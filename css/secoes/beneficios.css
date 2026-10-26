@@ -30,29 +30,10 @@
   gap: 54px;
 }
 
-/* ========== CABEÇALHO ========== */
-.beneficios__topo {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.beneficios__titulo {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 760px;
-}
-
-.beneficios__h2 {
-  font: 800 var(--fs-h2)/.9 var(--fonte-display);
-  text-transform: uppercase;
-}
-
+/* ========== CABEÇALHO ==========
+   .cabecalho-secao e .titulo-secao (componentes.css): centralizado a partir de 768 px, Jakarta 800. */
 .beneficios__h2 span {
-  color: rgba(255, 255, 255, .38);
+  color: rgba(255, 255, 255, .42);
 }
 
 /* ========== BENTO ========== */
@@ -105,7 +86,9 @@
   max-width: 56%;
 }
 
+/* Cards largos (01, 04 e 08): um degrau acima dos normais, e ~1,5× abaixo do título da seção */
 .beneficio--01 .card-z__t,
+.beneficio--04 .card-z__t,
 .beneficio--08 .card-z__t {
   font-size: var(--fs-card-destaque);
 }
@@ -159,10 +142,6 @@
 /* 04: repasse */
 .beneficio--04 {
   min-height: 340px;
-}
-
-.beneficio--04 .card-z__t {
-  font-size: clamp(36px, 3.2vw, 50px);
 }
 
 .beneficio--04 .beneficio__contorno {
@@ -291,15 +270,7 @@
     font-size: 14px;
   }
 
-  .card-z__t,
-  .beneficio--04 .card-z__t {
-    font-size: 32px;
-  }
-
-  .beneficio--01 .card-z__t,
-  .beneficio--08 .card-z__t {
-    font-size: 40px;
-  }
+  /* Títulos dos cards: os mínimos dos clamps (26 e 34 px), abaixo do título da seção (38 px) */
 
   .card-z__d {
     font-size: 15px;

@@ -362,6 +362,32 @@
   }
 }
 
+/* ========== CABEÇALHO E TÍTULO DE SEÇÃO ==========
+   Ajuste do cliente: o título de seção usa o idioma do H1 (Jakarta 800, caixa normal), para não competir
+   com os títulos de card (Barlow em caixa alta). Cabeçalho centralizado a partir de 768 px; à esquerda no mobile. */
+.cabecalho-secao {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .cabecalho-secao {
+    align-items: center;
+    max-width: 900px;
+    margin-inline: auto;
+    text-align: center;
+  }
+}
+
+.titulo-secao {
+  font: 800 var(--fs-titulo-secao)/1.02 var(--fonte-impacto);
+  letter-spacing: -.04em;
+  color: #fff;
+  text-wrap: balance;
+}
+
 /* ========== CARD DE BENEFÍCIO (.card-z) ========== */
 .card-z {
   position: relative;

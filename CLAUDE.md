@@ -55,8 +55,9 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
 5. **Fundo nunca liso.** Toda seção tem textura: grão global, grade de 72 px com máscara, linhas de gráfico ou luz.
 6. **Transição nunca seca.** Entre seções use sempre uma destas: horizonte (o planeta vira o fundo da próxima seção), candles (a seção sobe recortada), picote de ingresso ou fusão por máscara ou degradê.
 7. **Tipografia.**
-   - Plus Jakarta Sans 800 (letter-spacing `-.045em`) só nas frases de impacto: H1 da hero e frase do fechamento.
-   - Barlow Condensed 700–900 em caixa alta para títulos de seção, nomes de plano, rótulos e números.
+   - Plus Jakarta Sans 800 para o H1 da hero, os **títulos de seção (h2)** e a frase do fechamento. Nos títulos de seção: caixa normal (sem uppercase), letter-spacing `-.04em`, line-height 1.02, `clamp(38px, 4.6vw, 64px)` e `text-wrap: balance`. Use `.titulo-secao` (`css/componentes.css`), com uma parte do título numa segunda cor (branco .42 ou o laranja do destaque da seção).
+   - Barlow Condensed 700–900 em caixa alta só para títulos de card, nomes de plano, rótulos, números e botões de aba. Títulos de card: `clamp(34px, 3vw, 44px)` nos cards largos e `clamp(26px, 2.1vw, 30px)` nos normais (`--fs-card-destaque` e `--fs-card`). O título de seção fica ~1,5× o título de card largo, com outra fonte.
+   - Cabeçalho de seção (rótulo, título e subtítulo): `.cabecalho-secao`, centralizado a partir de 768 px (max-width 900, margin-inline auto) e alinhado à esquerda abaixo de 768 px.
    - Inter 400–600 para o corpo do texto.
    - O ponto final depois de palavra em Jakarta leva `margin-left: -.07em`, porque a fonte deixa um vão.
 8. **3D com parcimônia.** Os elementos 3D do brand kit aparecem só onde o protótipo usa: benefícios 01, 04 e 08 e o card Academy. Nada de 3D decorativo flutuando.
