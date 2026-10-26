@@ -213,3 +213,10 @@ Todas rodadas de novo depois da 2ª rodada de ajustes.
 6. **Grade de 72 px no mobile:** pendência 4 da Fase 1, ainda aberta.
 
 Aguardando aprovação para a Fase 3.
+
+---
+
+## Ajuste pós-aprovação (commit "fase 2 (ajuste): menu")
+
+- O CTA do painel do menu passou a dizer "Aproveitar a Black" (texto completo da copy), já que ali tem largura. O CTA da nav continua "Aproveitar".
+- O CLAUDE.md ganhou a seção "Hero aprovada na Fase 2", com os valores que as próximas fases usam no lugar dos do print 01 (altura, `--arco`, H1, selo, CTA escuro e contador guardado).

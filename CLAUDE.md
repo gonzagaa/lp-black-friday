@@ -26,6 +26,16 @@ A direção visual já foi aprovada e está em `_referencia/`. Comece pelo `_ref
 3. `_referencia/canvas/*.dc.html`: o CSS desses arquivos traz os valores exatos aprovados.
 4. `../Zero7/`: a home oficial (planos, lógica de preços, rodapé). **Só leitura. Nunca altere nada fora desta pasta.**
 
+### Hero aprovada na Fase 2 (vale por cima do print 01 e do canvas)
+
+O cliente ajustou a hero depois do print. As próximas fases partem destes valores, não dos do `01-hero-desktop.png`:
+
+- Altura: `min-height: clamp(640px, 82svh, 860px)` no desktop e `clamp(620px, 86svh, 740px)` no mobile. O conteúdo pode fazer a hero crescer (em 1440 × 900 ela tem 825 px).
+- Arco do planeta: na variável `--arco` (`css/secoes/topo.css`): 150 px acima da base no desktop e 144 px no mobile. Brilho e raios derivam dela. Qualquer seção que encoste na hero (ex.: a sobreposição dos benefícios) usa `--arco`, nunca um número fixo.
+- H1: "A maior black" / "da história." em todas as larguras, com a luz em "da história." inteiro. Selo com `top: -.05em` e `margin-left: -.1em`; a linha 2 é deslocada .41em para a esquerda.
+- CTA da hero: `.fbtn--escuro` a partir de 768 px (laranja no mobile).
+- Sem contador na hero (o módulo `js/modulos/contador.js` está guardado; a decisão sobre a barra mobile fica para a Fase 6).
+
 ## Regras invioláveis
 
 1. **Copy.** Use os textos da copy palavra por palavra, incluindo pontuação. Os textos que não vieram da copy estão listados na seção "Textos a aprovar" do `PROMPTS-LP-BLACK.md`. Pode usá-los, mas sinalize no relatório.
