@@ -140,3 +140,14 @@ Valores em uma escala de 0 a 255: não há linha nem corte. O arco continua inte
 5. Seguem abertas: `BLACK_FIM` provisório (P1), contador na barra mobile (Fase 6) e grade de 72 px no mobile (pendência 4 da Fase 1).
 
 Aguardando aprovação para a Fase 4.
+
+---
+
+## Ajuste pós-aprovação (commit "fase 3 (ajuste): títulos balanceados")
+
+- `text-wrap: balance` em todos os títulos (`h1`, `h2`, `h3` e `.card-z__t`), no `base.css`.
+- **Conferido em 768, 810 e 1024** (`shots/fase-3/ajuste-titulos-*.png`):
+  - em 768 e 1024, o H2 fica em duas linhas equilibradas ("Um pacote completo" / "para o próximo nível.");
+  - em 810, ele cabe inteiro numa linha.
+- **Varredura de 360 a 1920 px, de 10 em 10:** nenhum título fica com uma palavra sozinha na última linha.
+- A geometria do H1 não mudou: o desvio da linha 2 continua em 0,152em, e a folga do selo é a mesma.
