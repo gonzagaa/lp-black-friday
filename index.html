@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070607">
+  <meta name="color-scheme" content="dark">
+  <!-- Título provisório: título, descrição e Open Graph saem da copy na Fase 6 -->
+  <title>Black Friday Zero7</title>
+  <!-- Favicon provisório (evita o 404 do /favicon.ico); o do brand kit entra na Fase 6 -->
+  <link rel="icon" href="data:,">
+
+  <!-- Fontes da hero: Plus Jakarta Sans 800 (H1) e Inter (corpo) -->
+  <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/componentes.css">
+  <link rel="stylesheet" href="css/secoes/topo.css">
+  <link rel="stylesheet" href="css/secoes/beneficios.css">
+  <link rel="stylesheet" href="css/secoes/planos.css">
+  <link rel="stylesheet" href="css/secoes/comunidade.css">
+  <link rel="stylesheet" href="css/secoes/fechamento.css">
+  <link rel="stylesheet" href="css/secoes/rodape.css">
+
+  <script type="module" src="js/main.js" defer></script>
+</head>
+<body>
+  <!-- Sprite: o selo serrilhado (polígono de 36 pontos) e os degradês das duas variantes.
+       Use com <svg><use href="#selo-serrilhado" fill="url(#selo-hero-cor)"/></svg>. Não pode ficar em display:none, senão os degradês somem. -->
+  <svg id="sprite" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="selo-hero-cor" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#FF7A2A"/>
+        <stop offset=".55" stop-color="#F24A1E"/>
+        <stop offset="1" stop-color="#D9231F"/>
+      </linearGradient>
+      <radialGradient id="selo-hero-brilho" cx=".32" cy=".26" r=".6">
+        <stop offset="0" stop-color="#fff" stop-opacity=".42"/>
+        <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="selo-plano-cor" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#FF8A3D"/>
+        <stop offset=".6" stop-color="#FF6A1A"/>
+        <stop offset="1" stop-color="#E52B24"/>
+      </linearGradient>
+    </defs>
+    <symbol id="selo-serrilhado" viewBox="0 0 100 100">
+      <polygon points="50.0,0.0 57.6,6.7 67.1,3.0 72.0,11.9 82.1,11.7 83.7,21.7 93.3,25.0 91.3,35.0 99.2,41.3 94.0,50.0 99.2,58.7 91.3,65.0 93.3,75.0 83.7,78.3 82.1,88.3 72.0,88.1 67.1,97.0 57.6,93.3 50.0,100.0 42.4,93.3 32.9,97.0 28.0,88.1 17.9,88.3 16.3,78.3 6.7,75.0 8.7,65.0 0.8,58.7 6.0,50.0 0.8,41.3 8.7,35.0 6.7,25.0 16.3,21.7 17.9,11.7 28.0,11.9 32.9,3.0 42.4,6.7"/>
+    </symbol>
+  </svg>
+
+  <div class="grao" aria-hidden="true"></div>
+
+  <main>
+    <section id="topo"></section>
+    <section id="beneficios"></section>
+    <section id="planos"></section>
+    <section id="comunidade"></section>
+    <section id="fechamento"></section>
+  </main>
+
+  <footer id="rodape"></footer>
+</body>
+</html>

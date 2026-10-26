@@ -1,0 +1,172 @@
+/* Base: fontes locais, reset, body, grão global e utilitários. */
+
+/* Fontes locais (woff2, subset latin). Preload só de Jakarta 800 e Inter, que são as da hero. */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../assets/fonts/plus-jakarta-sans-latin-700-normal.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(../assets/fonts/plus-jakarta-sans-latin-800-normal.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../assets/fonts/barlow-condensed-latin-700-normal.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(../assets/fonts/barlow-condensed-latin-800-normal.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(../assets/fonts/barlow-condensed-latin-900-normal.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(../assets/fonts/inter-latin-wght-normal.woff2) format('woff2');
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body,
+h1, h2, h3, h4, p, figure, blockquote, ul, ol {
+  margin: 0;
+}
+
+ul[class],
+ol[class] {
+  padding: 0;
+  list-style: none;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: var(--cor-laranja-claro);
+}
+
+a:hover {
+  color: var(--cor-texto);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cor-luz);
+  outline-offset: 3px;
+}
+
+/* Body */
+body {
+  position: relative; /* referência do grão global */
+  min-height: 100vh;
+  background: var(--cor-base);
+  color: var(--cor-texto);
+  font: 400 var(--fs-corpo)/1.55 var(--fonte-texto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Grão global: por cima de tudo, sem capturar clique */
+.grao {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  background: url(../assets/texturas/grain.png) repeat;
+  background-size: 240px;
+  opacity: .55;
+  mix-blend-mode: soft-light;
+}
+
+/* Utilitários */
+.wrap {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.disp {
+  font-family: var(--fonte-display);
+  text-transform: uppercase;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* O ponto final depois de palavra em Jakarta leva -.07em: a fonte deixa um vão */
+.ponto {
+  margin-left: -.07em;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Movimento reduzido: desliga toda animação e transição */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

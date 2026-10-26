@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Black Zero7 — mobile v2</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#050404}
+a{color:#FF8A4C}a:hover{color:#fff}
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+.m{font-family:Inter,system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.m *{box-sizing:border-box}
+.disp{font-family:'Barlow Condensed',Impact,sans-serif;text-transform:uppercase}
+.grain{position:absolute;inset:0;z-index:50;pointer-events:none;background:url(../texturas/grain.png) repeat;background-size:240px;opacity:.55;mix-blend-mode:soft-light}
+.grid{background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px}
+.tag{display:inline-flex;align-items:center;gap:8px;font:600 11px/1 Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.tag::before{content:"";width:6px;height:6px;background:#FF6A1A;border-radius:3px 0}
+.fbtn{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:58px;padding:6px 6px 6px 22px;border-radius:16px 0;text-decoration:none;color:#fff;background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.015) 60%),#0d0a09;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),inset 0 1px 0 rgba(255,255,255,.12),0 18px 40px -18px rgba(255,106,26,.55);overflow:hidden}
+.fbtn::before{content:"";position:absolute;inset:0;padding:1px;border-radius:inherit;background:conic-gradient(from var(--ang),transparent 0 62%,#FF6A1A 82%,#FFC83D 86%,transparent 92%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:ang 3.6s linear infinite;z-index:1}
+.fbtn__label{position:relative;z-index:2;font:700 17px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.fbtn__cap{position:relative;z-index:2;display:grid;place-items:center;width:44px;height:44px;border-radius:999px 0 999px 999px;color:#0a0706;background:radial-gradient(120% 120% at 30% 20%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%),linear-gradient(160deg,#FF8A3D,#FF6A1A 55%,#E85A14)}
+.fbtn{color:#fff;gap:16px;padding:6px 6px 6px 22px;background:linear-gradient(180deg,#FF9152 0%,#FF6A1A 52%,#F2511A 100%);box-shadow:0 0 0 5px rgba(255,106,26,.07),0 0 0 6px rgba(255,140,70,.24),inset 0 1px 1px rgba(255,255,255,.55),inset 0 -3px 8px rgba(255,200,61,.42),0 10px 26px -6px rgba(255,90,20,.7),0 0 60px rgba(255,106,26,.26)}
+.fbtn::before{display:none}
+.fbtn__label{font:700 14px/1 'Plus Jakarta Sans',Inter,sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;text-shadow:0 1px 1px rgba(140,35,0,.35)}
+.fbtn__cap{color:#FF6A1A;background:#fff;box-shadow:0 2px 6px rgba(120,30,0,.35),inset 0 -2px 3px rgba(0,0,0,.08)}
+.candles{position:relative;margin-top:-48px;-webkit-mask:url(../texturas/candles-mask.svg) repeat-x 0 0/270px 36px,linear-gradient(#000,#000) 0 35px/100% calc(100% - 35px) no-repeat;mask:url(../texturas/candles-mask.svg) repeat-x 0 0/270px 36px,linear-gradient(#000,#000) 0 35px/100% calc(100% - 35px) no-repeat}
+.candles::after{content:"";position:absolute;left:0;right:0;top:0;height:36px;background:url(../texturas/candles-tops.svg) repeat-x 0 0/270px 36px}
+.chips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.chip{grid-column:span 2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:54px;padding:6px 3px;border-radius:8px;background:rgba(255,255,255,.035);text-align:center}
+.chip--w{grid-column:span 3}
+.chip span{font:400 10px/1.2 Inter,sans-serif;color:rgba(255,255,255,.55)}
+.chip b{font:700 12px/1.15 Inter,sans-serif}
+@keyframes ang{to{--ang:360deg}}
+</style>
+</helmet>
+<div class="m" style="position: relative; width: 390px; height: 2600px; background: #050404; overflow: hidden">
+  <div class="grain"></div>
+
+  <section style="position: relative; height: 844px; overflow: hidden">
+    <div style="position: absolute; inset: 0; background: radial-gradient(90% 50% at 50% 100%, rgba(255,106,26,.18), transparent 70%), #080606"></div>
+    <div class="grid" style="position: absolute; inset: 0; -webkit-mask-image: radial-gradient(90% 70% at 50% 55%, #000 20%, transparent 80%); mask-image: radial-gradient(90% 70% at 50% 55%, #000 20%, transparent 80%)"></div>
+    <div style="position: absolute; left: 50%; bottom: 110px; width: 900px; height: 520px; transform: translateX(-50%); background: repeating-conic-gradient(from 270deg at 50% 100%, rgba(255,160,90,.11) 0deg 1deg, transparent 1deg 6.5deg); -webkit-mask-image: radial-gradient(55% 85% at 50% 100%, #000 5%, transparent 70%); mask-image: radial-gradient(55% 85% at 50% 100%, #000 5%, transparent 70%); mix-blend-mode: screen"></div>
+    <div style="position: absolute; left: 50%; bottom: 90px; width: 860px; height: 520px; transform: translateX(-50%); background: radial-gradient(40% 55% at 50% 100%, rgba(255,214,160,.95), rgba(255,140,55,.78) 20%, rgba(255,106,26,.45) 42%, rgba(229,43,36,.16) 62%, transparent 78%); filter: blur(10px); mix-blend-mode: screen"></div>
+    <div style="position: absolute; left: 50%; top: 700px; width: 1100px; height: 800px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(38% 7% at 50% 0%, #4a200c, #0c0504 60%, #030202 80%); box-shadow: inset 0 3px 0 #ffe0bf, inset 0 14px 36px -8px rgba(255,120,40,.7), 0 -2px 6px rgba(255,230,200,.95), 0 -8px 28px rgba(255,150,70,.9), 0 -40px 110px rgba(255,106,26,.6), 0 -120px 220px rgba(229,43,36,.28)"></div>
+    <span style="position: absolute; left: 12%; top: 22%; width: 2px; height: 2px; border-radius: 9px; background: #fff; opacity: .5"></span>
+    <span style="position: absolute; left: 82%; top: 34%; width: 2px; height: 2px; border-radius: 9px; background: #fff; opacity: .4"></span>
+    <span style="position: absolute; left: 70%; top: 13%; width: 2px; height: 2px; border-radius: 9px; background: #fff; opacity: .6"></span>
+
+    <header style="position: relative; z-index: 5; padding: 14px 14px 0">
+      <nav aria-label="Principal" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 8px 8px 16px; border-radius: 16px 0; background: rgba(6,5,5,.62); border: 1px solid rgba(255,255,255,.1); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px)">
+        <img src="../../_brandkit/completa-escuro.svg" alt="Black Friday Zero7" style="height: 38px; width: auto; display: block">
+        <button type="button" aria-label="Abrir menu" style="display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 12px 0; color: #fff; background: #0f0c0b; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h10"></path></svg></button>
+      </nav>
+    </header>
+
+    <div style="position: relative; z-index: 4; padding: 150px 18px 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px">
+      <h1 style="margin: 0; font: 800 47px/1.02 'Plus Jakarta Sans', Inter, sans-serif; letter-spacing: -.045em; color: #fff">A maior black<br><span style="position: relative; display: inline-block">da <span style="background: linear-gradient(180deg,#fff 0%,#fff 56%,#ffe7d6 78%,#ffc49c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 12px 30px rgba(255,106,26,.18)">história<span style="margin-left: -.07em">.</span></span><span role="img" aria-label="80% OFF" style="position: absolute; left: 100%; top: -.1em; margin-left: .02em; z-index: 3; display: grid; place-items: center; width: 1.12em; height: 1.12em; transform: rotate(-12deg); filter: drop-shadow(0 3px 5px rgba(0,0,0,.65)) drop-shadow(0 0 12px rgba(255,106,26,.35))"><svg viewBox="0 0 100 100" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%"><defs><linearGradient id="msg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF7A2A"></stop><stop offset=".55" stop-color="#F24A1E"></stop><stop offset="1" stop-color="#D9231F"></stop></linearGradient></defs><polygon fill="url(#msg)" points="50.0,0.0 57.6,6.7 67.1,3.0 72.0,11.9 82.1,11.7 83.7,21.7 93.3,25.0 91.3,35.0 99.2,41.3 94.0,50.0 99.2,58.7 91.3,65.0 93.3,75.0 83.7,78.3 82.1,88.3 72.0,88.1 67.1,97.0 57.6,93.3 50.0,100.0 42.4,93.3 32.9,97.0 28.0,88.1 17.9,88.3 16.3,78.3 6.7,75.0 8.7,65.0 0.8,58.7 6.0,50.0 0.8,41.3 8.7,35.0 6.7,25.0 16.3,21.7 17.9,11.7 28.0,11.9 32.9,3.0 42.4,6.7"></polygon><circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.2" stroke-dasharray="2.5 3"></circle></svg><b style="position: relative; display: flex; flex-direction: column; align-items: center; font: 800 .33em/.84 'Plus Jakarta Sans', sans-serif; letter-spacing: -.05em; color: #fff">80%<small style="font-size: .8em">OFF</small></b></span></span></h1>
+      <p style="margin: 0; font: 400 16px/1.55 Inter, sans-serif; color: rgba(255,255,255,.66)">+ um pacote completo para levar sua jornada no trading para outro nível:</p>
+      <a class="fbtn" href="#planos" style="align-self: stretch"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+    </div>
+  </section>
+
+  <section style="position: relative; margin-top: -130px; padding: 130px 16px 110px; background: linear-gradient(180deg, rgba(3,2,2,0), #030202 130px)">
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <span class="tag">O pacote da Black</span>
+      <h2 class="disp" style="margin: 0; font-weight: 800; font-size: 44px; line-height: .9">Um pacote completo <span style="color: rgba(255,255,255,.38)">para o próximo nível.</span></h2>
+      <article style="position: relative; overflow: hidden; min-height: 300px; padding: 26px 22px; border-radius: 24px 24px 24px 0; background: linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.01) 60%),#0a0807; border: 1px solid rgba(255,255,255,.07); display: flex; flex-direction: column; gap: 12px">
+        <span style="font: 700 14px/1 'Barlow Condensed', sans-serif; letter-spacing: .12em; color: #FF8A4C">01</span>
+        <h3 class="disp" style="margin: 0; font-weight: 800; font-size: 40px; line-height: .95">Desconto de 80%</h3>
+        <p style="margin: 0; max-width: 220px; font: 400 15px/1.55 Inter, sans-serif; color: rgba(255,255,255,.62)">Mais estrutura para o seu operacional, investindo menos.</p>
+        <span class="disp" aria-hidden="true" style="position: absolute; right: -10px; bottom: -40px; font-weight: 900; font-size: 210px; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.07)">80</span>
+        <img src="../../_brandkit/19-Percentual.png" alt="" style="position: absolute; right: 14px; bottom: 18px; width: 130px; filter: drop-shadow(0 20px 30px rgba(0,0,0,.7))">
+      </article>
+      <article style="padding: 26px 22px; border-radius: 24px 24px 24px 0; background: linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.01) 60%),#0a0807; border: 1px solid rgba(255,255,255,.07); display: flex; flex-direction: column; gap: 12px">
+        <span style="font: 700 14px/1 'Barlow Condensed', sans-serif; letter-spacing: .12em; color: #FF8A4C">02</span>
+        <h3 class="disp" style="margin: 0; font-weight: 800; font-size: 32px; line-height: .95">Aumento de margem</h3>
+        <p style="margin: 0; font: 400 15px/1.55 Inter, sans-serif; color: rgba(255,255,255,.62)">Mais estrutura para você operar com folga.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="planos" class="candles" style="padding: 90px 16px 120px; background: radial-gradient(80% 30% at 50% 0%, rgba(255,106,26,.08), transparent 70%), #0c0908">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center">
+      <span class="tag">Planos Black Friday</span>
+      <h2 class="disp" style="margin: 0; font-weight: 800; font-size: 42px; line-height: .92"><span style="color: #FF6A1A">80% OFF</span> para garantir o seu plano perfeito.</h2>
+      <div style="display: flex; align-self: stretch; padding: 4px; border-radius: 999px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1)">
+        <span style="flex: 1; display: grid; place-items: center; min-height: 44px; border-radius: 999px; font: 600 13px/1 Inter, sans-serif; color: #0a0706; background: #FF6A1A">Mini Índice / Dólar</span>
+        <span style="flex: 1; display: grid; place-items: center; min-height: 44px; font: 600 13px/1 Inter, sans-serif; color: rgba(255,255,255,.7)">Futuro de Bitcoin</span>
+      </div>
+      <h3 class="disp" style="margin: 6px 0 0; font-weight: 800; font-size: 28px">Mini Índice / Dólar</h3>
+    </div>
+
+    <article style="position: relative; margin-top: 46px; padding: 46px 14px 18px; display: flex; flex-direction: column; gap: 18px; border-radius: 24px 24px 24px 0; border: 2px solid rgba(255,106,26,.7); background: linear-gradient(180deg,#050303,#0d0908); box-shadow: 0 0 26px rgba(255,106,26,.25), 0 0 70px rgba(229,43,36,.14)">
+      <div style="position: absolute; top: -25px; left: 12%; right: 12%; height: 50px; display: grid; place-items: center; border-radius: 16px; border: 1px solid rgba(255,106,26,.55); background: linear-gradient(180deg,#020101,#0b0807)"><h3 class="disp" style="margin: 0; font-weight: 900; font-size: 28px; letter-spacing: .04em">Sênior</h3></div>
+      <div style="position: absolute; top: -28px; right: -10px; width: 66px; height: 66px; transform: rotate(12deg); filter: drop-shadow(0 8px 14px rgba(0,0,0,.6))">
+        <svg viewBox="0 0 100 100" width="66" height="66" aria-hidden="true"><defs><linearGradient id="sgm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A3D"></stop><stop offset=".6" stop-color="#FF6A1A"></stop><stop offset="1" stop-color="#E52B24"></stop></linearGradient></defs><polygon fill="url(#sgm)" points="50.0,0.0 57.6,6.7 67.1,3.0 72.0,11.9 82.1,11.7 83.7,21.7 93.3,25.0 91.3,35.0 99.2,41.3 94.0,50.0 99.2,58.7 91.3,65.0 93.3,75.0 83.7,78.3 82.1,88.3 72.0,88.1 67.1,97.0 57.6,93.3 50.0,100.0 42.4,93.3 32.9,97.0 28.0,88.1 17.9,88.3 16.3,78.3 6.7,75.0 8.7,65.0 0.8,58.7 6.0,50.0 0.8,41.3 8.7,35.0 6.7,25.0 16.3,21.7 17.9,11.7 28.0,11.9 32.9,3.0 42.4,6.7"></polygon></svg>
+        <span style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font: 900 20px/.85 'Barlow Condensed', sans-serif; color: #0a0706">80%<small style="font: 800 10px/1 'Barlow Condensed', sans-serif; letter-spacing: .1em">OFF</small></span>
+      </div>
+      <p style="margin: -4px 0 0; padding: 8px 10px; border-radius: 10px 0; text-align: center; font: 600 11px/1.35 Inter, sans-serif; color: #FFB48A; background: rgba(255,106,26,.08); border: 1px solid rgba(255,106,26,.25)">Nossos traders mais positivos operam o plano Sênior</p>
+      <div class="chips">
+        <div class="chip"><span>Limite por operação</span><b>80 contratos</b></div>
+        <div class="chip"><span>Limite para WIN</span><b>50 contratos</b></div>
+        <div class="chip"><span>Limite para WDO</span><b>30 contratos</b></div>
+        <div class="chip"><span>Limite de perda diária</span><b>R$ 2.497,00</b></div>
+        <div class="chip"><span>Limite de perda total</span><b>R$ 9.997,00</b></div>
+        <div class="chip"><span>Meta de aprovação</span><b>R$ 9.997,00</b></div>
+        <div class="chip chip--w"><span>Máximo de dias</span><b>ilimitado*</b></div>
+        <div class="chip chip--w"><span>Repasse</span><b>100% em conta real</b></div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+        <p style="margin: 0; font: 500 14px/1 Inter, sans-serif; color: rgba(255,255,255,.75)">de <s style="color: rgba(255,255,255,.5); text-decoration-color: #FF6A1A; text-decoration-thickness: 2px">R$ 3.047,00</s> por</p>
+        <p style="margin: 0; display: flex; align-items: baseline; gap: 8px"><span class="disp" style="font-weight: 800; font-size: 32px; color: #FF6A1A">12x</span><b class="disp" style="font-weight: 900; font-size: 46px; line-height: 1">R$70,08</b></p>
+        <p class="disp" style="margin: 0; font-weight: 700; font-size: 19px"><i style="font-style: normal; color: #FF6A1A">ou</i> R$700,81 <i style="font-style: normal; color: #FF6A1A">à vista</i></p>
+      </div>
+      <p style="margin: 0; font: 400 11px/1.4 Inter, sans-serif; color: rgba(255,255,255,.55); text-align: center">*Plataforma gratuita por 60 dias. Após, cobrança mensal.</p>
+      <a class="fbtn" href="#planos"><span class="fbtn__label">Contratar plano</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+    </article>
+
+    <div style="display: flex; gap: 2px; margin-top: 24px; overflow: hidden">
+      <span class="disp" style="flex: 0 0 auto; display: grid; place-items: center; min-height: 46px; padding: 0 12px; font-weight: 700; font-size: 15px; letter-spacing: .1em; color: rgba(255,255,255,.5); border-bottom: 2px solid rgba(255,255,255,.06)">Pleno</span>
+      <span class="disp" style="flex: 0 0 auto; display: grid; place-items: center; min-height: 46px; padding: 0 12px; font-weight: 700; font-size: 15px; letter-spacing: .1em; color: #fff; border-bottom: 2px solid #FF6A1A">Sênior</span>
+      <span class="disp" style="flex: 0 0 auto; display: grid; place-items: center; min-height: 46px; padding: 0 12px; font-weight: 700; font-size: 15px; letter-spacing: .1em; color: rgba(255,255,255,.5); border-bottom: 2px solid rgba(255,255,255,.06)">Expert</span>
+      <span class="disp" style="flex: 0 0 auto; display: grid; place-items: center; min-height: 46px; padding: 0 12px; font-weight: 700; font-size: 15px; letter-spacing: .1em; color: rgba(255,255,255,.5); border-bottom: 2px solid rgba(255,255,255,.06)">Master</span>
+    </div>
+  </section>
+
+  <div style="position: absolute; left: 10px; right: 10px; bottom: 12px; z-index: 40; display: flex; align-items: center; gap: 10px; padding: 7px 7px 7px 16px; border-radius: 16px 0; background: rgba(8,6,6,.78); border: 1px solid rgba(255,255,255,.1); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); box-shadow: 0 -10px 40px rgba(0,0,0,.6)">
+    <div style="display: flex; flex-direction: column; gap: 4px; flex: 0 0 auto"><span style="font: 600 9px/1 Inter, sans-serif; letter-spacing: .14em; color: rgba(255,255,255,.5)">TERMINA EM</span><span class="disp" style="font-weight: 700; font-size: 19px; line-height: 1; font-variant-numeric: tabular-nums">05d 12:44:<span style="color: #FF8A4C">18</span></span></div>
+    <a href="#planos" style="flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 48px; padding: 4px 4px 4px 16px; border-radius: 14px 0; text-decoration: none; color: #fff; background: linear-gradient(180deg,#FF9152 0%,#FF6A1A 52%,#F2511A 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,.55), inset 0 -3px 8px rgba(255,200,61,.42), 0 8px 22px -6px rgba(255,90,20,.7)"><span style="font: 700 13px/1 'Plus Jakarta Sans', Inter, sans-serif; letter-spacing: .05em; text-transform: uppercase; text-shadow: 0 1px 1px rgba(140,35,0,.35)">Aproveitar a Black</span><span style="display: grid; place-items: center; width: 38px; height: 38px; border-radius: 999px 0 999px 999px; color: #FF6A1A; background: #fff"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2600}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

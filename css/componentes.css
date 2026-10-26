@@ -1,0 +1,519 @@
+/* Componentes: botões, rótulo, cards, selo, divisores e texturas.
+   Valores copiados de _referencia/canvas/Main.dc.html (desktop) e Mobile.dc.html (≤ 600 px).
+   Vitrine com todos os estados em componentes.html. */
+
+/* ========== BOTÃO PRINCIPAL (.fbtn) ==========
+   "BOTÃO v4" do Main.dc.html aplicado sobre as regras-base anteriores a ele.
+   Laranja sólido com volume, moldura fina de vidro (box-shadow com spread, segue o raio
+   diagonal), texto branco em Jakarta 700 e seta laranja na gota branca. */
+.fbtn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 62px;
+  padding: 7px 7px 7px 28px;
+  border: 0;
+  border-radius: var(--raio-assinatura);
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(180deg, #FF9152 0%, #FF6A1A 52%, #F2511A 100%);
+  box-shadow:
+    0 0 0 5px rgba(255, 106, 26, .07),
+    0 0 0 6px rgba(255, 140, 70, .24),
+    inset 0 1px 1px rgba(255, 255, 255, .55),
+    inset 0 -3px 8px rgba(255, 200, 61, .42),
+    0 10px 26px -6px rgba(255, 90, 20, .7),
+    0 0 70px rgba(255, 106, 26, .26);
+  overflow: hidden;
+  transition: transform var(--dur-2) var(--curva), box-shadow var(--dur-2);
+}
+
+/* Varredura de luz: atravessa uma vez no hover (sem transição na volta, para não varrer de novo) */
+.fbtn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -30%;
+  z-index: 1;
+  width: 22%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .38), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+.fbtn:hover {
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, .05),
+    0 0 0 6px rgba(255, 150, 80, .4),
+    inset 0 1px 1px rgba(255, 255, 255, .6),
+    inset 0 -3px 8px rgba(255, 200, 61, .55),
+    0 14px 34px -6px rgba(255, 90, 20, .85),
+    0 0 100px rgba(255, 106, 26, .4);
+}
+
+.fbtn:hover::after {
+  left: 120%;
+  transition: left var(--dur-4) var(--curva);
+}
+
+.fbtn:focus-visible {
+  outline: 2px solid var(--cor-luz);
+  outline-offset: 4px;
+}
+
+/* O protótipo não define :active: o botão volta ao lugar e a moldura apaga, como um clique */
+.fbtn:active {
+  transform: translateY(0);
+  box-shadow:
+    0 0 0 5px rgba(255, 106, 26, .07),
+    0 0 0 6px rgba(255, 140, 70, .24),
+    inset 0 1px 1px rgba(255, 255, 255, .55),
+    inset 0 -3px 8px rgba(255, 200, 61, .42),
+    0 6px 18px -6px rgba(255, 90, 20, .7),
+    0 0 50px rgba(255, 106, 26, .22);
+}
+
+.fbtn__label {
+  position: relative;
+  z-index: 2;
+  font: 700 15px/1 var(--fonte-impacto);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(140, 35, 0, .35);
+}
+
+.fbtn__cap {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--raio-gota);
+  color: var(--cor-laranja);
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(120, 30, 0, .35), inset 0 -2px 3px rgba(0, 0, 0, .08);
+}
+
+.fbtn__cap svg {
+  transition: transform .25s;
+}
+
+.fbtn:hover .fbtn__cap svg {
+  transform: translateX(3px);
+}
+
+/* Mobile.dc.html: botão um pouco mais baixo e compacto (vem antes das variações para elas prevalecerem) */
+@media (max-width: 600px) {
+  .fbtn {
+    gap: 16px;
+    min-height: 58px;
+    padding: 6px 6px 6px 22px;
+    box-shadow:
+      0 0 0 5px rgba(255, 106, 26, .07),
+      0 0 0 6px rgba(255, 140, 70, .24),
+      inset 0 1px 1px rgba(255, 255, 255, .55),
+      inset 0 -3px 8px rgba(255, 200, 61, .42),
+      0 10px 26px -6px rgba(255, 90, 20, .7),
+      0 0 60px rgba(255, 106, 26, .26);
+  }
+
+  .fbtn__label {
+    font-size: 14px;
+  }
+
+  .fbtn__cap {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Variação da nav */
+.fbtn--sm {
+  gap: 14px;
+  min-height: 48px;
+  padding: 5px 5px 5px 18px;
+}
+
+.fbtn--sm .fbtn__label {
+  font-size: 13px;
+  letter-spacing: .12em;
+}
+
+.fbtn--sm .fbtn__cap {
+  width: 34px;
+  height: 34px;
+}
+
+/* Largura total (planos) */
+.fbtn--block {
+  display: flex;
+  width: 100%;
+}
+
+/* ========== LINK SECUNDÁRIO (.lbtn): sublinhado laranja que cresce no hover ========== */
+.lbtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  font: 600 15px/1 var(--fonte-texto);
+  color: rgba(255, 255, 255, .78);
+  text-decoration: none;
+}
+
+.lbtn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--cor-laranja), rgba(255, 106, 26, 0));
+  transform-origin: left;
+  transform: scaleX(.35);
+  transition: transform var(--dur-3) var(--curva);
+}
+
+.lbtn:hover,
+.lbtn:active {
+  color: #fff;
+}
+
+.lbtn:hover::after,
+.lbtn:active::after {
+  transform: scaleX(1);
+}
+
+.lbtn:focus-visible {
+  outline: 2px solid var(--cor-luz);
+  outline-offset: 4px;
+}
+
+/* ========== BOTÃO DE NAVEGAÇÃO (.ibtn): quadrado 52×52, neumórfico discreto ========== */
+.ibtn {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 14px 0;
+  cursor: pointer;
+  color: rgba(255, 255, 255, .8);
+  background: var(--cor-superficie-3);
+  box-shadow:
+    -4px -4px 10px rgba(255, 255, 255, .025),
+    6px 8px 16px rgba(0, 0, 0, .65),
+    inset 0 1px 0 rgba(255, 255, 255, .06),
+    inset 0 0 0 1px rgba(255, 255, 255, .06);
+  transition: color var(--dur-1), box-shadow var(--dur-2);
+}
+
+.ibtn:hover {
+  color: var(--cor-laranja-claro);
+}
+
+/* Afunda no clique */
+.ibtn:active {
+  color: var(--cor-laranja-claro);
+  box-shadow: inset 3px 3px 8px rgba(0, 0, 0, .7), inset -2px -2px 6px rgba(255, 255, 255, .03);
+}
+
+.ibtn:focus-visible {
+  outline: 2px solid var(--cor-luz);
+  outline-offset: 3px;
+}
+
+/* Desabilitado (ex.: seta no fim do carrossel). O protótipo não define: apagado e sem relevo. */
+.ibtn:disabled,
+.ibtn[aria-disabled="true"] {
+  cursor: default;
+  pointer-events: none;
+  color: rgba(255, 255, 255, .25);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .05);
+}
+
+/* ========== RÓTULO DE SEÇÃO (.tag) ========== */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 600 12px/1 var(--fonte-texto);
+  letter-spacing: var(--tracking-rotulo);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .6);
+}
+
+.tag::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 7px;
+  height: 7px;
+  border-radius: 3px 0;
+  background: var(--cor-laranja);
+}
+
+@media (max-width: 600px) {
+  .tag {
+    gap: 8px;
+    font-size: 11px;
+  }
+
+  .tag::before {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* ========== CARD DE BENEFÍCIO (.card-z) ========== */
+.card-z {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 300px;
+  padding: 34px 34px 30px;
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-card);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .01) 60%), var(--cor-superficie-1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06), 0 40px 60px -40px rgba(0, 0, 0, .9);
+  transition: border-color var(--dur-2), transform var(--dur-3) var(--curva);
+}
+
+/* Linha de luz no topo: acende no hover */
+.card-z::before {
+  content: "";
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 138, 76, .8), transparent);
+  opacity: 0;
+  transition: opacity var(--dur-3);
+}
+
+.card-z:hover {
+  border-color: var(--cor-linha-forte);
+  transform: translateY(-3px);
+}
+
+.card-z:hover::before {
+  opacity: 1;
+}
+
+.card-z__n {
+  font: 700 15px/1 var(--fonte-display);
+  letter-spacing: .12em;
+  color: var(--cor-laranja-claro);
+}
+
+.card-z__t {
+  font: 800 var(--fs-card)/.95 var(--fonte-display);
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.card-z__d {
+  max-width: 440px;
+  font: 400 16px/1.55 var(--fonte-texto);
+  color: rgba(255, 255, 255, .62);
+}
+
+.card-z__3d {
+  position: absolute;
+  pointer-events: none;
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .7));
+  transition: transform var(--dur-4) var(--curva);
+}
+
+.card-z:hover .card-z__3d {
+  transform: translateY(-6px) rotate(-3deg);
+}
+
+/* ========== SELO DE DESCONTO ==========
+   Um único <symbol id="selo-serrilhado"> (polígono de 36 pontos) no index.html, usado com <use>.
+   Os degradês (#selo-hero-cor, #selo-hero-brilho, #selo-plano-cor) ficam no mesmo sprite. */
+.selo-hero,
+.selo-plano {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+}
+
+.selo-hero > svg,
+.selo-plano > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.selo-hero b,
+.selo-plano b {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hero: tamanho em em, relativo ao H1. Entra carimbando e depois gira a cada 40 s. */
+.selo-hero {
+  width: 1.12em;
+  height: 1.12em;
+  transform: rotate(-12deg);
+  filter: drop-shadow(0 .05em .1em rgba(0, 0, 0, .65)) drop-shadow(0 0 .3em rgba(255, 106, 26, .35));
+  animation: stamp .9s cubic-bezier(.2, 1.5, .4, 1) .5s both;
+}
+
+.selo-hero > svg {
+  animation: spinSlow 40s linear 1.4s infinite;
+}
+
+.selo-hero circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, .45);
+  stroke-width: 1.2;
+  stroke-dasharray: 2.5 3;
+}
+
+.selo-hero b {
+  font: 800 .33em/.84 var(--fonte-impacto);
+  letter-spacing: -.05em;
+  color: #fff;
+  text-shadow: 0 .05em .1em rgba(110, 20, 0, .45);
+}
+
+.selo-hero small {
+  font-size: .8em;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+@keyframes stamp {
+  0% {
+    transform: rotate(-34deg) scale(1.9);
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotate(-12deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Plano: 74 px, girado 12°, texto escuro. A posição no canto do card entra na Fase 4. */
+.selo-plano {
+  width: 74px;
+  height: 74px;
+  transform: rotate(12deg);
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .6));
+}
+
+.selo-plano circle {
+  fill: none;
+  stroke: rgba(10, 7, 6, .35);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+}
+
+.selo-plano b {
+  font: 900 22px/.85 var(--fonte-display);
+  letter-spacing: -.01em;
+  color: var(--cor-tinta);
+}
+
+.selo-plano small {
+  font: 800 11px/1 var(--fonte-display);
+  letter-spacing: .1em;
+}
+
+/* ========== DIVISORES ========== */
+
+/* Candles: a seção sobe recortada em barras e os topos ficam acesos (DNA da home Zero7) */
+.div-candles {
+  position: relative;
+  margin-top: -48px;
+  -webkit-mask:
+    url(../assets/texturas/candles-mask.svg) repeat-x 0 0 / 360px 48px,
+    linear-gradient(#000, #000) 0 47px / 100% calc(100% - 47px) no-repeat;
+  mask:
+    url(../assets/texturas/candles-mask.svg) repeat-x 0 0 / 360px 48px,
+    linear-gradient(#000, #000) 0 47px / 100% calc(100% - 47px) no-repeat;
+}
+
+.div-candles::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 3;
+  height: 48px;
+  background: url(../assets/texturas/candles-tops.svg) repeat-x 0 0 / 360px 48px;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .div-candles {
+    -webkit-mask:
+      url(../assets/texturas/candles-mask.svg) repeat-x 0 0 / 270px 36px,
+      linear-gradient(#000, #000) 0 35px / 100% calc(100% - 35px) no-repeat;
+    mask:
+      url(../assets/texturas/candles-mask.svg) repeat-x 0 0 / 270px 36px,
+      linear-gradient(#000, #000) 0 35px / 100% calc(100% - 35px) no-repeat;
+  }
+
+  .div-candles::after {
+    height: 36px;
+    background-size: 270px 36px;
+  }
+}
+
+/* Picote: a borda de cima rasga como ingresso */
+.div-picote {
+  position: relative;
+  -webkit-mask: radial-gradient(circle at 14px 0, #0000 7px, #000 7.5px) repeat-x 0 0 / 28px 100%;
+  mask: radial-gradient(circle at 14px 0, #0000 7px, #000 7.5px) repeat-x 0 0 / 28px 100%;
+}
+
+.div-picote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 18px;
+  border-top: 1px dashed var(--cor-linha-forte);
+  pointer-events: none;
+}
+
+/* ========== TEXTURAS ==========
+   O grão global (.grao) está em base.css. */
+.grade {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px);
+  background-size: 72px 72px;
+}

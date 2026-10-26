@@ -1,0 +1,85 @@
+/* Tokens da LP Black Friday Zero7.
+   Valores tirados do CSS de _referencia/canvas/Main.dc.html. Não reinvente: mude aqui. */
+
+:root {
+  /* Cores: o preto domina, o branco conduz, o laranja só onde há ação ou dinheiro */
+  --cor-base: #050404;
+  --cor-ceu: #080606;
+  --cor-planeta: #030202;
+  --cor-superficie-1: #0a0807;
+  --cor-superficie-2: #0c0908;
+  --cor-superficie-3: #0f0c0b;
+
+  --cor-texto: #fff;
+  --cor-texto-2: rgba(255, 255, 255, .66);
+  --cor-texto-3: rgba(255, 255, 255, .55);
+  --cor-texto-4: rgba(255, 255, 255, .45);
+  --cor-tinta: #0a0706; /* texto escuro sobre laranja */
+
+  --cor-laranja: #FF6A1A;
+  --cor-laranja-claro: #FF8A4C;
+  --cor-vermelho: #E52B24; /* só no fim de degradês */
+  --cor-luz: #FFC83D; /* só luz: brilho interno do botão e foco */
+
+  --cor-linha: rgba(255, 255, 255, .07);
+  --cor-linha-forte: rgba(255, 255, 255, .14);
+
+  /* Raios: o raio diagonal da Zero7 */
+  --raio-assinatura: 16px 0;
+  --raio-card: 24px 24px 24px 0;
+  --raio-gota: 999px 0 999px 999px;
+  --raio-palco: 40px 0 40px 0;
+  --raio-chip: 8px;
+  --raio-sm: 12px 0;
+
+  /* Espaço em múltiplos de 4 */
+  --esp-1: 4px;
+  --esp-2: 8px;
+  --esp-3: 12px;
+  --esp-4: 16px;
+  --esp-5: 20px;
+  --esp-6: 24px;
+  --esp-8: 32px;
+  --esp-10: 40px;
+  --esp-12: 48px;
+  --esp-16: 64px;
+  --esp-20: 80px;
+  --esp-24: 96px;
+  --esp-32: 128px;
+  --esp-40: 160px;
+
+  --container: 1240px;
+  --gutter: clamp(16px, 4vw, 48px);
+
+  /* Tipografia */
+  --fonte-impacto: 'Plus Jakarta Sans', Inter, system-ui, sans-serif; /* 800: H1 da hero e frase do fechamento */
+  --fonte-display: 'Barlow Condensed', Impact, sans-serif; /* 700–900, caixa alta: títulos, planos, rótulos, números */
+  --fonte-texto: Inter, system-ui, sans-serif; /* 400–600: corpo */
+
+  --tracking-impacto: -.045em;
+  --tracking-rotulo: .18em;
+
+  /* Escala usada no protótipo */
+  --fs-h1: clamp(50px, 7.6vw, 116px);
+  --fs-fechamento: clamp(52px, 6.6vw, 104px);
+  --fs-h2: clamp(44px, 5.2vw, 76px);
+  --fs-h2-planos: clamp(42px, 5vw, 72px);
+  --fs-h2-comunidade: clamp(36px, 4vw, 58px);
+  --fs-card-destaque: clamp(40px, 3.6vw, 56px);
+  --fs-card: clamp(28px, 2.4vw, 36px);
+  --fs-lead: clamp(16px, 1.4vw, 19px);
+  --fs-corpo: 16px;
+  --fs-15: 15px;
+  --fs-14: 14px;
+  --fs-13: 13px;
+  --fs-12: 12px;
+  --fs-11: 11px;
+  --fs-10: 10px;
+
+  /* Movimento */
+  --curva: cubic-bezier(.2, 0, 0, 1);
+  --dur-1: 150ms;
+  --dur-2: 200ms;
+  --dur-3: 300ms;
+  --dur-4: 600ms;
+}

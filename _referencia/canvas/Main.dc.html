@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Black Friday Zero7 — Landing page</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#050404}
+a{color:#FF8A4C}a:hover{color:#fff}
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+
+.z{font-family:Inter,system-ui,sans-serif;color:#fff;background:#050404;-webkit-font-smoothing:antialiased;position:relative;overflow-x:clip}
+.z *{box-sizing:border-box}
+.disp{font-family:'Barlow Condensed',Impact,sans-serif;text-transform:uppercase}
+.tnum{font-variant-numeric:tabular-nums}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+
+/* textura global: grão por cima de tudo */
+.grain{position:absolute;inset:0;z-index:80;pointer-events:none;background:url(../texturas/grain.png) repeat;background-size:240px;opacity:.55;mix-blend-mode:soft-light}
+.grid{background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:72px 72px}
+
+/* rótulo de seção */
+.tag{display:inline-flex;align-items:center;gap:10px;font:600 12px/1 Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.tag::before{content:"";width:7px;height:7px;background:#FF6A1A;border-radius:3px 0}
+
+/* NAV: raio diagonal da Zero7 */
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 10px 10px 22px;border-radius:16px 0;background:rgba(6,5,5,.62);border:1px solid rgba(255,255,255,.1);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);box-shadow:2px 3px 8px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.04)}
+.navlink{font:500 14px/1 Inter,sans-serif;color:rgba(255,255,255,.66);text-decoration:none;padding:14px 8px;transition:color .15s}
+.navlink:hover{color:#fff}
+
+/* BOTÃO futurista: corpo fumê, luz que percorre a borda, seta na gota */
+.fbtn{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:space-between;gap:22px;min-height:62px;padding:8px 8px 8px 28px;border-radius:16px 0;text-decoration:none;color:#fff;background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.015) 60%),#0d0a09;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),inset 0 1px 0 rgba(255,255,255,.12),0 18px 40px -18px rgba(255,106,26,.55),0 0 0 4px rgba(255,106,26,.05);overflow:hidden;transition:transform .2s cubic-bezier(.2,0,0,1),box-shadow .2s}
+.fbtn::before{content:"";position:absolute;inset:0;padding:1px;border-radius:inherit;background:conic-gradient(from var(--ang),transparent 0 62%,rgba(255,106,26,.0) 66%,#FF6A1A 82%,#FFC83D 86%,transparent 92%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:ang 3.6s linear infinite;z-index:1;pointer-events:none}
+.fbtn::after{content:"";position:absolute;top:0;bottom:0;left:-30%;width:22%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent);transform:skewX(-20deg);transition:left .6s cubic-bezier(.2,0,0,1);z-index:0}
+.fbtn:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1px rgba(255,106,26,.35),inset 0 1px 0 rgba(255,255,255,.14),0 24px 50px -16px rgba(255,106,26,.7),0 0 0 4px rgba(255,106,26,.08)}
+.fbtn:hover::after{left:120%}
+.fbtn:focus-visible{outline:2px solid #FFC83D;outline-offset:4px}
+.fbtn__label{position:relative;z-index:2;font:700 18px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.fbtn__cap{position:relative;z-index:2;flex:0 0 auto;display:grid;place-items:center;width:46px;height:46px;border-radius:999px 0 999px 999px;color:#0a0706;background:radial-gradient(120% 120% at 30% 20%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%),linear-gradient(160deg,#FF8A3D,#FF6A1A 55%,#E85A14);box-shadow:inset 0 -2px 4px rgba(120,30,0,.35),0 6px 16px -4px rgba(255,106,26,.6);transition:transform .25s cubic-bezier(.2,0,0,1)}
+.fbtn:hover .fbtn__cap svg{transform:translateX(3px)}
+.fbtn__cap svg{transition:transform .25s}
+.fbtn--sm{min-height:48px;padding:5px 5px 5px 18px;gap:14px}
+.fbtn--sm .fbtn__label{font-size:15px;letter-spacing:.12em}
+.fbtn--sm .fbtn__cap{width:36px;height:36px}
+.fbtn--block{display:flex;width:100%}
+/* BOTÃO v4: laranja sólido com volume, moldura de vidro em volta (box-shadow com spread segue o raio diagonal), seta na gota branca */
+.fbtn{color:#fff;gap:20px;padding:7px 7px 7px 28px;background:linear-gradient(180deg,#FF9152 0%,#FF6A1A 52%,#F2511A 100%);box-shadow:0 0 0 5px rgba(255,106,26,.07),0 0 0 6px rgba(255,140,70,.24),inset 0 1px 1px rgba(255,255,255,.55),inset 0 -3px 8px rgba(255,200,61,.42),0 10px 26px -6px rgba(255,90,20,.7),0 0 70px rgba(255,106,26,.26)}
+.fbtn::before{display:none}
+.fbtn::after{display:block;z-index:1;background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent)}
+.fbtn:hover{transform:translateY(-1px);box-shadow:0 0 0 5px rgba(255,255,255,.05),0 0 0 6px rgba(255,150,80,.4),inset 0 1px 1px rgba(255,255,255,.6),inset 0 -3px 8px rgba(255,200,61,.55),0 14px 34px -6px rgba(255,90,20,.85),0 0 100px rgba(255,106,26,.4)}
+.fbtn__label{font:700 15px/1 'Plus Jakarta Sans',Inter,sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;text-shadow:0 1px 1px rgba(140,35,0,.35)}
+.fbtn__cap{width:46px;height:46px;color:#FF6A1A;background:#fff;box-shadow:0 2px 6px rgba(120,30,0,.35),inset 0 -2px 3px rgba(0,0,0,.08)}
+.fbtn--sm{padding:5px 5px 5px 18px;gap:14px}
+.fbtn--sm .fbtn__label{font-size:13px}
+.fbtn--sm .fbtn__cap{width:34px;height:34px}
+
+/* secundário: link com sublinhado que corre */
+.lbtn{position:relative;display:inline-flex;align-items:center;gap:10px;min-height:48px;font:600 15px/1 Inter,sans-serif;color:rgba(255,255,255,.78);text-decoration:none}
+.lbtn::after{content:"";position:absolute;left:0;right:0;bottom:12px;height:1px;background:linear-gradient(90deg,#FF6A1A,rgba(255,106,26,0));transform-origin:left;transform:scaleX(.35);transition:transform .3s cubic-bezier(.2,0,0,1)}
+.lbtn:hover{color:#fff}
+.lbtn:hover::after{transform:scaleX(1)}
+/* ícone quadrado de navegação, raio diagonal */
+.ibtn{display:grid;place-items:center;width:52px;height:52px;border:0;border-radius:14px 0;cursor:pointer;color:rgba(255,255,255,.8);background:#0f0c0b;box-shadow:-4px -4px 10px rgba(255,255,255,.025),6px 8px 16px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.06),inset 0 0 0 1px rgba(255,255,255,.06);transition:color .15s,box-shadow .2s}
+.ibtn:hover{color:#FF8A4C}
+.ibtn:active{box-shadow:inset 3px 3px 8px rgba(0,0,0,.7),inset -2px -2px 6px rgba(255,255,255,.03)}
+.ibtn:focus-visible{outline:2px solid #FFC83D;outline-offset:3px}
+
+/* HERO: horizonte */
+.sky{position:absolute;inset:0;background:radial-gradient(70% 60% at 50% 100%,rgba(255,106,26,.3),rgba(229,43,36,.08) 45%,transparent 72%),#080606}
+.sky-grid{position:absolute;inset:0;-webkit-mask-image:radial-gradient(75% 70% at 50% 60%,#000 20%,transparent 80%);mask-image:radial-gradient(75% 70% at 50% 60%,#000 20%,transparent 80%)}
+.glow-rise{position:absolute;left:50%;bottom:150px;width:1800px;height:760px;transform:translateX(-50%);transform-origin:50% 100%;background:radial-gradient(40% 55% at 50% 100%,rgba(255,214,160,.95),rgba(255,140,55,.78) 20%,rgba(255,106,26,.45) 42%,rgba(229,43,36,.16) 62%,transparent 78%);filter:blur(14px);mix-blend-mode:screen;pointer-events:none;animation:breathe 7s ease-in-out infinite}
+.rays{position:absolute;left:50%;bottom:205px;width:2200px;height:1000px;transform:translateX(-50%);background:repeating-conic-gradient(from 270deg at 50% 100%,rgba(255,160,90,.11) 0deg 1deg,transparent 1deg 6.5deg);-webkit-mask-image:radial-gradient(55% 85% at 50% 100%,#000 5%,transparent 70%);mask-image:radial-gradient(55% 85% at 50% 100%,#000 5%,transparent 70%);mix-blend-mode:screen;pointer-events:none}
+@keyframes breathe{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.05,1.1)}}
+.planet{position:absolute;left:50%;top:calc(100% - 210px);width:2600px;height:1600px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(38% 7% at 50% 0%,#4a200c,#0c0504 60%,#030202 80%);box-shadow:inset 0 3px 0 #ffe0bf,inset 0 16px 44px -8px rgba(255,120,40,.7),0 -2px 6px rgba(255,230,200,.95),0 -8px 34px rgba(255,150,70,.9),0 -50px 150px rgba(255,106,26,.6),0 -160px 320px rgba(229,43,36,.28)}
+.star{position:absolute;width:2px;height:2px;border-radius:9px;background:#fff;opacity:.5;animation:twinkle 4s ease-in-out infinite}
+.sparkle{position:absolute;color:rgba(255,255,255,.85);animation:twinkle 5s ease-in-out infinite}
+.h1{margin:0;font:800 clamp(50px,7.6vw,116px)/1 'Plus Jakarta Sans',Inter,sans-serif;letter-spacing:-.045em;color:#fff}
+.h1-line{display:block}
+/* só "história." recebe a luz do horizonte, de leve, na base das letras */
+.h1-lit{background:linear-gradient(180deg,#fff 0%,#fff 56%,#ffe7d6 78%,#ffc49c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 14px 40px rgba(255,106,26,.18)}
+.h1-anchor{position:relative;display:inline-block}
+/* selo 80% OFF: depois do ponto, levemente acima da linha */
+.hseal{position:absolute;left:100%;top:-.08em;margin-left:.02em;z-index:3;display:grid;place-items:center;width:1.12em;height:1.12em;transform:rotate(-12deg);filter:drop-shadow(0 .05em .1em rgba(0,0,0,.65)) drop-shadow(0 0 .3em rgba(255,106,26,.35));animation:stamp .9s cubic-bezier(.2,1.5,.4,1) .5s both}
+.hseal svg{position:absolute;inset:0;width:100%;height:100%;animation:spinSlow 40s linear 1.4s infinite}
+.hseal b{position:relative;display:flex;flex-direction:column;align-items:center;font:800 .33em/.84 'Plus Jakarta Sans',sans-serif;letter-spacing:-.05em;color:#fff;text-shadow:0 .05em .1em rgba(110,20,0,.45)}
+.hseal b small{font-size:.8em;font-weight:800;letter-spacing:0}
+@keyframes stamp{0%{transform:rotate(-34deg) scale(1.9);opacity:0}100%{transform:rotate(-12deg) scale(1);opacity:1}}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.off{display:flex;align-items:center;gap:18px}
+.off i{display:block;width:clamp(30px,6vw,90px);height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4))}
+.off i:last-child{transform:scaleX(-1)}
+.off b{font:800 clamp(40px,4.4vw,64px)/1 'Barlow Condensed',sans-serif;color:#FF6A1A;text-shadow:0 0 30px rgba(255,106,26,.45)}
+.off span{font:800 clamp(40px,4.4vw,64px)/1 'Barlow Condensed',sans-serif;color:transparent;-webkit-text-stroke:1.4px rgba(255,255,255,.85)}
+.cd{display:flex;align-items:center;gap:14px;padding:10px 18px;border-radius:12px 0;background:rgba(10,8,7,.55);border:1px solid rgba(255,255,255,.08);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.cd b{font:700 22px/1 'Barlow Condensed',sans-serif;letter-spacing:.04em;color:#fff}
+.cd small{font:600 10px/1 Inter,sans-serif;letter-spacing:.12em;color:rgba(255,255,255,.45);margin-left:2px}
+.cd em{font-style:normal;color:rgba(255,255,255,.25)}
+
+/* BENEFÍCIOS: bento */
+.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.s2{grid-column:span 2}.s3{grid-column:span 3}
+.bc{position:relative;overflow:hidden;min-height:300px;padding:34px 34px 30px;border-radius:24px 24px 24px 0;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.01) 60%),#0a0807;border:1px solid rgba(255,255,255,.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 40px 60px -40px rgba(0,0,0,.9);display:flex;flex-direction:column;justify-content:space-between;gap:24px;transition:border-color .2s,transform .3s cubic-bezier(.2,0,0,1)}
+.bc::before{content:"";position:absolute;left:24px;right:24px;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,138,76,.0),transparent);transition:background .3s}
+.bc:hover{border-color:rgba(255,255,255,.14);transform:translateY(-3px)}
+.bc:hover::before{background:linear-gradient(90deg,transparent,rgba(255,138,76,.8),transparent)}
+.bc__n{font:700 15px/1 'Barlow Condensed',sans-serif;letter-spacing:.12em;color:#FF8A4C}
+.bc__t{margin:0;font:800 clamp(28px,2.4vw,36px)/.95 'Barlow Condensed',sans-serif;text-transform:uppercase;color:#fff}
+.bc__d{margin:0;max-width:440px;font:400 16px/1.55 Inter,sans-serif;color:rgba(255,255,255,.62)}
+.bc__3d{position:absolute;pointer-events:none;filter:drop-shadow(0 30px 40px rgba(0,0,0,.7));transition:transform .6s cubic-bezier(.2,0,0,1)}
+.bc:hover .bc__3d{transform:translateY(-6px) rotate(-3deg)}
+.bc__lines{position:absolute;inset:0;pointer-events:none;opacity:.5}
+
+/* DIVISOR: a seção sobe recortada em candles (DNA da home Zero7) */
+.candles{position:relative;margin-top:-48px;-webkit-mask:url(../texturas/candles-mask.svg) repeat-x 0 0/360px 48px,linear-gradient(#000,#000) 0 47px/100% calc(100% - 47px) no-repeat;mask:url(../texturas/candles-mask.svg) repeat-x 0 0/360px 48px,linear-gradient(#000,#000) 0 47px/100% calc(100% - 47px) no-repeat}
+.candles::after{content:"";position:absolute;left:0;right:0;top:0;height:48px;background:url(../texturas/candles-tops.svg) repeat-x 0 0/360px 48px;pointer-events:none;z-index:3}
+/* DIVISOR: picote de ticket */
+.perf{position:relative;-webkit-mask:radial-gradient(circle at 14px 0,#0000 7px,#000 7.5px) repeat-x 0 0/28px 100%;mask:radial-gradient(circle at 14px 0,#0000 7px,#000 7.5px) repeat-x 0 0/28px 100%}
+.perf::before{content:"";position:absolute;left:0;right:0;top:18px;border-top:1px dashed rgba(255,255,255,.14)}
+
+/* PLANOS: layout igual ao da home, pele Black */
+.seg{display:inline-flex;padding:5px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 2px 8px rgba(0,0,0,.5)}
+.seg button{min-width:240px;min-height:46px;padding:0 22px;border:0;border-radius:999px;background:none;cursor:pointer;font:600 14px/1 Inter,sans-serif;color:rgba(255,255,255,.7);transition:all .2s}
+.seg button[aria-pressed="true"]{color:#0a0706;background:linear-gradient(180deg,rgba(255,255,255,.25),rgba(255,255,255,0) 60%),#FF6A1A;box-shadow:inset 0 -2px 5px rgba(150,40,0,.3),0 6px 20px -6px rgba(255,106,26,.6)}
+.track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:44px 4px 30px;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.pc{position:relative;flex:0 0 calc((100% - 48px)/3);min-width:320px;scroll-snap-align:start;display:flex;flex-direction:column;gap:20px;padding:50px 18px 22px;border-radius:24px 24px 24px 0;border:1px solid rgba(255,255,255,.14);background:linear-gradient(180deg,#050303,#0d0908);box-shadow:0 30px 60px -30px rgba(0,0,0,.9)}
+.pc--feat{border:2px solid rgba(255,106,26,.7);box-shadow:0 0 0 1px rgba(255,138,76,.25),0 0 26px rgba(255,106,26,.25),0 0 70px rgba(229,43,36,.16),0 30px 60px -30px rgba(0,0,0,.9)}
+.pc__title{position:absolute;top:-27px;left:12%;right:12%;height:54px;display:grid;place-items:center;border-radius:16px;border:1px solid rgba(255,255,255,.13);background:linear-gradient(180deg,#020101,#0b0807)}
+.pc--feat .pc__title{border-color:rgba(255,106,26,.55)}
+.pc__title h3{margin:0;font:900 30px/1 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.04em}
+.seal{position:absolute;top:-30px;right:-18px;width:74px;height:74px;transform:rotate(12deg);filter:drop-shadow(0 8px 14px rgba(0,0,0,.6));z-index:4}
+.seal span{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font:900 22px/.85 'Barlow Condensed',sans-serif;color:#0a0706;letter-spacing:-.01em}
+.seal span small{font:800 11px/1 'Barlow Condensed',sans-serif;letter-spacing:.1em}
+.tarja{margin:-6px 0 0;padding:8px 12px;border-radius:10px 0;text-align:center;font:600 12px/1.35 Inter,sans-serif;color:#FFB48A;background:rgba(255,106,26,.08);border:1px solid rgba(255,106,26,.25)}
+.chips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.chip{grid-column:span 2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:58px;padding:8px 4px;border-radius:8px;background:rgba(255,255,255,.035);text-align:center}
+.chip--w{grid-column:span 3}
+.chip span{font:400 11px/1.2 Inter,sans-serif;color:rgba(255,255,255,.55)}
+.chip b{font:700 14px/1.15 Inter,sans-serif;color:#fff;font-variant-numeric:tabular-nums}
+.price{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.price__old{margin:0;font:500 15px/1 Inter,sans-serif;color:rgba(255,255,255,.75)}
+.price__old s{color:rgba(255,255,255,.5);text-decoration-color:#FF6A1A;text-decoration-thickness:2px}
+.price__main{margin:0;display:flex;align-items:baseline;gap:8px;font-variant-numeric:tabular-nums}
+.price__main span{font:800 36px/1 'Barlow Condensed',sans-serif;color:#FF6A1A}
+.price__main b{font:900 50px/1 'Barlow Condensed',sans-serif;color:#fff}
+.price__cash{margin:0;font:700 20px/1 'Barlow Condensed',sans-serif;letter-spacing:.02em;color:#fff}
+.price__cash i{font-style:normal;color:#FF6A1A}
+.foot{margin:0;font:400 12px/1.4 Inter,sans-serif;color:rgba(255,255,255,.55);text-align:center}
+.ptabs{display:flex;flex-wrap:wrap;justify-content:center;gap:4px}
+.ptab{min-height:48px;padding:0 18px;border:0;border-bottom:2px solid rgba(255,255,255,.06);background:none;cursor:pointer;font:700 17px/1 'Barlow Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);transition:all .2s}
+.ptab:hover{color:#fff}
+.ptab[aria-pressed="true"]{color:#fff;border-bottom-color:#FF6A1A}
+
+/* COMUNIDADE */
+.stage{position:relative;height:580px}
+.slide{position:absolute;top:0;left:50%;width:298px;height:530px;padding:0;border:0;border-radius:24px 24px 24px 0;overflow:hidden;cursor:pointer;background:#0d0a09;transition:transform .7s cubic-bezier(.2,0,0,1),opacity .7s,filter .7s,box-shadow .7s}
+.slide--on{box-shadow:0 0 0 1px rgba(255,255,255,.35),0 40px 80px -30px rgba(255,106,26,.45)}
+.slide-ph{position:absolute;inset:0;background:radial-gradient(90% 50% at 50% 110%,rgba(255,106,26,.28),transparent 70%),linear-gradient(180deg,#151110,#070505)}
+.play{display:grid;place-items:center;width:72px;height:72px;border-radius:999px 0 999px 999px;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.ctab{min-height:46px;padding:0 16px;border:0;border-bottom:2px solid transparent;background:none;cursor:pointer;white-space:nowrap;font:700 16px/1 'Barlow Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:all .2s}
+.ctab:hover{color:#fff}
+.ctab[aria-pressed="true"]{color:#fff;border-bottom-color:#FF6A1A}
+.prog{display:flex;gap:6px}
+.prog button{width:28px;height:44px;padding:0;border:0;background:none;cursor:pointer;display:grid;place-items:center}
+.prog button i{display:block;width:100%;height:3px;border-radius:2px 0;background:rgba(255,255,255,.18);transition:background .2s}
+.prog button[aria-pressed="true"] i{background:#FF6A1A}
+
+/* FECHAMENTO: eclipse */
+.eclipse{position:absolute;left:50%;top:50%;width:620px;height:620px;transform:translate(-50%,-46%);border-radius:50%;background:radial-gradient(circle at 50% 30%,#120c0a,#030202 70%);box-shadow:inset 0 3px 0 rgba(255,190,130,.65),inset 0 18px 40px -10px rgba(255,106,26,.35),0 -4px 30px rgba(255,140,70,.35),0 -40px 140px rgba(255,106,26,.22)}
+
+/* RODAPÉ */
+.flink{display:block;padding:9px 0;font:400 15px/1.3 Inter,sans-serif;color:rgba(255,255,255,.62);text-decoration:none;transition:color .15s}
+.flink:hover{color:#fff}
+.fhead{margin:0 0 10px;font:700 16px/1 'Barlow Condensed',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.9)}
+.soc{display:grid;place-items:center;width:48px;height:48px;border-radius:14px 0;color:rgba(255,255,255,.8);background:#0f0c0b;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 1px 0 rgba(255,255,255,.06);text-decoration:none;transition:color .15s}
+.soc:hover{color:#FF8A4C}
+.pay{display:grid;place-items:center;width:100px;height:54px;border-radius:12px 0;background:#0f0c0b;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+
+@keyframes ang{to{--ang:360deg}}
+@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.8}}
+@keyframes rise{0%,100%{opacity:.85}50%{opacity:1}}
+.z-still *,.z-still *::before,.z-still *::after{animation:none!important}
+@media (prefers-reduced-motion:reduce){.z *,.z *::before,.z *::after{animation:none!important;transition:none!important}}
+@media (max-width:900px){.bento{grid-template-columns:1fr}.s2,.s3{grid-column:auto}.pc{flex-basis:86%}}
+</style>
+</helmet>
+
+<div class="z {{ stillCls }}">
+<div class="grain"></div>
+
+<!-- ================= HERO ================= -->
+<section id="topo" style="position: relative; min-height: 1000px; overflow: hidden; display: flex; flex-direction: column">
+  <div class="sky"></div>
+  <div class="sky-grid grid"></div>
+  <div class="rays" style="opacity: {{ glow }}"></div>
+  <div class="glow-rise" style="opacity: {{ glow }}"></div>
+  <span class="star" style="left: 8%; top: 24%"></span>
+  <span class="star" style="left: 17%; top: 61%; animation-delay: 1.2s"></span>
+  <span class="star" style="left: 29%; top: 14%; animation-delay: 2.1s"></span>
+  <span class="star" style="left: 71%; top: 19%; animation-delay: .6s"></span>
+  <span class="star" style="left: 84%; top: 48%; animation-delay: 1.8s"></span>
+  <span class="star" style="left: 92%; top: 12%; animation-delay: 2.6s"></span>
+  <span class="star" style="left: 63%; top: 66%; animation-delay: 3.1s"></span>
+  <svg class="sparkle" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="left: 5%; top: 14%"><path d="M12 0l2.2 9.8L24 12l-9.8 2.2L12 24l-2.2-9.8L0 12l9.8-2.2z"></path></svg>
+  <svg class="sparkle" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="left: 6%; top: 78%; animation-delay: 2s"><path d="M12 0l2.2 9.8L24 12l-9.8 2.2L12 24l-2.2-9.8L0 12l9.8-2.2z"></path></svg>
+  <div class="planet" style="opacity: {{ planetOp }}"></div>
+
+  <header style="position: relative; z-index: 20; padding: 18px clamp(16px, 4vw, 48px) 0">
+    <nav class="nav" aria-label="Principal" style="max-width: 1240px; margin: 0 auto">
+      <a href="#topo" aria-label="Black Friday Zero7 — início" style="display: flex; align-items: center; text-decoration: none">
+        <img src="../../_brandkit/completa-escuro.svg" alt="Black Friday Zero7" style="height: 46px; width: auto; display: block">
+      </a>
+      <div style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: flex-end">
+        <a class="navlink" href="#beneficios">Benefícios</a>
+        <a class="navlink" href="#planos">Planos</a>
+        <a class="navlink" href="#comunidade">Comunidade</a>
+        <a class="navlink" href="https://app.zero7.com.br/login">Área do Trader</a>
+        <a class="fbtn fbtn--sm" href="#planos"><span class="fbtn__label">Aproveitar</span><span class="fbtn__cap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+      </div>
+    </nav>
+  </header>
+
+  <div style="position: relative; z-index: 5; flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 30px; padding: 110px clamp(16px, 4vw, 48px) 260px">
+    <h1 class="h1"><span class="h1-line">A maior black da</span><span class="h1-line"><span class="h1-anchor"><span class="h1-lit">história<span style="margin-left: -.07em">.</span></span><span class="hseal" role="img" aria-label="80% OFF"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="hsg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF7A2A"></stop><stop offset=".55" stop-color="#F24A1E"></stop><stop offset="1" stop-color="#D9231F"></stop></linearGradient><radialGradient id="hsh" cx=".32" cy=".26" r=".6"><stop offset="0" stop-color="#fff" stop-opacity=".42"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></radialGradient></defs><polygon fill="url(#hsg)" points="50.0,0.0 57.6,6.7 67.1,3.0 72.0,11.9 82.1,11.7 83.7,21.7 93.3,25.0 91.3,35.0 99.2,41.3 94.0,50.0 99.2,58.7 91.3,65.0 93.3,75.0 83.7,78.3 82.1,88.3 72.0,88.1 67.1,97.0 57.6,93.3 50.0,100.0 42.4,93.3 32.9,97.0 28.0,88.1 17.9,88.3 16.3,78.3 6.7,75.0 8.7,65.0 0.8,58.7 6.0,50.0 0.8,41.3 8.7,35.0 6.7,25.0 16.3,21.7 17.9,11.7 28.0,11.9 32.9,3.0 42.4,6.7"></polygon><polygon fill="url(#hsh)" points="50.0,0.0 57.6,6.7 67.1,3.0 72.0,11.9 82.1,11.7 83.7,21.7 93.3,25.0 91.3,35.0 99.2,41.3 94.0,50.0 99.2,58.7 91.3,65.0 93.3,75.0 83.7,78.3 82.1,88.3 72.0,88.1 67.1,97.0 57.6,93.3 50.0,100.0 42.4,93.3 32.9,97.0 28.0,88.1 17.9,88.3 16.3,78.3 6.7,75.0 8.7,65.0 0.8,58.7 6.0,50.0 0.8,41.3 8.7,35.0 6.7,25.0 16.3,21.7 17.9,11.7 28.0,11.9 32.9,3.0 42.4,6.7"></polygon><circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.2" stroke-dasharray="2.5 3"></circle></svg><b>80%<small>OFF</small></b></span></span></span></h1>
+    <p style="margin: -6px 0 0; max-width: 480px; font: 400 clamp(16px, 1.4vw, 19px)/1.55 Inter, sans-serif; color: rgba(255,255,255,.66)">+ um pacote completo para levar sua jornada no trading para outro nível:</p>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 22px; margin-top: 6px">
+      <a class="fbtn" href="#planos"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+    </div>
+    <div class="cd tnum" aria-label="Tempo restante da Black">
+      <span style="font: 600 10px/1.2 Inter, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.5); text-align: left">Termina<br>em</span>
+      <b>{{ cd.d }}<small>D</small></b><em>:</em><b>{{ cd.h }}<small>H</small></b><em>:</em><b>{{ cd.m }}<small>M</small></b><em>:</em><b style="color: #FF8A4C">{{ cd.s }}<small>S</small></b>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BENEFÍCIOS (continua no corpo do planeta) ================= -->
+<section id="beneficios" style="position: relative; margin-top: -200px; padding: 160px 0 150px; background: linear-gradient(180deg, rgba(3,2,2,0), #030202 200px, #070505)">
+  <svg aria-hidden="true" viewBox="0 0 1440 400" preserveAspectRatio="none" style="position: absolute; left: 0; right: 0; top: 360px; width: 100%; height: 400px; opacity: .07"><polyline fill="none" stroke="#fff" stroke-width="1.2" points="0,300 80,280 140,310 220,240 290,260 360,190 430,220 500,170 570,200 640,120 720,150 800,90 870,130 940,80 1010,110 1090,60 1160,95 1240,40 1320,70 1440,20"></polyline><polyline fill="none" stroke="#FF6A1A" stroke-width="1" points="0,340 100,330 180,350 260,300 340,315 420,270 500,290 580,250 660,265 740,220 820,240 900,200 980,215 1060,180 1140,200 1220,160 1300,175 1440,140"></polyline></svg>
+  <div class="wrap" style="position: relative; display: flex; flex-direction: column; gap: 54px">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px">
+      <div style="display: flex; flex-direction: column; gap: 20px; max-width: 760px">
+        <span class="tag">O pacote da Black</span>
+        <h2 class="disp" style="margin: 0; font-weight: 800; font-size: clamp(44px, 5.2vw, 76px); line-height: .9">Um pacote completo <span style="color: rgba(255,255,255,.38)">para o próximo nível.</span></h2>
+      </div>
+      <a class="lbtn" href="#planos">Ir direto para os planos<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg></a>
+    </div>
+
+    <div class="bento">
+      <article class="bc s2" style="min-height: 360px">
+        <div style="display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 2; max-width: 56%">
+          <span class="bc__n">01</span>
+          <h3 class="bc__t" style="font-size: clamp(40px, 3.6vw, 56px)">Desconto de 80%</h3>
+          <p class="bc__d">Mais estrutura para o seu operacional, investindo menos.</p>
+        </div>
+        <span class="disp" aria-hidden="true" style="position: absolute; right: 30px; bottom: -40px; font-weight: 900; font-size: 300px; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.07)">80</span>
+        <img class="bc__3d" src="../../_brandkit/19-Percentual.png" alt="" style="right: 48px; top: 50%; margin-top: -130px; width: 260px">
+      </article>
+
+      <article class="bc">
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <span class="bc__n">02</span>
+          <h3 class="bc__t">Aumento de margem</h3>
+          <p class="bc__d">Mais estrutura para você operar com folga.</p>
+        </div>
+        <svg aria-hidden="true" viewBox="0 0 300 90" style="width: 100%; height: 90px"><g fill="rgba(255,255,255,.12)"><rect x="4" y="60" width="18" height="30" rx="3"></rect><rect x="34" y="52" width="18" height="38" rx="3"></rect><rect x="64" y="44" width="18" height="46" rx="3"></rect><rect x="94" y="48" width="18" height="42" rx="3"></rect><rect x="124" y="36" width="18" height="54" rx="3"></rect></g><g fill="#FF6A1A"><rect x="154" y="28" width="18" height="62" rx="3" opacity=".55"></rect><rect x="184" y="20" width="18" height="70" rx="3" opacity=".7"></rect><rect x="214" y="12" width="18" height="78" rx="3" opacity=".85"></rect><rect x="244" y="4" width="18" height="86" rx="3"></rect></g><line x1="0" y1="89.5" x2="300" y2="89.5" stroke="rgba(255,255,255,.12)"></line></svg>
+      </article>
+
+      <article class="bc">
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <span class="bc__n">03</span>
+          <h3 class="bc__t">Conta real com 10 dias na incubadora</h3>
+          <p class="bc__d">Mostre seu potencial e chegue a conta real para começar a lucrar sem limite.</p>
+        </div>
+        <div aria-hidden="true" style="display: flex; align-items: center; gap: 4px">
+          <span style="flex: 1; height: 6px; border-radius: 3px 0; background: #FF6A1A"></span><span style="flex: 1; height: 6px; border-radius: 3px 0; background: #FF6A1A"></span><span style="flex: 1; height: 6px; border-radius: 3px 0; background: #FF6A1A"></span><span style="flex: 1; height: 6px; border-radius: 3px 0; background: #FF6A1A; opacity: .8"></span><span style="flex: 1; height: 6px; border-radius: 3px 0; background: #FF6A1A; opacity: .6"></span><span style="flex: 1; height: 6px; border-radius: 3px 0; background: rgba(255,255,255,.12)"></span><span style="flex: 1; height: 6px; border-radius: 3px 0; background: rgba(255,255,255,.12)"></span><span style="flex: 1; height: 6px; border-radius: 3px 0; background: rgba(255,255,255,.12)"></span><span style="flex: 1; height: 6px; border-radius: 3px 0; background: rgba(255,255,255,.12)"></span><span style="flex: 1; height: 6px; border-radius: 3px 0; background: rgba(255,255,255,.12)"></span>
+          <span class="disp" style="margin-left: 10px; font-weight: 700; font-size: 14px; letter-spacing: .1em; color: rgba(255,255,255,.55)">10 dias</span>
+        </div>
+      </article>
+
+      <article class="bc s2" style="min-height: 340px">
+        <div style="display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 2; max-width: 56%">
+          <span class="bc__n">04</span>
+          <h3 class="bc__t" style="font-size: clamp(36px, 3.2vw, 50px)">Repasse de 100% em conta real</h3>
+          <p class="bc__d">Ao passar para a conta real, todo o lucro é seu.</p>
+        </div>
+        <span class="disp" aria-hidden="true" style="position: absolute; right: 24px; bottom: -46px; font-weight: 900; font-size: 280px; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.07)">100</span>
+        <img class="bc__3d" src="../../_brandkit/11-Cofre-de-Capital.png" alt="" style="right: 70px; top: 50%; margin-top: -120px; width: 230px">
+      </article>
+
+      <article class="bc">
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <span class="bc__n">05</span>
+          <h3 class="bc__t">Reinício</h3>
+          <p class="bc__d">Uma segunda chance garantida para zerar e começar de novo quando quiser.</p>
+        </div>
+        <svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#FF8A4C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+      </article>
+
+      <article class="bc">
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <span class="bc__n">06</span>
+          <h3 class="bc__t">Profit Pro</h3>
+          <p class="bc__d">Comece com uma plataforma completa e com mais recursos à sua disposição.</p>
+        </div>
+        <svg aria-hidden="true" viewBox="0 0 300 70" style="width: 100%; height: 70px"><g stroke="rgba(255,255,255,.35)" stroke-width="1.5"><line x1="20" y1="10" x2="20" y2="60"></line><line x1="60" y1="18" x2="60" y2="64"></line><line x1="100" y1="6" x2="100" y2="50"></line><line x1="140" y1="20" x2="140" y2="66"></line><line x1="180" y1="4" x2="180" y2="44"></line><line x1="220" y1="12" x2="220" y2="52"></line><line x1="260" y1="2" x2="260" y2="38"></line></g><g><rect x="13" y="22" width="14" height="26" rx="2" fill="rgba(255,255,255,.18)"></rect><rect x="53" y="30" width="14" height="22" rx="2" fill="rgba(255,255,255,.18)"></rect><rect x="93" y="16" width="14" height="24" rx="2" fill="#FF6A1A"></rect><rect x="133" y="32" width="14" height="22" rx="2" fill="rgba(255,255,255,.18)"></rect><rect x="173" y="12" width="14" height="22" rx="2" fill="#FF6A1A"></rect><rect x="213" y="20" width="14" height="20" rx="2" fill="#FF6A1A"></rect><rect x="253" y="8" width="14" height="20" rx="2" fill="#FF6A1A"></rect></g></svg>
+      </article>
+
+      <article class="bc">
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <span class="bc__n">07</span>
+          <h3 class="bc__t">Sem prazo de avaliação</h3>
+          <p class="bc__d">Para operar com tranquilidade sem a pressão de um prazo.</p>
+        </div>
+        <span class="disp" aria-hidden="true" style="font-weight: 300; font-size: 84px; line-height: .8; color: #FF8A4C">∞</span>
+      </article>
+
+      <article class="bc s3" style="min-height: 280px; flex-direction: row; align-items: center; flex-wrap: wrap">
+        <div style="display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 2; flex: 1 1 420px; max-width: 620px">
+          <span class="bc__n">08</span>
+          <h3 class="bc__t" style="font-size: clamp(40px, 3.6vw, 56px)">Mentor IAVA</h3>
+          <p class="bc__d" style="max-width: 520px">Seu Mentor de trading 24h por dia. Otimize o seu operacional identificando padrões que potencializam seus resultados.</p>
+        </div>
+        <div style="position: relative; z-index: 2; display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-radius: 16px 0; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); margin-right: 220px">
+          <span style="width: 8px; height: 8px; border-radius: 9px; background: #4ADE80; box-shadow: 0 0 10px #4ADE80"></span>
+          <span class="disp" style="font-weight: 700; font-size: 20px; letter-spacing: .08em">Online 24h</span>
+        </div>
+        <img class="bc__3d" src="../../_brandkit/17-Cavalo-de-Estrategia.png" alt="" style="right: 70px; bottom: -40px; width: 170px">
+      </article>
+    </div>
+
+    <div style="display: flex; justify-content: center; padding-top: 10px">
+      <a class="fbtn" href="#planos"><span class="fbtn__label">Conhecer planos</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLANOS (sobe recortado em candles) ================= -->
+<section id="planos" class="candles" style="padding: 150px 0 110px; background: radial-gradient(60% 40% at 50% 0%, rgba(255,106,26,.07), transparent 70%), #0c0908">
+  <div class="grid" style="position: absolute; inset: 0; opacity: .5; -webkit-mask-image: linear-gradient(180deg, #000, transparent 60%); mask-image: linear-gradient(180deg, #000, transparent 60%)"></div>
+  <div class="wrap" style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center">
+    <span class="tag">Planos Black Friday</span>
+    <h2 class="disp" style="margin: 0; max-width: 860px; font-weight: 800; font-size: clamp(42px, 5vw, 72px); line-height: .92"><span style="color: #FF6A1A">80% OFF</span> para garantir o seu plano perfeito.</h2>
+    <span style="width: 120px; height: 3px; border-radius: 2px 0; background: linear-gradient(90deg, rgba(255,106,26,0), #FF6A1A, rgba(255,106,26,0))"></span>
+    <div class="seg" role="group" aria-label="Escolha o mercado" style="margin-top: 18px">
+      <button type="button" aria-pressed="{{ mkIndice }}" onClick="{{ pickIndice }}">Mini Índice / Dólar</button>
+      <button type="button" aria-pressed="{{ mkBit }}" onClick="{{ pickBit }}">Futuro de Bitcoin</button>
+    </div>
+    <h3 class="disp" style="margin: 14px 0 0; font-weight: 800; font-size: 34px; letter-spacing: .04em">{{ marketName }}</h3>
+  </div>
+
+  <div class="wrap" style="position: relative">
+    <div class="track" ref="{{ setTrack }}" onScroll="{{ onTrackScroll }}">
+      <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
+        <article class="{{ p.cls }}" data-plan="{{ p.id }}">
+          <div class="pc__title"><h3>{{ p.name }}</h3></div>
+          <div class="seal" aria-label="80% de desconto">
+            <svg viewBox="0 0 100 100" width="74" height="74" aria-hidden="true"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A3D"></stop><stop offset=".6" stop-color="#FF6A1A"></stop><stop offset="1" stop-color="#E52B24"></stop></linearGradient></defs><polygon fill="url(#sg)" points="50.0,0.0 57.6,6.7 67.1,3.0 72.0,11.9 82.1,11.7 83.7,21.7 93.3,25.0 91.3,35.0 99.2,41.3 94.0,50.0 99.2,58.7 91.3,65.0 93.3,75.0 83.7,78.3 82.1,88.3 72.0,88.1 67.1,97.0 57.6,93.3 50.0,100.0 42.4,93.3 32.9,97.0 28.0,88.1 17.9,88.3 16.3,78.3 6.7,75.0 8.7,65.0 0.8,58.7 6.0,50.0 0.8,41.3 8.7,35.0 6.7,25.0 16.3,21.7 17.9,11.7 28.0,11.9 32.9,3.0 42.4,6.7"></polygon><circle cx="50" cy="50" r="37" fill="none" stroke="rgba(10,7,6,.35)" stroke-width="1" stroke-dasharray="2 3"></circle></svg>
+            <span>80%<small>OFF</small></span>
+          </div>
+          <sc-if value="{{ p.featured }}" hint-placeholder-val="{{ false }}">
+            <p class="tarja">Nossos traders mais positivos operam o plano Sênior</p>
+          </sc-if>
+          <div class="chips">
+            <sc-for list="{{ p.chips }}" as="c" hint-placeholder-count="8">
+              <div class="{{ c.cls }}"><span>{{ c.l }}</span><b>{{ c.v }}</b></div>
+            </sc-for>
+          </div>
+          <div class="price">
+            <p class="price__old">de <s>{{ p.old }}</s> por</p>
+            <p class="price__main"><span>12x</span><b>{{ p.parcel }}</b></p>
+            <p class="price__cash"><i>ou</i> {{ p.avista }} <i>à vista</i></p>
+          </div>
+          <p class="foot">*Plataforma gratuita por 60 dias. Após, cobrança mensal.</p>
+          <a class="fbtn fbtn--block" href="#planos" aria-label="Contratar plano {{ p.name }}"><span class="fbtn__label">Contratar plano</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+        </article>
+      </sc-for>
+    </div>
+    <button type="button" class="ibtn" aria-label="Plano anterior" onClick="{{ prevPlan }}" style="position: absolute; left: -8px; top: 52%; transform: translateY(-50%); z-index: 5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+    <button type="button" class="ibtn" aria-label="Próximo plano" onClick="{{ nextPlan }}" style="position: absolute; right: -8px; top: 52%; transform: translateY(-50%); z-index: 5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+  </div>
+
+  <div class="wrap" style="position: relative">
+    <div class="ptabs" role="group" aria-label="Planos">
+      <sc-for list="{{ planPills }}" as="pp" hint-placeholder-count="6">
+        <button type="button" class="ptab" aria-pressed="{{ pp.on }}" onClick="{{ pp.pick }}">{{ pp.name }}</button>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMUNIDADE (borda em picote de ticket) ================= -->
+<section id="comunidade" class="perf" style="position: relative; padding: 140px 0 120px; background: linear-gradient(180deg, #070505, #050404)">
+  <div class="grid" style="position: absolute; inset: 0; opacity: .35; -webkit-mask-image: radial-gradient(60% 50% at 50% 55%, #000, transparent 75%); mask-image: radial-gradient(60% 50% at 50% 55%, #000, transparent 75%)"></div>
+  <div class="wrap" style="position: relative; display: flex; flex-direction: column; gap: 46px">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 30px">
+      <div style="display: flex; flex-direction: column; gap: 20px; max-width: 860px">
+        <span class="tag">Ecossistema Zero7</span>
+        <h2 class="disp" style="margin: 0; font-weight: 800; font-size: clamp(36px, 4vw, 58px); line-height: .95; color: rgba(255,255,255,.42)">Faça parte da comunidade com mais de <span style="color: #fff">19 mil traders</span> e que continuam evoluindo com o ecossistema criado pela Zero7.</h2>
+      </div>
+      <div style="display: flex; align-items: baseline; gap: 10px">
+        <span class="disp tnum" style="font-weight: 800; font-size: 88px; line-height: .8; color: #fff">19<span style="color: #FF6A1A">K</span></span>
+        <span style="font: 500 13px/1.3 Inter, sans-serif; color: rgba(255,255,255,.5); max-width: 90px">traders na comunidade</span>
+      </div>
+    </div>
+
+    <div style="position: relative; border-radius: 40px 0 40px 0; padding: 22px clamp(12px, 3vw, 36px) 32px; background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.01)), #090706; border: 1px solid rgba(255,255,255,.07); box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 60px 120px -60px rgba(0,0,0,.9); overflow: hidden">
+      <div role="group" aria-label="Escolha um conteúdo" style="position: relative; display: flex; gap: 6px; overflow-x: auto; justify-content: safe center; border-bottom: 1px solid rgba(255,255,255,.06); scrollbar-width: none">
+        <sc-for list="{{ slides }}" as="s" hint-placeholder-count="6">
+          <button type="button" class="ctab" aria-pressed="{{ s.on }}" onClick="{{ s.pick }}">{{ s.title }}</button>
+        </sc-for>
+      </div>
+
+      <div class="stage" style="margin-top: 34px">
+        <div style="position: absolute; left: 50%; bottom: -40px; width: 900px; height: 260px; transform: translateX(-50%); background: radial-gradient(50% 60% at 50% 100%, rgba(255,106,26,.22), transparent 70%); opacity: {{ glow }}; pointer-events: none"></div>
+        <sc-for list="{{ slides }}" as="s" hint-placeholder-count="5">
+          <button type="button" class="{{ s.cls }}" style="{{ s.style }}" onClick="{{ s.pick }}" aria-label="{{ s.title }}">
+            <sc-if value="{{ s.poster }}" hint-placeholder-val="{{ false }}">
+              <img src="{{ s.poster }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+            </sc-if>
+            <sc-if value="{{ s.ph }}" hint-placeholder-val="{{ true }}">
+              <span class="slide-ph"></span>
+              <span class="disp" style="position: absolute; left: 20px; top: 14px; font-weight: 800; font-size: 120px; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.1)">{{ s.num }}</span>
+              <span style="position: absolute; right: 18px; top: 22px; font: 600 10px/1 Inter, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.5)">Vídeo em breve</span>
+            </sc-if>
+            <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(5,4,4,.92))"></span>
+            <span style="position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%)"><span class="play"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"></path></svg></span></span>
+            <span style="position: absolute; left: 22px; right: 22px; bottom: 22px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+              <span style="font: 700 11px/1 'Barlow Condensed', sans-serif; letter-spacing: .16em; color: #FF8A4C">{{ s.num }}</span>
+              <span class="disp" style="font-weight: 800; font-size: 26px; line-height: 1; color: #fff">{{ s.title }}</span>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+
+      <div style="position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; margin-top: 10px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.06)">
+        <p style="margin: 0; flex: 1 1 420px; max-width: 660px; font: 400 16px/1.6 Inter, sans-serif; color: rgba(255,255,255,.66)"><b class="disp" style="font-weight: 800; font-size: 22px; letter-spacing: .03em; color: #fff; margin-right: 10px">{{ active.title }}</b>{{ active.desc }}</p>
+        <div style="display: flex; align-items: center; gap: 14px">
+          <button type="button" class="ibtn" aria-label="Conteúdo anterior" onClick="{{ prevSlide }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+          <div class="prog">
+            <sc-for list="{{ slides }}" as="s" hint-placeholder-count="6">
+              <button type="button" aria-pressed="{{ s.on }}" aria-label="Ir para {{ s.title }}" onClick="{{ s.pick }}"><i></i></button>
+            </sc-for>
+          </div>
+          <button type="button" class="ibtn" aria-label="Próximo conteúdo" onClick="{{ nextSlide }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FECHAMENTO: eclipse ================= -->
+<section style="position: relative; padding: 160px clamp(16px, 4vw, 48px) 220px; overflow: hidden; background: #050404">
+  <div class="grid" style="position: absolute; inset: 0; opacity: .5; -webkit-mask-image: radial-gradient(50% 50% at 50% 50%, #000, transparent 75%); mask-image: radial-gradient(50% 50% at 50% 50%, #000, transparent 75%)"></div>
+  <div class="eclipse" style="opacity: {{ planetOp }}"></div>
+  <div style="position: relative; z-index: 2; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 34px; text-align: center">
+    <h2 class="h1" style="font-size: clamp(52px, 6.6vw, 104px)">Com a Zero7 você não opera sozinho.</h2>
+    <a class="fbtn" href="#planos"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+  </div>
+</section>
+
+<!-- ================= RODAPÉ (sobe em candles) ================= -->
+<footer class="candles" style="background: #0c0908">
+  <img src="../../_brandkit/lettering-escuro.svg" alt="" aria-hidden="true" style="position: absolute; left: 50%; bottom: -90px; width: 1400px; max-width: none; transform: translateX(-50%); opacity: .03; pointer-events: none">
+  <div class="wrap" style="position: relative; padding-top: 110px; padding-bottom: 44px; display: flex; flex-direction: column; gap: 48px">
+    <div style="display: flex; flex-wrap: wrap; gap: 48px; justify-content: space-between">
+      <div style="flex: 1 1 340px; max-width: 430px; display: flex; flex-direction: column; gap: 12px">
+        <img src="../../../Zero7/assets/logo zero7.svg" alt="Zero7" style="width: 150px; height: auto; display: block; margin-bottom: 10px">
+        <p style="margin: 0; font: 600 14px/1.5 Inter, sans-serif; color: rgba(255,255,255,.82)">Zero7 Tesouraria LTDA | CNPJ: 49.452.697/0001-20</p>
+        <p style="margin: 0; font: 400 14px/1.5 Inter, sans-serif; color: rgba(255,255,255,.58)">Av. Dep. Jamel Cecílio, nº 2929 - Jardim Goiás, Goiânia - GO, 74810-240</p>
+        <p style="margin: 0; font: 400 14px/1.5 Inter, sans-serif; color: rgba(255,255,255,.58)">Segunda a sexta-feira, 8h às 18h</p>
+        <div style="margin-top: 12px; width: 230px; height: 72px; border-radius: 16px 0; display: grid; place-items: center; background: #0f0c0b; box-shadow: inset 0 0 0 1px rgba(255,255,255,.07); font: 500 12px/1.3 Inter, sans-serif; color: rgba(255,255,255,.45); text-align: center">[Selo Reclame Aqui<br>— script do site]</div>
+      </div>
+      <nav aria-label="Rodapé" style="flex: 0 1 180px">
+        <h3 class="fhead">Navegação</h3>
+        <a class="flink" href="#topo">Home</a>
+        <a class="flink" href="https://blog.zero7.com.br/">Blog</a>
+        <a class="flink" href="#planos">Planos</a>
+        <a class="flink" href="https://zero7.com.br/regulamento/">Regulamento</a>
+        <a class="flink" href="https://zero7.com.br/quem-somos/">Quem Somos</a>
+        <a class="flink" href="https://app.zero7.com.br/login">Área do Trader</a>
+      </nav>
+      <div style="flex: 0 1 220px">
+        <h3 class="fhead">Suporte</h3>
+        <a class="flink" href="mailto:suporte@zero7.com.br">suporte@zero7.com.br</a>
+      </div>
+      <div style="flex: 0 1 200px">
+        <h3 class="fhead">Social</h3>
+        <div style="display: flex; gap: 10px; margin-top: 8px">
+          <a class="soc" href="https://www.instagram.com/zero7tesouraria/" aria-label="Zero7 no Instagram"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle></svg></a>
+          <a class="soc" href="https://www.tiktok.com/@zero7_mesa" aria-label="Zero7 no TikTok"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"></path><path d="M14 3c.4 2.6 2.2 4.4 5 4.6"></path></svg></a>
+          <a class="soc" href="https://www.facebook.com/zero7tesouraria" aria-label="Zero7 no Facebook"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V21M6 10.5h8"></path></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,.07)">
+      <span style="font: 600 12px/1 Inter, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-right: 10px">Formas de pagamento</span>
+      <span class="pay"><img src="../../../Zero7/assets/pagamento/1.avif" alt="Pix" style="width: 80px; height: auto"></span>
+      <span class="pay"><img src="../../../Zero7/assets/pagamento/2.avif" alt="Mastercard" style="width: 80px; height: auto"></span>
+      <span class="pay"><img src="../../../Zero7/assets/pagamento/3.avif" alt="Visa" style="width: 80px; height: auto"></span>
+      <span class="pay"><img src="../../../Zero7/assets/pagamento/4.avif" alt="Elo" style="width: 80px; height: auto"></span>
+      <span class="pay"><img src="../../../Zero7/assets/pagamento/5.avif" alt="American Express" style="width: 80px; height: auto"></span>
+      <span class="pay"><img src="../../../Zero7/assets/pagamento/6.avif" alt="Hipercard" style="width: 80px; height: auto"></span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 18px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.07)">
+      <div style="display: flex; flex-wrap: wrap; gap: 8px 24px; font: 400 13px/1.4 Inter, sans-serif; color: rgba(255,255,255,.5)">
+        <span>© 2026 | Todos os direitos reservados.</span>
+        <a href="https://zero7.com.br/politica-de-privacidade/" style="color: rgba(255,255,255,.7)">Política de Privacidade</a>
+        <a href="#topo" style="color: rgba(255,255,255,.7)">Cookie</a>
+        <a href="#topo" style="color: rgba(255,255,255,.7)">Políticas de Uso</a>
+        <span>Zero7 Tesouraria LTDA | CNPJ: 49.452.697/0001-20</span>
+      </div>
+      <p style="margin: 0; max-width: 1000px; font: 400 12px/1.6 Inter, sans-serif; color: rgba(255,255,255,.45)">Todas as informações aqui apresentadas são destinadas exclusivamente a fins educacionais sobre trading nos mercados financeiros. Elas não constituem recomendação de investimento, análise de oportunidade ou orientação para negócios relacionados à negociação de instrumentos financeiros. A Zero7 oferece apenas serviços de trading simulado e ferramentas educacionais para traders. As informações contidas neste site não se destinam a residentes de países ou jurisdições onde tal distribuição ou uso contrarie as leis ou regulamentos locais. A Zero7 não atua como corretora e não aceita depósitos. A solução técnica para plataformas e a fonte de dados são fornecidas por terceiros.</p>
+    </div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true,"section":"Efeitos"},"glow":{"editor":"range","default":1,"min":0,"max":1,"step":0.05,"section":"Efeitos"},"planet":{"editor":"range","default":1,"min":0,"max":1,"step":0.05,"section":"Efeitos"},"$preview":{"width":1440,"height":7000}}'>
+class Component extends DCLogic {
+  constructor(...a) {
+    super(...a);
+    this.state = { market: 'indice', planIdx: 2, active: 3, t: 5 * 86400 + 12 * 3600 + 44 * 60 + 18 };
+    this.track = null;
+  }
+  componentDidMount() {
+    var self = this;
+    this.timer = setInterval(function () { self.setState(function (s) { return { t: s.t > 0 ? s.t - 1 : 0 }; }); }, 1000);
+    setTimeout(function () { self.scrollToPlan(self.state.planIdx, false); }, 300);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+  componentDidUpdate(pp, ps) {
+    if (ps.market !== this.state.market) this.scrollToPlan(this.state.planIdx, false);
+  }
+  cards() { return this.track ? this.track.querySelectorAll('[data-plan]') : []; }
+  scrollToPlan(i, smooth) {
+    var cs = this.cards(); var c = cs[i]; if (!c || !this.track) return;
+    var left = c.offsetLeft - this.track.offsetLeft - 4;
+    this.track.scrollTo({ left: left, behavior: smooth ? 'smooth' : 'auto' });
+  }
+  plansData() {
+    var ch = function (op, win, wdo, dia, tot, meta) {
+      var r = [{ l: 'Limite por operação', v: op + ' contratos' }];
+      if (win) r.push({ l: 'Limite para WIN', v: win + ' contratos' });
+      if (wdo) r.push({ l: 'Limite para WDO', v: wdo + ' contratos' });
+      r.push({ l: 'Limite de perda diária', v: 'R$ ' + dia });
+      r.push({ l: 'Limite de perda total', v: 'R$ ' + tot });
+      r.push({ l: 'Meta de aprovação', v: 'R$ ' + meta });
+      r.push({ l: 'Máximo de dias', v: 'ilimitado*' });
+      r.push({ l: 'Repasse', v: '100% em conta real' });
+      var n = r.length;
+      return r.map(function (c, i) { return { l: c.l, v: c.v, cls: (n === 8 && i >= 6) || (n === 6 && i >= 4) ? 'chip chip--w' : 'chip' }; });
+    };
+    var indice = [
+      { id: 'trainee', name: 'Trainee', chips: ch(8, 5, 3, '247,00', '997,00', '997,00'), old: 'R$ 627,00', parcel: 'R$14,42', avista: 'R$144,21' },
+      { id: 'junior', name: 'Júnior', chips: ch(16, 10, 6, '497,00', '1.997,00', '1.997,00'), old: 'R$ 917,00', parcel: 'R$21,09', avista: 'R$210,91' },
+      { id: 'pleno', name: 'Pleno', chips: ch(40, 25, 15, '1.247,00', '4.997,00', '4.997,00'), old: 'R$ 1.837,00', parcel: 'R$42,25', avista: 'R$422,51' },
+      { id: 'senior', name: 'Sênior', featured: true, chips: ch(80, 50, 30, '2.497,00', '9.997,00', '9.997,00'), old: 'R$ 3.047,00', parcel: 'R$70,08', avista: 'R$700,81' },
+      { id: 'expert', name: 'Expert', chips: ch(120, 75, 45, '3.747,00', '14.997,00', '14.997,00'), old: 'R$ 4.867,00', parcel: 'R$111,94', avista: 'R$1.119,41' },
+      { id: 'master', name: 'Master', chips: ch(160, 100, 60, '4.997,00', '19.997,00', '19.997,00'), old: 'R$ 5.937,00', parcel: 'R$136,55', avista: 'R$1.365,51' }
+    ];
+    var bit = [
+      { id: 'bit_junior', name: 'BIT 16', chips: ch(16, 0, 0, '497,00', '1.997,00', '1.997,00'), old: 'R$ 917,00', parcel: 'R$21,09', avista: 'R$210,91' },
+      { id: 'bit_trainee', name: 'BIT 8', chips: ch(8, 0, 0, '247,00', '997,00', '997,00'), old: 'R$ 627,00', parcel: 'R$14,42', avista: 'R$144,21' }
+    ];
+    return this.state.market === 'indice' ? indice : bit;
+  }
+  renderVals() {
+    var self = this;
+    var motion = this.props.motion ?? true;
+    var glow = this.props.glow ?? 1;
+    var planetOp = this.props.planet ?? 1;
+    var plans = this.plansData().map(function (p) {
+      return Object.assign({}, p, { featured: !!p.featured, cls: p.featured ? 'pc pc--feat' : 'pc' });
+    });
+    var pi = Math.min(this.state.planIdx, plans.length - 1);
+    var planPills = plans.map(function (p, i) {
+      return { name: p.name, on: i === pi ? 'true' : 'false', pick: function () { self.setState({ planIdx: i }); self.scrollToPlan(i, true); } };
+    });
+    var go = function (d) { var n = Math.max(0, Math.min(plans.length - 1, pi + d)); self.setState({ planIdx: n }); self.scrollToPlan(n, true); };
+
+    var raw = [
+      { title: 'HUB Zero7', desc: 'Evento para conectar traders e trocar ideias sobre o dia a dia no mercado acompanhado de boa gastronomia.' },
+      { title: 'Trading e Performance', desc: 'Imersão de 3 dias focada na sua carreira enquanto trader para se tornar um profissional.' },
+      { title: 'Lives', desc: 'Encontros diários, com panoramas, insights educacionais e bate papo.' },
+      { title: 'Academy', desc: 'Plataforma com + de 170 aulas educacionais com mentores como Fabrício Gonçalves, Iago Vieira, entre outros nomes do mercado, com o objetivo de acelerar a sua evolução como trader.', poster: '../../../Zero7/assets/poster-academy-1.avif' },
+      { title: 'Comunidade no WhatsApp', desc: 'Acompanhamento do mercado em tempo real e ofertas em primeira mão.' },
+      { title: 'Gamification', desc: 'Programa de recompensas para clientes engajados, garantindo experiências exclusivas.' }
+    ];
+    var n = raw.length, a = this.state.active;
+    var slides = raw.map(function (s, i) {
+      var d = ((i - a + n + 3) % n) - 3;
+      var ad = Math.abs(d);
+      var x = d * 255, sc = 1 - ad * 0.16, op = ad === 0 ? 1 : ad === 1 ? 0.5 : ad === 2 ? 0.2 : 0;
+      var style = 'transform: translateX(calc(-50% + ' + x + 'px)) scale(' + sc + '); opacity: ' + op + '; z-index: ' + (10 - ad) + '; filter: ' + (ad ? 'grayscale(.6) brightness(.8)' : 'none') + '; pointer-events: ' + (ad > 2 ? 'none' : 'auto');
+      return { title: s.title, desc: s.desc, num: '0' + (i + 1), poster: s.poster || '', ph: !s.poster, on: i === a ? 'true' : 'false', cls: i === a ? 'slide slide--on' : 'slide', style: style, pick: function () { self.setState({ active: i }); } };
+    });
+
+    var t = this.state.t, pad = function (v) { return (v < 10 ? '0' : '') + v; };
+    var cd = { d: pad(Math.floor(t / 86400)), h: pad(Math.floor(t % 86400 / 3600)), m: pad(Math.floor(t % 3600 / 60)), s: pad(t % 60) };
+
+    return {
+      stillCls: motion ? '' : 'z-still',
+      glow: glow, planetOp: planetOp,
+      cd: cd,
+      plans: plans,
+      planPills: planPills,
+      marketName: this.state.market === 'indice' ? 'Mini Índice / Dólar' : 'Futuro de Bitcoin',
+      prevPlan: function () { go(-1); },
+      nextPlan: function () { go(1); },
+      setTrack: function (el) { self.track = el; },
+      onTrackScroll: function () {
+        var cs = self.cards(); if (!cs.length || !self.track) return;
+        var sl = self.track.scrollLeft, best = 0, bd = 1e9;
+        for (var i = 0; i < cs.length; i++) { var dd = Math.abs(cs[i].offsetLeft - self.track.offsetLeft - 4 - sl); if (dd < bd) { bd = dd; best = i; } }
+        if (best !== self.state.planIdx) self.setState({ planIdx: best });
+      },
+      mkIndice: this.state.market === 'indice' ? 'true' : 'false',
+      mkBit: this.state.market === 'bit' ? 'true' : 'false',
+      pickIndice: function () { self.setState({ market: 'indice', planIdx: 2 }); },
+      pickBit: function () { self.setState({ market: 'bit', planIdx: 0 }); },
+      slides: slides,
+      active: slides[a],
+      prevSlide: function () { self.setState({ active: (a - 1 + n) % n }); },
+      nextSlide: function () { self.setState({ active: (a + 1) % n }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

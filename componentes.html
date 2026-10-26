@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="pt-BR" data-carregando>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070607">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex">
+  <title>Componentes · LP Black Zero7</title>
+  <link rel="icon" href="data:,">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/componentes.css">
+
+  <!-- Estilos só da vitrine (esta página não sobe para o servidor) -->
+  <style>
+    .v { padding-block: 64px 96px; display: flex; flex-direction: column; gap: 64px; }
+    .v-topo { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; }
+    .v-topo h1 { margin-top: 14px; font: 800 clamp(44px, 6vw, 72px)/.9 var(--fonte-display); text-transform: uppercase; }
+    .v-topo h1 span { color: rgba(255, 255, 255, .38); }
+    .v-nota { max-width: 440px; font: 400 13px/1.5 var(--fonte-texto); color: var(--cor-texto-3); }
+    .v-sec { display: flex; flex-direction: column; gap: 22px; }
+    .v-sec > h2 { font: inherit; }
+    .v-caixa { padding: clamp(18px, 3vw, 30px); border-radius: var(--raio-card); border: 1px solid var(--cor-linha); background: linear-gradient(180deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .01) 60%), var(--cor-superficie-1); }
+    .v-linha { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 28px 26px; }
+    .v-item { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; min-width: 0; }
+    .v-item--centro { align-items: center; }
+    .v-legenda { font: 400 12px/1.4 var(--fonte-texto); color: var(--cor-texto-3); }
+    .v-legenda code { font: 500 12px/1.4 ui-monospace, Consolas, monospace; color: var(--cor-texto-2); }
+    .v-grade-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 28px; }
+
+    /* Cores */
+    .v-cores { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+    .v-cor { display: flex; flex-direction: column; gap: 8px; }
+    .v-cor i { display: block; height: 64px; border-radius: var(--raio-sm); border: 1px solid var(--cor-linha); }
+    .v-cor span { font: 400 12px/1.35 var(--fonte-texto); color: var(--cor-texto-3); }
+    .v-cor b { display: block; font-weight: 600; color: var(--cor-texto-2); }
+
+    /* Raios */
+    .v-raio { background: linear-gradient(180deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .01) 60%), var(--cor-superficie-1); border: 1px solid var(--cor-linha); }
+
+    /* Tipografia */
+    .v-jakarta { font: 800 clamp(40px, 6vw, 80px)/1 var(--fonte-impacto); letter-spacing: var(--tracking-impacto); }
+    .v-jakarta span { background: linear-gradient(180deg, #fff 0%, #fff 56%, #ffe7d6 78%, #ffc49c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .v-barlow { font-family: var(--fonte-display); text-transform: uppercase; line-height: .95; }
+
+    /* 3D da amostra de card (o tamanho real de cada card entra na Fase 3) */
+    .v-3d { right: 18px; bottom: 18px; width: 150px; height: auto; }
+    @media (max-width: 600px) { .v-3d { width: 96px; } }
+
+    /* Botão em hover congelado: a varredura fica no meio, como no print 04 */
+    .v .fbtn.is-hover::after { left: 52%; }
+
+    /* Divisores: as mesmas cores da prancha do sistema visual (print 04) */
+    .v-div { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+    .v-div-moldura { display: flex; flex-direction: column; justify-content: flex-end; height: 200px; overflow: hidden; border-radius: var(--raio-assinatura); }
+    .v-div-moldura > div { height: 130px; }
+
+    /* Texturas */
+    .v-tex { position: relative; height: 160px; overflow: hidden; border-radius: var(--raio-assinatura); border: 1px solid var(--cor-linha); background-color: var(--cor-superficie-2); }
+    .v-tex .v-legenda { position: absolute; left: 12px; bottom: 10px; }
+  </style>
+</head>
+<body>
+  <div class="grao" aria-hidden="true"></div>
+
+  <main class="wrap v">
+    <header class="v-topo">
+      <div>
+        <span class="tag">LP Black Friday Zero7 · Fase 1</span>
+        <h1>Componentes, <span>pele Black.</span></h1>
+      </div>
+      <p class="v-nota">Vitrine da fundação (não sobe para o servidor). Os estados hover, foco e ativo aparecem congelados com as mesmas regras do CSS real; passe o mouse ou use Tab para ver ao vivo.</p>
+    </header>
+
+    <!-- 01 · CORES -->
+    <section class="v-sec" aria-labelledby="t-cores">
+      <h2 class="tag" id="t-cores">01 · Cores (tokens.css)</h2>
+      <div class="v-cores">
+        <div class="v-cor"><i style="background: var(--cor-base)"></i><span><b>--cor-base</b>#050404</span></div>
+        <div class="v-cor"><i style="background: var(--cor-ceu)"></i><span><b>--cor-ceu</b>#080606</span></div>
+        <div class="v-cor"><i style="background: var(--cor-planeta)"></i><span><b>--cor-planeta</b>#030202</span></div>
+        <div class="v-cor"><i style="background: var(--cor-superficie-1)"></i><span><b>--cor-superficie-1</b>#0a0807</span></div>
+        <div class="v-cor"><i style="background: var(--cor-superficie-2)"></i><span><b>--cor-superficie-2</b>#0c0908</span></div>
+        <div class="v-cor"><i style="background: var(--cor-superficie-3)"></i><span><b>--cor-superficie-3</b>#0f0c0b</span></div>
+        <div class="v-cor"><i style="background: var(--cor-texto)"></i><span><b>--cor-texto</b>#fff</span></div>
+        <div class="v-cor"><i style="background: var(--cor-texto-2)"></i><span><b>--cor-texto-2</b>branco .66</span></div>
+        <div class="v-cor"><i style="background: var(--cor-texto-3)"></i><span><b>--cor-texto-3</b>branco .55</span></div>
+        <div class="v-cor"><i style="background: var(--cor-texto-4)"></i><span><b>--cor-texto-4</b>branco .45</span></div>
+        <div class="v-cor"><i style="background: var(--cor-laranja)"></i><span><b>--cor-laranja</b>#FF6A1A</span></div>
+        <div class="v-cor"><i style="background: var(--cor-laranja-claro)"></i><span><b>--cor-laranja-claro</b>#FF8A4C</span></div>
+        <div class="v-cor"><i style="background: var(--cor-vermelho)"></i><span><b>--cor-vermelho</b>#E52B24 · só fim de degradê</span></div>
+        <div class="v-cor"><i style="background: var(--cor-luz)"></i><span><b>--cor-luz</b>#FFC83D · só luz e foco</span></div>
+        <div class="v-cor"><i style="background: var(--cor-linha)"></i><span><b>--cor-linha</b>branco .07</span></div>
+        <div class="v-cor"><i style="background: var(--cor-linha-forte)"></i><span><b>--cor-linha-forte</b>branco .14</span></div>
+      </div>
+    </section>
+
+    <!-- 02 · RAIOS -->
+    <section class="v-sec" aria-labelledby="t-raios">
+      <h2 class="tag" id="t-raios">02 · Raio diagonal</h2>
+      <div class="v-linha" style="align-items: flex-end">
+        <div class="v-item"><div class="v-raio" style="width: 88px; height: 56px; border-radius: var(--raio-assinatura)"></div><span class="v-legenda"><code>--raio-assinatura</code><br>16 0 · nav, botão, pílula</span></div>
+        <div class="v-item"><div class="v-raio" style="width: 80px; height: 96px; border-radius: var(--raio-card)"></div><span class="v-legenda"><code>--raio-card</code><br>24 24 24 0 · card</span></div>
+        <div class="v-item"><div style="width: 56px; height: 56px; border-radius: var(--raio-gota); background: linear-gradient(160deg, #FF8A3D, #FF6A1A 55%, #E85A14)"></div><span class="v-legenda"><code>--raio-gota</code><br>gota · seta</span></div>
+        <div class="v-item"><div class="v-raio" style="width: 96px; height: 96px; border-radius: var(--raio-palco)"></div><span class="v-legenda"><code>--raio-palco</code><br>40 0 40 0 · palco</span></div>
+        <div class="v-item"><div class="v-raio" style="width: 72px; height: 56px; border-radius: var(--raio-sm)"></div><span class="v-legenda"><code>--raio-sm</code><br>12 0 · contador, chip de pagamento</span></div>
+        <div class="v-item"><div class="v-raio" style="width: 72px; height: 56px; border-radius: var(--raio-chip)"></div><span class="v-legenda"><code>--raio-chip</code><br>8 · chips dos planos</span></div>
+      </div>
+    </section>
+
+    <!-- 03 · TIPOGRAFIA -->
+    <section class="v-sec" aria-labelledby="t-tipo">
+      <h2 class="tag" id="t-tipo">03 · Tipografia (fontes locais)</h2>
+      <p class="v-jakarta">A maior black da <span>história<span class="ponto">.</span></span></p>
+      <p class="v-legenda">Plus Jakarta Sans 800 · tracking -.045em · só H1 da hero e frase do fechamento. O ponto final leva margin-left -.07em.</p>
+      <div class="v-linha" style="align-items: baseline">
+        <span class="v-barlow" style="font-weight: 900; font-size: 56px">Black 900</span>
+        <span class="v-barlow" style="font-weight: 800; font-size: 56px">ExtraBold 800</span>
+        <span class="v-barlow" style="font-weight: 700; font-size: 56px">Bold 700</span>
+      </div>
+      <p class="v-legenda">Barlow Condensed 700–900 em caixa alta · títulos de seção, nomes de plano, rótulos e números.</p>
+      <div class="v-linha" style="align-items: baseline; gap: 12px 32px">
+        <span style="font: 400 17px/1.55 var(--fonte-texto); color: var(--cor-texto-2)">Inter 400 · corpo em branco 66%</span>
+        <span style="font: 500 17px/1.55 var(--fonte-texto)">Inter 500</span>
+        <span style="font: 600 17px/1.55 var(--fonte-texto)">Inter 600</span>
+        <span style="font: 700 17px/1.55 var(--fonte-texto)">Inter 700 · valores dos chips</span>
+      </div>
+    </section>
+
+    <!-- 04 · BOTÕES -->
+    <section class="v-sec" aria-labelledby="t-botoes">
+      <h2 class="tag" id="t-botoes">04 · Botões</h2>
+      <div class="v-caixa grade" style="display: flex; flex-direction: column; gap: 36px">
+        <div class="v-linha">
+          <div class="v-item">
+            <a class="fbtn" href="#t-botoes"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <span class="v-legenda"><code>.fbtn</code> normal</span>
+          </div>
+          <div class="v-item">
+            <a class="fbtn is-hover" href="#t-botoes" tabindex="-1"><span class="fbtn__label">Hover</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <span class="v-legenda">hover · sobe 1px, moldura acende, varredura</span>
+          </div>
+          <div class="v-item">
+            <a class="fbtn is-focus" href="#t-botoes" tabindex="-1"><span class="fbtn__label">Foco</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <span class="v-legenda">focus-visible · anel #FFC83D</span>
+          </div>
+          <div class="v-item">
+            <a class="fbtn is-active" href="#t-botoes" tabindex="-1"><span class="fbtn__label">Ativo</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <span class="v-legenda">active</span>
+          </div>
+        </div>
+
+        <div class="v-linha">
+          <div class="v-item">
+            <a class="fbtn fbtn--sm" href="#t-botoes"><span class="fbtn__label">Aproveitar</span><span class="fbtn__cap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <span class="v-legenda"><code>.fbtn--sm</code> (nav)</span>
+          </div>
+          <div class="v-item">
+            <a class="fbtn fbtn--sm is-hover" href="#t-botoes" tabindex="-1"><span class="fbtn__label">Aproveitar</span><span class="fbtn__cap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <span class="v-legenda">hover</span>
+          </div>
+          <div class="v-item">
+            <a class="fbtn fbtn--sm is-focus" href="#t-botoes" tabindex="-1"><span class="fbtn__label">Aproveitar</span><span class="fbtn__cap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <span class="v-legenda">foco</span>
+          </div>
+        </div>
+
+        <div class="v-item" style="width: min(100%, 380px)">
+          <a class="fbtn fbtn--block" href="#t-botoes"><span class="fbtn__label">Contratar plano</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <span class="v-legenda"><code>.fbtn--block</code> · largura total (planos)</span>
+        </div>
+
+        <div class="v-linha" style="align-items: center">
+          <div class="v-item">
+            <a class="lbtn" href="#t-botoes">Ir direto para os planos</a>
+            <span class="v-legenda"><code>.lbtn</code> normal</span>
+          </div>
+          <div class="v-item">
+            <a class="lbtn is-hover" href="#t-botoes" tabindex="-1">Ir direto para os planos</a>
+            <span class="v-legenda">hover / ativo · sublinhado cresce</span>
+          </div>
+          <div class="v-item">
+            <a class="lbtn is-focus" href="#t-botoes" tabindex="-1">Ir direto para os planos</a>
+            <span class="v-legenda">foco</span>
+          </div>
+        </div>
+
+        <div class="v-linha">
+          <div class="v-item v-item--centro">
+            <button type="button" class="ibtn" aria-label="Anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <span class="v-legenda"><code>.ibtn</code></span>
+          </div>
+          <div class="v-item v-item--centro">
+            <button type="button" class="ibtn is-hover" aria-label="Próximo (exemplo de hover)" tabindex="-1"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+            <span class="v-legenda">hover</span>
+          </div>
+          <div class="v-item v-item--centro">
+            <button type="button" class="ibtn is-focus" aria-label="Próximo (exemplo de foco)" tabindex="-1"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+            <span class="v-legenda">foco</span>
+          </div>
+          <div class="v-item v-item--centro">
+            <button type="button" class="ibtn is-active" aria-label="Próximo (exemplo pressionado)" tabindex="-1"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+            <span class="v-legenda">ativo · afunda</span>
+          </div>
+          <div class="v-item v-item--centro">
+            <button type="button" class="ibtn" aria-label="Próximo (exemplo desabilitado)" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+            <span class="v-legenda">desabilitado</span>
+          </div>
+        </div>
+        <p class="v-legenda" style="max-width: 640px">Laranja sólido com volume (luz em cima, brilho âmbar por dentro na base), moldura fina de vidro em volta seguindo o raio diagonal, seta laranja na gota branca. No hover sobe 1px, a moldura acende e uma varredura de luz atravessa uma vez.</p>
+      </div>
+    </section>
+
+    <!-- 05 · RÓTULO -->
+    <section class="v-sec" aria-labelledby="t-tag">
+      <h2 class="tag" id="t-tag">05 · Rótulo de seção</h2>
+      <div class="v-linha" style="align-items: center">
+        <span class="tag">O pacote da Black</span>
+        <span class="tag">Planos Black Friday</span>
+        <span class="tag">Ecossistema Zero7</span>
+      </div>
+      <p class="v-legenda"><code>.tag</code> · quadradinho laranja com raio 3px 0 + caixa alta, tracking .18em</p>
+    </section>
+
+    <!-- 06 · CARD -->
+    <section class="v-sec" aria-labelledby="t-card">
+      <h2 class="tag" id="t-card">06 · Card de benefício</h2>
+      <div class="v-grade-2">
+        <article class="card-z">
+          <div style="display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 2; max-width: 58%">
+            <span class="card-z__n">01</span>
+            <h3 class="card-z__t">Desconto de 80%</h3>
+            <p class="card-z__d">Mais estrutura para o seu operacional, investindo menos.</p>
+          </div>
+          <picture>
+            <source srcset="assets/3d/19-percentual-320.avif" type="image/avif">
+            <img class="card-z__3d v-3d" src="assets/3d/19-percentual-320.webp" alt="" width="320" height="329" loading="lazy">
+          </picture>
+        </article>
+        <article class="card-z is-hover">
+          <div style="display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 2; max-width: 58%">
+            <span class="card-z__n">04</span>
+            <h3 class="card-z__t">Repasse de 100% em conta real</h3>
+            <p class="card-z__d">Ao passar para a conta real, todo o lucro é seu.</p>
+          </div>
+          <picture>
+            <source srcset="assets/3d/11-cofre-de-capital-320.avif" type="image/avif">
+            <img class="card-z__3d v-3d" src="assets/3d/11-cofre-de-capital-320.webp" alt="" width="320" height="324" loading="lazy">
+          </picture>
+        </article>
+      </div>
+      <p class="v-legenda"><code>.card-z</code> normal e em hover (borda .14, linha de luz no topo, 3D sobe 6px com -3°)</p>
+    </section>
+
+    <!-- 07 · SELO -->
+    <section class="v-sec" aria-labelledby="t-selo">
+      <h2 class="tag" id="t-selo">07 · Selo de desconto</h2>
+      <div class="v-linha" style="align-items: center; gap: 40px">
+        <div class="v-item v-item--centro">
+          <span class="selo-hero" role="img" aria-label="80% OFF" style="font-size: 116px">
+            <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-hero-cor)"/><use href="#selo-serrilhado" fill="url(#selo-hero-brilho)"/><circle cx="50" cy="50" r="38"/></svg>
+            <b>80%<small>OFF</small></b>
+          </span>
+          <span class="v-legenda"><code>.selo-hero</code> · 1.12em de um H1 de 116px</span>
+        </div>
+        <div class="v-item v-item--centro">
+          <span class="selo-hero" role="img" aria-label="80% OFF" style="font-size: 47px">
+            <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-hero-cor)"/><use href="#selo-serrilhado" fill="url(#selo-hero-brilho)"/><circle cx="50" cy="50" r="38"/></svg>
+            <b>80%<small>OFF</small></b>
+          </span>
+          <span class="v-legenda">o mesmo num H1 de 47px (mobile)</span>
+        </div>
+        <div class="v-item v-item--centro">
+          <span class="selo-plano" role="img" aria-label="80% de desconto">
+            <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-plano-cor)"/><circle cx="50" cy="50" r="37"/></svg>
+            <b>80%<small>OFF</small></b>
+          </span>
+          <span class="v-legenda"><code>.selo-plano</code> · 74px, 12°</span>
+        </div>
+      </div>
+      <p class="v-legenda" style="max-width: 640px">Um único <code>&lt;symbol id="selo-serrilhado"&gt;</code> (polígono de 36 pontos) no index.html, usado com <code>&lt;use&gt;</code>. Esta vitrine busca o sprite do index.html em vez de copiá-lo.</p>
+    </section>
+
+    <!-- 08 · DIVISORES -->
+    <section class="v-sec" aria-labelledby="t-div">
+      <h2 class="tag" id="t-div">08 · Transições entre seções</h2>
+      <div class="v-div">
+        <div class="v-item" style="align-items: stretch">
+          <div class="v-div-moldura" style="background: var(--cor-planeta)"><div class="div-candles" style="background: #15100e"></div></div>
+          <span class="v-legenda"><code>.div-candles</code> · a seção sobe recortada (home Zero7), topos acesos</span>
+        </div>
+        <div class="v-item" style="align-items: stretch">
+          <div class="v-div-moldura" style="background: var(--cor-superficie-2)"><div class="div-picote" style="background: #1a1412"></div></div>
+          <span class="v-legenda"><code>.div-picote</code> · a borda rasga como ingresso</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 · TEXTURAS -->
+    <section class="v-sec" aria-labelledby="t-tex">
+      <h2 class="tag" id="t-tex">09 · Textura (nunca fundo liso)</h2>
+      <div class="v-div">
+        <div class="v-tex"><div style="position: absolute; inset: 0; background: url(assets/texturas/grain.png); background-size: 240px"></div><span class="v-legenda">grão (tile de 240px, sem blend, para ver o desenho)</span></div>
+        <div class="v-tex grade"><span class="v-legenda"><code>.grade</code> · 72px</span></div>
+        <div class="v-tex"><div class="grade" style="position: absolute; inset: 0; -webkit-mask-image: radial-gradient(60% 70% at 50% 50%, #000, transparent 75%); mask-image: radial-gradient(60% 70% at 50% 50%, #000, transparent 75%)"></div><span class="v-legenda"><code>.grade</code> com máscara radial</span></div>
+      </div>
+      <p class="v-legenda"><code>.grao</code> (em base.css) cobre a página inteira em soft-light, por cima de tudo, sem capturar clique: é o grão que se vê nesta vitrine.</p>
+    </section>
+  </main>
+
+  <script>
+    // 1) O selo usa o <symbol> do index.html: buscamos o sprite de lá para não duplicar o polígono.
+    // 2) Congela hover/foco/ativo: copia cada regra com :hover, :focus-visible ou :active
+    //    para .is-hover, .is-focus e .is-active, usando os valores do CSS real.
+    const ESTADOS = [[':hover', '.is-hover'], [':focus-visible', '.is-focus'], [':active', '.is-active']];
+
+    function regrasDeEstado(regras) {
+      const saida = [];
+      for (const regra of regras) {
+        if (regra.media && regra.cssRules) {
+          const dentro = regrasDeEstado(regra.cssRules);
+          if (dentro.length) saida.push(`@media ${regra.conditionText}{${dentro.join('')}}`);
+        } else if (regra.selectorText && ESTADOS.some(([p]) => regra.selectorText.includes(p))) {
+          let seletor = regra.selectorText;
+          for (const [pseudo, classe] of ESTADOS) seletor = seletor.replaceAll(pseudo, classe);
+          saida.push(`${seletor}{${regra.style.cssText}}`);
+        }
+      }
+      return saida;
+    }
+
+    const congelados = [];
+    for (const folha of document.styleSheets) {
+      if (folha.ownerNode?.id === 'estados') continue;
+      try { congelados.push(...regrasDeEstado(folha.cssRules)); } catch { /* folha de outra origem */ }
+    }
+    const estilo = document.createElement('style');
+    estilo.id = 'estados';
+    estilo.textContent = congelados.join('\n');
+    // Entra antes do <style> da vitrine, para os ajustes dela prevalecerem
+    document.head.querySelector('style').before(estilo);
+
+    fetch('index.html')
+      .then((resposta) => resposta.text())
+      .then((html) => {
+        const sprite = new DOMParser().parseFromString(html, 'text/html').getElementById('sprite');
+        document.body.prepend(document.importNode(sprite, true));
+      })
+      .catch((erro) => console.warn('Não consegui carregar o sprite do index.html:', erro))
+      .finally(() => document.documentElement.removeAttribute('data-carregando'));
+  </script>
+</body>
+</html>

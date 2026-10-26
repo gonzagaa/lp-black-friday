@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sistema visual v2 — Black Zero7</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#050404}
+a{color:#FF8A4C}a:hover{color:#fff}
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+.s{font-family:Inter,system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.s *{box-sizing:border-box}
+.disp{font-family:'Barlow Condensed',Impact,sans-serif;text-transform:uppercase}
+.grain{position:absolute;inset:0;z-index:50;pointer-events:none;background:url(../texturas/grain.png) repeat;background-size:240px;opacity:.55;mix-blend-mode:soft-light}
+.grid{background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:36px 36px}
+.lbl{display:inline-flex;align-items:center;gap:10px;font:600 12px/1 Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.lbl::before{content:"";width:7px;height:7px;background:#FF6A1A;border-radius:3px 0}
+.cap{font:400 13px/1.45 Inter,sans-serif;color:rgba(255,255,255,.55)}
+.box{background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.01) 60%),#0a0807;border:1px solid rgba(255,255,255,.07)}
+.fbtn{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:space-between;gap:22px;min-height:62px;padding:8px 8px 8px 28px;border-radius:16px 0;text-decoration:none;color:#fff;background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.015) 60%),#0d0a09;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),inset 0 1px 0 rgba(255,255,255,.12),0 18px 40px -18px rgba(255,106,26,.55),0 0 0 4px rgba(255,106,26,.05);overflow:hidden}
+.fbtn::before{content:"";position:absolute;inset:0;padding:1px;border-radius:inherit;background:conic-gradient(from var(--ang),transparent 0 62%,#FF6A1A 82%,#FFC83D 86%,transparent 92%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:ang 3.6s linear infinite;z-index:1}
+.fbtn--hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1px rgba(255,106,26,.35),0 24px 50px -16px rgba(255,106,26,.7),0 0 0 4px rgba(255,106,26,.08)}
+.fbtn--hover::after{content:"";position:absolute;top:0;bottom:0;left:52%;width:22%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent);transform:skewX(-20deg)}
+.fbtn__label{position:relative;z-index:2;font:700 18px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.fbtn__cap{position:relative;z-index:2;display:grid;place-items:center;width:46px;height:46px;border-radius:999px 0 999px 999px;color:#0a0706;background:radial-gradient(120% 120% at 30% 20%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%),linear-gradient(160deg,#FF8A3D,#FF6A1A 55%,#E85A14);box-shadow:inset 0 -2px 4px rgba(120,30,0,.35),0 6px 16px -4px rgba(255,106,26,.6)}
+.fbtn{color:#fff;gap:20px;padding:7px 7px 7px 28px;background:linear-gradient(180deg,#FF9152 0%,#FF6A1A 52%,#F2511A 100%);box-shadow:0 0 0 5px rgba(255,106,26,.07),0 0 0 6px rgba(255,140,70,.24),inset 0 1px 1px rgba(255,255,255,.55),inset 0 -3px 8px rgba(255,200,61,.42),0 10px 26px -6px rgba(255,90,20,.7),0 0 70px rgba(255,106,26,.26)}
+.fbtn::before{display:none}
+.fbtn--hover{transform:translateY(-1px);box-shadow:0 0 0 5px rgba(255,255,255,.05),0 0 0 6px rgba(255,150,80,.4),inset 0 1px 1px rgba(255,255,255,.6),inset 0 -3px 8px rgba(255,200,61,.55),0 14px 34px -6px rgba(255,90,20,.85),0 0 100px rgba(255,106,26,.4)}
+.fbtn--hover::after{background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent);z-index:1}
+.fbtn__label{font:700 15px/1 'Plus Jakarta Sans',Inter,sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;text-shadow:0 1px 1px rgba(140,35,0,.35)}
+.fbtn__cap{color:#FF6A1A;background:#fff;box-shadow:0 2px 6px rgba(120,30,0,.35),inset 0 -2px 3px rgba(0,0,0,.08)}
+.ibtn{display:grid;place-items:center;width:52px;height:52px;border:0;border-radius:14px 0;color:rgba(255,255,255,.8);background:#0f0c0b;box-shadow:-4px -4px 10px rgba(255,255,255,.025),6px 8px 16px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.06),inset 0 0 0 1px rgba(255,255,255,.06)}
+.ibtn--press{color:#FF8A4C;box-shadow:inset 3px 3px 8px rgba(0,0,0,.7),inset -2px -2px 6px rgba(255,255,255,.03)}
+.lbtn{position:relative;display:inline-flex;align-items:center;gap:10px;min-height:48px;font:600 15px/1 Inter,sans-serif;color:#fff;text-decoration:none}
+.lbtn::after{content:"";position:absolute;left:0;right:0;bottom:12px;height:1px;background:linear-gradient(90deg,#FF6A1A,rgba(255,106,26,0))}
+.candles{-webkit-mask:url(../texturas/candles-mask.svg) repeat-x 0 0/360px 48px,linear-gradient(#000,#000) 0 47px/100% calc(100% - 47px) no-repeat;mask:url(../texturas/candles-mask.svg) repeat-x 0 0/360px 48px,linear-gradient(#000,#000) 0 47px/100% calc(100% - 47px) no-repeat;position:relative}
+.candles::after{content:"";position:absolute;left:0;right:0;top:0;height:48px;background:url(../texturas/candles-tops.svg) repeat-x 0 0/360px 48px}
+.perf{position:relative;-webkit-mask:radial-gradient(circle at 14px 0,#0000 7px,#000 7.5px) repeat-x 0 0/28px 100%;mask:radial-gradient(circle at 14px 0,#0000 7px,#000 7.5px) repeat-x 0 0/28px 100%}
+.perf::before{content:"";position:absolute;left:0;right:0;top:18px;border-top:1px dashed rgba(255,255,255,.18)}
+@keyframes ang{to{--ang:360deg}}
+</style>
+</helmet>
+<div class="s" style="box-sizing: border-box; position: relative; width: 1440px; height: 1300px; background: #050404; padding: 64px 72px; display: flex; flex-direction: column; gap: 44px; overflow: hidden">
+  <div class="grain"></div>
+
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px">
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <span class="lbl">LP Black Friday Zero7 · v2</span>
+      <h1 class="disp" style="margin: 0; font-weight: 800; font-size: 72px; line-height: .9">DNA Zero7, <span style="color: rgba(255,255,255,.38)">pele Black.</span></h1>
+    </div>
+    <p class="cap" style="margin: 0; max-width: 430px">Preto domina, branco conduz, laranja só onde há ação ou dinheiro. Toda forma usa o raio diagonal da home.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px">
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <span class="lbl">01 · Proporção de cor</span>
+      <div style="display: flex; height: 120px; border-radius: 16px 0; overflow: hidden; border: 1px solid rgba(255,255,255,.08)">
+        <div style="flex: 82; background: #050404; display: flex; align-items: flex-end; padding: 12px"><span class="cap">Preto · 82%</span></div>
+        <div style="flex: 9; background: #1a1513"></div>
+        <div style="flex: 6; background: #fff"></div>
+        <div style="flex: 3; background: #FF6A1A"></div>
+      </div>
+      <p class="cap" style="margin: 0">Laranja permitido em: CTA, preço, um destaque por seção, luz do horizonte, topo dos candles, aba ativa. Vermelho só no fim de degradê.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <span class="lbl">02 · Raio diagonal</span>
+      <div style="display: flex; gap: 14px; align-items: flex-end">
+        <div style="display: flex; flex-direction: column; gap: 8px; align-items: center"><div class="box" style="width: 88px; height: 56px; border-radius: 16px 0"></div><span class="cap">16 0 · nav, botão</span></div>
+        <div style="display: flex; flex-direction: column; gap: 8px; align-items: center"><div class="box" style="width: 80px; height: 96px; border-radius: 24px 24px 24px 0"></div><span class="cap">24 24 24 0 · card</span></div>
+        <div style="display: flex; flex-direction: column; gap: 8px; align-items: center"><div style="width: 56px; height: 56px; border-radius: 999px 0 999px 999px; background: linear-gradient(160deg,#FF8A3D,#FF6A1A 55%,#E85A14)"></div><span class="cap">gota · seta</span></div>
+        <div style="display: flex; flex-direction: column; gap: 8px; align-items: center"><div class="box" style="width: 96px; height: 96px; border-radius: 40px 0 40px 0"></div><span class="cap">40 0 40 0 · palco</span></div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <span class="lbl">03 · Textura (nunca fundo liso)</span>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+        <div style="position: relative; height: 120px; border-radius: 16px 0; background: #0c0908; overflow: hidden; border: 1px solid rgba(255,255,255,.06)"><div style="position: absolute; inset: 0; background: url(../texturas/grain.png); background-size: 240px; opacity: 1"></div><span class="cap" style="position: absolute; left: 10px; bottom: 8px">grão</span></div>
+        <div class="grid" style="position: relative; height: 120px; border-radius: 16px 0; background-color: #0c0908; border: 1px solid rgba(255,255,255,.06)"><span class="cap" style="position: absolute; left: 10px; bottom: 8px">grade 72px</span></div>
+        <div style="position: relative; height: 120px; border-radius: 16px 0; overflow: hidden; background: #080606; border: 1px solid rgba(255,255,255,.06)"><div style="position: absolute; left: 50%; top: 70px; width: 600px; height: 400px; transform: translateX(-50%); border-radius: 50%; background: #030202; box-shadow: inset 0 2px 0 rgba(255,190,130,.75), 0 -2px 14px rgba(255,140,70,.55), 0 -20px 50px rgba(255,106,26,.35)"></div><span class="cap" style="position: absolute; left: 10px; top: 8px">horizonte</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px">
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <span class="lbl">04 · Botões</span>
+      <div class="box grid" style="border-radius: 24px 24px 24px 0; padding: 30px; display: flex; flex-direction: column; gap: 22px; background-color: #0a0807">
+        <div style="display: flex; gap: 18px; align-items: center; flex-wrap: wrap">
+          <a class="fbtn" href="#"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+          <a class="fbtn fbtn--hover" href="#"><span class="fbtn__label">Hover</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+        </div>
+        <div style="display: flex; gap: 18px; align-items: center; flex-wrap: wrap">
+          <a class="lbtn" href="#">Ir direto para os planos</a>
+          <button type="button" class="ibtn" aria-label="Anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+          <button type="button" class="ibtn ibtn--press" aria-label="Próximo, pressionado"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+        </div>
+        <p class="cap" style="margin: 0">Laranja sólido com volume (luz em cima, brilho âmbar por dentro na base), moldura fina de vidro em volta seguindo o raio diagonal, seta laranja na gota branca. No hover sobe 1px, a moldura acende e uma varredura de luz atravessa uma vez.</p>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <span class="lbl">05 · Transições entre seções</span>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <div style="height: 150px; border-radius: 16px 0; overflow: hidden; background: #030202; display: flex; flex-direction: column; justify-content: flex-end"><div class="candles" style="height: 100px; background: #15100e"></div></div>
+          <span class="cap">Candles: a seção sobe recortada (home Zero7), topos acesos</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <div style="height: 150px; border-radius: 16px 0; overflow: hidden; background: #0c0908; display: flex; flex-direction: column; justify-content: flex-end"><div class="perf" style="height: 100px; background: #1a1412"></div></div>
+          <span class="cap">Picote: a borda rasga como ingresso</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <div style="position: relative; height: 150px; border-radius: 16px 0; overflow: hidden; background: #080606"><div style="position: absolute; left: 50%; top: 80px; width: 700px; height: 500px; transform: translateX(-50%); border-radius: 50%; background: #030202; box-shadow: inset 0 2px 0 rgba(255,190,130,.75), 0 -2px 14px rgba(255,140,70,.55), 0 -24px 60px rgba(255,106,26,.35)"></div></div>
+          <span class="cap">Horizonte: o planeta vira o fundo da seção seguinte</span>
+        </div>
+      </div>
+
+      <span class="lbl" style="margin-top: 10px">06 · Selo de desconto (todos os planos)</span>
+      <div style="display: flex; align-items: center; gap: 22px">
+        <div style="position: relative; width: 84px; height: 84px; transform: rotate(12deg)">
+          <svg viewBox="0 0 100 100" width="84" height="84" aria-hidden="true"><defs><linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A3D"></stop><stop offset=".6" stop-color="#FF6A1A"></stop><stop offset="1" stop-color="#E52B24"></stop></linearGradient></defs><polygon fill="url(#sg2)" points="50.0,0.0 57.6,6.7 67.1,3.0 72.0,11.9 82.1,11.7 83.7,21.7 93.3,25.0 91.3,35.0 99.2,41.3 94.0,50.0 99.2,58.7 91.3,65.0 93.3,75.0 83.7,78.3 82.1,88.3 72.0,88.1 67.1,97.0 57.6,93.3 50.0,100.0 42.4,93.3 32.9,97.0 28.0,88.1 17.9,88.3 16.3,78.3 6.7,75.0 8.7,65.0 0.8,58.7 6.0,50.0 0.8,41.3 8.7,35.0 6.7,25.0 16.3,21.7 17.9,11.7 28.0,11.9 32.9,3.0 42.4,6.7"></polygon><circle cx="50" cy="50" r="37" fill="none" stroke="rgba(10,7,6,.35)" stroke-width="1" stroke-dasharray="2 3"></circle></svg>
+          <span style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font: 900 25px/.85 'Barlow Condensed', sans-serif; color: #0a0706">80%<small style="font: 800 12px/1 'Barlow Condensed', sans-serif; letter-spacing: .1em">OFF</small></span>
+        </div>
+        <p class="cap" style="margin: 0; max-width: 360px">Selo serrilhado de etiqueta de preço, girado 12°, preso no canto superior direito de cada card. É o único elemento laranja cheio dentro do card além da seta.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <span class="lbl">07 · Tipografia</span>
+    <div style="display: flex; align-items: baseline; gap: 40px; flex-wrap: wrap">
+      <span style="font: 800 80px/1 'Plus Jakarta Sans', Inter, sans-serif; letter-spacing: -.045em; color: #fff">A maior black da <span style="background: linear-gradient(180deg,#fff 0%,#fff 56%,#ffe7d6 78%,#ffc49c 100%); -webkit-background-clip: text; background-clip: text; color: transparent">história.</span></span>
+      <span class="cap">Plus Jakarta Sans 800 · frases de impacto (hero, fechamento). Só a última palavra recebe a luz do horizonte, de leve. Barlow Condensed fica para rótulos, planos e números.</span>
+      <span style="font: 400 17px/1.55 Inter, sans-serif; color: rgba(255,255,255,.66)">Inter 400 · corpo em branco 66%</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
