@@ -487,3 +487,11 @@
     animation: none;
   }
 }
+
+
+/* Mercado com menos cards do que a tela comporta (o Bitcoin): o Swiper trava o carrossel e põe a classe de trava
+   também na paginação, que a home esconde. Os nomes dos planos (indicadores montados um por card em
+   carrosselPlanos.js) continuam à vista; as setas somem, pela regra .swiper-button-lock da home. */
+#planos .plano .swiper-pagination.swiper-pagination-lock {
+  display: flex;
+}

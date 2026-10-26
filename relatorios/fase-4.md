@@ -1059,3 +1059,44 @@ Valores em px: x a partir da borda da janela, y a partir do topo do `.swiper`, d
 | paginação | 19.2, 489.9, 351.6, 44 | 19.2, 489.9, 351.6, 44 | 0.0 | ✅ |
 | paginação 1 (BIT 16) | 79.1, 489.9, 111.9, 44 | 79.1, 489.9, 111.9, 44 | 0.0 | ✅ |
 | paginação 2 (BIT 8) | 199, 489.9, 111.9, 44 | 199, 489.9, 111.9, 44 | 0.0 | ✅ |
+
+---
+
+## Adendo pós-aprovação (commit "fase 4 (ajuste): bitcoin sem loop e publicação em subpasta")
+
+**Bitcoin (2 cards): o defeito da home não foi replicado.**
+
+O `carrosselPlanos.js` só liga o loop quando o mercado tem pelo menos 2 × o maior `slidesPerView`. Com menos cards:
+- loop desligado;
+- `centerInsufficientSlides`;
+- `watchOverflow` (as setas somem quando todos cabem);
+- indicadores montados um por card, com o nome do plano. A paginação do Swiper sem loop tem um por posição: com os 2 cards à vista, só um.
+
+O mesmo vale se o índice perder cards por dado inválido. Outras mudanças:
+- O `blackPlanos.js` põe os cards na ordem do `planos.json` (BIT 8, BIT 16), uma vez, antes de o carrossel armar.
+- O aviso "Swiper Loop Warning" que ainda sobrava vinha do carrossel do índice criado escondido (página aberta com `?ativo=bitcoin`). Agora os dois blocos ficam visíveis só enquanto os carrosséis nascem, na mesma tarefa e sem pintar.
+
+**Teste com 3 recargas seguidas por largura, em `?ativo=bitcoin`:**
+
+| Largura | Ordem | Na tela | Loop | Centro | Setas | Indicadores | Console |
+|---|---|---|---|---|---|---|---|
+| 390 | BIT 8, BIT 16 (3/3) | BIT 8 | não | 0 px | escondidas | BIT 8, BIT 16 | nenhum aviso |
+| 768 | BIT 8, BIT 16 (3/3) | os dois | não | 0 px | escondidas | BIT 8, BIT 16 | nenhum aviso |
+| 1440 | BIT 8, BIT 16 (3/3) | os dois | não | 0 px | escondidas | BIT 8, BIT 16 | nenhum aviso |
+
+Em 390, clicar no indicador "BIT 16" leva ao card e o acende; o BIT 8 fica `inert`. Voltar ao índice mantém o Sênior e os 6 indicadores.
+
+Rodei de novo, sem regressão:
+- UTM 8/8;
+- etiqueta nunca cortada (5 larguras);
+- fallback;
+- card inválido (4 cards, sem loop, 4 indicadores);
+- teclado;
+- página sem scroll horizontal e com console limpo.
+
+**P3 (publicação em https://zero7.com.br/a-maior-black/):**
+- `PLANOS_URL` continua `data/planos.json`, o arquivo próprio da LP. O "TODO" saiu, e um comentário explica por que não aponta para o painel da home.
+- Não há nenhum caminho começando com "/" no HTML, CSS ou JS. O favicon é `data:,` e o sprite do selo é inline; manifest ainda não existe (Fase 6).
+- O `live-server --mount=/a-maior-black:.` devolveu 404 na própria subpasta no Windows. Além disso, ele serviria a pasta também na raiz, e um caminho absoluto passaria despercebido. Por isso criei `scripts/servir-subpasta.mjs`: serve a pasta só em `/a-maior-black/` e responde 404 em todo o resto.
+- **Resultado em http://localhost:5502/a-maior-black/ (390 e 1440, página rolada inteira e os dois mercados):** 38 requisições (html, 10 css, 6 woff2, 11 js com o Swiper, svg, png, avif, json); nenhum 404, nenhuma requisição fora da subpasta, console limpo e os 8 planos prontos. Vou repetir o teste na Fase 5, com os vídeos.
+- A tabela de pendências do `PROMPTS-LP-BLACK.md` foi atualizada: P3 resolvida, P2 aguardando os preços do cliente. O commit leva junto as suas alterações que estavam abertas nesse arquivo (porta 5501, vídeos do HUB e logo animada na Fase 5).

@@ -7,6 +7,7 @@
      loop e a paginação do Swiper precisam nascer com a lista final). Por isso o índice do slide inicial é lido na
      hora de armar, não no parse;
    - a largura do slide inicial é lida na hora de armar (na home, window.innerWidth no parse: dá no mesmo);
+   - loop só quando há cards suficientes (loopOuCentro); senão, cards centralizados e sem aviso do Swiper;
    - ajuste do cliente: o Sênior não tem mais destaque (.card--copa saiu). Ele continua sendo o slide inicial,
      marcado no HTML com data-inicial. */
 
@@ -63,7 +64,7 @@ function marcarPlanosNaTela(sw) {
     slide.inert = naTela.size > 0 && !naTela.has(real === null ? i : Number(real));
   });
 
-  const indicadores = (sw.pagination && sw.pagination.bullets) || [];
+  const indicadores = sw.indicadoresProprios || (sw.pagination && sw.pagination.bullets) || [];
   indicadores.forEach((b, i) => b.classList.toggle("is-na-tela", naTela.has(i)));
 }
 
@@ -89,7 +90,44 @@ const A11Y = {
   slideRole: "group",
 };
 
+// LP: loop só com cards suficientes (o Swiper pede pelo menos 2 × slidesPerView). Com menos (o Bitcoin tem 2),
+// a home liga o loop mesmo assim: aviso no console e ordem instável. Aqui o loop desliga, os cards ficam
+// centralizados, as setas somem quando todos cabem (watchOverflow) e a paginação com os nomes continua
+// (planos-black.css mantém a paginação à vista mesmo travada).
+function loopOuCentro(seletor, breakpoints) {
+  const n = document.querySelectorAll(`${seletor} .swiper-wrapper > .swiper-slide`).length;
+  const maxNaTela = Math.max(1, ...Object.values(breakpoints).map(b => b.slidesPerView));
+  return n >= maxNaTela * 2
+    ? { loop: true }
+    : { loop: false, centerInsufficientSlides: true, watchOverflow: true, pagination: false };
+}
+
+// Sem loop, a paginação do Swiper tem um indicador por posição, não por card (com os 2 cards do Bitcoin à
+// vista, só um). Aqui os indicadores são montados um por card, com o nome do plano e as classes do Swiper.
+function indicadoresPorCard(sw, carrossel) {
+  if (sw.params.loop) return;
+  const lugar = document.querySelector(carrossel + " + .swiper-pagination");
+  if (!lugar) return;
+  lugar.classList.add("swiper-pagination-clickable", "swiper-pagination-bullets", "swiper-pagination-horizontal");
+  lugar.innerHTML = "";
+  sw.indicadoresProprios = sw.slides.map((slide, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "swiper-pagination-bullet";
+    b.textContent = slide.querySelector(".title h3")?.textContent.trim() || String(i + 1);
+    b.addEventListener("click", () => sw.slideTo(i));
+    lugar.appendChild(b);
+    return b;
+  });
+  marcarPlanosNaTela(sw);
+}
+
 function armarCarrosseis(Swiper) {
+  // O bloco do mercado que não está selecionado fica escondido; o Swiper não mede um carrossel escondido (e o
+  // loop dele avisava no console). Os dois aparecem só enquanto os carrosséis nascem, na mesma tarefa, sem pintar.
+  const escondidos = Array.from(document.querySelectorAll("#planos .plano-asset[hidden]"));
+  escondidos.forEach(bloco => { bloco.hidden = false; });
+
   // O card com data-inicial (o Sênior) é o slide inicial: primeiro no mobile, do meio no desktop.
   // (Na home, o slide inicial é o .card--copa.)
   const slidesDoCarrossel = Array.from(
@@ -101,18 +139,19 @@ function armarCarrosseis(Swiper) {
   const slideInicial =
     window.innerWidth >= BP_LG ? Math.max(0, indiceInicial - 1) : indiceInicial;
 
+  const breakpoints4 = {
+    [BP_SM]: { slidesPerView: 2, spaceBetween: 20 },
+    [BP_LG]: { slidesPerView: 3, spaceBetween: 60 },
+  };
   window.swiper4 = new Swiper(".mySwiper4", {
     slidesPerView: 1,
     spaceBetween: 5,
-    loop: true,
+    ...loopOuCentro(".mySwiper4", breakpoints4),
     grabCursor: true,
     speed: SEM_MOVIMENTO ? 0 : 300,
     watchSlidesProgress: true,
     ...(temInicial ? { initialSlide: slideInicial } : {}),
-    breakpoints: {
-      [BP_SM]: { slidesPerView: 2, spaceBetween: 20 },
-      [BP_LG]: { slidesPerView: 3, spaceBetween: 60 },
-    },
+    breakpoints: breakpoints4,
     pagination: paginacaoDePlanos(".mySwiper4"),
     navigation: {
       nextEl: ".swiper-button-next",
@@ -123,17 +162,18 @@ function armarCarrosseis(Swiper) {
   });
 
   // O carrossel de bitcoin só tem dois cards, então o teto dele é 2.
+  const breakpoints11 = {
+    [BP_SM]: { slidesPerView: 2, spaceBetween: 20 },
+    [BP_LG]: { slidesPerView: 2, spaceBetween: 30 },
+  };
   window.swiper11 = new Swiper(".mySwiper11", {
     slidesPerView: 1,
     spaceBetween: 5,
-    loop: true,
+    ...loopOuCentro(".mySwiper11", breakpoints11),
     grabCursor: true,
     speed: SEM_MOVIMENTO ? 0 : 300,
     watchSlidesProgress: true,
-    breakpoints: {
-      [BP_SM]: { slidesPerView: 2, spaceBetween: 20 },
-      [BP_LG]: { slidesPerView: 2, spaceBetween: 30 },
-    },
+    breakpoints: breakpoints11,
     pagination: paginacaoDePlanos(".mySwiper11"),
     navigation: {
       nextEl: ".swiper-button-next",
@@ -142,6 +182,10 @@ function armarCarrosseis(Swiper) {
     a11y: A11Y,
     on: EVENTOS_DO_CARROSSEL_DE_PLANOS,
   });
+
+  indicadoresPorCard(window.swiper4, ".mySwiper4");
+  indicadoresPorCard(window.swiper11, ".mySwiper11");
+  escondidos.forEach(bloco => { bloco.hidden = true; });
 
   window.dispatchEvent(new CustomEvent("zero7:carrosseisProntos"));
 }

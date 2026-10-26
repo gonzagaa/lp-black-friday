@@ -9,7 +9,7 @@ São seis fases, cada uma com entrega e critério de aceite próprios. **O Claud
 1. Confira se a pasta `lp-black-friday` tem: `CLAUDE.md`, `PROMPTS-LP-BLACK.md`, `_referencia/` e `_brandkit/`. A pasta `../Zero7` (home oficial) precisa estar ao lado.
 2. Abra o Claude Code **dentro de `lp-black-friday`**. Ele lê o `CLAUDE.md` sozinho.
 3. Cole o prompt da **Fase 1**. Quando ele terminar, vai mostrar o relatório e parar.
-4. Deixe o `npm run dev` rodando e me mande o relatório aqui. Eu abro `http://localhost:5500` no navegador, confiro com o protótipo e te devolvo **as correções** ou **a mensagem de aprovação + o prompt da fase seguinte**.
+4. Deixe o `npm run dev` rodando e me mande o relatório aqui. Eu abro `http://localhost:5501` no navegador, confiro com o protótipo e te devolvo **as correções** ou **a mensagem de aprovação + o prompt da fase seguinte**.
 5. Para aprovar, cole no Claude Code: `Fase N aprovada.` e, em seguida, o prompt da fase seguinte.
 
 | Fase | Entrega | Risco |
@@ -40,10 +40,10 @@ Estes textos **não estão na copy**. Eles entram na LP, mas cada relatório pre
 | # | Pendência | Afeta |
 |---|---|---|
 | P1 | Data e hora de término da Black (contador) | Fase 2 |
-| P2 | Preços da Black no `planos.json`. Hoje o desconto real dá cerca de 77%, e o selo diz "80% OFF" | Fase 4 |
-| P3 | Onde a LP será publicada (domínio e caminho). Isso define de onde ela lê o `planos.json` | Fase 4 |
+| P2 | **Aguardando o cliente:** preços e links de checkout da Black para o `data/planos.json` da LP. Hoje o desconto real dá cerca de 77%, e a etiqueta diz "80% OFF" (mantida até os preços chegarem) | Fase 4 |
+| P3 | ~~Onde a LP será publicada~~ **Resolvida:** https://zero7.com.br/a-maior-black/. A LP lê o próprio `data/planos.json` (relativo à pasta; não o painel da home), todos os caminhos são relativos e canonical/og:url = https://zero7.com.br/a-maior-black/ (Fase 6) | Fase 4 |
 | P4 | Remover a observação "Profit One disponível…" dos planos (conflita com o benefício Profit Pro) | Fase 4 |
-| P5 | Vídeos: HUB, Trading e Performance, Lives, Comunidade no WhatsApp, Gamification (e o formato deles) | Fase 5 |
+| P5 | Vídeos: Trading e Performance, Lives, Comunidade no WhatsApp, Gamification (o HUB já chegou: 9:16 no card, 16:9 no modal do desktop) | Fase 5 |
 | P6 | Imagem de fundo da hero gerada por IA (opcional; o horizonte em CSS já resolve) | Fase 6 |
 | P7 | Tracking (GTM, Meta, etc.) | Fase 6 |
 
@@ -78,10 +78,10 @@ Esta fase NÃO monta nenhuma seção da página. Ela cria a base que todas as ou
 3. FERRAMENTAS (package.json, só devDependencies)
    - sharp, playwright e live-server.
    - Scripts:
-     "dev":     live-server --port=5500 --no-browser
+     "dev":     live-server --port=5501 --no-browser
      "imagens": node scripts/imagens.mjs
      "shots":   node scripts/shots.mjs
-   - O shots.mjs abre http://localhost:5500 (e /componentes.html quando receber --pagina=componentes) e captura a página inteira em 360, 390, 768, 1024, 1280, 1440 e 1920 px, salvando em shots/<rotulo>/<largura>.png. Antes de capturar, espera as fontes carregarem (document.fonts.ready) e roda com prefers-reduced-motion: reduce, para a captura ser estável.
+   - O shots.mjs abre http://localhost:5501 (e /componentes.html quando receber --pagina=componentes) e captura a página inteira em 360, 390, 768, 1024, 1280, 1440 e 1920 px, salvando em shots/<rotulo>/<largura>.png. Antes de capturar, espera as fontes carregarem (document.fonts.ready) e roda com prefers-reduced-motion: reduce, para a captura ser estável.
    - Se o navegador do Playwright faltar, rode npx playwright install chromium.
 
 4. FONTES LOCAIS (nada de Google Fonts)
@@ -355,7 +355,7 @@ Regra: o usuário já conhece o layout dos planos da home. A ESTRUTURA é a mesm
 
 6. ACEITE (obrigatório no relatório)
    - Tabela com todos os modos ativos × todos os planos: oldPrice, parcelado, à vista, checkout e o % de desconto REAL calculado (1 − à vista / oldPrice). Marque com ⚠ onde o % real for diferente de 80% (pendência P2).
-   - Teste abrindo http://localhost:5500/?utm_source=teste&utm_campaign=bf26 e confirme que TODOS os links de checkout carregam os parâmetros.
+   - Teste abrindo http://localhost:5501/?utm_source=teste&utm_campaign=bf26 e confirme que TODOS os links de checkout carregam os parâmetros.
    - Compare lado a lado com 05-planos-home-oficial.jpg: mesma estrutura (aba, chips 3+3+2, preço, CTA, abas de plano).
    - Capturas em 390, 768, 1024, 1440 e 1920 mostrando que o selo nunca é cortado.
 
@@ -389,13 +389,29 @@ Fase 4 aprovada. Faça SOMENTE a Fase 5. Referências: a metade de baixo de 02-p
    - Legenda: título do ativo em Barlow 800 + descrição exata da copy.
    - MÍDIA: um array em js/modulos/comunidade.js com { titulo, descricao, video: { mp4, webm }, poster }.
        * Academy: copie ../Zero7/assets/academy 1.mp4/.webm e poster-academy-1.avif para assets/video/ (com nomes em kebab-case).
-       * Os outros 5 ficam em estado "Vídeo em breve": fundo escuro com brilho laranja embaixo, número "01"–"06" gigante em contorno e o selo "Vídeo em breve" (a aprovar). Quando o arquivo existir, basta preencher o array (pendência P5).
+       * HUB Zero7: os vídeos JÁ ESTÃO em assets/video/ (otimizados, sem áudio):
+           - hub-zero7-9x16-540.mp4 (2,5 MB): vídeo do CARD no carrossel;
+           - hub-zero7-9x16-poster.webp: poster do card;
+           - hub-zero7-9x16-720.mp4: vídeo do modal no mobile;
+           - hub-zero7-16x9-720.mp4 + hub-zero7-16x9-poster.webp: vídeo do modal no desktop (≥ 768px).
+         Escolha a fonte do modal por matchMedia no momento em que ele abre.
+       * Os outros 4 (Trading e Performance, Lives, Comunidade no WhatsApp, Gamification) ficam em estado "Vídeo em breve": fundo escuro com brilho laranja embaixo, número "01"–"06" gigante em contorno e o selo "Vídeo em breve" (a aprovar). Quando o arquivo existir, basta preencher o array (pendência P5). Cada entrada aceita video.card (9:16) e, opcionalmente, video.modalDesktop (16:9).
        * Comportamento: só o card ATIVO toca, mudo, em loop e playsinline, e só enquanto a seção estiver visível (IntersectionObserver). Os outros ficam pausados, com preload="none".
-       * O botão de play (gota de vidro) abre um modal com o vídeo com som e controles: foco preso, Esc fecha, devolve o foco.
+       * O botão de play (gota de vidro) abre um modal com o vídeo em tamanho grande e com controles: foco preso, Esc fecha, devolve o foco. Os vídeos do HUB não têm áudio, então não mostre controle de volume para eles.
        * Com reduced motion: nada de autoplay.
 
 2. FECHAMENTO
    - Eclipse: copie .eclipse do protótipo + grade com máscara.
+   - LOGO ANIMADA DA CAMPANHA (motion oficial do brand kit, em _brandkit/motion/; leia o LEIA-ME-V02.md):
+       * Dentro do eclipse, acima da frase, a assinatura Black Friday se monta: o ingresso entra voando, as letras se formam e um reflexo branco atravessa o lettering.
+       * A animação é código, não vídeo: _brandkit/motion/Fonte/motion-core.cjs (createMotion) + Fonte/scene-assets.json. Porte para js/modulos/motion-logo.js (ES module) e gere o SVG quadro a quadro com requestAnimationFrame.
+       * Adaptação para fundo escuro, já testada (ver _brandkit/motion/prova-fundo-escuro.png):
+           - ink '#070607' → '#FFFFFF';
+           - remova o <rect> de fundo branco (o fundo é o eclipse).
+         Use a viewBox recortada só na área da marca, sem as margens do quadro 4:3, e uns 520px de largura no desktop, 300px no mobile.
+       * Toca UMA vez, quando a seção entra na tela (IntersectionObserver, threshold ~.4), e para no quadro final, nítido (t ≥ 5,11s). Sem som (o WAV não entra).
+       * Com reduced motion, ou antes de o JS carregar: mostre direto o quadro final (assets/marca/completa-escuro.svg), sem animar.
+       * Performance: o scene-assets.json tem ~38KB. Carregue o módulo com import() só quando a seção estiver a ~600px da tela, para não pesar na carga inicial.
    - Frase da copy em Plus Jakarta 800 (mesmo estilo do H1, sem degradê), com o ponto ajustado: "Com a Zero7 você não opera sozinho."
    - .fbtn "Aproveitar a Black" → #planos.
 
@@ -445,7 +461,7 @@ Fase 5 aprovada. Faça SOMENTE a Fase 6.
    - Se não existirem, não faça nada e registre.
 
 4. PERFORMANCE
-   - Rode o Lighthouse (npx lighthouse) em mobile e desktop sobre http://localhost:5500 e cole os números no relatório.
+   - Rode o Lighthouse (npx lighthouse) em mobile e desktop sobre http://localhost:5501 e cole os números no relatório.
    - Metas: LCP < 2,5 s no mobile, CLS < 0,05, TBT < 200 ms, primeira dobra < 800 KB.
    - Se não bater, corrija antes de reportar: subset de fontes, tamanhos responsivos, CSS crítico da hero inline, carregamento preguiçoso.
 

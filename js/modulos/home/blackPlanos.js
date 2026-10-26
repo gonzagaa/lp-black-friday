@@ -4,7 +4,8 @@
      preenchidos (o carrossel só arma depois disso);
    - DATA_URL -> PLANOS_URL (js/config.js), com fallback no snapshot embutido se o fetch falhar (Fase 4);
    - card sem preço ou sem checkout válido sai do carrossel (Fase 4: nunca mostrar card sem preço);
-   - card preenchido ganha .is-pronto (até lá a pele o deixa invisível, ocupando o lugar).
+   - card preenchido ganha .is-pronto (até lá a pele o deixa invisível, ocupando o lugar);
+   - os cards ficam na ordem do planos.json (ordenarComoNoJson).
    O resto (modos, botões, textos, flash, footnote, withCurrentQueryParams) é o da home. */
 import { PLANOS_URL } from '../../config.js';
 import SNAPSHOT from '../planos-snapshot.js';
@@ -53,6 +54,21 @@ export function iniciarBlackPlanos() {
       : activeModes[0].id;
 
     await setMode(defaultMode);
+    ordenarComoNoJson(db[defaultMode]);
+  }
+
+  // LP: os cards de cada carrossel ficam na ordem das chaves do planos.json (na home, o HTML traz o BIT 16
+  // antes do BIT 8). Roda uma vez, antes de o carrossel armar; a troca de modo não reordena.
+  function ordenarComoNoJson(table) {
+    if (!table) return;
+    const ordem = Object.keys(table);
+    sections.forEach(sec => {
+      sec.querySelectorAll(".swiper-wrapper").forEach(wrapper => {
+        Array.from(wrapper.querySelectorAll(":scope > .card[data-plan]"))
+          .sort((a, b) => ordem.indexOf(a.dataset.plan) - ordem.indexOf(b.dataset.plan))
+          .forEach(card => wrapper.appendChild(card));
+      });
+    });
   }
 
   function getActiveModes(config) {

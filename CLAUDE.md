@@ -44,6 +44,7 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
 - Cards com o raio da home (`30px 30px 30px 0`), não o da regra 4.
 - CTAs dos cards e da hero usam o mesmo desenho escuro (tokens `--escuro-*` em `tokens.css`): borda em degradê, neon na base, seta preta na gota laranja.
 - Título bicolor como o dos benefícios: "80% OFF para garantir" em branco e "o seu plano perfeito." em branco .42 (linha própria a partir de 768 px).
+- Loop do carrossel só com cards suficientes (≥ 2 × slidesPerView). Com menos (o Bitcoin), sem loop, cards centralizados, setas escondidas quando todos cabem, indicadores com o nome de cada plano e ordem do `planos.json` (aqui NÃO se replica o defeito da home).
 
 ## Regras invioláveis
 
@@ -87,6 +88,8 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
 12. **Datas e números de negócio.** A data de término do contador e qualquer número que não esteja na copy ficam em `js/config.js` como constantes com `// TODO: confirmar`. Liste todos no relatório.
 
 ## Verificação
+
+- **Publicação:** https://zero7.com.br/a-maior-black/. Todo caminho é relativo (nada começa com "/"): CSS, JS, módulos, imagens, vídeos, fontes, vendor, dados. Teste com `node scripts/servir-subpasta.mjs` (http://localhost:5502/a-maior-black/; fora da subpasta tudo dá 404) e confira a aba de rede sem 404.
 
 - `npm run dev` sobe a página em **http://localhost:5500**. Use sempre esta porta: o revisor abre a página nesse endereço, no navegador.
 - `npm run shots -- <rotulo>` captura a página inteira em 360, 390, 768, 1024, 1280, 1440 e 1920 px e salva em `shots/<rotulo>/`.
