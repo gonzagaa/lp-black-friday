@@ -3,6 +3,7 @@
 // Salva em shots/<rotulo>/<largura>.png. Roda com prefers-reduced-motion: reduce para a captura ser estável.
 // Também relata: erros de console, requisições para fora do localhost, fontes baixadas e scroll horizontal.
 import { chromium } from 'playwright';
+import sharp from 'sharp';
 import { mkdir } from 'node:fs/promises';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -78,8 +79,23 @@ for (const largura of LARGURAS) {
     altura: document.documentElement.scrollHeight,
   }));
 
+  // Página inteira em fatias do tamanho da janela, emendadas. O modo fullPage do Chromium desenha errado os
+  // carrosséis com scroll-snap + máscara (mostra outra posição de rolagem). Na foto, a nav deixa de grudar,
+  // para não se repetir em cada fatia (o lugar dela no fluxo é o mesmo).
+  await pagina.addStyleTag({ content: '.cabecalho{position:relative!important;top:auto!important}' });
+  const altura = medidas.altura;
+  const fatias = [];
+  for (let y = 0; y < altura; y += 900) {
+    await pagina.evaluate((y) => scrollTo(0, y), y);
+    await pagina.waitForTimeout(150);
+    const topo = await pagina.evaluate(() => scrollY); // a última fatia para no fim da página
+    fatias.push({ input: await pagina.screenshot(), top: topo, left: 0 });
+  }
   const arquivo = join(pasta, `${largura}.png`);
-  await pagina.screenshot({ path: arquivo, fullPage: true });
+  await sharp({ create: { width: largura, height: altura, channels: 3, background: '#050404' } })
+    .composite(fatias)
+    .png()
+    .toFile(arquivo);
   resultados.push({ largura, arquivo, erros, externas, fontes: [...fontes], ...medidas });
   await contexto.close();
 }

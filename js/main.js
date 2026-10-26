@@ -3,6 +3,10 @@
 // js/modulos/contador.js existe, mas está sem uso (saiu da hero por ajuste do cliente; ver o módulo).
 import { iniciarNav } from './modulos/nav.js';
 import { iniciarRevelar } from './modulos/revelar.js';
+import { iniciarCarrosseis } from './modulos/carrossel.js';
+import { iniciarPlanos } from './modulos/planos.js';
 
 iniciarNav();
 iniciarRevelar();
+iniciarCarrosseis();
+iniciarPlanos();

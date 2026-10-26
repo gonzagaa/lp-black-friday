@@ -62,6 +62,11 @@ h1, h2, h3, h4, p, figure, blockquote, ul, ol {
   margin: 0;
 }
 
+/* O atributo hidden sempre esconde, mesmo em componentes com display próprio (ex.: card sem preço) */
+[hidden] {
+  display: none !important;
+}
+
 /* Títulos com linhas equilibradas: nada de uma palavra sozinha na última linha */
 h1,
 h2,

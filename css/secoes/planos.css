@@ -1,1 +1,535 @@
-/* Seção #planos: Fase 4 */
+/* Seção #planos: Fase 4.
+   Layout da home (section#plan): seletor de mercado, título do mercado, modos, carrossel de cards com aba do
+   nome, chips 3+3+2, preço, nota e CTA, e abas com o nome de cada plano. Pele: Main.dc.html (PLANOS) e
+   Mobile.dc.html (< 768 px). */
+
+/* ========== SEÇÃO: sobe recortada em candles ========== */
+.planos {
+  position: relative;
+  overflow-x: clip; /* setas e brilho do card em destaque não geram scroll horizontal */
+  padding: 150px 0 110px;
+  background: radial-gradient(60% 40% at 50% 0%, rgba(255, 106, 26, .07), transparent 70%), var(--cor-superficie-2);
+}
+
+/* Grade de 72 px que some para baixo */
+.planos__grade {
+  position: absolute;
+  inset: 0;
+  opacity: .5;
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 60%);
+  mask-image: linear-gradient(180deg, #000, transparent 60%);
+  pointer-events: none;
+}
+
+/* ========== CABEÇALHO (.cabecalho-secao + .titulo-secao em componentes.css) ========== */
+.planos__topo {
+  position: relative;
+  gap: 26px;
+}
+
+.planos__h2 span:first-child {
+  color: var(--cor-laranja);
+}
+
+.planos__barra {
+  width: 120px;
+  height: 3px;
+  border-radius: 2px 0;
+  background: linear-gradient(90deg, rgba(255, 106, 26, 0), var(--cor-laranja), rgba(255, 106, 26, 0));
+}
+
+/* Seletor de mercado: pílula (a exceção de raio permitida) */
+.seg {
+  display: inline-flex;
+  margin-top: 18px;
+  padding: 5px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .03);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, .5);
+}
+
+.seg button {
+  min-width: 240px;
+  min-height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  font: 600 14px/1 var(--fonte-texto);
+  color: rgba(255, 255, 255, .7);
+  transition: color var(--dur-2), background-color var(--dur-2), box-shadow var(--dur-2);
+}
+
+.seg button:hover {
+  color: #fff;
+}
+
+.seg button[aria-checked="true"] {
+  color: var(--cor-tinta);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .25), rgba(255, 255, 255, 0) 60%), var(--cor-laranja);
+  box-shadow: inset 0 -2px 5px rgba(150, 40, 0, .3), 0 6px 20px -6px rgba(255, 106, 26, .6);
+}
+
+/* Nome do mercado: um degrau abaixo do título da seção em qualquer largura (34 px no desktop, 26 nas menores) */
+.planos__mercado {
+  margin-top: 14px;
+  font: 800 clamp(26px, 2.4vw, 34px)/1 var(--fonte-display);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+/* Modos de avaliação: só aparecem com mais de um modo ativo no planos.json */
+.planos__modos {
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  gap: 14px;
+}
+
+.planos__modos-titulo {
+  font: 600 12px/1 var(--fonte-texto);
+  letter-spacing: var(--tracking-rotulo);
+  color: rgba(255, 255, 255, .6);
+}
+
+.planos__modos-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: inherit;
+  gap: 8px;
+}
+
+.planos__modos-botoes button {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: var(--raio-assinatura);
+  background: rgba(255, 255, 255, .03);
+  font: 600 14px/1 var(--fonte-texto);
+  color: rgba(255, 255, 255, .7);
+}
+
+.planos__modos-botoes button:hover {
+  color: #fff;
+}
+
+.planos__modos-botoes button[aria-pressed="true"] {
+  border-color: transparent;
+  color: var(--cor-tinta);
+  background: var(--cor-laranja);
+}
+
+.planos__modos-textos p {
+  max-width: 620px;
+  font: 400 15px/1.55 var(--fonte-texto);
+  color: var(--cor-texto-2);
+}
+
+/* ========== CARROSSEL ========== */
+.planos__corpo {
+  position: relative;
+  margin-top: 30px;
+}
+
+.carrossel {
+  position: relative;
+}
+
+/* O selo vaza 26 px para a direita do card e a aba 36 px para cima. Por isso o trilho tem 44 px de folga em
+   cima e --pad dos lados, e invade a margem da seção nessa medida (os cards ficam com a largura do protótipo).
+   Para não aparecer fatia dos vizinhos nessas folgas: o vão entre cards é >= --pad (o próximo começa fora da
+   tela) e a folga da esquerda é apagada por máscara (o selo só vaza para a direita). */
+.carrossel__trilho {
+  --visiveis: 3;
+  --pad: 32px;
+  --vao: 32px;
+  display: flex;
+  align-items: flex-start; /* cards alinhados pelo topo (na home eles esticam) */
+  gap: var(--vao);
+  margin-inline: calc(-1 * var(--pad));
+  padding: 44px var(--pad) 30px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--pad);
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent calc(var(--pad) - 4px), #000 var(--pad));
+  mask-image: linear-gradient(90deg, transparent calc(var(--pad) - 4px), #000 var(--pad));
+}
+
+.carrossel__trilho::-webkit-scrollbar {
+  display: none;
+}
+
+.carrossel__trilho:focus-visible {
+  outline: 2px solid var(--cor-luz);
+  outline-offset: -2px;
+}
+
+/* Tudo cabe na tela (bitcoin no desktop): centraliza, sem setas nem abas */
+.carrossel--cabe .carrossel__trilho {
+  justify-content: center;
+}
+
+.carrossel__seta {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  display: none;
+  transform: translateY(-50%);
+}
+
+.carrossel__seta--ant {
+  left: calc(-1 * var(--gutter));
+}
+
+.carrossel__seta--prox {
+  right: calc(-1 * var(--gutter));
+}
+
+@media (min-width: 1200px) {
+  .carrossel__seta {
+    display: grid;
+  }
+
+  .carrossel--cabe .carrossel__seta {
+    display: none;
+  }
+}
+
+/* Abas com o nome de cada plano */
+.carrossel__abas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  min-height: 48px;
+}
+
+.carrossel--cabe .carrossel__abas {
+  display: none;
+}
+
+.carrossel__aba {
+  min-height: 48px;
+  padding: 0 18px;
+  border: 0;
+  border-bottom: 2px solid rgba(255, 255, 255, .06);
+  background: none;
+  font: 700 17px/1 var(--fonte-display);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .5);
+  transition: color var(--dur-2), border-color var(--dur-2);
+}
+
+.carrossel__aba:hover {
+  color: #fff;
+}
+
+.carrossel__aba[aria-current="true"] {
+  color: #fff;
+  border-bottom-color: var(--cor-laranja);
+}
+
+/* ========== CARD (mesma estrutura da home: .card[data-plan]) ========== */
+.card {
+  position: relative;
+  flex: 0 0 calc((100% - (var(--visiveis) - 1) * var(--vao)) / var(--visiveis));
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 50px 18px 22px;
+  border: 1px solid var(--cor-linha-forte);
+  border-radius: var(--raio-card);
+  background: linear-gradient(180deg, #050303, #0d0908);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .9);
+  scroll-snap-align: start;
+  container-type: inline-size; /* os chips medem o próprio card */
+}
+
+/* Até os dados chegarem, o card ocupa o lugar dele sem aparecer (nada de card sem preço na tela) */
+.card:not(.is-pronto) {
+  visibility: hidden;
+}
+
+/* Sênior */
+.card--destaque {
+  border: 2px solid rgba(255, 106, 26, .7);
+  padding: 49px 17px 21px; /* compensa a borda de 2 px */
+  box-shadow:
+    0 0 0 1px rgba(255, 138, 76, .25),
+    0 0 26px rgba(255, 106, 26, .25),
+    0 0 70px rgba(229, 43, 36, .16),
+    0 30px 60px -30px rgba(0, 0, 0, .9);
+}
+
+/* Aba do nome sobre a borda */
+.card__aba {
+  position: absolute;
+  top: -27px;
+  left: 12%;
+  right: 12%;
+  display: grid;
+  place-items: center;
+  height: 54px;
+  border: 1px solid rgba(255, 255, 255, .13);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #020101, #0b0807);
+}
+
+.card--destaque .card__aba {
+  border-color: rgba(255, 106, 26, .55);
+}
+
+.card__aba h4 {
+  font: 900 30px/1 var(--fonte-display);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+/* Selo 80% OFF em todos os cards (componente .selo-plano) */
+.card .selo-plano {
+  position: absolute;
+  top: -30px;
+  right: -18px;
+  z-index: 4;
+}
+
+.card__tarja {
+  margin-top: -6px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 106, 26, .25);
+  border-radius: 10px 0;
+  background: rgba(255, 106, 26, .08);
+  font: 600 12px/1.35 var(--fonte-texto);
+  text-align: center;
+  color: #FFB48A;
+}
+
+/* Chips: 6 colunas; 3 por linha nas duas primeiras e 2 largos na última. Bitcoin (6 chips): 3 + 3. */
+.card__chips {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.chip {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 58px;
+  padding: 8px 4px;
+  border-radius: var(--raio-chip);
+  background: rgba(255, 255, 255, .035);
+  text-align: center;
+}
+
+.chip:nth-child(7),
+.chip:nth-child(8) {
+  grid-column: span 3;
+}
+
+.chip span {
+  font: 400 11px/1.2 var(--fonte-texto);
+  color: var(--cor-texto-3);
+}
+
+/* Valor: 14 px quando o card tem a largura do protótipo; encolhe com o card (container query) até 11,5 px.
+   "R$" fica preso ao número (espaço não separável no HTML); textos longos podem ir para duas linhas
+   ("100% em conta real" na caixa de 1/3 do bitcoin, "120 contratos" no card mais estreito). */
+.chip b {
+  font: 700 clamp(11.5px, 3.75cqi, 14px)/1.15 var(--fonte-texto);
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+/* Preço: "de R$ x por" / "12x R$ y" / "ou R$ z à vista" (sem caixa alta) */
+.card__preco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.card__de {
+  font: 500 15px/1 var(--fonte-texto);
+  color: rgba(255, 255, 255, .75);
+}
+
+.card__de s {
+  color: rgba(255, 255, 255, .5);
+  text-decoration-color: var(--cor-laranja);
+  text-decoration-thickness: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.card__parcela {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.card__parcela span {
+  font: 800 36px/1 var(--fonte-display);
+  color: var(--cor-laranja);
+}
+
+.card__parcela b {
+  font: 900 50px/1 var(--fonte-display);
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+.card__avista {
+  font: 700 20px/1 var(--fonte-display);
+  letter-spacing: .02em;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+.card__avista i {
+  font-style: normal;
+  color: var(--cor-laranja);
+}
+
+.card__nota {
+  font: 400 12px/1.4 var(--fonte-texto);
+  text-align: center;
+  color: var(--cor-texto-3);
+}
+
+/* ========== 768–1199 px: 2 cards ========== */
+@media (max-width: 1199.98px) {
+  .carrossel__trilho {
+    --visiveis: 2;
+  }
+}
+
+/* ========== < 768 px: 1 card + espiada do próximo (Mobile.dc.html) ========== */
+@media (max-width: 767.98px) {
+  .planos {
+    padding: 90px 0 120px;
+  }
+
+  .seg {
+    display: flex;
+    align-self: stretch;
+    padding: 4px;
+  }
+
+  .seg button {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 44px;
+    padding: 0 10px;
+    font-size: 13px;
+  }
+
+  .planos__mercado {
+    margin-top: 6px;
+  }
+
+  .planos__corpo {
+    margin-top: 16px;
+    padding-inline: 0;
+  }
+
+  /* Aqui o trilho vai de borda a borda; o próximo card aparece de propósito (a espiada) */
+  .carrossel__trilho {
+    --visiveis: 1;
+    --pad: var(--gutter);
+    --vao: 14px;
+    margin-inline: 0;
+  }
+
+  .card {
+    flex-basis: 86%;
+    gap: 18px;
+    padding: 46px 14px 18px;
+  }
+
+  .card--destaque {
+    padding: 45px 13px 17px;
+  }
+
+  .card__aba {
+    top: -25px;
+    height: 50px;
+  }
+
+  .card__aba h4 {
+    font-size: 28px;
+  }
+
+  .card .selo-plano {
+    top: -28px;
+    right: -10px;
+    width: 66px;
+    height: 66px;
+  }
+
+  .card .selo-plano b {
+    font-size: 20px;
+  }
+
+  .card .selo-plano small {
+    font-size: 10px;
+  }
+
+  .card__tarja {
+    margin-top: -4px;
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .card__chips {
+    gap: 6px;
+  }
+
+  .chip {
+    gap: 4px;
+    min-height: 54px;
+    padding: 6px 3px;
+  }
+
+  .chip span {
+    font-size: 10px;
+  }
+
+  .card__de {
+    font-size: 14px;
+  }
+
+  .card__parcela span {
+    font-size: 32px;
+  }
+
+  .card__parcela b {
+    font-size: 46px;
+  }
+
+  .card__avista {
+    font-size: 19px;
+  }
+
+  .card__nota {
+    font-size: 11px;
+  }
+
+  /* Abas em duas linhas de três, como na home */
+  .carrossel__abas {
+    padding-inline: var(--gutter);
+  }
+
+  .carrossel__aba {
+    flex: 0 0 calc((100% - 8px) / 3);
+    padding: 0 6px;
+    font-size: 15px;
+  }
+}
