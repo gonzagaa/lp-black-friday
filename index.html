@@ -10,8 +10,10 @@
   <!-- Favicon provisório (evita o 404 do /favicon.ico); o do brand kit entra na Fase 6 -->
   <link rel="icon" href="data:,">
 
-  <!-- Fontes da hero: Plus Jakarta Sans 800 (H1) e Inter (corpo) -->
+  <!-- Fontes da hero: Plus Jakarta Sans 800 (H1), 700 (rótulo dos botões da nav e da hero) e Inter (corpo).
+       Sem o preload da 700, o rótulo troca de fonte depois da pintura e o botão muda de largura (CLS). -->
   <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="css/tokens.css">
@@ -53,8 +55,80 @@
 
   <div class="grao" aria-hidden="true"></div>
 
+  <!-- NAV: fica fora do <main> para o sticky valer na página inteira (dentro da hero, com overflow:hidden, ele não grudaria) -->
+  <header class="cabecalho">
+    <nav class="nav" aria-label="Principal">
+      <a class="nav__marca" href="#topo" aria-label="Black Friday Zero7 — início">
+        <img src="assets/marca/completa-escuro.svg" alt="" width="93" height="46">
+      </a>
+      <div class="nav__links">
+        <a class="nav__link" href="#beneficios">Benefícios</a>
+        <a class="nav__link" href="#planos">Planos</a>
+        <a class="nav__link" href="#comunidade">Comunidade</a>
+        <a class="nav__link" href="https://app.zero7.com.br/login" target="_blank" rel="noopener">Área do Trader</a>
+        <a class="fbtn fbtn--sm" href="#planos"><span class="fbtn__label">Aproveitar</span><span class="fbtn__cap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      </div>
+      <button class="ibtn ibtn--sm nav__menu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h10"/></svg></button>
+    </nav>
+  </header>
+
+  <!-- Menu abaixo de 900 px: painel de vidro em tela cheia (dialog modal: foco preso, Esc e clique fora fecham) -->
+  <dialog class="menu" id="menu" aria-label="Menu">
+    <div class="menu__conteudo">
+      <div class="menu__topo">
+        <img class="menu__marca" src="assets/marca/completa-escuro.svg" alt="" width="93" height="46">
+        <button class="ibtn ibtn--sm menu__fechar" type="button" aria-label="Fechar menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <ul class="menu__lista">
+        <li><a class="menu__link" href="#beneficios">Benefícios<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+        <li><a class="menu__link" href="#planos">Planos<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+        <li><a class="menu__link" href="#comunidade">Comunidade<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+        <li><a class="menu__link" href="https://app.zero7.com.br/login" target="_blank" rel="noopener">Área do Trader<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></li>
+      </ul>
+      <a class="fbtn fbtn--block" href="#planos"><span class="fbtn__label">Aproveitar</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
+  </dialog>
+
   <main>
-    <section id="topo"></section>
+    <!-- HERO: horizonte em CSS -->
+    <section id="topo" class="hero" aria-labelledby="hero-titulo">
+      <!-- P6 (Fase 6): imagem de fundo gerada por IA. Quando os arquivos existirem em assets/img/,
+           descomente o picture abaixo e esconda o .horizonte. O horizonte em CSS continua como fallback.
+      <picture class="hero__fundo">
+        <source media="(max-width: 600px)" srcset="assets/img/hero-bg-mobile.avif" type="image/avif">
+        <source media="(max-width: 600px)" srcset="assets/img/hero-bg-mobile.webp" type="image/webp">
+        <source srcset="assets/img/hero-bg-desktop.avif" type="image/avif">
+        <img src="assets/img/hero-bg-desktop.webp" alt="" width="1920" height="1080" fetchpriority="high">
+      </picture>
+      -->
+      <div class="horizonte" aria-hidden="true">
+        <div class="sky"></div>
+        <div class="sky-grid grade"></div>
+        <div class="rays"></div>
+        <div class="glow-rise"></div>
+        <span class="star" style="left: 8%; top: 24%"></span>
+        <span class="star" style="left: 17%; top: 61%; animation-delay: 1.2s"></span>
+        <span class="star" style="left: 29%; top: 14%; animation-delay: 2.1s"></span>
+        <span class="star" style="left: 71%; top: 19%; animation-delay: .6s"></span>
+        <span class="star" style="left: 84%; top: 48%; animation-delay: 1.8s"></span>
+        <span class="star" style="left: 92%; top: 12%; animation-delay: 2.6s"></span>
+        <span class="star" style="left: 63%; top: 66%; animation-delay: 3.1s"></span>
+        <svg class="sparkle" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="left: 5%; top: 14%"><path d="M12 0l2.2 9.8L24 12l-9.8 2.2L12 24l-2.2-9.8L0 12l9.8-2.2z"/></svg>
+        <svg class="sparkle" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="left: 6%; top: 78%; animation-delay: 2s"><path d="M12 0l2.2 9.8L24 12l-9.8 2.2L12 24l-2.2-9.8L0 12l9.8-2.2z"/></svg>
+        <div class="planet"></div>
+      </div>
+
+      <div class="hero__conteudo">
+        <!-- Quebra em todas as larguras: "A maior black" / "da história." + selo; a luz pega "da história." inteiro (ajustes do cliente) -->
+        <h1 class="hero__titulo" id="hero-titulo">A maior black<br> <span class="h1-ancora"><span class="h1-luz">da história<span class="ponto">.</span></span><span class="selo-pino"><span class="selo-hero" role="img" aria-label="80% OFF"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-hero-cor)"/><use href="#selo-serrilhado" fill="url(#selo-hero-brilho)"/><circle cx="50" cy="50" r="38"/></svg><b>80%<small>OFF</small></b></span></span></span></h1>
+        <p class="hero__sub">+ um pacote completo para levar sua jornada no trading para outro nível:</p>
+        <div class="hero__acoes">
+          <!-- A partir de 768 px, versão escura (.fbtn--escuro): o laranja sumia na luz do horizonte. No mobile, laranja. -->
+          <a class="fbtn fbtn--escuro" href="#planos"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        </div>
+      </div>
+    </section>
+
     <section id="beneficios"></section>
     <section id="planos"></section>
     <section id="comunidade"></section>

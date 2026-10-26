@@ -1,1 +1,513 @@
-/* Seção #topo (nav + hero): Fase 2 */
+/* Seção #topo (nav + hero): Fase 2.
+   Valores da seção HERO de _referencia/canvas/Main.dc.html; em ≤ 600 px, de Mobile.dc.html (print 03). */
+
+:root {
+  --nav-margem: 18px; /* distância da nav ao topo com a página parada (no protótipo, o padding do header) */
+  --nav-altura: 70px; /* 10 + botão de 48 + 10 + borda */
+  --nav-lateral: var(--gutter);
+}
+
+@media (max-width: 600px) {
+  :root {
+    --nav-margem: 16px;
+    --nav-altura: 62px; /* 8 + botão de menu de 44 + 8 + borda */
+    --nav-lateral: 14px;
+  }
+}
+
+/* Âncoras não ficam escondidas atrás da nav fixa */
+html {
+  scroll-padding-top: calc(var(--nav-margem) + var(--nav-altura) + 16px);
+}
+
+/* O menu aberto trava a rolagem da página */
+html.menu-aberto {
+  overflow: hidden;
+}
+
+/* ========== NAV ========== */
+.cabecalho {
+  position: sticky;
+  top: 16px;
+  z-index: 60;
+  margin-top: var(--nav-margem);
+  padding-inline: var(--nav-lateral);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: var(--container);
+  height: var(--nav-altura);
+  margin-inline: auto;
+  padding: 10px 10px 10px 22px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: var(--raio-assinatura);
+  background-color: rgba(6, 5, 5, .62);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: 2px 3px 8px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255, 255, 255, .04);
+  transition: background-color var(--dur-3);
+}
+
+/* Depois de 80 px de rolagem (js/modulos/nav.js) */
+.nav--opaca {
+  background-color: rgba(6, 5, 5, .85);
+}
+
+.nav__marca {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+}
+
+.nav__marca img {
+  width: auto;
+  height: 46px;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Protótipo: padding 14px 8px (42 px de altura). Aqui 44 px, a área de toque mínima, com o mesmo visual. */
+.nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 8px;
+  font: 500 14px/1 var(--fonte-texto);
+  color: var(--cor-texto-2);
+  text-decoration: none;
+  transition: color var(--dur-1);
+}
+
+.nav__link:hover {
+  color: #fff;
+}
+
+.nav__menu {
+  display: none;
+}
+
+@media (max-width: 899.98px) {
+  .nav__links {
+    display: none;
+  }
+
+  .nav__menu {
+    display: grid;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav {
+    padding: 8px 8px 8px 16px;
+  }
+
+  .nav__marca img {
+    height: 38px;
+  }
+}
+
+/* ========== MENU (abaixo de 900 px) ========== */
+.menu {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: var(--nav-margem) var(--nav-lateral) 32px;
+  overflow-y: auto;
+  border: 0;
+  color: #fff;
+  background-color: rgba(6, 5, 5, .85);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+}
+
+.menu[open] {
+  animation: menu-entra var(--dur-3) var(--curva);
+}
+
+.menu::backdrop {
+  background: transparent;
+}
+
+/* Grão também no painel (o dialog fica por cima do grão global) */
+.menu::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: url(../../assets/texturas/grain.png) repeat;
+  background-size: 240px;
+  opacity: .55;
+  mix-blend-mode: soft-light;
+}
+
+.menu__conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: var(--container);
+  margin-inline: auto;
+}
+
+/* Mesmo desenho da nav: o botão de fechar cai exatamente onde estava o de abrir */
+.menu__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-altura);
+  padding: 10px 10px 10px 22px;
+  border: 1px solid transparent;
+}
+
+.menu__marca {
+  width: auto;
+  height: 46px;
+}
+
+.menu__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--cor-linha);
+}
+
+.menu__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 72px;
+  padding: 0 4px;
+  border-bottom: 1px solid var(--cor-linha);
+  font: 800 clamp(30px, 8vw, 40px)/1 var(--fonte-display);
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu__link svg {
+  flex: 0 0 auto;
+  color: var(--cor-texto-3);
+  transition: transform var(--dur-2) var(--curva), color var(--dur-2);
+}
+
+.menu__link:hover {
+  color: #fff;
+}
+
+.menu__link:hover svg {
+  color: #fff;
+  transform: translateX(4px);
+}
+
+@keyframes menu-entra {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .menu__topo {
+    padding: 8px 8px 8px 16px;
+  }
+
+  .menu__marca {
+    height: 38px;
+  }
+}
+
+/* ========== HERO ========== */
+/* Ajuste do cliente: hero mais baixa (era 100svh). A altura vem do clamp, mas nunca a ponto de o CTA
+   cair no miolo quente do brilho: o padding de baixo do conteúdo garante a folga (--folga-brilho).
+   A geometria do horizonte é medida a partir da base. No protótipo, numa hero de 1000 px: arco a 210,
+   brilho a 150 e raios a 205. Aqui o arco desce para 150 e o resto acompanha (mesmos degradês e intensidade). */
+.hero {
+  --arco: 150px; /* topo do arco do planeta acima da base */
+  --brilho-base: calc(var(--arco) - 60px); /* base do .glow-rise, onde o brilho é mais forte */
+  --raios-base: calc(var(--arco) - 5px);
+  --folga-brilho: 175px; /* da base do CTA ao centro do brilho: onde ficava o contador aprovado no print 01 */
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(640px, 82vh, 860px);
+  min-height: clamp(640px, 82svh, 860px);
+  margin-top: calc(-1 * (var(--nav-margem) + var(--nav-altura))); /* sobe por baixo da nav */
+  overflow: hidden;
+}
+
+/* P6: imagem de IA (preparada, comentada no HTML) */
+.hero__fundo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Horizonte: camadas na ordem do protótipo */
+.horizonte {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 60% at 50% 100%, rgba(255, 106, 26, .3), rgba(229, 43, 36, .08) 45%, transparent 72%), var(--cor-ceu);
+}
+
+.sky-grid {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: radial-gradient(75% 70% at 50% 60%, #000 20%, transparent 80%);
+  mask-image: radial-gradient(75% 70% at 50% 60%, #000 20%, transparent 80%);
+}
+
+.rays {
+  position: absolute;
+  left: 50%;
+  bottom: var(--raios-base);
+  width: 2200px;
+  height: 1000px;
+  transform: translateX(-50%);
+  background: repeating-conic-gradient(from 270deg at 50% 100%, rgba(255, 160, 90, .11) 0deg 1deg, transparent 1deg 6.5deg);
+  -webkit-mask-image: radial-gradient(55% 85% at 50% 100%, #000 5%, transparent 70%);
+  mask-image: radial-gradient(55% 85% at 50% 100%, #000 5%, transparent 70%);
+  mix-blend-mode: screen;
+}
+
+.glow-rise {
+  position: absolute;
+  left: 50%;
+  bottom: var(--brilho-base);
+  width: 1800px;
+  height: 760px;
+  transform: translateX(-50%);
+  transform-origin: 50% 100%;
+  background: radial-gradient(40% 55% at 50% 100%, rgba(255, 214, 160, .95), rgba(255, 140, 55, .78) 20%, rgba(255, 106, 26, .45) 42%, rgba(229, 43, 36, .16) 62%, transparent 78%);
+  filter: blur(14px);
+  mix-blend-mode: screen;
+  animation: breathe 7s ease-in-out infinite;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 9px;
+  background: #fff;
+  opacity: .5;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+.sparkle {
+  position: absolute;
+  color: rgba(255, 255, 255, .85);
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+/* O topo do arco fica --arco acima da base da hero */
+.planet {
+  position: absolute;
+  left: 50%;
+  top: calc(100% - var(--arco));
+  width: 2600px;
+  height: 1600px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(38% 7% at 50% 0%, #4a200c, #0c0504 60%, var(--cor-planeta) 80%);
+  box-shadow:
+    inset 0 3px 0 #ffe0bf,
+    inset 0 16px 44px -8px rgba(255, 120, 40, .7),
+    0 -2px 6px rgba(255, 230, 200, .95),
+    0 -8px 34px rgba(255, 150, 70, .9),
+    0 -50px 150px rgba(255, 106, 26, .6),
+    0 -160px 320px rgba(229, 43, 36, .28);
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.05, 1.1);
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: .15;
+  }
+
+  50% {
+    opacity: .8;
+  }
+}
+
+/* Conteúdo */
+.hero__conteudo {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  /* Protótipo: 110 px em cima e 260 embaixo (hero de 1000 px) */
+  padding: calc(var(--nav-margem) + var(--nav-altura) + 72px) var(--gutter) calc(var(--brilho-base) + var(--folga-brilho));
+  text-align: center;
+}
+
+.hero__titulo {
+  font: 800 var(--fs-h1)/1 var(--fonte-impacto);
+  letter-spacing: var(--tracking-impacto);
+  color: #fff;
+}
+
+/* Linha 2: "da história." + o selo, sempre juntos.
+   Inline (e não inline-block como no protótipo): assim o texto faz parte do bloco do H1, e o LCP é o H1
+   inteiro também no mobile.
+   Ajuste óptico do cliente: a linha 2 vai .41em para a esquerda, para compensar o peso do selo. O centro
+   do conjunto "da história." + selo fica .15em à direita do centro da linha 1 (critério: entre .10 e .20em).
+   Como a linha é centralizada, .82em de sobra à direita empurram o texto .41em para a esquerda: o mesmo
+   efeito de um translateX(-.41em). Não usei transform (não vale em inline) nem position:relative + left
+   (o Chrome passa a contar o trecho como LCP separado, e o LCP deixa de ser o H1). */
+.h1-ancora {
+  padding-right: .82em;
+  white-space: nowrap;
+}
+
+/* Pino de largura zero logo depois do ponto, com o topo no topo da linha: a referência do selo */
+.selo-pino {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 1em;
+  vertical-align: top;
+}
+
+/* "da história." recebe a luz do horizonte, de leve, na base das letras; a linha 1 fica branca pura */
+.h1-luz {
+  background: linear-gradient(180deg, #fff 0%, #fff 56%, #ffe7d6 78%, #ffc49c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 14px 40px rgba(255, 106, 26, .18);
+}
+
+/* Selo colado no ponto final (componente .selo-hero em componentes.css). Ajuste do cliente: margin-left
+   -.1em (era .02em). O top pedido como ponto de partida, -.2em, faz o selo invadir o "ck" de "black"
+   (a linha 1 é mais larga e fica por cima dele): até 11,7 px de sobreposição, e ainda 2,4 px em -.12em.
+   Em -.05em a folga mínima é 3 px em qualquer largura de 360 a 1920 e em qualquer ângulo do giro.
+   O selo pode encostar no ponto; em nenhuma letra. */
+.hero .selo-hero {
+  position: absolute;
+  left: 0;
+  top: -.05em;
+  z-index: 3;
+  margin-left: -.1em;
+}
+
+.hero__sub {
+  max-width: 480px;
+  margin-top: -6px;
+  font: 400 var(--fs-lead)/1.55 var(--fonte-texto);
+  color: var(--cor-texto-2);
+}
+
+.hero__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 6px;
+}
+
+/* O contador "Termina em" saiu da hero (ajuste do cliente). O JS dele está sem uso em js/modulos/contador.js. */
+
+/* ========== HERO NO MOBILE (≤ 600 px): Mobile.dc.html / print 03 ========== */
+@media (max-width: 600px) {
+  /* Mobile.dc.html: arco a 144, brilho a 90 e raios a 110 da base */
+  .hero {
+    --arco: 144px;
+    --brilho-base: 90px;
+    --raios-base: 110px;
+    --folga-brilho: 160px;
+    min-height: clamp(620px, 86vh, 740px);
+    min-height: clamp(620px, 86svh, 740px);
+  }
+
+  .sky {
+    background: radial-gradient(90% 50% at 50% 100%, rgba(255, 106, 26, .18), transparent 70%), var(--cor-ceu);
+  }
+
+  .sky-grid {
+    -webkit-mask-image: radial-gradient(90% 70% at 50% 55%, #000 20%, transparent 80%);
+    mask-image: radial-gradient(90% 70% at 50% 55%, #000 20%, transparent 80%);
+  }
+
+  .rays {
+    width: 900px;
+    height: 520px;
+  }
+
+  .glow-rise {
+    width: 860px;
+    height: 520px;
+    filter: blur(10px);
+  }
+
+  /* Planeta menor, para o arco curvar como no print 03 */
+  .planet {
+    width: 1100px;
+    height: 800px;
+    box-shadow:
+      inset 0 3px 0 #ffe0bf,
+      inset 0 14px 36px -8px rgba(255, 120, 40, .7),
+      0 -2px 6px rgba(255, 230, 200, .95),
+      0 -8px 28px rgba(255, 150, 70, .9),
+      0 -40px 110px rgba(255, 106, 26, .6),
+      0 -120px 220px rgba(229, 43, 36, .28);
+  }
+
+  /* Mobile.dc.html: 150 px acima do H1, numa hero de 844. Reduzido na mesma proporção da altura. */
+  .hero__conteudo {
+    gap: 22px;
+    padding: calc(var(--nav-margem) + var(--nav-altura) + 128px) 18px calc(var(--brilho-base) + var(--folga-brilho));
+  }
+
+  .hero__titulo {
+    font-size: 47px;
+    line-height: 1.02;
+  }
+
+  .hero__sub {
+    margin-top: 0;
+  }
+
+  .hero__acoes {
+    align-self: stretch;
+    margin-top: 0;
+  }
+
+  .hero__acoes .fbtn {
+    display: flex;
+    width: 100%;
+  }
+}
