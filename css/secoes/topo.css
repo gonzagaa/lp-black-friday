@@ -5,6 +5,9 @@
   --nav-margem: 18px; /* distância da nav ao topo com a página parada (no protótipo, o padding do header) */
   --nav-altura: 70px; /* 10 + botão de 48 + 10 + borda */
   --nav-lateral: var(--gutter);
+  /* Topo do arco do planeta acima da base da hero. Compartilhado: a seção de benefícios sobe exatamente
+     essa altura por cima da hero, para o arco ficar inteiro e o corpo do planeta virar o fundo dela. */
+  --arco: 150px;
 }
 
 @media (max-width: 600px) {
@@ -12,6 +15,7 @@
     --nav-margem: 16px;
     --nav-altura: 62px; /* 8 + botão de menu de 44 + 8 + borda */
     --nav-lateral: 14px;
+    --arco: 144px;
   }
 }
 
@@ -234,7 +238,6 @@ html.menu-aberto {
    A geometria do horizonte é medida a partir da base. No protótipo, numa hero de 1000 px: arco a 210,
    brilho a 150 e raios a 205. Aqui o arco desce para 150 e o resto acompanha (mesmos degradês e intensidade). */
 .hero {
-  --arco: 150px; /* topo do arco do planeta acima da base */
   --brilho-base: calc(var(--arco) - 60px); /* base do .glow-rise, onde o brilho é mais forte */
   --raios-base: calc(var(--arco) - 5px);
   --folga-brilho: 175px; /* da base do CTA ao centro do brilho: onde ficava o contador aprovado no print 01 */
@@ -445,7 +448,6 @@ html.menu-aberto {
 @media (max-width: 600px) {
   /* Mobile.dc.html: arco a 144, brilho a 90 e raios a 110 da base */
   .hero {
-    --arco: 144px;
     --brilho-base: 90px;
     --raios-base: 110px;
     --folga-brilho: 160px;

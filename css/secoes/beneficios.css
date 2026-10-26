@@ -1,1 +1,368 @@
-/* Seção #beneficios: Fase 3 */
+/* Seção #beneficios: Fase 3.
+   Valores da seção #beneficios de _referencia/canvas/Main.dc.html; em < 768 px, de Mobile.dc.html (print 03). */
+
+/* ========== TRANSIÇÃO DO PLANETA ==========
+   A seção sobe --arco (a altura real do arco, definida em topo.css) por cima da base da hero. O degradê
+   começa transparente exatamente no topo do arco, que fica inteiro, e chega ao #030202 (o corpo do planeta)
+   na base da hero: o planeta vira o fundo da seção, sem corte. No protótipo: -200px fixos. */
+.beneficios {
+  position: relative;
+  margin-top: calc(-1 * var(--arco));
+  padding: calc(var(--arco) - 40px) 0 150px; /* o rótulo aparece 40 px acima da base da hero, como no print 01 */
+  background: linear-gradient(180deg, rgba(3, 2, 2, 0), var(--cor-planeta) var(--arco), #070505);
+}
+
+/* Linhas de gráfico ao fundo (no protótipo, 160 px abaixo da base da hero) */
+.beneficios__linhas {
+  position: absolute;
+  top: calc(var(--arco) + 160px);
+  left: 0;
+  width: 100%;
+  height: 400px;
+  opacity: .07;
+  pointer-events: none;
+}
+
+.beneficios__conteudo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 54px;
+}
+
+/* ========== CABEÇALHO ========== */
+.beneficios__topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.beneficios__titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 760px;
+}
+
+.beneficios__h2 {
+  font: 800 var(--fs-h2)/.9 var(--fonte-display);
+  text-transform: uppercase;
+}
+
+.beneficios__h2 span {
+  color: rgba(255, 255, 255, .38);
+}
+
+/* ========== BENTO ========== */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card-z--2 {
+  grid-column: span 2;
+}
+
+.card-z--3 {
+  grid-column: span 3;
+}
+
+.beneficio__texto {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* O <picture> do 3D não pode virar item do flex do card (empurraria os outros itens, como a pílula do 08):
+   vira uma camada absoluta do tamanho do card, e o <img> se posiciona dentro dela como no protótipo */
+.beneficio picture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Número gigante só em contorno, ao fundo */
+.beneficio__contorno {
+  position: absolute;
+  font: 900 300px/1 var(--fonte-display);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, .07);
+  pointer-events: none;
+}
+
+/* 01: desconto */
+.beneficio--01 {
+  min-height: 360px;
+}
+
+.beneficio--01 .beneficio__texto,
+.beneficio--04 .beneficio__texto {
+  max-width: 56%;
+}
+
+.beneficio--01 .card-z__t,
+.beneficio--08 .card-z__t {
+  font-size: var(--fs-card-destaque);
+}
+
+.beneficio--01 .beneficio__contorno {
+  right: 30px;
+  bottom: -40px;
+}
+
+.beneficio--01 .card-z__3d {
+  top: 50%;
+  right: 48px;
+  width: 260px;
+  height: auto;
+  margin-top: -130px;
+}
+
+/* 02: barras crescendo */
+.beneficio__grafico {
+  width: 100%;
+  height: 90px;
+}
+
+/* 03: 10 dias, 5 acesos */
+.beneficio__progresso {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.beneficio__progresso i {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px 0;
+  background: rgba(255, 255, 255, .12);
+}
+
+.beneficio__progresso i.aceso {
+  background: var(--cor-laranja);
+}
+
+.beneficio__progresso span {
+  margin-left: 10px;
+  font: 700 14px/1 var(--fonte-display);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--cor-texto-3);
+}
+
+/* 04: repasse */
+.beneficio--04 {
+  min-height: 340px;
+}
+
+.beneficio--04 .card-z__t {
+  font-size: clamp(36px, 3.2vw, 50px);
+}
+
+.beneficio--04 .beneficio__contorno {
+  right: 24px;
+  bottom: -46px;
+  font-size: 280px;
+}
+
+.beneficio--04 .card-z__3d {
+  top: 50%;
+  right: 70px;
+  width: 230px;
+  height: auto;
+  margin-top: -120px;
+}
+
+/* 05: reinício */
+.beneficio__icone {
+  color: var(--cor-laranja-claro);
+}
+
+/* 06: candles */
+.beneficio__candles {
+  width: 100%;
+  height: 70px;
+}
+
+/* 07: sem prazo. O protótipo pede "∞" em Barlow 300, mas o glifo não existe no subset latin da Barlow:
+   o símbolo é um SVG com o mesmo tamanho e peso do print 02. */
+.beneficio__infinito {
+  color: var(--cor-laranja-claro);
+}
+
+/* 08: Mentor IAVA */
+.beneficio--08 {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 280px;
+}
+
+.beneficio--08 .beneficio__texto {
+  flex: 1 1 420px;
+  max-width: 620px;
+}
+
+.beneficio--08 .card-z__d {
+  max-width: 520px;
+}
+
+.beneficio__online {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-right: 220px;
+  padding: 14px 20px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: var(--raio-assinatura);
+  background: rgba(255, 255, 255, .03);
+  font: 700 20px/1 var(--fonte-display);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.beneficio__online i {
+  width: 8px;
+  height: 8px;
+  border-radius: 9px;
+  background: #4ADE80;
+  box-shadow: 0 0 10px #4ADE80;
+}
+
+.beneficio--08 .card-z__3d {
+  right: 70px;
+  bottom: -40px;
+  width: 170px;
+  height: auto;
+}
+
+/* CTA da seção */
+.beneficios__acao {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+/* ========== 768–1199 px: 2 colunas ==========
+   Os cards de 2 e 3 colunas ocupam a linha inteira. O 07 também, para não sobrar um buraco ao lado dele
+   (05 e 06 dividem uma linha; o 07 ficaria sozinho em meia linha). */
+@media (max-width: 1199.98px) {
+  .bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card-z--2,
+  .card-z--3,
+  .beneficio--07 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ========== < 768 px: 1 coluna, 3D menor (Mobile.dc.html / print 03) ========== */
+@media (max-width: 767.98px) {
+  .beneficios__conteudo {
+    gap: 40px;
+  }
+
+  .bento {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .card-z {
+    min-height: 0;
+    padding: 26px 22px;
+    gap: 22px;
+  }
+
+  .beneficio__texto {
+    gap: 12px;
+  }
+
+  .card-z__n {
+    font-size: 14px;
+  }
+
+  .card-z__t,
+  .beneficio--04 .card-z__t {
+    font-size: 32px;
+  }
+
+  .beneficio--01 .card-z__t,
+  .beneficio--08 .card-z__t {
+    font-size: 40px;
+  }
+
+  .card-z__d {
+    font-size: 15px;
+  }
+
+  /* 01 e 04: texto à esquerda, 3D pequeno no canto de baixo */
+  .beneficio--01,
+  .beneficio--04 {
+    min-height: 300px;
+  }
+
+  /* Título na largura toda; só a descrição fica estreita, para não passar por cima do 3D (Mobile.dc.html) */
+  .beneficio--01 .beneficio__texto,
+  .beneficio--04 .beneficio__texto {
+    max-width: none;
+  }
+
+  .beneficio--01 .card-z__d,
+  .beneficio--04 .card-z__d {
+    max-width: 220px;
+  }
+
+  .beneficio--01 .beneficio__contorno,
+  .beneficio--04 .beneficio__contorno {
+    right: -10px;
+    bottom: -40px;
+    font-size: 210px;
+  }
+
+  .beneficio--01 .card-z__3d,
+  .beneficio--04 .card-z__3d {
+    top: auto;
+    right: 14px;
+    bottom: 18px;
+    width: 130px;
+    margin-top: 0;
+  }
+
+  /* 08: texto em cima, selo "Online 24h" embaixo à esquerda, cavalo menor à direita */
+  .beneficio--08 {
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 420px;
+  }
+
+  .beneficio--08 .beneficio__texto {
+    flex: 0 0 auto;
+  }
+
+  .beneficio__online {
+    margin-right: 0;
+    padding: 12px 16px;
+    font-size: 18px;
+  }
+
+  .beneficio--08 .card-z__3d {
+    right: 18px;
+    bottom: -24px;
+    width: 96px;
+  }
+
+  .beneficios__acao .fbtn {
+    display: flex;
+    width: 100%;
+  }
+}

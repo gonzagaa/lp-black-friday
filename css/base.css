@@ -163,6 +163,24 @@ body {
   border: 0;
 }
 
+/* Entrada por rolagem (js/modulos/revelar.js): os itens nascem escondidos só se há JS e o movimento é
+   permitido. Rede de segurança: se o módulo não chegar a rodar (.revelar-pronto), eles aparecem sozinhos em 3 s. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-revelar]:not(.revelado) {
+    opacity: 0;
+  }
+
+  .js:not(.revelar-pronto) [data-revelar]:not(.revelado) {
+    animation: revelar-sem-js 0s 3s forwards;
+  }
+}
+
+@keyframes revelar-sem-js {
+  to {
+    opacity: 1;
+  }
+}
+
 /* Movimento reduzido: desliga toda animação e transição */
 @media (prefers-reduced-motion: reduce) {
   html {
