@@ -4,6 +4,7 @@
 // Planos: módulos de js/modulos/home/ são PORTES do JS da home (ver o cabeçalho de cada um).
 import { iniciarNav } from './modulos/nav.js';
 import { iniciarRevelar } from './modulos/revelar.js';
+import { iniciarRolagem } from './modulos/rolagem.js';
 import { iniciarSelet4 } from './modulos/home/selet4.js';
 import { iniciarPlanosAtivo } from './modulos/home/planosAtivo.js';
 import { iniciarBlackPlanos } from './modulos/home/blackPlanos.js';
@@ -11,6 +12,7 @@ import { iniciarCarrosselPlanos } from './modulos/home/carrosselPlanos.js';
 
 iniciarNav();
 iniciarRevelar();
+iniciarRolagem();
 iniciarSelet4();
 iniciarPlanosAtivo();
 iniciarCarrosselPlanos(iniciarBlackPlanos());

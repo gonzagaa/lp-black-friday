@@ -82,6 +82,7 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
     - Imagens em AVIF/WebP com `width`/`height` e `loading="lazy"` abaixo da dobra.
     - Fontes locais em woff2, com preload só das usadas na hero.
     - Sem bibliotecas pesadas: o carrossel usa CSS scroll-snap e JS próprio, sem Swiper, GSAP ou Lenis.
+      - Exceção aprovada pelo cliente: rolagem suave com o Lenis 1.1.14, como na home (`vendor/lenis-1.1.14/`, `js/modulos/rolagem.js`): carregado depois do load, em idle, e desligado com movimento reduzido. Modais e o menu levam `data-lenis-prevent`.
       - Exceção aprovada pelo cliente: a seção de planos usa o Swiper 11.2.10 da home (`vendor/swiper-11.2.10/`, carregado sob demanda depois do load, em idle), porque o carrossel é portado literalmente da home. Só ali.
     - Metas: LCP < 2,5 s no mobile, CLS < 0,05, primeira dobra < 800 KB.
 11. **Tracking e terceiros.** Não adicione GTM, Pixel ou similares sem pedido explícito. O selo do Reclame Aqui entra igual à home (Fase 5).

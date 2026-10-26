@@ -1100,3 +1100,38 @@ Rodei de novo, sem regressão:
 - O `live-server --mount=/a-maior-black:.` devolveu 404 na própria subpasta no Windows. Além disso, ele serviria a pasta também na raiz, e um caminho absoluto passaria despercebido. Por isso criei `scripts/servir-subpasta.mjs`: serve a pasta só em `/a-maior-black/` e responde 404 em todo o resto.
 - **Resultado em http://localhost:5502/a-maior-black/ (390 e 1440, página rolada inteira e os dois mercados):** 38 requisições (html, 10 css, 6 woff2, 11 js com o Swiper, svg, png, avif, json); nenhum 404, nenhuma requisição fora da subpasta, console limpo e os 8 planos prontos. Vou repetir o teste na Fase 5, com os vídeos.
 - A tabela de pendências do `PROMPTS-LP-BLACK.md` foi atualizada: P3 resolvida, P2 aguardando os preços do cliente. O commit leva junto as suas alterações que estavam abertas nesse arquivo (porta 5501, vídeos do HUB e logo animada na Fase 5).
+
+---
+
+## Adendo 2: Lenis e barra de rolagem fina (commit "ajuste: rolagem suave com Lenis e barra fina")
+
+A mensagem com as especificações não chegou a esta sessão. O cliente aprovou a proposta abaixo.
+
+**Lenis 1.1.14, como na home** (`js/modulos/rolagem.js`, `vendor/lenis-1.1.14/`: JS, CSS do pacote e LICENSE):
+- `duration: 1.1` e `easing: t => 1 − (1 − t)^4`, iguais à home. Sem o `console.log` de cada rolagem que a home tem.
+- Local e com caminho relativo, sem CDN. Carregado depois do load, em idle: não entra na primeira dobra. Até ele chegar, vale o `scroll-behavior: smooth` nativo.
+- Desligado com `prefers-reduced-motion`: o script nem é baixado.
+- **Âncoras:** o 1.1.14 não as trata. O módulo rola com `lenis.scrollTo` até a seção, descontando o `scroll-padding-top` (a nav fixa), e põe o `#` no endereço.
+- **Menu aberto:** o Lenis para e a página não rola por baixo. O menu tem `data-lenis-prevent`, e os modais da Fase 5 vão levar o mesmo.
+- CSS do pacote em `base.css`. Regra 10 do CLAUDE.md: exceção registrada.
+
+**Barra fina:** 6 px. Trilho na cor da base (`#050404`) e polegar branco .18, que vai a .32 no hover, com raio de pílula. Chromium e Safari usam o `::-webkit-scrollbar`; o Firefox, o `scrollbar-width: thin` com `scrollbar-color`.
+
+**Testes de rolagem:**
+
+| Teste | Resultado |
+|---|---|
+| Lenis ligado (1440, sem movimento reduzido) | `window.lenis` e `html.lenis` ✔ |
+| Rodinha de 400 px | 21 posições intermediárias em 40 quadros (suave), de 89 a 400 |
+| Nav → #beneficios | seção alinhada abaixo da nav (−0,3 px), endereço `#beneficios` |
+| Nav → #planos | 0,3 px, endereço `#planos` |
+| Nav → #topo | volta ao topo da página |
+| Nav → #comunidade | vai ao fim da página (a seção ainda é curta; reconfiro na Fase 5) |
+| Teclado End / Home | chega ao fim (0 px de sobra) / volta a 0 |
+| Arrastar o carrossel com o Lenis ligado | índice 2 → 4 (igual a sem Lenis) |
+| 390, menu aberto, rodinha de 600 px | a página não se move (0 px); Lenis parado |
+| 390, "Planos" no menu | menu fecha, seção a 0,5 px, foco em `#planos`, Lenis volta a rodar |
+| Movimento reduzido | sem Lenis (nem o script); âncora nativa e instantânea (0,3 px) |
+| Barra (Chromium com barras visíveis) | 6 px de largura; polegar cinza arredondado sobre o trilho escuro |
+| LCP / CLS com o Lenis | 1.808 ms (390, CPU 4× e 1,6 Mbps) / 188 ms (1440); CLS 0,0000 com rolagem até os planos |
+| Console | limpo em todos os testes |

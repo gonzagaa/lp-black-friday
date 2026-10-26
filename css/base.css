@@ -143,6 +143,52 @@ body {
   mix-blend-mode: soft-light;
 }
 
+/* Barra de rolagem fina (página e áreas com rolagem própria): trilho na cor da base, polegar branco .18
+   (.32 no hover). Chromium e Safari usam o ::-webkit-scrollbar; o Firefox, o scrollbar-width/color. */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background: var(--cor-base);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .18);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, .32);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, .18) var(--cor-base);
+  }
+}
+
+/* Lenis (js/modulos/rolagem.js): o CSS do próprio pacote (vendor/lenis-1.1.14/lenis.css) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 /* Utilitários */
 .wrap {
   max-width: var(--container);
