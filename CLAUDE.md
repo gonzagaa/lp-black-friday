@@ -46,6 +46,12 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
 - Título bicolor como o dos benefícios: "80% OFF para garantir" em branco e "o seu plano perfeito." em branco .42 (linha própria a partir de 768 px).
 - Loop do carrossel só com cards suficientes (≥ 2 × slidesPerView). Com menos (o Bitcoin), sem loop, cards centralizados, setas escondidas quando todos cabem, indicadores com o nome de cada plano e ordem do `planos.json` (aqui NÃO se replica o defeito da home).
 
+### Comunidade, fechamento e rodapé (Fase 5)
+
+- Comunidade: cabeçalho no padrão de título de seção (centralizado a partir de 768 px, Jakarta, bicolor: "Faça parte da comunidade com mais de 19 mil traders" em branco e o resto em branco .42). Sem o bloco "19K". Mídia no array `MIDIA` de `js/modulos/comunidade.js`; o arquivo de vídeo de um card só é pedido quando ele vai tocar.
+- Fechamento: a logo da campanha é o Motion V02 do brand kit portado (`scripts/portar-motion-logo.mjs` gera `motion-logo-core.js` e `motion-logo-cena.js`; não edite os gerados). Quadro final = `assets/marca/completa-escuro.svg` (idêntico, pixel a pixel).
+- Rodapé: textos e links iguais aos da home (`node scripts/diff-rodape.mjs`); o selo do Reclame Aqui usa o mesmo script da home, sem alteração.
+
 ## Regras invioláveis
 
 1. **Copy.** Use os textos da copy palavra por palavra, incluindo pontuação. Os textos que não vieram da copy estão listados na seção "Textos a aprovar" do `PROMPTS-LP-BLACK.md`. Pode usá-los, mas sinalize no relatório.

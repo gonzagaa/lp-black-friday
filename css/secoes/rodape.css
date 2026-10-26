@@ -1,1 +1,227 @@
-/* Rodapé #rodape: Fase 5 */
+/* Rodapé (#rodape): Fase 5.
+   Conteúdo da home (#footer, #pagamento e #author); pele do RODAPÉ de _referencia/canvas/Main.dc.html. Sobe em
+   candles (.div-candles). Fundo #0c0908 com o lettering BLACK FRIDAY gigante ao fundo, a .03. */
+
+.rodape {
+  overflow: hidden;
+  background: var(--cor-superficie-2);
+}
+
+.rodape__lettering {
+  position: absolute;
+  left: 50%;
+  bottom: -90px;
+  width: 1400px;
+  max-width: none;
+  height: auto;
+  opacity: .03;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.rodape__conteudo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding-top: 110px;
+  padding-bottom: 44px;
+}
+
+.rodape__colunas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+/* Coluna 1: marca, CNPJ, endereço, horário e o selo do Reclame Aqui */
+.rodape__marca {
+  display: flex;
+  flex: 1 1 340px;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 430px;
+}
+
+.rodape__marca p {
+  font: 400 14px/1.5 var(--fonte-texto);
+  color: rgba(255, 255, 255, .62);
+}
+
+.rodape__marca .rodape__cnpj {
+  font-weight: 600;
+  color: rgba(255, 255, 255, .82);
+}
+
+.rodape__logo {
+  display: block;
+  width: 150px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* O selo do RA é injetado pelo script da home; a caixa reserva o espaço dele */
+#ra-verified-seal {
+  min-height: 72px;
+  margin-top: 12px;
+}
+
+.rodape__coluna {
+  flex: 0 1 200px;
+}
+
+.rodape__titulo {
+  margin-bottom: 10px;
+  font: 700 16px/1 var(--fonte-display);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .9);
+}
+
+.rodape__coluna p {
+  font: 400 15px/1.3 var(--fonte-texto);
+  color: rgba(255, 255, 255, .62);
+}
+
+.rodape__coluna:not(nav) p {
+  padding: 9px 0;
+}
+
+.rodape__coluna a {
+  display: block;
+  padding: 9px 0;
+  color: rgba(255, 255, 255, .62);
+  text-decoration: none;
+  transition: color var(--dur-1);
+}
+
+.rodape__coluna a:hover {
+  color: #fff;
+}
+
+.rodape__coluna a:focus-visible,
+.rodape__social a:focus-visible,
+.rodape__autor a:focus-visible {
+  outline: 2px solid var(--cor-luz);
+  outline-offset: 2px;
+}
+
+/* Social: ícones em quadrados com raio 14px 0 */
+.rodape__social {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.rodape__social a {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 14px 0;
+  color: rgba(255, 255, 255, .8);
+  background: var(--cor-superficie-3);
+  box-shadow: inset 0 0 0 1px var(--cor-linha), inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+.rodape__social a:hover {
+  color: var(--cor-laranja-claro);
+}
+
+/* Formas de pagamento: 6 logos em chips 100 × 54 com raio 12px 0 */
+.rodape__pagamento {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-top: 30px;
+  border-top: 1px solid var(--cor-linha);
+}
+
+.rodape__pagamento > p {
+  margin-right: 10px;
+  font: 600 12px/1 var(--fonte-texto);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--cor-texto-4);
+}
+
+.rodape__bandeiras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rodape__bandeiras li {
+  display: grid;
+  place-items: center;
+  width: 100px;
+  height: 54px;
+  border-radius: 12px 0;
+  background: var(--cor-superficie-3);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+}
+
+.rodape__bandeiras img {
+  width: 80px;
+  height: auto;
+}
+
+/* Linha final e aviso legal */
+.rodape__autor {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 26px;
+  border-top: 1px solid var(--cor-linha);
+}
+
+.rodape__linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;
+  font: 400 13px/1.4 var(--fonte-texto);
+  color: var(--cor-texto-4);
+}
+
+.rodape__linha a {
+  display: inline-block;
+  padding-block: 12px; /* área de toque de 44 px */
+  color: rgba(255, 255, 255, .7);
+}
+
+.rodape__linha a:hover {
+  color: #fff;
+}
+
+.rodape__aviso {
+  max-width: 1000px;
+  font: 400 12px/1.6 var(--fonte-texto);
+  color: var(--cor-texto-4);
+}
+
+@media (max-width: 767.98px) {
+  .rodape__conteudo {
+    gap: 40px;
+    padding-top: 90px;
+  }
+
+  .rodape__colunas {
+    gap: 36px 24px;
+  }
+
+  .rodape__coluna {
+    flex: 1 1 140px;
+  }
+
+  .rodape__lettering {
+    width: 760px;
+    bottom: -40px;
+  }
+}

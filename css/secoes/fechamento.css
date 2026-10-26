@@ -1,1 +1,95 @@
-/* Seção #fechamento: Fase 5 */
+/* Seção #fechamento: Fase 5.
+   Eclipse e grade do FECHAMENTO de _referencia/canvas/Main.dc.html. Dentro do eclipse, acima da frase, a logo da
+   campanha (Motion V02, js/modulos/motion-logo.js): 520 px no desktop e 300 px no mobile. */
+
+.fechamento {
+  position: relative;
+  overflow: hidden;
+  padding: 160px var(--gutter) 220px;
+  background: var(--cor-base);
+}
+
+.fechamento__grade {
+  position: absolute;
+  inset: 0;
+  opacity: .5;
+  -webkit-mask-image: radial-gradient(50% 50% at 50% 50%, #000, transparent 75%);
+  mask-image: radial-gradient(50% 50% at 50% 50%, #000, transparent 75%);
+  pointer-events: none;
+}
+
+/* Eclipse do protótipo. A logo entrou acima da frase, e o conteúdo ficou mais alto que o círculo de 620 px:
+   ele cresce para 760 px no desktop, mantendo o mesmo desenho (aro aceso em cima, brilho laranja). */
+.eclipse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 760px;
+  height: 760px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 30%, #120c0a, #030202 70%);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 190, 130, .65),
+    inset 0 18px 40px -10px rgba(255, 106, 26, .35),
+    0 -4px 30px rgba(255, 140, 70, .35),
+    0 -40px 140px rgba(255, 106, 26, .22);
+  transform: translate(-50%, -46%);
+  pointer-events: none;
+}
+
+.fechamento__conteudo {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 34px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Área da logo: mesma proporção do quadro final (completa-escuro.svg, 1306 × 646), então a troca da imagem
+   estática pela animação não mexe no layout. O ingresso entra voando de fora da área (overflow visível no SVG). */
+.fechamento__marca {
+  width: min(520px, 100%);
+  aspect-ratio: 1306 / 646;
+}
+
+.fechamento__marca img,
+.fechamento__marca svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Frase: mesmo estilo do H1 da hero, sem degradê */
+.fechamento__frase {
+  font: 800 clamp(52px, 6.6vw, 104px)/1 var(--fonte-impacto);
+  letter-spacing: var(--tracking-impacto);
+  color: #fff;
+  text-wrap: balance;
+}
+
+@media (max-width: 767.98px) {
+  .fechamento {
+    padding: 120px var(--gutter) 160px;
+  }
+
+  .eclipse {
+    width: min(620px, 160vw);
+    height: min(620px, 160vw);
+  }
+
+  .fechamento__conteudo {
+    gap: 28px;
+  }
+
+  .fechamento__marca {
+    width: 300px;
+  }
+
+  .fechamento__frase {
+    font-size: var(--fs-h1);
+  }
+}

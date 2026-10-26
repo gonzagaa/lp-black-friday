@@ -4,8 +4,8 @@
 // - Com prefers-reduced-motion: sem Lenis.
 // - Âncoras da página (#planos etc.): o Lenis 1.1.14 não as trata; aqui elas rolam com lenis.scrollTo até o
 //   alvo, descontando o scroll-padding-top do <html> (a nav fixa), e o endereço ganha o #.
-// - Menu aberto (html.menu-aberto) e qualquer [data-lenis-prevent] (menu, modais): o Lenis para e a rolagem
-//   de dentro deles é a nativa.
+// - Menu ou modal de vídeo aberto (html.menu-aberto / html.modal-aberto) e qualquer [data-lenis-prevent]: o Lenis
+//   para e a rolagem de dentro deles é a nativa.
 // - Diferente da home: sem o console.log de cada evento de rolagem.
 
 const LENIS_JS = 'vendor/lenis-1.1.14/lenis.min.js';
@@ -32,9 +32,9 @@ function armar(Lenis) {
   };
   requestAnimationFrame(quadro);
 
-  // Menu aberto: a página não rola por baixo
+  // Menu ou modal aberto: a página não rola por baixo
   const html = document.documentElement;
-  const acompanharMenu = () => (html.classList.contains('menu-aberto') ? lenis.stop() : lenis.start());
+  const acompanharMenu = () => (html.classList.contains('menu-aberto') || html.classList.contains('modal-aberto') ? lenis.stop() : lenis.start());
   new MutationObserver(acompanharMenu).observe(html, { attributes: true, attributeFilter: ['class'] });
 
   // Âncoras: o clique chega aqui depois do nav.js (que fecha o menu e devolve a rolagem)

@@ -33,7 +33,7 @@ Estes textos **não estão na copy**. Eles entram na LP, mas cada relatório pre
 | Hero | "Termina em" (contador) |
 | Benefícios | rótulo "O pacote da Black"; título "Um pacote completo para o próximo nível."; link "Ir direto para os planos"; selo "Online 24h" no card Mentor IAVA; título curto do card 03, "Conta real com 10 dias na incubadora" (a copy diz "Transição para conta real com 10 dias na incubadora.") |
 | Planos | rótulo "Planos Black Friday" |
-| Comunidade | rótulo "Ecossistema Zero7"; número "19K traders na comunidade"; "Vídeo em breve" |
+| Comunidade | rótulo "Ecossistema Zero7"; "Vídeo em breve" (o bloco "19K traders na comunidade" foi removido a pedido do cliente) |
 
 ## Pendências de negócio (não bloqueiam as fases)
 

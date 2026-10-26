@@ -9,6 +9,9 @@ import { iniciarSelet4 } from './modulos/home/selet4.js';
 import { iniciarPlanosAtivo } from './modulos/home/planosAtivo.js';
 import { iniciarBlackPlanos } from './modulos/home/blackPlanos.js';
 import { iniciarCarrosselPlanos } from './modulos/home/carrosselPlanos.js';
+import { iniciarComunidade } from './modulos/comunidade.js';
+import { iniciarFechamento } from './modulos/fechamento.js';
+import { iniciarRodape } from './modulos/rodape.js';
 
 iniciarNav();
 iniciarRevelar();
@@ -16,3 +19,6 @@ iniciarRolagem();
 iniciarSelet4();
 iniciarPlanosAtivo();
 iniciarCarrosselPlanos(iniciarBlackPlanos());
+iniciarComunidade();
+iniciarFechamento();
+iniciarRodape();
