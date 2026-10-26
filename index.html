@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/secoes/topo.css">
   <link rel="stylesheet" href="css/secoes/beneficios.css">
   <link rel="stylesheet" href="css/secoes/planos.css">
+  <link rel="stylesheet" href="css/secoes/planos-black.css">
   <link rel="stylesheet" href="css/secoes/comunidade.css">
   <link rel="stylesheet" href="css/secoes/fechamento.css">
   <link rel="stylesheet" href="css/secoes/rodape.css">
@@ -237,226 +238,367 @@
       </div>
     </section>
 
-    <!-- PLANOS: layout da home (section#plan), pele Black. Preços, checkout, modo e prazo vêm do planos.json. -->
-    <section id="planos" class="planos div-candles" aria-labelledby="planos-titulo">
-      <div class="planos__grade grade" aria-hidden="true"></div>
-      <div class="wrap planos__topo cabecalho-secao">
-        <span class="tag">Planos Black Friday</span>
-        <h2 class="titulo-secao planos__h2" id="planos-titulo"><span>80% OFF</span> para garantir o seu plano perfeito<span class="ponto">.</span></h2>
-        <span class="planos__barra" aria-hidden="true"></span>
-        <div class="seg" role="radiogroup" aria-label="Escolha o mercado" data-seg>
-          <button type="button" role="radio" aria-checked="true" tabindex="0" data-ativo="indice">Mini Índice / Dólar</button>
-          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-ativo="bitcoin">Futuro de Bitcoin</button>
-        </div>
-        <h3 class="planos__mercado" data-mercado-titulo>Mini índice / Dólar</h3>
-        <!-- Modos de avaliação (mesma lógica do blackPlanos.js): só aparecem com mais de um modo ativo no planos.json -->
-        <div class="planos__modos" data-modos hidden>
-          <p class="planos__modos-titulo">ESCOLHA SEU MODELO DE AVALIAÇÃO</p>
-          <div class="planos__modos-botoes" role="group" aria-label="Modelo de avaliação" data-modos-botoes></div>
-          <div class="planos__modos-textos" data-modos-textos>
-            <p data-modo="30dias" hidden>Os planos com 30 dias de avaliação são ideais para quem tem um perfil agressivo e busca resultados maiores no dia.</p>
-            <p data-modo="60dias" hidden>Os planos com 60 dias de avaliação são ideais para quem constroe resultado dia após dia, mantendo sempre a consistência.</p>
-            <p data-modo="reinicio" hidden>Os planos com reinício tem duração de 60 dias e dentro desse período sempre que atingir o limite de perda total, pode reiniciar a sua avaliação. Esse plano é ideal para quem ainda está inseguro com sua estratégia, pois vai te permitir reajustar e tentar novamente.</p>
-          </div>
+    <!-- PLANOS: PORTE da section#plan da home (../Zero7/index.html), gerado por scripts/portar-planos-html.mjs.
+         CSS da home em css/secoes/planos.css (gerado) e a pele Black em css/secoes/planos-black.css.
+         Preços, checkout, modo e prazo vêm do planos.json (js/modulos/home/blackPlanos.js). -->
+    <section id="planos" class="planos tema div-candles" data-asset="indice" aria-labelledby="planos-titulo">
+
+    <div class="wrapper planos-topo-wrapper">
+      <div class="planos-topo-grid">
+        <div class="cabecalho-secao planos__cabecalho">
+          <span class="tag">Planos Black Friday</span>
+          <h2 class="titulo-secao planos__h2" id="planos-titulo">80% OFF para garantir <span>o seu plano perfeito<span class="ponto">.</span></span></h2>
         </div>
       </div>
 
-      <div class="wrap planos__corpo">
-        <div class="planos__ativo" data-ativo="indice">
-          <div class="carrossel" data-carrossel>
-            <div class="carrossel__trilho" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Planos Mini Índice / Dólar" data-trilho data-inicial="senior">
-            <article class="card" data-plan="trainee" aria-labelledby="plano-trainee">
-              <div class="card__aba"><h4 id="plano-trainee">Trainee</h4></div>
-              <span class="selo-plano" role="img" aria-label="80% de desconto"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-plano-cor)"/><circle cx="50" cy="50" r="37"/></svg><b>80%<small>OFF</small></b></span>
-              <div class="card__chips">
-                <div class="chip"><span>Limite por operação</span><b>8 contratos</b></div>
-                <div class="chip"><span>Limite para WIN</span><b>5 contratos</b></div>
-                <div class="chip"><span>Limite para WDO</span><b>3 contratos</b></div>
-                <div class="chip"><span>Limite de perda diária</span><b>R$&nbsp;247,00</b></div>
-                <div class="chip"><span>Limite de perda total</span><b>R$&nbsp;997,00</b></div>
-                <div class="chip"><span>Meta de aprovação</span><b>R$&nbsp;997,00</b></div>
-                <div class="chip"><span>Máximo de dias</span><b class="js-max-dias">&nbsp;</b></div>
-                <div class="chip"><span>Repasse</span><b>100% em conta real</b></div>
-              </div>
-              <div class="card__preco">
-                <p class="card__de">de <s class="js-old-price">&nbsp;</s> por</p>
-                <p class="card__parcela"><span class="js-parcelas">&nbsp;</span><b class="js-parcela-valor">&nbsp;</b></p>
-                <p class="card__avista"><i>ou</i> <span class="js-avista-valor">&nbsp;</span> <i>à vista</i></p>
-              </div>
-              <p class="card__nota js-nota" hidden></p>
-              <a class="fbtn fbtn--block js-checkout" target="_blank" rel="noopener" aria-label="Contratar plano Trainee"><span class="fbtn__label">Contratar plano</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-            </article>
-            <article class="card" data-plan="junior" aria-labelledby="plano-junior">
-              <div class="card__aba"><h4 id="plano-junior">Júnior</h4></div>
-              <span class="selo-plano" role="img" aria-label="80% de desconto"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-plano-cor)"/><circle cx="50" cy="50" r="37"/></svg><b>80%<small>OFF</small></b></span>
-              <div class="card__chips">
-                <div class="chip"><span>Limite por operação</span><b>16 contratos</b></div>
-                <div class="chip"><span>Limite para WIN</span><b>10 contratos</b></div>
-                <div class="chip"><span>Limite para WDO</span><b>6 contratos</b></div>
-                <div class="chip"><span>Limite de perda diária</span><b>R$&nbsp;497,00</b></div>
-                <div class="chip"><span>Limite de perda total</span><b>R$&nbsp;1.997,00</b></div>
-                <div class="chip"><span>Meta de aprovação</span><b>R$&nbsp;1.997,00</b></div>
-                <div class="chip"><span>Máximo de dias</span><b class="js-max-dias">&nbsp;</b></div>
-                <div class="chip"><span>Repasse</span><b>100% em conta real</b></div>
-              </div>
-              <div class="card__preco">
-                <p class="card__de">de <s class="js-old-price">&nbsp;</s> por</p>
-                <p class="card__parcela"><span class="js-parcelas">&nbsp;</span><b class="js-parcela-valor">&nbsp;</b></p>
-                <p class="card__avista"><i>ou</i> <span class="js-avista-valor">&nbsp;</span> <i>à vista</i></p>
-              </div>
-              <p class="card__nota js-nota" hidden></p>
-              <a class="fbtn fbtn--block js-checkout" target="_blank" rel="noopener" aria-label="Contratar plano Júnior"><span class="fbtn__label">Contratar plano</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-            </article>
-            <article class="card" data-plan="pleno" aria-labelledby="plano-pleno">
-              <div class="card__aba"><h4 id="plano-pleno">Pleno</h4></div>
-              <span class="selo-plano" role="img" aria-label="80% de desconto"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-plano-cor)"/><circle cx="50" cy="50" r="37"/></svg><b>80%<small>OFF</small></b></span>
-              <div class="card__chips">
-                <div class="chip"><span>Limite por operação</span><b>40 contratos</b></div>
-                <div class="chip"><span>Limite para WIN</span><b>25 contratos</b></div>
-                <div class="chip"><span>Limite para WDO</span><b>15 contratos</b></div>
-                <div class="chip"><span>Limite de perda diária</span><b>R$&nbsp;1.247,00</b></div>
-                <div class="chip"><span>Limite de perda total</span><b>R$&nbsp;4.997,00</b></div>
-                <div class="chip"><span>Meta de aprovação</span><b>R$&nbsp;4.997,00</b></div>
-                <div class="chip"><span>Máximo de dias</span><b class="js-max-dias">&nbsp;</b></div>
-                <div class="chip"><span>Repasse</span><b>100% em conta real</b></div>
-              </div>
-              <div class="card__preco">
-                <p class="card__de">de <s class="js-old-price">&nbsp;</s> por</p>
-                <p class="card__parcela"><span class="js-parcelas">&nbsp;</span><b class="js-parcela-valor">&nbsp;</b></p>
-                <p class="card__avista"><i>ou</i> <span class="js-avista-valor">&nbsp;</span> <i>à vista</i></p>
-              </div>
-              <p class="card__nota js-nota" hidden></p>
-              <a class="fbtn fbtn--block js-checkout" target="_blank" rel="noopener" aria-label="Contratar plano Pleno"><span class="fbtn__label">Contratar plano</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-            </article>
-            <article class="card card--destaque" data-plan="senior" aria-labelledby="plano-senior">
-              <div class="card__aba"><h4 id="plano-senior">Sênior</h4></div>
-              <span class="selo-plano" role="img" aria-label="80% de desconto"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-plano-cor)"/><circle cx="50" cy="50" r="37"/></svg><b>80%<small>OFF</small></b></span>
-              <p class="card__tarja">Nossos traders mais positivos operam o plano Sênior</p>
-              <div class="card__chips">
-                <div class="chip"><span>Limite por operação</span><b>80 contratos</b></div>
-                <div class="chip"><span>Limite para WIN</span><b>50 contratos</b></div>
-                <div class="chip"><span>Limite para WDO</span><b>30 contratos</b></div>
-                <div class="chip"><span>Limite de perda diária</span><b>R$&nbsp;2.497,00</b></div>
-                <div class="chip"><span>Limite de perda total</span><b>R$&nbsp;9.997,00</b></div>
-                <div class="chip"><span>Meta de aprovação</span><b>R$&nbsp;9.997,00</b></div>
-                <div class="chip"><span>Máximo de dias</span><b class="js-max-dias">&nbsp;</b></div>
-                <div class="chip"><span>Repasse</span><b>100% em conta real</b></div>
-              </div>
-              <div class="card__preco">
-                <p class="card__de">de <s class="js-old-price">&nbsp;</s> por</p>
-                <p class="card__parcela"><span class="js-parcelas">&nbsp;</span><b class="js-parcela-valor">&nbsp;</b></p>
-                <p class="card__avista"><i>ou</i> <span class="js-avista-valor">&nbsp;</span> <i>à vista</i></p>
-              </div>
-              <p class="card__nota js-nota" hidden></p>
-              <a class="fbtn fbtn--block js-checkout" target="_blank" rel="noopener" aria-label="Contratar plano Sênior"><span class="fbtn__label">Contratar plano</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-            </article>
-            <article class="card" data-plan="expert" aria-labelledby="plano-expert">
-              <div class="card__aba"><h4 id="plano-expert">Expert</h4></div>
-              <span class="selo-plano" role="img" aria-label="80% de desconto"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-plano-cor)"/><circle cx="50" cy="50" r="37"/></svg><b>80%<small>OFF</small></b></span>
-              <div class="card__chips">
-                <div class="chip"><span>Limite por operação</span><b>120 contratos</b></div>
-                <div class="chip"><span>Limite para WIN</span><b>75 contratos</b></div>
-                <div class="chip"><span>Limite para WDO</span><b>45 contratos</b></div>
-                <div class="chip"><span>Limite de perda diária</span><b>R$&nbsp;3.747,00</b></div>
-                <div class="chip"><span>Limite de perda total</span><b>R$&nbsp;14.997,00</b></div>
-                <div class="chip"><span>Meta de aprovação</span><b>R$&nbsp;14.997,00</b></div>
-                <div class="chip"><span>Máximo de dias</span><b class="js-max-dias">&nbsp;</b></div>
-                <div class="chip"><span>Repasse</span><b>100% em conta real</b></div>
-              </div>
-              <div class="card__preco">
-                <p class="card__de">de <s class="js-old-price">&nbsp;</s> por</p>
-                <p class="card__parcela"><span class="js-parcelas">&nbsp;</span><b class="js-parcela-valor">&nbsp;</b></p>
-                <p class="card__avista"><i>ou</i> <span class="js-avista-valor">&nbsp;</span> <i>à vista</i></p>
-              </div>
-              <p class="card__nota js-nota" hidden></p>
-              <a class="fbtn fbtn--block js-checkout" target="_blank" rel="noopener" aria-label="Contratar plano Expert"><span class="fbtn__label">Contratar plano</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-            </article>
-            <article class="card" data-plan="master" aria-labelledby="plano-master">
-              <div class="card__aba"><h4 id="plano-master">Master</h4></div>
-              <span class="selo-plano" role="img" aria-label="80% de desconto"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-plano-cor)"/><circle cx="50" cy="50" r="37"/></svg><b>80%<small>OFF</small></b></span>
-              <div class="card__chips">
-                <div class="chip"><span>Limite por operação</span><b>160 contratos</b></div>
-                <div class="chip"><span>Limite para WIN</span><b>100 contratos</b></div>
-                <div class="chip"><span>Limite para WDO</span><b>60 contratos</b></div>
-                <div class="chip"><span>Limite de perda diária</span><b>R$&nbsp;4.997,00</b></div>
-                <div class="chip"><span>Limite de perda total</span><b>R$&nbsp;19.997,00</b></div>
-                <div class="chip"><span>Meta de aprovação</span><b>R$&nbsp;19.997,00</b></div>
-                <div class="chip"><span>Máximo de dias</span><b class="js-max-dias">&nbsp;</b></div>
-                <div class="chip"><span>Repasse</span><b>100% em conta real</b></div>
-              </div>
-              <div class="card__preco">
-                <p class="card__de">de <s class="js-old-price">&nbsp;</s> por</p>
-                <p class="card__parcela"><span class="js-parcelas">&nbsp;</span><b class="js-parcela-valor">&nbsp;</b></p>
-                <p class="card__avista"><i>ou</i> <span class="js-avista-valor">&nbsp;</span> <i>à vista</i></p>
-              </div>
-              <p class="card__nota js-nota" hidden></p>
-              <a class="fbtn fbtn--block js-checkout" target="_blank" rel="noopener" aria-label="Contratar plano Master"><span class="fbtn__label">Contratar plano</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-            </article>
-            </div>
-            <button type="button" class="ibtn carrossel__seta carrossel__seta--ant" aria-label="Plano anterior" data-anterior><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-            <button type="button" class="ibtn carrossel__seta carrossel__seta--prox" aria-label="Próximo plano" data-proximo><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+      <div class="planos-topo-conteudo">
+        <header>
+          <div class="seg seg--ativo js-plan-asset" role="radiogroup" aria-label="Escolha o mercado">
+            <span class="seg__blob" aria-hidden="true"></span>
+            <button type="button" class="seg__option selecionado" data-asset="indice" role="radio" aria-checked="true" tabindex="0">
+              Mini Índice / Dólar
+            </button>
+            <button type="button" class="seg__option" data-asset="bitcoin" role="radio" aria-checked="false" tabindex="-1">
+              Futuro de Bitcoin
+            </button>
           </div>
-          <div class="carrossel__abas" role="group" aria-label="Escolha o plano">
-            <button type="button" class="carrossel__aba" data-aba="trainee">Trainee</button>
-            <button type="button" class="carrossel__aba" data-aba="junior">Júnior</button>
-            <button type="button" class="carrossel__aba" data-aba="pleno">Pleno</button>
-            <button type="button" class="carrossel__aba" data-aba="senior">Sênior</button>
-            <button type="button" class="carrossel__aba" data-aba="expert">Expert</button>
-            <button type="button" class="carrossel__aba" data-aba="master">Master</button>
+
+          <h3 class="js-plan-title">Mini índice / Dólar</h3>
+
+          <p class="escolha js-plan-mode-heading">ESCOLHA SEU MODELO DE AVALIAÇÃO</p>
+
+          <div class="botoes"></div>
+
+          <div class="textBotoes js-plan-mode-description">
+            <p class="mode-30dias" style="display:none;">
+              Os planos com 30 dias de avaliação são ideais para quem tem um perfil agressivo e busca resultados maiores no dia.
+            </p>
+            <p class="mode-60dias" style="display:none;">
+              Os planos com 60 dias de avaliação são ideais para quem constroe resultado dia após dia, mantendo sempre a consistência.
+            </p>
+            <p class="mode-reinicio" style="display:none;">
+              Os planos com reinício tem duração de 60 dias e dentro desse período sempre que atingir o limite de perda total, pode reiniciar a sua avaliação. Esse plano é ideal para quem ainda está inseguro com sua estratégia, pois vai te permitir reajustar e tentar novamente.
+            </p>
           </div>
-        </div>
-        <div class="planos__ativo" data-ativo="bitcoin" hidden>
-          <div class="carrossel" data-carrossel>
-            <div class="carrossel__trilho" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Planos Futuro de Bitcoin" data-trilho data-inicial="bit_junior">
-            <article class="card" data-plan="bit_junior" aria-labelledby="plano-bit-junior">
-              <div class="card__aba"><h4 id="plano-bit-junior">BIT 16</h4></div>
-              <span class="selo-plano" role="img" aria-label="80% de desconto"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-plano-cor)"/><circle cx="50" cy="50" r="37"/></svg><b>80%<small>OFF</small></b></span>
-              <div class="card__chips">
-                <div class="chip"><span>Limite por operação</span><b>16 contratos</b></div>
-                <div class="chip"><span>Limite de perda diária</span><b>R$&nbsp;497,00</b></div>
-                <div class="chip"><span>Limite de perda total</span><b>R$&nbsp;1.997,00</b></div>
-                <div class="chip"><span>Meta de aprovação</span><b>R$&nbsp;1.997,00</b></div>
-                <div class="chip"><span>Máximo de dias</span><b class="js-max-dias">&nbsp;</b></div>
-                <div class="chip"><span>Repasse</span><b>100% em conta real</b></div>
-              </div>
-              <div class="card__preco">
-                <p class="card__de">de <s class="js-old-price">&nbsp;</s> por</p>
-                <p class="card__parcela"><span class="js-parcelas">&nbsp;</span><b class="js-parcela-valor">&nbsp;</b></p>
-                <p class="card__avista"><i>ou</i> <span class="js-avista-valor">&nbsp;</span> <i>à vista</i></p>
-              </div>
-              <p class="card__nota js-nota" hidden></p>
-              <a class="fbtn fbtn--block js-checkout" target="_blank" rel="noopener" aria-label="Contratar plano BIT 16"><span class="fbtn__label">Contratar plano</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-            </article>
-            <article class="card" data-plan="bit_trainee" aria-labelledby="plano-bit-trainee">
-              <div class="card__aba"><h4 id="plano-bit-trainee">BIT 8</h4></div>
-              <span class="selo-plano" role="img" aria-label="80% de desconto"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#selo-serrilhado" fill="url(#selo-plano-cor)"/><circle cx="50" cy="50" r="37"/></svg><b>80%<small>OFF</small></b></span>
-              <div class="card__chips">
-                <div class="chip"><span>Limite por operação</span><b>8 contratos</b></div>
-                <div class="chip"><span>Limite de perda diária</span><b>R$&nbsp;247,00</b></div>
-                <div class="chip"><span>Limite de perda total</span><b>R$&nbsp;997,00</b></div>
-                <div class="chip"><span>Meta de aprovação</span><b>R$&nbsp;997,00</b></div>
-                <div class="chip"><span>Máximo de dias</span><b class="js-max-dias">&nbsp;</b></div>
-                <div class="chip"><span>Repasse</span><b>100% em conta real</b></div>
-              </div>
-              <div class="card__preco">
-                <p class="card__de">de <s class="js-old-price">&nbsp;</s> por</p>
-                <p class="card__parcela"><span class="js-parcelas">&nbsp;</span><b class="js-parcela-valor">&nbsp;</b></p>
-                <p class="card__avista"><i>ou</i> <span class="js-avista-valor">&nbsp;</span> <i>à vista</i></p>
-              </div>
-              <p class="card__nota js-nota" hidden></p>
-              <a class="fbtn fbtn--block js-checkout" target="_blank" rel="noopener" aria-label="Contratar plano BIT 8"><span class="fbtn__label">Contratar plano</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-            </article>
-            </div>
-            <button type="button" class="ibtn carrossel__seta carrossel__seta--ant" aria-label="Plano anterior" data-anterior><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-            <button type="button" class="ibtn carrossel__seta carrossel__seta--prox" aria-label="Próximo plano" data-proximo><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
-          </div>
-          <div class="carrossel__abas" role="group" aria-label="Escolha o plano">
-            <button type="button" class="carrossel__aba" data-aba="bit_junior">BIT 16</button>
-            <button type="button" class="carrossel__aba" data-aba="bit_trainee">BIT 8</button>
-          </div>
-        </div>
+        </header>
       </div>
-    </section>
+    </div>
+
+    <!-- ATIVO: Mini Índice / Dólar -->
+    <div class="plano-asset plano-asset--indice">
+
+    <div class="wrapper plano">
+      <div class="swiper mySwiper4">
+        <div class="cards swiper-wrapper">
+
+          <!-- TRAINEE -->
+          <div class="card swiper-slide" data-plan="trainee" aria-label="80% de desconto">
+            <div class="title"><h3>TRAINEE</h3></div>
+            <img class="card-etiqueta" src="assets/3d/22-etiqueta-de-oferta-320.webp" srcset="assets/3d/22-etiqueta-de-oferta-320.avif" width="320" height="616" alt="" loading="lazy" decoding="async">
+
+            <div class="topics">
+              <div class="chip"><span class="chip__rotulo">Limite por operação</span><span class="chip__valor">8 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WIN</span><span class="chip__valor">5 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WDO</span><span class="chip__valor">3 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda diária</span><span class="chip__valor">R$ 247,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda total</span><span class="chip__valor">R$ 997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Meta de aprovação</span><span class="chip__valor">R$ 997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Máximo de dias</span><span class="chip__valor js-max-dias">&nbsp;</span></div>
+              <div class="chip"><span class="chip__rotulo">Repasse</span><span class="chip__valor">100% em conta real</span></div>
+            </div>
+
+            <div class="oldPrice">
+              <p class="oldPrice__texto">de <span class="js-old-price">&nbsp;</span> por</p>
+            </div>
+
+            <div class="price">
+              <p class="js-price-parcel"><span>12x</span> &nbsp;</p>
+              <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
+            </div>
+
+            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Trainee">
+              <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
+              <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
+              <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(TRAINEE)</span></span>
+              <span class="z7-btnx__cap btn__cap" aria-hidden="true">
+                <span class="z7-btnx__arrow btn__arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </span>
+            </a>
+          </div>
+
+          <!-- JÚNIOR -->
+          <div class="card swiper-slide" data-plan="junior" aria-label="80% de desconto">
+            <div class="title"><h3>JÚNIOR</h3></div>
+            <img class="card-etiqueta" src="assets/3d/22-etiqueta-de-oferta-320.webp" srcset="assets/3d/22-etiqueta-de-oferta-320.avif" width="320" height="616" alt="" loading="lazy" decoding="async">
+
+            <div class="topics">
+              <div class="chip"><span class="chip__rotulo">Limite por operação</span><span class="chip__valor">16 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WIN</span><span class="chip__valor">10 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WDO</span><span class="chip__valor">6 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda diária</span><span class="chip__valor">R$ 497,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda total</span><span class="chip__valor">R$ 1.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Meta de aprovação</span><span class="chip__valor">R$ 1.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Máximo de dias</span><span class="chip__valor js-max-dias">&nbsp;</span></div>
+              <div class="chip"><span class="chip__rotulo">Repasse</span><span class="chip__valor">100% em conta real</span></div>
+            </div>
+
+            <div class="oldPrice">
+              <p class="oldPrice__texto">de <span class="js-old-price">&nbsp;</span> por</p>
+            </div>
+
+            <div class="price">
+              <p class="js-price-parcel"><span>12x</span> &nbsp;</p>
+              <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
+            </div>
+
+            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Júnior">
+              <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
+              <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
+              <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(JUNIOR)</span></span>
+              <span class="z7-btnx__cap btn__cap" aria-hidden="true">
+                <span class="z7-btnx__arrow btn__arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </span>
+            </a>
+          </div>
+
+          <!-- PLENO -->
+          <div class="card swiper-slide" data-plan="pleno" aria-label="80% de desconto">
+
+            <div class="title"><h3>PLENO</h3></div>
+            <img class="card-etiqueta" src="assets/3d/22-etiqueta-de-oferta-320.webp" srcset="assets/3d/22-etiqueta-de-oferta-320.avif" width="320" height="616" alt="" loading="lazy" decoding="async">
+
+            <div class="topics">
+              <div class="chip"><span class="chip__rotulo">Limite por operação</span><span class="chip__valor">40 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WIN</span><span class="chip__valor">25 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WDO</span><span class="chip__valor">15 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda diária</span><span class="chip__valor">R$ 1.247,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda total</span><span class="chip__valor">R$ 4.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Meta de aprovação</span><span class="chip__valor">R$ 4.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Máximo de dias</span><span class="chip__valor js-max-dias">&nbsp;</span></div>
+              <div class="chip"><span class="chip__rotulo">Repasse</span><span class="chip__valor">100% em conta real</span></div>
+            </div>
+
+            <div class="oldPrice">
+              <p class="oldPrice__texto">de <span class="js-old-price">&nbsp;</span> por</p>
+            </div>
+
+            <div class="price">
+              <p class="js-price-parcel"><span>12x</span> &nbsp;</p>
+              <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
+            </div>
+
+            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Pleno">
+              <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
+              <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
+              <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(PLENO)</span></span>
+              <span class="z7-btnx__cap btn__cap" aria-hidden="true">
+                <span class="z7-btnx__arrow btn__arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </span>
+            </a>
+          </div>
+
+          <!-- SÊNIOR -->
+          <div class="card swiper-slide" data-plan="senior" data-inicial aria-label="80% de desconto">
+            <div class="title"><h3>SÊNIOR</h3></div>
+            <img class="card-etiqueta" src="assets/3d/22-etiqueta-de-oferta-320.webp" srcset="assets/3d/22-etiqueta-de-oferta-320.avif" width="320" height="616" alt="" loading="lazy" decoding="async">
+
+            <div class="topics">
+              <div class="chip"><span class="chip__rotulo">Limite por operação</span><span class="chip__valor">80 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WIN</span><span class="chip__valor">50 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WDO</span><span class="chip__valor">30 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda diária</span><span class="chip__valor">R$ 2.497,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda total</span><span class="chip__valor">R$ 9.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Meta de aprovação</span><span class="chip__valor">R$ 9.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Máximo de dias</span><span class="chip__valor js-max-dias">&nbsp;</span></div>
+              <div class="chip"><span class="chip__rotulo">Repasse</span><span class="chip__valor">100% em conta real</span></div>
+            </div>
+
+            <div class="oldPrice">
+              <p class="oldPrice__texto">de <span class="js-old-price">&nbsp;</span> por</p>
+            </div>
+
+            <div class="price">
+              <p class="js-price-parcel"><span>12x</span> &nbsp;</p>
+              <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
+            </div>
+
+            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Sênior">
+              <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
+              <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
+              <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(SÊNIOR)</span></span>
+              <span class="z7-btnx__cap btn__cap" aria-hidden="true">
+                <span class="z7-btnx__arrow btn__arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </span>
+            </a>
+          </div>
+
+          <!-- EXPERT -->
+          <div class="card swiper-slide" data-plan="expert" aria-label="80% de desconto">
+            <div class="title"><h3>EXPERT</h3></div>
+            <img class="card-etiqueta" src="assets/3d/22-etiqueta-de-oferta-320.webp" srcset="assets/3d/22-etiqueta-de-oferta-320.avif" width="320" height="616" alt="" loading="lazy" decoding="async">
+
+            <div class="topics">
+              <div class="chip"><span class="chip__rotulo">Limite por operação</span><span class="chip__valor">120 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WIN</span><span class="chip__valor">75 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WDO</span><span class="chip__valor">45 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda diária</span><span class="chip__valor">R$ 3.747,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda total</span><span class="chip__valor">R$ 14.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Meta de aprovação</span><span class="chip__valor">R$ 14.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Máximo de dias</span><span class="chip__valor js-max-dias">&nbsp;</span></div>
+              <div class="chip"><span class="chip__rotulo">Repasse</span><span class="chip__valor">100% em conta real</span></div>
+            </div>
+
+            <div class="oldPrice">
+              <p class="oldPrice__texto">de <span class="js-old-price">&nbsp;</span> por</p>
+            </div>
+
+            <div class="price">
+              <p class="js-price-parcel"><span>12x</span> &nbsp;</p>
+              <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
+            </div>
+
+            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Expert">
+              <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
+              <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
+              <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(EXPERT)</span></span>
+              <span class="z7-btnx__cap btn__cap" aria-hidden="true">
+                <span class="z7-btnx__arrow btn__arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </span>
+            </a>
+          </div>
+
+          <!-- MASTER -->
+          <div class="card swiper-slide" data-plan="master" aria-label="80% de desconto">
+            <div class="title"><h3>MASTER</h3></div>
+            <img class="card-etiqueta" src="assets/3d/22-etiqueta-de-oferta-320.webp" srcset="assets/3d/22-etiqueta-de-oferta-320.avif" width="320" height="616" alt="" loading="lazy" decoding="async">
+
+            <div class="topics">
+              <div class="chip"><span class="chip__rotulo">Limite por operação</span><span class="chip__valor">160 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WIN</span><span class="chip__valor">100 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite para WDO</span><span class="chip__valor">60 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda diária</span><span class="chip__valor">R$ 4.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda total</span><span class="chip__valor">R$ 19.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Meta de aprovação</span><span class="chip__valor">R$ 19.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Máximo de dias</span><span class="chip__valor js-max-dias">&nbsp;</span></div>
+              <div class="chip"><span class="chip__rotulo">Repasse</span><span class="chip__valor">100% em conta real</span></div>
+            </div>
+
+            <div class="oldPrice">
+              <p class="oldPrice__texto">de <span class="js-old-price">&nbsp;</span> por</p>
+            </div>
+
+            <div class="price">
+              <p class="js-price-parcel"><span>12x</span> &nbsp;</p>
+              <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
+            </div>
+
+            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Master">
+              <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
+              <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
+              <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(MASTER)</span></span>
+              <span class="z7-btnx__cap btn__cap" aria-hidden="true">
+                <span class="z7-btnx__arrow btn__arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </span>
+            </a>
+          </div>
+
+        </div>
+
+        <div class="swiper-button-prev btn btn--md btn--secundaria btn--icone"></div>
+        <div class="swiper-button-next btn btn--md btn--secundaria btn--icone"></div>
+      </div>
+
+      <!-- Indicadores de plano: o global.js monta aqui um botão por plano -->
+      <div class="swiper-pagination"></div>
+    </div>
+
+    </div><!-- /.plano-asset--indice -->
+
+    <!-- ATIVO: Contrato Futuro de Bitcoin -->
+    <div class="plano-asset plano-asset--bit">
+
+    <div class="wrapper plano">
+      <div class="swiper mySwiper11">
+        <div class="cards swiper-wrapper">
+
+          <!-- BIT JÚNIOR -->
+          <div class="card swiper-slide" data-plan="bit_junior" aria-label="80% de desconto">
+            <div class="title"><h3>BIT 16</h3></div>
+            <img class="card-etiqueta" src="assets/3d/22-etiqueta-de-oferta-320.webp" srcset="assets/3d/22-etiqueta-de-oferta-320.avif" width="320" height="616" alt="" loading="lazy" decoding="async">
+
+            <div class="topics">
+              <div class="chip"><span class="chip__rotulo">Limite por operação</span><span class="chip__valor">16 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda diária</span><span class="chip__valor">R$ 497,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda total</span><span class="chip__valor">R$ 1.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Meta de aprovação</span><span class="chip__valor">R$ 1.997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Máximo de dias</span><span class="chip__valor js-max-dias">&nbsp;</span></div>
+              <div class="chip"><span class="chip__rotulo">Repasse</span><span class="chip__valor">100% em conta real</span></div>
+            </div>
+
+            <div class="oldPrice">
+              <p class="oldPrice__texto">de <span class="js-old-price">&nbsp;</span> por</p>
+            </div>
+
+            <div class="price">
+              <p class="js-price-parcel"><span>12x</span> &nbsp;</p>
+              <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
+            </div>
+
+             <a target="_blank" rel="noopener" class="z7-btnx js-checkout btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano BIT 16">
+              <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
+              <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
+              <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(BIT 16)</span></span>
+              <span class="z7-btnx__cap btn__cap" aria-hidden="true">
+                <span class="z7-btnx__arrow btn__arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </span>
+            </a>
+          </div>
+
+          <!-- BIT TRAINEE -->
+          <div class="card swiper-slide" data-plan="bit_trainee" aria-label="80% de desconto">
+            <div class="title"><h3>BIT 8</h3></div>
+            <img class="card-etiqueta" src="assets/3d/22-etiqueta-de-oferta-320.webp" srcset="assets/3d/22-etiqueta-de-oferta-320.avif" width="320" height="616" alt="" loading="lazy" decoding="async">
+
+            <div class="topics">
+              <div class="chip"><span class="chip__rotulo">Limite por operação</span><span class="chip__valor">8 contratos</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda diária</span><span class="chip__valor">R$ 247,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Limite de perda total</span><span class="chip__valor">R$ 997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Meta de aprovação</span><span class="chip__valor">R$ 997,00</span></div>
+              <div class="chip"><span class="chip__rotulo">Máximo de dias</span><span class="chip__valor js-max-dias">&nbsp;</span></div>
+              <div class="chip"><span class="chip__rotulo">Repasse</span><span class="chip__valor">100% em conta real</span></div>
+            </div>
+
+            <div class="oldPrice">
+              <p class="oldPrice__texto">de <span class="js-old-price">&nbsp;</span> por</p>
+            </div>
+
+            <div class="price">
+              <p class="js-price-parcel"><span>12x</span> &nbsp;</p>
+              <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
+            </div>
+
+             <a target="_blank" rel="noopener" class="z7-btnx js-checkout btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano BIT 8">
+              <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
+              <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
+              <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(BIT 8)</span></span>
+              <span class="z7-btnx__cap btn__cap" aria-hidden="true">
+                <span class="z7-btnx__arrow btn__arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </span>
+            </a>
+          </div>
+
+        </div>
+
+        <div class="swiper-button-prev btn btn--md btn--secundaria btn--icone"></div>
+        <div class="swiper-button-next btn btn--md btn--secundaria btn--icone"></div>
+      </div>
+
+      <!-- Indicadores de plano: o global.js monta aqui um botão por plano -->
+      <div class="swiper-pagination"></div>
+    </div>
+
+    </div><!-- /.plano-asset--bit -->
+  </section>
     <section id="comunidade"></section>
     <section id="fechamento"></section>
   </main>

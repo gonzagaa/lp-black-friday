@@ -56,6 +56,8 @@
     .v-div { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
     /* Fundo de luz do horizonte, para a amostra do .fbtn--escuro */
     .v-luz { display: flex; flex-direction: column; gap: 18px; padding: 28px 24px; border-radius: var(--raio-assinatura); background: radial-gradient(60% 120% at 50% 130%, rgba(255, 214, 160, .9), rgba(255, 140, 55, .75) 25%, rgba(255, 106, 26, .45) 50%, transparent 80%), var(--cor-ceu); }
+    /* Fundo dos cards de plano, para a amostra do .fbtn--escuro nos planos */
+    .v-palco { display: flex; flex-wrap: wrap; gap: 24px; padding: 28px 24px; border: 2px solid rgba(255, 255, 255, .19); border-radius: 24px 24px 24px 0; background: linear-gradient(180deg, #050303, #0d0908); }
     .v-div-moldura { display: flex; flex-direction: column; justify-content: flex-end; height: 200px; overflow: hidden; border-radius: var(--raio-assinatura); }
     .v-div-moldura > div { height: 130px; }
 
@@ -182,7 +184,7 @@
             </div>
             <div class="v-item">
               <a class="fbtn fbtn--escuro is-hover" href="#t-botoes" tabindex="-1"><span class="fbtn__label">Hover</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-              <span class="v-legenda">hover · sobe 2px, borda acende</span>
+              <span class="v-legenda">hover · sobe 1px, neon e borda acendem, a varredura atravessa</span>
             </div>
             <div class="v-item">
               <a class="fbtn fbtn--escuro is-focus" href="#t-botoes" tabindex="-1"><span class="fbtn__label">Foco</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
@@ -193,7 +195,18 @@
               <span class="v-legenda">ativo</span>
             </div>
           </div>
-          <p class="v-legenda" style="max-width: 640px">Corpo fumê, luz laranja que percorre a borda (gira a cada 3,6 s; parada com movimento reduzido) e seta na gota laranja. Só a partir de 768 px: abaixo disso é o .fbtn laranja. Aqui, sobre a luz do horizonte, que é onde ele é usado.</p>
+          <p class="v-legenda" style="max-width: 640px">Versão melhorada (ajuste dos planos): borda de 1 px em degradê (branco .22 no topo → .04 na base), filete de neon laranja na base, luz que percorre a borda mais fina e mais lenta (5 s; parada com movimento reduzido) e seta preta (traço de 2,4 px) na gota laranja com reflexo; no hover a gota ganha brilho e a seta avança 3 px. Na hero, só a partir de 768 px (abaixo disso é o .fbtn laranja). Aqui, sobre a luz do horizonte.</p>
+        </div>
+
+        <div class="v-palco">
+          <div class="v-item" style="width: min(100%, 480px)">
+            <a class="fbtn fbtn--escuro fbtn--block" href="#t-botoes"><span class="fbtn__label">Contratar plano (Sênior)</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <span class="v-legenda">o mesmo desenho sobre o preto dos cards de plano. Nos planos ele usa a caixa do <code>.z7-btnx</code> da home (70 px, raio 20px 0) com os tokens <code>--escuro-*</code> (planos-black.css)</span>
+          </div>
+          <div class="v-item" style="width: min(100%, 480px)">
+            <a class="fbtn fbtn--escuro fbtn--block is-hover" href="#t-botoes" tabindex="-1"><span class="fbtn__label">Hover</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <span class="v-legenda">hover</span>
+          </div>
         </div>
 
         <div class="v-linha" style="align-items: center">

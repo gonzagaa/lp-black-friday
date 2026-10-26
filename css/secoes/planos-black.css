@@ -1,0 +1,489 @@
+/* Seção #planos: PELE BLACK sobre o porte da home (planos.css, gerado).
+   Só pele: cor, fonte, fundo e a etiqueta de oferta. Caixas, espaçamentos e posições continuam os da home
+   (aceite de layout no relatório da Fase 4, medido com scripts/medir-planos.mjs).
+   Ajuste do cliente: a seção é PRETA e NEUTRA. O laranja aparece só nas etiquetas 3D (e no filete de neon e na
+   seta dos CTAs escuros, que são o desenho do .fbtn--escuro). Nenhum card tem destaque.
+   Carrega DEPOIS de planos.css. As regras daqui usam #planos para vencer as da home sem !important. */
+
+/* ========== Tokens: as fontes e as cores da home viram as da LP dentro da seção ========== */
+#planos {
+  /* --ncs e --tts (as fontes da home) apontam para estes dois */
+  --fonte-display: 'Barlow Condensed', Impact, sans-serif;
+  --fonte-corpo: Inter, system-ui, sans-serif;
+  --jakarta: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+
+  /* o azul da marca da home vira neutro (branco e grafite) */
+  --marca: #fff;
+  --marca-clara: rgba(255, 255, 255, .8);
+  --marca-escura: #1c1614;
+  --gradient: linear-gradient(180deg, #2a2220, #1c1614);
+  --borda-acesa: rgba(255, 255, 255, .3);
+  --borda-marca: rgba(255, 255, 255, .14);
+  --foco-cor: var(--cor-luz);
+
+  /* cinza do que não é valor no preço (o mesmo do título dos benefícios) */
+  --cinza-preco: rgba(255, 255, 255, .42);
+
+  color: var(--cor-texto);
+  /* só o eixo vertical: no bitcoin a home recua a seção nas laterais (section.planos.bit) */
+  padding-top: 150px;
+  padding-bottom: 110px;
+  background: var(--cor-base);
+}
+
+/* ========== Fundo: palco de vitrine ==========
+   1. feixe de luz branca vindo de cima, centrado nos cards (#planos::before);
+   2. gráfico de candles enorme atrás do título (.planos-topo-wrapper::before);
+   3. piso em perspectiva sob os cards (.plano-asset::before);
+   o grão global (.grao) continua por cima de tudo e a entrada em candles (.div-candles) continua. */
+
+/* 1. Feixe: um cone que abre para baixo, com pico de branco a 6%, e some antes das bordas */
+#planos::before {
+  content: "";
+  inset: 0;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  background:
+    conic-gradient(from 152deg at 50% -4%, rgba(255, 255, 255, 0) 0deg, rgba(255, 255, 255, .06) 28deg, rgba(255, 255, 255, 0) 56deg);
+  -webkit-mask-image: radial-gradient(60% 78% at 50% 0%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(60% 78% at 50% 0%, #000 30%, transparent 100%);
+  pointer-events: none;
+}
+
+/* 2. Gráfico de candles atrás do título: branco a 3,5%, com máscara radial */
+#planos .planos-topo-wrapper::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -230px;
+  z-index: -1;
+  width: min(1600px, 150vw);
+  aspect-ratio: 1600 / 640;
+  transform: translateX(-50%);
+  background: url(../../assets/texturas/planos-grafico.svg) center / 100% 100% no-repeat;
+  opacity: .035;
+  -webkit-mask-image: radial-gradient(closest-side, #000 35%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 35%, transparent 100%);
+  pointer-events: none;
+}
+
+/* 3. Piso: uma grade deitada em perspectiva. A borda de cima (o fundo do piso) fica atrás dos cards e é para lá
+   que as linhas convergem; a máscara apaga o piso para os lados e para a frente. */
+#planos .plano-asset {
+  position: relative;
+}
+
+#planos .plano-asset::before {
+  content: "";
+  position: absolute;
+  left: -60%;
+  right: -60%;
+  top: 46%;
+  height: 1100px;
+  z-index: 0;
+  transform-origin: 50% 0;
+  transform: perspective(520px) rotateX(74deg);
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: 50% 0;
+  -webkit-mask-image: radial-gradient(34% 62% at 50% 0%, #000 25%, transparent 100%);
+  mask-image: radial-gradient(34% 62% at 50% 0%, #000 25%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Topo dos candles (.div-candles, componentes.css): a home usa o ::after para o filete de baixo */
+#planos.div-candles::after {
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  width: auto;
+  height: 48px;
+  z-index: 3;
+  background: url(../../assets/texturas/candles-tops.svg) repeat-x 0 0 / 360px 48px;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  #planos.div-candles::after {
+    height: 36px;
+    background-size: 270px 36px;
+  }
+}
+
+/* ========== Cabeçalho da LP (Planos Black Friday / título) dentro da seção ========== */
+/* Título bicolor como o dos benefícios: "80% OFF para garantir" em branco e "o seu plano perfeito." no cinza .42;
+   a partir de 768 px a parte cinza começa numa linha própria (ajuste do cliente) */
+#planos .planos__cabecalho {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+/* O reset da home (:where(#planos) * { font-family: var(--tts) }) põe a fonte do corpo direto em cada filho; no
+   cabeçalho da LP eles herdam (especificidade zero: .tag e as outras classes continuam valendo) */
+:where(#planos .planos__cabecalho) * {
+  font-family: inherit;
+}
+
+#planos .planos__h2 > span {
+  color: rgba(255, 255, 255, .42);
+}
+
+@media (min-width: 768px) {
+  #planos .planos__h2 > span {
+    display: block;
+  }
+}
+
+@media (max-width: 767.98px) {
+  #planos .planos__cabecalho {
+    text-align: left;
+  }
+}
+
+/* ========== Seletor de mercado e título do mercado ========== */
+/* A opção ativa é uma pílula escura elevada (não mais laranja) */
+#planos .seg--ativo .seg__blob {
+  background: #1c1614;
+  border: 1px solid rgba(255, 255, 255, .14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .14),
+    inset 0 12px 18px -14px rgba(255, 255, 255, .22),
+    0 8px 22px -8px rgba(0, 0, 0, .9);
+}
+
+#planos .seg--ativo .seg__option {
+  color: rgba(255, 255, 255, .55);
+}
+
+#planos .seg--ativo .seg__option.selecionado,
+#planos .seg--ativo .seg__option:hover {
+  color: #fff;
+}
+
+#planos header .js-plan-title {
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+/* Modos de avaliação (só aparecem com mais de um modo ativo no planos.json): mesma linguagem do seletor */
+#planos p.escolha {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--cor-texto-2);
+  letter-spacing: var(--ls-rotulo);
+}
+
+#planos .botoes button {
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(255, 255, 255, .04);
+  color: rgba(255, 255, 255, .55);
+}
+
+#planos .botoes button:hover {
+  color: #fff;
+}
+
+#planos .botoes button.selecionado {
+  border-color: rgba(255, 255, 255, .14);
+  background: #1c1614;
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14);
+}
+
+/* ========== Card (todos iguais: o Sênior não tem destaque) ========== */
+#planos .card {
+  background: linear-gradient(180deg, #050303, #0d0908);
+}
+
+/* Todos os cards com a mesma altura: o slide estica até o mais alto da fileira (no Swiper ele tem height: 100%,
+   que não estica). Com o mesmo conteúdo, não muda nada; é a garantia para dados que quebrem linha. */
+#planos .swiper-slide.card {
+  height: auto;
+}
+
+#planos .card .title {
+  background: linear-gradient(180deg, #050303, #0b0807);
+}
+
+#planos .card .title h3 {
+  font-family: var(--fonte-display);
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: .02em;
+}
+
+@media (min-width: 1080px) {
+  #planos .card .title h3 {
+    font-size: 38px;
+    line-height: 1.08;
+  }
+}
+
+@media (hover: hover) {
+  #planos .plano .card:hover {
+    border-color: var(--borda-acesa);
+  }
+}
+
+/* Chips: Inter, rótulo a .58 */
+#planos .chip {
+  --chip-rotulo: rgba(255, 255, 255, .58);
+}
+
+#planos .chip__rotulo {
+  font-size: 11px;
+}
+
+/* 13 px abaixo de 1080: "R$ 14.997,00" cabe numa linha no chip de 1/3 (em 14 px quebrava e o card do
+   Expert e do Master ficava mais alto que os outros) */
+#planos .chip__valor {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* desktop: a mesma rampa da home, que chega a 13 / 16 px em 1920 */
+@media (min-width: 1080px) {
+  #planos .chip__rotulo {
+    font-size: clamp(9px, calc(.9vw - 1.7px), 13px);
+  }
+
+  #planos .chip__valor {
+    font-size: clamp(11px, calc(.95vw + .2px), 16px);
+  }
+}
+
+/* Preço antigo: "de ~~R$ X~~ por" em branco, com o risco cinza no próprio valor (o traço posicionado da home
+   dependia da métrica da TT Fors). Claro também no bitcoin, onde a home escurece o texto (o card dela é claro). */
+#planos .card .oldPrice p {
+  color: var(--cor-titulo);
+}
+
+#planos .card .oldPrice p::before {
+  content: none;
+}
+
+#planos .card .oldPrice .js-old-price {
+  text-decoration: line-through 2px var(--cinza-preco);
+}
+
+/* Preço: valores em branco; "12x", "ou" e "à vista" no cinza .42 (contraste no relatório: 20 px bold é texto
+   grande, e por isso o tamanho fica 20 px em todas as larguras) */
+#planos .card .price .js-price-parcel {
+  font-family: var(--jakarta);
+  font-weight: 800;
+  font-size: 36px;
+  letter-spacing: -.03em;
+  color: var(--cor-texto);
+}
+
+#planos .card .price .js-price-avista {
+  font-family: var(--jakarta);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0;
+  color: var(--cor-texto);
+}
+
+#planos .card .price .js-price-parcel span,
+#planos .card .price .js-price-avista span {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  font-family: var(--jakarta);
+  font-size: 20px;
+  letter-spacing: 0;
+  color: var(--cinza-preco);
+}
+
+#planos .card .price .js-price-parcel span {
+  font-weight: 800;
+}
+
+#planos .card .price .js-price-avista span {
+  font-weight: 700;
+}
+
+@media (min-width: 1080px) {
+  #planos .card .price .js-price-parcel {
+    font-size: 50px;
+  }
+}
+
+/* troca de modo: o brilho do preço fica branco */
+#planos .flash-active {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, .45), 0 0 16px rgba(255, 255, 255, .3);
+}
+
+/* ========== CTA: a caixa do .z7-btnx da home com o desenho do .fbtn--escuro ==========
+   Mesmos tokens --escuro-* do .fbtn--escuro (tokens.css). As camadas da home são reaproveitadas:
+   .z7-btnx__bg::before = fundo; .z7-btnx::after = borda em degradê + luz girando; .z7-btnx__shine = varredura. */
+#planos .z7-btnx {
+  --_borda: var(--escuro-borda);
+  border: 0;
+  box-shadow: var(--escuro-sombra);
+}
+
+/* o halo azul desfocado da home sai */
+#planos .z7-btnx::before {
+  content: none;
+}
+
+#planos .z7-btnx::after {
+  padding: 1px;
+  opacity: 1;
+  background: conic-gradient(from var(--ang), var(--escuro-luz-arco)), var(--_borda);
+  animation: ang var(--escuro-luz-volta) linear infinite;
+}
+
+/* O fundo cobre as sombras internas do botão; por isso o fundo e o filete de neon (sombras internas) moram
+   juntos na camada .z7-btnx__bg, e o ::before dela (o degradê azul da home) sai. A sombra externa fica no botão. */
+#planos .z7-btnx__bg {
+  background: var(--escuro-fundo);
+  box-shadow: var(--escuro-sombra);
+}
+
+#planos .z7-btnx__bg::before {
+  content: none;
+}
+
+#planos .z7-btnx:hover .z7-btnx__bg {
+  box-shadow: var(--escuro-sombra-acesa);
+}
+
+#planos .z7-btnx__shine {
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0) 44%, rgba(255, 255, 255, .14) 50%, rgba(255, 255, 255, 0) 56%);
+}
+
+#planos .z7-btnx__label,
+#planos .z7-btnx__label span {
+  font-family: var(--jakarta);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+}
+
+/* seta preta (SVG de traço 2,4 px, o mesmo do .fbtn) na gota laranja */
+#planos .z7-btnx__cap {
+  border: 0;
+  background: var(--escuro-gota);
+  color: var(--cor-tinta);
+  box-shadow: var(--escuro-gota-sombra);
+  transition: filter var(--dur-2);
+}
+
+#planos .z7-btnx__arrow {
+  display: grid;
+}
+
+#planos .z7-btnx:hover .z7-btnx__cap {
+  filter: brightness(1.08);
+}
+
+#planos .z7-btnx:hover .z7-btnx__arrow {
+  transform: translateX(3px);
+}
+
+#planos .z7-btnx:hover {
+  --_borda: var(--escuro-borda-acesa);
+  filter: none;
+  transform: translateY(-1px);
+  box-shadow: var(--escuro-sombra-acesa);
+}
+
+#planos .z7-btnx:focus-visible {
+  outline: 2px solid var(--cor-luz);
+  outline-offset: 4px;
+}
+
+/* ========== Setas e indicadores (neutros) ========== */
+#planos .swiper-button-prev,
+#planos .swiper-button-next {
+  background: rgba(255, 255, 255, .04);
+  color: #fff;
+}
+
+@media (hover: hover) {
+  #planos .swiper-button-prev:hover,
+  #planos .swiper-button-next:hover {
+    background: rgba(255, 255, 255, .1);
+  }
+}
+
+#planos .plano .swiper-pagination .swiper-pagination-bullet {
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: .08em;
+}
+
+#planos .plano .swiper-pagination .is-na-tela {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+/* ========== Etiqueta de oferta 3D (no lugar do selo serrilhado) ========== */
+/* O carrossel recorta só no eixo X, com folga para a etiqueta do card da ponta direita; a etiqueta dos cards
+   fora da tela some, para a folga não mostrar a do vizinho. */
+#planos .wrapper .swiper.mySwiper4,
+#planos .wrapper .swiper.mySwiper11 {
+  overflow: clip;
+  overflow-clip-margin: 48px;
+}
+
+@media (max-width: 1079.98px) {
+  #planos .wrapper .swiper.mySwiper4,
+  #planos .wrapper .swiper.mySwiper11 {
+    overflow: visible;
+  }
+}
+
+#planos .card-etiqueta {
+  position: absolute;
+  top: -24px;
+  right: -14px;
+  z-index: 4;
+  width: auto;
+  height: 78px;
+  transform: rotate(14deg);
+  transform-origin: 50% 12%;
+  filter: drop-shadow(0 14px 14px rgba(0, 0, 0, .7)) drop-shadow(0 3px 4px rgba(0, 0, 0, .55));
+  pointer-events: none;
+  animation: planos-etiqueta-balanco 4s ease-in-out infinite;
+}
+
+#planos .swiper-initialized .swiper-slide:not(.swiper-slide-visible) .card-etiqueta {
+  visibility: hidden;
+}
+
+@media (min-width: 1080px) {
+  #planos .card-etiqueta {
+    top: -34px;
+    right: -22px;
+    height: 110px;
+  }
+}
+
+@keyframes planos-etiqueta-balanco {
+  0%,
+  100% {
+    transform: rotate(10deg);
+  }
+
+  50% {
+    transform: rotate(18deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #planos .card-etiqueta {
+    animation: none;
+  }
+}

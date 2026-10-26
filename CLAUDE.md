@@ -36,6 +36,15 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
 - CTA da hero: `.fbtn--escuro` a partir de 768 px (laranja no mobile).
 - Sem contador na hero (o módulo `js/modulos/contador.js` está guardado; a decisão sobre a barra mobile fica para a Fase 6).
 
+### Planos (Fase 4 refeita: porte da home + ajustes do cliente; vale por cima do canvas e do print 05)
+
+- Layout é o da home **portado literalmente**: HTML (`scripts/portar-planos-html.mjs`), CSS (`css/secoes/planos.css`, GERADO por `scripts/portar-planos-css.mjs`; não edite à mão) e JS (`js/modulos/home/`). A pele fica só em `css/secoes/planos-black.css`. Aceite: `node scripts/medir-planos.mjs` (home × LP, ±2 px).
+- Seção preta e neutra: o laranja aparece só nas etiquetas 3D (`22-etiqueta-de-oferta`, exceção à regra 8) e no desenho do botão escuro (neon da base, luz da borda e gota da seta). Nenhum card tem destaque; o Sênior só é o slide inicial (`data-inicial`).
+- Preço: valores em branco; "12x", "ou" e "à vista" em branco .42 (20 px bold, texto grande: 4:1 sobre o card).
+- Cards com o raio da home (`30px 30px 30px 0`), não o da regra 4.
+- CTAs dos cards e da hero usam o mesmo desenho escuro (tokens `--escuro-*` em `tokens.css`): borda em degradê, neon na base, seta preta na gota laranja.
+- Título bicolor como o dos benefícios: "80% OFF para garantir" em branco e "o seu plano perfeito." em branco .42 (linha própria a partir de 768 px).
+
 ## Regras invioláveis
 
 1. **Copy.** Use os textos da copy palavra por palavra, incluindo pontuação. Os textos que não vieram da copy estão listados na seção "Textos a aprovar" do `PROMPTS-LP-BLACK.md`. Pode usá-los, mas sinalize no relatório.
@@ -72,6 +81,7 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
     - Imagens em AVIF/WebP com `width`/`height` e `loading="lazy"` abaixo da dobra.
     - Fontes locais em woff2, com preload só das usadas na hero.
     - Sem bibliotecas pesadas: o carrossel usa CSS scroll-snap e JS próprio, sem Swiper, GSAP ou Lenis.
+      - Exceção aprovada pelo cliente: a seção de planos usa o Swiper 11.2.10 da home (`vendor/swiper-11.2.10/`, carregado sob demanda depois do load, em idle), porque o carrossel é portado literalmente da home. Só ali.
     - Metas: LCP < 2,5 s no mobile, CLS < 0,05, primeira dobra < 800 KB.
 11. **Tracking e terceiros.** Não adicione GTM, Pixel ou similares sem pedido explícito. O selo do Reclame Aqui entra igual à home (Fase 5).
 12. **Datas e números de negócio.** A data de término do contador e qualquer número que não esteja na copy ficam em `js/config.js` como constantes com `// TODO: confirmar`. Liste todos no relatório.

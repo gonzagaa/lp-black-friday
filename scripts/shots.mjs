@@ -71,7 +71,8 @@ for (const largura of LARGURAS) {
     }
     scrollTo(0, 0);
   });
-  await pagina.waitForFunction(() => [...document.images].every((img) => img.complete), null, { timeout: 15000 });
+  // só as imagens que aparecem: a etiqueta dos cards fora da tela e o mercado escondido nunca carregam (lazy)
+  await pagina.waitForFunction(() => [...document.images].filter((img) => img.checkVisibility({ visibilityProperty: true })).every((img) => img.complete), null, { timeout: 15000 });
 
   const medidas = await pagina.evaluate(() => ({
     scrollWidth: document.documentElement.scrollWidth,
