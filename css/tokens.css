@@ -13,7 +13,7 @@
   --cor-texto: #fff;
   --cor-texto-2: rgba(255, 255, 255, .66);
   --cor-texto-3: rgba(255, 255, 255, .55);
-  --cor-texto-4: rgba(255, 255, 255, .45);
+  --cor-texto-4: rgba(255, 255, 255, .5); /* era .45 no protótipo (4,46:1); .5 dá 5,33:1 sobre a base */
   --cor-tinta: #0a0706; /* texto escuro sobre laranja */
 
   --cor-laranja: #FF6A1A;

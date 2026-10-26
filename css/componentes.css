@@ -19,7 +19,11 @@
   border-radius: var(--raio-assinatura);
   text-decoration: none;
   color: #fff;
-  background: linear-gradient(180deg, #FF9152 0%, #FF6A1A 52%, #F2511A 100%);
+  /* Exceção de contraste aprovada (CLAUDE.md, regra 9): texto branco sobre laranja.
+     O protótipo tinha #FF6A1A em 52% e #F2511A na base (2,7:1 sob o rótulo). O stop do meio subiu
+     para 20% e a base escureceu para #E2470F: o rótulo (35–63% da altura) cai na faixa mais escura
+     e fica >= 3:1 em toda a área dele, também na variação --sm. */
+  background: linear-gradient(180deg, #FF9152 0%, #FF6A1A 20%, #E2470F 100%);
   box-shadow:
     0 0 0 5px rgba(255, 106, 26, .07),
     0 0 0 6px rgba(255, 140, 70, .24),

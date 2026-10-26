@@ -54,6 +54,7 @@ A direção visual já foi aprovada e está em `_referencia/`. Comece pelo `_ref
    - Área de toque de no mínimo 44 × 44 px.
    - `:focus-visible` desenhado em tudo que recebe foco.
    - Contraste de 4,5:1 no texto.
+     - Exceção consciente, aprovada pelo cliente: o `.fbtn` mantém o texto branco sobre laranja (visual aprovado). O degradê dele garante no mínimo 3:1 em toda a área do rótulo. Não use essa exceção em nenhum outro texto.
    - `prefers-reduced-motion` desliga toda animação que não for essencial.
    - Use HTML semântico: `button` para ação, `a` para navegação.
 10. **Performance.**

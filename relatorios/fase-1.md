@@ -183,3 +183,23 @@ Não capturei o `index.html`: nesta fase ele é uma página preta vazia.
 6. **Porta 5500.** Ocupada pelo live-server de outro projeto. Por enquanto a Black roda em http://localhost:5501.
 
 Aguardando aprovação para a Fase 2.
+
+---
+
+## Ajuste pós-aprovação (commit "fase 1 (ajuste): contraste")
+
+1. **Contraste do `.fbtn`.** O texto continua branco.
+   - Por que o exemplo não bastava: o rótulo ocupa de 35% a 63% da altura do botão, e o pior ponto ficava na metade de cima dele, acima do stop do meio (#FF6A1A em 52%). Escurecer só a base (#F2511A → #E2470F) não muda essa faixa: medi e continuou em 2,68:1.
+   - O que mudou: o degradê passou a **#FF9152 0% → #FF6A1A 20% → #E2470F 100%**. O stop do meio subiu e a base é a sugerida, então o rótulo cai na faixa mais escura.
+   - Contraste mínimo do branco, medido pixel a pixel no fundo renderizado (sem o grão), em 1440 e 390 px:
+
+     | Variação | Caixa do rótulo: antes | Caixa do rótulo: depois | Letras: depois |
+     |---|---:|---:|---:|
+     | `.fbtn` | 2,67 | 3,08 | 3,15 |
+     | `.fbtn--sm` | 2,63 | **3,04** (pior caso) | 3,09 |
+     | `.fbtn--block` | 2,67 | 3,06 | 3,13 |
+
+   - Comparação visual (print 01, antes e depois): `shots/fase-1/comparacao-botao-ajuste.png`. O aspecto geral se mantém; o laranja fica um tom mais encorpado embaixo, e o realce do topo, mais curto.
+   - O CLAUDE.md, regra 9, agora registra o `.fbtn` como exceção consciente aprovada pelo cliente.
+2. **`--cor-texto-4`** passou de branco .45 para **.5** (5,33:1 sobre #050404). A legenda da vitrine foi atualizada.
+3. `BLACK_FIM` e `PLANOS_URL` continuam como estão, com `// TODO: confirmar` (P1 e P3).
