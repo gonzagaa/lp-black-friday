@@ -3,6 +3,7 @@
 // js/modulos/contador.js existe, mas está sem uso (saiu da hero e não entrou na barra mobile, por decisão do cliente).
 // Planos: módulos de js/modulos/home/ são PORTES do JS da home (ver o cabeçalho de cada um).
 import { iniciarNav } from './modulos/nav.js';
+import { iniciarSimboloHero } from './modulos/simbolo-hero.js';
 import { iniciarRevelar } from './modulos/revelar.js';
 import { iniciarRolagem } from './modulos/rolagem.js';
 import { iniciarSelet4 } from './modulos/home/selet4.js';
@@ -18,6 +19,7 @@ import { iniciarTracking } from './modulos/tracking.js';
 
 iniciarTracking(); // antes dos planos: o sck entra a cada href que o blackPlanos montar
 iniciarNav();
+iniciarSimboloHero();
 iniciarRevelar();
 iniciarRolagem();
 iniciarSelet4();

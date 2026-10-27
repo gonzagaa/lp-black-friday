@@ -43,6 +43,8 @@ await sharp({ create: { width: 180, height: 180, channels: 4, background: '#0706
 
 // Imagem OG: o topo da página em 1200 × 630, sem a nav e sem movimento
 const ctx = await nav.newContext({ viewport: { width: 1200, height: 630 }, reducedMotion: 'reduce' });
+// sem tracking na captura: nada de evento falso saindo de localhost (como no scripts/shots.mjs)
+await ctx.route(/googletagmanager\.com|google-analytics\.com|doubleclick\.net|facebook\.(net|com)|rdstation\.com\.br|hotjar\.com|backend-api-zero7\.vercel\.app/, (rota) => rota.abort('blockedbyclient'));
 const p = await ctx.newPage();
 await p.goto(`http://localhost:${PORTA}/`, { waitUntil: 'networkidle' });
 await p.evaluate(() => document.fonts.ready);

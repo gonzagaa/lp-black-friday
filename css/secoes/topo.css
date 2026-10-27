@@ -343,6 +343,69 @@ html.menu-aberto {
     0 -160px 320px rgba(229, 43, 36, .28);
 }
 
+/* Símbolo da Zero7 nascendo no horizonte (pedido do CEO). Centralizado, com clamp(340px, 90vw, 1180px) de largura;
+   a base fica ~20% da altura dele abaixo do topo do planeta, calculada pelo mesmo --arco que posiciona o .planet
+   (o planeta vem depois no HTML e cobre a base). Duas camadas: o brilho (o mesmo path, desfocado) e o corpo, com
+   contorno. A caixa tem uma folga em volta para a máscara não cortar o brilho desfocado.
+   Entra depois do LCP (js/modulos/simbolo-hero.js põe .simbolo-pronto na .hero): até lá fica invisível e não é
+   pintado (o blur não pesa na primeira pintura). Sem JS, aparece parado. */
+.hero__simbolo {
+  --simbolo-l: clamp(340px, 90vw, 1180px);
+  --simbolo-a: calc(var(--simbolo-l) * 327 / 591); /* proporção do viewBox do símbolo */
+  --simbolo-folga: 60px;
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--arco) - .2 * var(--simbolo-a) - var(--simbolo-folga));
+  width: calc(var(--simbolo-l) + 2 * var(--simbolo-folga));
+  height: calc(var(--simbolo-a) + 2 * var(--simbolo-folga));
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 24px);
+  -webkit-mask-image: linear-gradient(to top, #000 30%, rgba(0, 0, 0, .75) 65%, rgba(0, 0, 0, .25) 100%);
+  mask-image: linear-gradient(to top, #000 30%, rgba(0, 0, 0, .75) 65%, rgba(0, 0, 0, .25) 100%);
+}
+
+.hero__simbolo svg {
+  position: absolute;
+  top: var(--simbolo-folga);
+  left: var(--simbolo-folga);
+  width: var(--simbolo-l);
+  height: var(--simbolo-a);
+  overflow: visible;
+}
+
+.hero__simbolo-brilho {
+  opacity: .55;
+  filter: blur(28px);
+}
+
+/* O contorno do corpo cruzando o subtítulo baixava o contraste para 3,88:1 (1440). Só na área do texto, o corpo
+   fica mais apagado (--furo-op), numa elipse de borda suave: o centro e os raios vêm de simbolo-hero.js, que mede
+   o subtítulo em relação ao símbolo. Sem as medidas, a elipse fica fora do símbolo e nada muda. */
+.hero__simbolo-corpo {
+  --furo-op: .4;
+  -webkit-mask-image: radial-gradient(var(--furo-l, 1px) var(--furo-a, 1px) at var(--furo-x, -9999px) var(--furo-y, -9999px), rgba(0, 0, 0, var(--furo-op)) 60%, #000 100%);
+  mask-image: radial-gradient(var(--furo-l, 1px) var(--furo-a, 1px) at var(--furo-x, -9999px) var(--furo-y, -9999px), rgba(0, 0, 0, var(--furo-op)) 60%, #000 100%);
+}
+
+.hero.simbolo-pronto .hero__simbolo,
+html:not(.js) .hero__simbolo {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.hero.simbolo-pronto .hero__simbolo {
+  transition: opacity 1.6s var(--curva), transform 1.6s var(--curva);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero.simbolo-pronto .hero__simbolo {
+    transition: none;
+  }
+}
+
 @keyframes breathe {
   0%, 100% {
     transform: translateX(-50%) scale(1);
@@ -375,6 +438,21 @@ html.menu-aberto {
   /* Protótipo: 110 px em cima e 260 embaixo (hero de 1000 px) */
   padding: calc(var(--nav-margem) + var(--nav-altura) + 72px) var(--gutter) calc(var(--brilho-base) + var(--folga-brilho));
   text-align: center;
+}
+
+/* Marca Zero7 acima do H1 (pedido do CEO). O espaço até o H1 é 28 px (20 no mobile): o gap do conteúdo é 30
+   (22 no mobile), daí a margem de -2 px. */
+.hero__marca {
+  width: 132px;
+  height: auto;
+  margin-bottom: -2px;
+  opacity: .95;
+}
+
+@media (max-width: 1023.98px) {
+  .hero__marca {
+    width: 112px;
+  }
 }
 
 .hero__titulo {
@@ -508,6 +586,10 @@ html.menu-aberto {
   .hero__conteudo {
     gap: 22px;
     padding: calc(var(--nav-margem) + var(--nav-altura) + 128px) 18px calc(var(--brilho-base) + var(--folga-brilho));
+  }
+
+  .hero__marca {
+    width: 96px;
   }
 
   .hero__titulo {
