@@ -3,7 +3,7 @@
    - módulo ES: a IIFE virou iniciarBlackPlanos(), que devolve uma promessa resolvida quando os cards estão
      preenchidos (o carrossel só arma depois disso);
    - DATA_URL -> PLANOS_URL (js/config.js), com fallback no snapshot embutido se o fetch falhar (Fase 4). A leitura
-     fica em js/modulos/dados-planos.js, dividida com o comparativo dos benefícios e o limite de perda;
+     fica em js/modulos/dados-planos.js, dividida com o limite de perda;
    - card sem preço ou sem checkout válido sai do carrossel (Fase 4: nunca mostrar card sem preço);
    - card preenchido ganha .is-pronto (até lá a pele o deixa invisível, ocupando o lugar);
    - os cards ficam na ordem do planos.json (ordenarComoNoJson).

@@ -1,5 +1,5 @@
 // Dados dos planos (data/planos.json, PLANOS_URL em js/config.js) para a LP inteira: uma requisição só, dividida
-// entre a seção de planos (blackPlanos.js), o comparativo do card 01 dos benefícios e o limite de perda dos cards.
+// entre a seção de planos (blackPlanos.js) e o limite de perda dos cards (limite-alta.js).
 // Se o fetch falhar (ou o JSON vier sem modo ativo), vale o snapshot embutido, como antes no blackPlanos.
 import { PLANOS_URL } from '../config.js';
 import SNAPSHOT from './planos-snapshot.js';

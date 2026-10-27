@@ -287,12 +287,49 @@ O "antes" (medido antes de mexer, 1920, 2 cargas):
 
 ## Textos a aprovar
 
-- **Item 1:** "Preço normal" e "Na Black".
+- ~~Item 1: "Preço normal" e "Na Black"~~: saíram com o comparativo (ver o adendo no fim).
 - **Item 3:** o `aria-label="Aumentou"` da seta é o da home (`750f810`). Ele só é lido pelo leitor de tela.
 
 ## Perguntas
 
 1. **Contraste da aba ativa:** o branco sobre o laranja do indicador dá no mínimo 3,12:1. A regra 9 pede 4,5:1 para esse tamanho; só o `.fbtn` tem a exceção. Estendo a exceção ao seletor (e registro na regra 9)? Ou o texto da aba ativa fica escuro (`#0a0706`, ~6:1)?
 2. **`aria-pressed`:** o pedido falava em `aria-pressed`, mas o seletor é o da home: `radiogroup` com `role="radio"` e `aria-checked` (e setas do teclado). Mantive o da home. Se quiser `aria-pressed`, ele vira dois botões de alternância.
-3. **Formato do comparativo:** os valores aparecem como "R$ 3.047,00" e "R$ 609,40" (com espaço). Nos cards dos planos, o à vista é "R$609,40", sem espaço, como vem do JSON da home. Uniformizo?
+3. ~~Formato do comparativo~~: não vale mais, porque o comparativo saiu.
 4. **Deriva no celular de verdade:** no teste sem GPU, a deriva custa ~30% do fps. Vale abrir num celular médio e conferir. Se pesar, dá para baixar a velocidade ou derivar só sem vídeo tocando.
+
+---
+
+## Adendo: o comparativo do item 1 saiu (commit "ajuste: marca d'água 80% no card 01")
+
+**O que saiu:**
+
+- o comparativo inteiro: HTML, CSS (`.cmp*`) e `js/modulos/comparativo.js`;
+- `bezier`/`curvaPagina` do `js/modulos/contagem.js`, que só ele usava;
+- "Preço normal" e "Na Black" dos textos a aprovar.
+
+**O que ficou:** a leitura única do `planos.json` (`js/modulos/dados-planos.js`) e o `contar`/`formatarReais`, porque a seção de planos e o limite de perda (item 3) usam.
+
+**No lugar, um "80%" gigante como marca d'água** (`.beneficio__marca`, `aria-hidden="true"`):
+
+- **Posição:** ancorado no canto inferior esquerdo, atrás do texto (`z-index` 0 × 2) e do % 3D (que vem depois no HTML). A base dos números sai do card, e o `overflow: hidden` do card corta.
+- **Tamanho:** Barlow Condensed 900, 260 px a partir de 768 e 150 px no mobile.
+- **Duas camadas empilhadas:**
+  - o brilho: o mesmo 80% preenchido com `--grad-marca`, opacity .10, `blur(24px)`, deslocado .05em/−.04em;
+  - o contorno: `-webkit-text-stroke` de 1,5 px `rgba(255,255,255,.10)`, com preenchimento `background-clip: text` de `rgba(255,255,255,.06)` para transparente, de baixo para cima.
+- **Máscara do conjunto:** `linear-gradient(30deg, #000 30%, rgba(0,0,0,.6) 55%, transparent 80%)`, opaca embaixo à esquerda e sumindo para cima e para a direita. A primeira versão (#000 22% → transparente aos 66%) apagava o "%" e quase o "80"; abri um pouco.
+- **Estática:** sem animação.
+- **Troca no card 01:** o "80" em contorno que já ficava ao fundo, à direita, atrás do %, saiu. Seriam dois números gigantes no mesmo card. O "100" do card 04 continua.
+
+**Contraste** (fundo medido pixel a pixel atrás do texto, com o texto escondido e a cor do texto composta sobre cada pixel):
+
+| Largura | Fonte da marca | Título | Descrição |
+|---|---|---|---|
+| 390 | 150 px | 17,88:1 | 7,52:1 |
+| 768 | 260 px | 17,88:1 | 7,52:1 |
+| 1024 | 260 px | 17,88:1 | 7,52:1 |
+| 1440 | 260 px | 17,88:1 | 7,52:1 |
+| 1920 | 260 px | 17,88:1 | 7,56:1 |
+
+A tinta dos números começa uns 35 px abaixo da descrição em 1440. Nas capturas, nada encosta no texto.
+
+**Capturas:** `shots/ajustes/card01-marca80-{390,768,1024,1440,1920}.png`.
