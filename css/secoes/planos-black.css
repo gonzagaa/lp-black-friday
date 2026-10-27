@@ -149,7 +149,8 @@
    laranja bem sutil no topo; opções maiores (60 px no desktop, 52 no mobile; 16 px / 600) e de largura igual; o
    indicador da aba ativa é o laranja dos CTAs (degradê da marca + brilho + sombra material) com um glow embaixo, e
    desliza entre as abas (o .seg__blob da home, posicionado por planosAtivo.js; aqui só transform anima, porque as
-   duas abas têm a mesma largura). A semântica é a da home: radiogroup com aria-checked. */
+   duas abas têm a mesma largura). A semântica é a da home: radiogroup com aria-checked. Texto em 19 px / 700
+   (texto grande do WCAG), por causa do branco sobre o laranja da aba ativa. */
 #planos .seg--ativo {
   display: inline-grid;
   grid-template-columns: 1fr 1fr;
@@ -194,7 +195,9 @@
   min-height: 60px;
   padding: 0 34px;
   border-radius: 12px 0;
-  font: 600 16px/1.2 var(--fonte-texto);
+  /* texto grande do WCAG (19 px / 700, acima de 18,66 px bold): o branco sobre o degradê da marca da aba ativa
+     precisa de 3:1, e o mínimo medido é 3,12:1 (regra 9). As duas abas no mesmo peso: a troca não mexe na largura. */
+  font: 700 19px/1.2 var(--fonte-texto);
   color: rgba(255, 255, 255, .72);
   text-align: center;
 }
@@ -205,7 +208,7 @@
 
 #planos .seg--ativo .seg__option.selecionado {
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 @media (max-width: 1079.98px) {
@@ -223,6 +226,12 @@
 @media (max-width: 767.98px) {
   #planos .seg--ativo .seg__option {
     min-height: 52px;
+  }
+
+  /* No mobile o rótulo quebra em 2 linhas e sobe até a faixa clara do brilho: sem ele, o branco fica em 3,16:1 no
+     mínimo (com o brilho, 2,60:1, abaixo dos 3:1 do texto grande). A partir de 768, uma linha só, com o brilho. */
+  #planos .seg--ativo .seg__blob {
+    background: var(--grad-marca);
   }
 }
 

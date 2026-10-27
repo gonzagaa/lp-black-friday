@@ -84,6 +84,7 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
    - `:focus-visible` desenhado em tudo que recebe foco.
    - Contraste de 4,5:1 no texto.
      - Exceção consciente, aprovada pelo cliente: o `.fbtn` mantém o texto branco sobre o degradê da marca (`--grad-marca` + `--grad-marca-brilho`, `tokens.css`). Medido pixel a pixel atrás do rótulo: no mínimo 3,07:1 (hero mobile) e 3,10–3,19:1 nos outros (nav, benefícios, planos, fechamento); mediana ~3,7:1. Não use essa exceção em nenhum outro texto, e remeça (`fbtn`) se mudar o degradê.
+     - Exceção consciente, aprovada pelo cliente: texto branco sobre `--grad-marca` só em texto grande do WCAG (18,66 px+ bold), que pede 3:1. Vale para a aba ativa do seletor de mercado dos planos (19 px / 700): no mínimo 3,15:1. No mobile o rótulo quebra em 2 linhas e o indicador fica sem o `--grad-marca-brilho` (com ele, 2,60:1).
    - `prefers-reduced-motion` desliga toda animação que não for essencial.
    - Use HTML semântico: `button` para ação, `a` para navegação.
 10. **Performance.**

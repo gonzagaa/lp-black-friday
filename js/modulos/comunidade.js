@@ -9,7 +9,7 @@
 //
 // Vídeos (desempenho):
 // - nada é pedido antes de o card chegar perto da tela (~300 px): aí entram o poster e o arquivo;
-// - só tocam os cards que estão na tela; ao sair, pausam;
+// - só tocam os cards que estão na tela, e no máximo 3 (os mais perto do centro); ao sair, pausam;
 // - desktop com mouse (DESKTOP, o mesmo media query do CSS): sem hover, tocam só os 3 cards do palco (os do degradê
 //   das laterais pausam); com hover, só o card sob o mouse, e os outros pausam no quadro em que estavam;
 // - com movimento reduzido, nada toca e nenhum vídeo é baixado: fica o poster.
@@ -121,18 +121,26 @@ export function iniciarComunidade() {
 
   function avaliar() {
     const largura = window.innerWidth;
-    // palco (desktop): o card do centro e os dois vizinhos, pelo centro de cada card
+    // palco (desktop): o centro do card dentro do palco (3 cards + 2 espaços); com a deriva, um card pode estar
+    // saindo e outro entrando, e o limite de 3 abaixo fica com os mais perto do centro
     const tr = trilho.getBoundingClientRect();
     const meio = tr.left + tr.width / 2;
     const primeiro = trilho.querySelector('.cslide');
-    const alcance = primeiro ? primeiro.offsetWidth + espaco() + 2 : 0;
-    trilho.querySelectorAll('.cslide__video').forEach((video) => {
+    const alcance = primeiro ? 1.5 * primeiro.offsetWidth + espaco() : 0;
+    const videos = [...trilho.querySelectorAll('.cslide__video')].map((video) => {
       const r = video.getBoundingClientRect();
       const perto = secaoPerto && r.right > -PERTO && r.left < largura + PERTO;
+      const distancia = Math.abs(r.left + r.width / 2 - meio);
       let naTela = secaoNaTela && r.right > 0 && r.left < largura;
       if (naTela && DESKTOP.matches) {
-        naTela = cardSobMouse ? video.closest('.cslide') === cardSobMouse : Math.abs(r.left + r.width / 2 - meio) <= alcance;
+        naTela = cardSobMouse ? video.closest('.cslide') === cardSobMouse : distancia <= alcance;
       }
+      return { video, perto, naTela, distancia };
+    });
+    // No máximo 3 tocando em qualquer largura: os 3 mais perto do centro (no tablet cabiam 4 na tela)
+    const tocam = new Set(videos.filter((v) => v.naTela).sort((a, b) => a.distancia - b.distancia).slice(0, 3).map((v) => v.video));
+    videos.forEach(({ video, perto }) => {
+      const naTela = tocam.has(video);
       if (semMovimento.matches) {
         // movimento reduzido: nada toca e nenhum vídeo é baixado; só o poster, quando perto
         if (perto && video.dataset.poster && !video.getAttribute('poster')) video.poster = video.dataset.poster;
