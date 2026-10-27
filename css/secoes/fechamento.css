@@ -1,12 +1,33 @@
-/* Seção #fechamento: Fase 5.
-   Eclipse e grade do FECHAMENTO de _referencia/canvas/Main.dc.html. Dentro do eclipse, acima da frase, a logo da
-   campanha (Motion V02, js/modulos/motion-logo.js): 520 px no desktop e 300 px no mobile. */
+/* Seção #fechamento: Fase 5, com os ajustes do cliente.
+   Eclipse e grade do FECHAMENTO de _referencia/canvas/Main.dc.html (eclipse de 760 px no desktop, aprovado). Por
+   cima: a logo da campanha como assinatura (Motion V02, js/modulos/motion-logo.js), com a largura do botão; a frase
+   bicolor é o destaque. O céu ecoa a hero, para a página fechar como abriu: coroa de raios girando devagar, órbitas
+   com um ponto de luz, estrelas fora do eclipse e uma névoa laranja na base. Tudo atrás do eclipse e do texto;
+   com movimento reduzido, fica estático (base.css). */
 
+/* Altura mínima proporcional ao eclipse e conteúdo centrado nele: o disco, a coroa e as órbitas respiram */
 .fechamento {
+  --eclipse: 760px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(var(--eclipse) * 1.32);
   overflow: hidden;
-  padding: 160px var(--gutter) 220px;
+  padding: 120px var(--gutter) 150px;
   background: var(--cor-base);
+}
+
+/* Névoa laranja na base: encaminha o olho para a transição em candles do rodapé */
+.fechamento::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  background: radial-gradient(60% 80% at 50% 100%, rgba(255, 106, 26, .06), transparent 72%);
+  pointer-events: none;
 }
 
 .fechamento__grade {
@@ -18,14 +39,109 @@
   pointer-events: none;
 }
 
-/* Eclipse do protótipo. A logo entrou acima da frase, e o conteúdo ficou mais alto que o círculo de 620 px:
-   ele cresce para 760 px no desktop, mantendo o mesmo desenho (aro aceso em cima, brilho laranja). */
+/* ========== CÉU: coroa e órbitas, com o mesmo centro do eclipse ========== */
+.fechamento__astro {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--eclipse);
+  height: var(--eclipse);
+  transform: translate(-50%, -46%);
+  pointer-events: none;
+}
+
+/* Coroa solar: raios finos saindo da borda do eclipse; a máscara em anel só os mostra logo fora da borda, e eles
+   somem a ~35% do raio */
+.fechamento__coroa {
+  --r: calc(var(--eclipse) / 2);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--eclipse) * 1.8);
+  height: calc(var(--eclipse) * 1.8);
+  margin: calc(var(--eclipse) * -.9) 0 0 calc(var(--eclipse) * -.9);
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 178, 120, .09) 0deg .35deg, transparent .35deg 3deg);
+  -webkit-mask-image: radial-gradient(circle, transparent 0 calc(var(--r) - 2px), #000 calc(var(--r) + 6px), transparent calc(var(--r) * 1.35));
+  mask-image: radial-gradient(circle, transparent 0 calc(var(--r) - 2px), #000 calc(var(--r) + 6px), transparent calc(var(--r) * 1.35));
+  animation: fechamento-coroa 140s linear infinite;
+}
+
+/* Órbitas: círculos concêntricos de 1 px, cada vez maiores */
+.orbita {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 1px solid rgba(255, 255, 255, .06);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.orbita--1 {
+  width: calc(var(--eclipse) * 1.18);
+  height: calc(var(--eclipse) * 1.18);
+  border-color: rgba(255, 255, 255, .07);
+}
+
+.orbita--2 {
+  width: calc(var(--eclipse) * 1.4);
+  height: calc(var(--eclipse) * 1.4);
+}
+
+.orbita--3 {
+  width: calc(var(--eclipse) * 1.66);
+  height: calc(var(--eclipse) * 1.66);
+  border-color: rgba(255, 255, 255, .05);
+}
+
+/* Um ponto de luz percorre a órbita do meio em 30 s */
+.orbita--ponto {
+  animation: fechamento-orbita 30s linear infinite;
+}
+
+.orbita--ponto::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -2.5px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--cor-luz);
+  box-shadow: 0 0 6px 1px rgba(255, 200, 61, .8), 0 0 16px 3px rgba(255, 140, 40, .45);
+}
+
+/* Estrelas da hero (.star e .sparkle, topo.css), em menor quantidade e fora do eclipse */
+.fechamento__estrelas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+@keyframes fechamento-coroa {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fechamento-orbita {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* ========== ECLIPSE ========== */
 .eclipse {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 760px;
-  height: 760px;
+  width: var(--eclipse);
+  height: var(--eclipse);
   border-radius: 50%;
   background: radial-gradient(circle at 50% 30%, #120c0a, #030202 70%);
   box-shadow:
@@ -37,23 +153,25 @@
   pointer-events: none;
 }
 
+/* ========== CONTEÚDO: assinatura → 40 px → frase → 32 px → botão ========== */
 .fechamento__conteudo {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 34px;
   max-width: 900px;
   margin: 0 auto;
   text-align: center;
 }
 
-/* Área da logo: mesma proporção do quadro final (completa-escuro.svg, 1306 × 646), então a troca da imagem
-   estática pela animação não mexe no layout. O ingresso entra voando de fora da área (overflow visível no SVG). */
+/* A logo tem a largura do botão logo abaixo (--largura-botao, medida em js/modulos/fechamento.js; antes do JS, a
+   medida do desktop). Mesma proporção do quadro final (1306 × 646): a troca da imagem pela animação não mexe no
+   layout. O ingresso entra voando de fora da área (overflow visível no SVG). */
 .fechamento__marca {
-  width: min(520px, 100%);
+  width: var(--largura-botao, 276px);
   aspect-ratio: 1306 / 646;
+  margin-bottom: 40px;
 }
 
 .fechamento__marca img,
@@ -63,33 +181,33 @@
   height: 100%;
 }
 
-/* Frase: mesmo estilo do H1 da hero, sem degradê */
+/* lettering um pouco menos brilhante que o ingresso (no quadro estático, assinatura-escuro.svg já vem assim) */
+.fechamento__marca #lettering-motion {
+  opacity: .92;
+}
+
+/* Frase: o destaque. Jakarta 800, no máximo 2 linhas no desktop, bicolor como os títulos de seção */
 .fechamento__frase {
-  font: 800 clamp(52px, 6.6vw, 104px)/1 var(--fonte-impacto);
+  margin-bottom: 32px;
+  font: 800 clamp(40px, 5vw, 72px)/1.02 var(--fonte-impacto);
   letter-spacing: var(--tracking-impacto);
   color: #fff;
   text-wrap: balance;
 }
 
+.fechamento__frase > span {
+  color: rgba(255, 255, 255, .42);
+}
+
 @media (max-width: 767.98px) {
   .fechamento {
-    padding: 120px var(--gutter) 160px;
+    --eclipse: min(620px, 160vw);
+    min-height: calc(var(--eclipse) * 1.18);
+    padding: 100px var(--gutter) 120px;
   }
 
-  .eclipse {
-    width: min(620px, 160vw);
-    height: min(620px, 160vw);
-  }
-
-  .fechamento__conteudo {
-    gap: 28px;
-  }
-
+  /* no mobile, a assinatura tem ~70% da largura do botão */
   .fechamento__marca {
-    width: 300px;
-  }
-
-  .fechamento__frase {
-    font-size: var(--fs-h1);
+    width: calc(var(--largura-botao, 252px) * .7);
   }
 }

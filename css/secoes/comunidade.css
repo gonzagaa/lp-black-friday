@@ -30,9 +30,16 @@
   }
 }
 
-/* Bicolor: "Faça parte … 19 mil traders" em branco, o resto em branco .42 (como os benefícios) */
-.comunidade__h2 span {
+/* Bicolor (ajuste do cliente): "Faça parte … continuam evoluindo" em branco e só "com o ecossistema criado pela
+   Zero7." em branco .42; a partir de 768 px, a parte cinza tem linha própria (3 linhas no desktop) */
+.comunidade__h2 > span {
   color: rgba(255, 255, 255, .42);
+}
+
+@media (min-width: 768px) {
+  .comunidade__h2 > span {
+    display: block;
+  }
 }
 
 /* ========== TRILHO (Swiper sangrado) ========== */

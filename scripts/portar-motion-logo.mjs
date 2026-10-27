@@ -8,6 +8,8 @@
 //       assets/marca/completa-escuro.svg), na escala e na posição do quadro 4:3. Com overflow visível, o
 //       ingresso entra voando de fora da área;
 //     * título e rótulo acessível da LP; module.exports → export.
+// - assets/marca/assinatura-escuro.svg: o quadro final estático do fechamento (completa-escuro.svg com o lettering a
+//   .92, como no SVG animado; ajuste do cliente: a logo é uma assinatura e não pode competir com a frase).
 // O controle (tocar uma vez, parar no quadro final) fica em js/modulos/motion-logo.js, escrito à mão.
 // Uso: node scripts/portar-motion-logo.mjs
 import { readFile, writeFile } from 'node:fs/promises';
@@ -48,5 +50,10 @@ const jsCore = `// GERADO por scripts/portar-motion-logo.mjs a partir de _brandk
 ${core.trim()}
 `;
 await writeFile(join(RAIZ, 'js', 'modulos', 'motion-logo-core.js'), jsCore);
+
+// Quadro final estático com o lettering a .92
+const estatico = await readFile(join(RAIZ, 'assets', 'marca', 'completa-escuro.svg'), 'utf8');
+if (!estatico.includes('<g id="tipografia"')) throw new Error('não achei o lettering no completa-escuro.svg');
+await writeFile(join(RAIZ, 'assets', 'marca', 'assinatura-escuro.svg'), estatico.replace('<g id="tipografia"', '<g id="tipografia" opacity=".92"'));
 
 console.log(`motion-logo-cena.js: ${(jsCena.length / 1024).toFixed(1)} KB, ${cena.letters.length} letras | motion-logo-core.js: ${(jsCore.length / 1024).toFixed(1)} KB`);
