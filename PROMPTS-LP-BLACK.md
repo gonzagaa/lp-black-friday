@@ -43,7 +43,7 @@ Estes textos **não estão na copy**. Eles entram na LP, mas cada relatório pre
 | P2 | ~~Preços e links de checkout da Black~~ **Resolvida:** planilha do cliente no modo ativo (60 dias) do `data/planos.json` (à vista, 12x e checkout dos 8 planos; desconto real de exatamente 80%) e "Limite de perda total" nos chips. Ver `relatorios/precos-black.md` | Fase 4 |
 | P3 | ~~Onde a LP será publicada~~ **Resolvida:** https://zero7.com.br/a-maior-black/. A LP lê o próprio `data/planos.json` (relativo à pasta; não o painel da home), todos os caminhos são relativos e canonical/og:url = https://zero7.com.br/a-maior-black/ (Fase 6) | Fase 4 |
 | P4 | Remover a observação "Profit One disponível…" dos planos (conflita com o benefício Profit Pro) | Fase 4 |
-| P5 | Vídeos: Trading e Performance, Lives, Comunidade no WhatsApp, Gamification (o HUB já chegou: 9:16 no card, 16:9 no modal do desktop) | Fase 5 |
+| P5 | Vídeos da comunidade. **Já entraram:** HUB Zero7, Trading e Performance (o vídeo que estava na Academy), Academy e Comunidade no WhatsApp. **Faltam:** Lives e Gamification (continuam em "Vídeo em breve"; basta preencher o array `MIDIA`) | Fase 5 |
 | P6 | Imagem de fundo da hero gerada por IA (opcional; o horizonte em CSS já resolve) | Fase 6 |
 | P7 | ~~Tracking (GTM, Meta, etc.)~~ **Resolvida:** cópia fiel da home (GTM-KCJQPMC na primeira interação, Pixel + CAPI com eventID), sck nos checkouts e `cta_click` no dataLayer. Ver `relatorios/tracking.md` | Fase 6 |
 

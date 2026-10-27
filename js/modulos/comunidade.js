@@ -25,6 +25,8 @@ export const MIDIA = [
   {
     titulo: 'Trading e Performance',
     descricao: 'Imersão de 3 dias focada na sua carreira enquanto trader para se tornar um profissional.',
+    video: { mp4: 'assets/video/trading-performance-1.mp4', webm: 'assets/video/trading-performance-1.webm' },
+    poster: 'assets/video/trading-performance-1-poster.avif',
   },
   {
     titulo: 'Lives',
@@ -33,12 +35,14 @@ export const MIDIA = [
   {
     titulo: 'Academy',
     descricao: 'Plataforma com + de 170 aulas educacionais com mentores como Fabrício Gonçalves, Iago Vieira, entre outros nomes do mercado, com o objetivo de acelerar a sua evolução como trader.',
-    video: { mp4: 'assets/video/academy-1.mp4', webm: 'assets/video/academy-1.webm' },
-    poster: 'assets/video/academy-1-poster.avif',
+    video: { mp4: 'assets/video/academy-9x16-540.mp4' },
+    poster: 'assets/video/academy-9x16-poster.webp',
   },
   {
     titulo: 'Comunidade no WhatsApp',
     descricao: 'Acompanhamento do mercado em tempo real e ofertas em primeira mão.',
+    video: { mp4: 'assets/video/comunidade-9x16-540.mp4' },
+    poster: 'assets/video/comunidade-9x16-poster.webp',
   },
   {
     titulo: 'Gamification',
