@@ -96,33 +96,6 @@
   pointer-events: none;
 }
 
-/* "Vídeo em breve": fundo escuro com brilho laranja embaixo e o número gigante em contorno */
-.cslide__ph {
-  position: absolute;
-  inset: 0;
-  /* o brilho fica acima da área do texto (embaixo, o degradê do card o cobriria) */
-  background: radial-gradient(85% 42% at 50% 74%, rgba(255, 106, 26, .3), transparent 70%), linear-gradient(180deg, #151110, #070505);
-}
-
-.cslide__num-grande {
-  position: absolute;
-  left: 20px;
-  top: 14px;
-  font: 800 120px/1 var(--fonte-display);
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, .1);
-}
-
-.cslide__breve {
-  position: absolute;
-  right: 18px;
-  top: 22px;
-  font: 600 10px/1 var(--fonte-texto);
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, .55);
-}
-
 /* Degradê da base do card */
 .cslide__sombra {
   position: absolute;

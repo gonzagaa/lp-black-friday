@@ -1,10 +1,9 @@
 // Comunidade: fileira de cards 9:16 sangrada na largura da tela (Swiper com slidesPerView 'auto', loop, arrastar
 // e toque), com o texto da copy por cima de cada card, setas .ibtn e uma barra de progresso de 6 segmentos.
 //
-// MÍDIA (pendência P5): para pôr um vídeo novo, basta preencher a entrada abaixo.
+// MÍDIA: cada card tem o seu vídeo (P5 resolvida).
 // - video: { mp4, webm? } do card (9:16), mudo e em loop, sem controles; poster: a imagem do card.
-// - Sem video: o card fica em "Vídeo em breve" (fundo escuro com brilho laranja, número gigante em contorno), com o
-//   mesmo texto por cima.
+// - O estado "Vídeo em breve" saiu do código e do CSS: um item sem video fica só com o fundo escuro do card.
 //
 // Vídeos (desempenho):
 // - nada é pedido antes de o card chegar perto da tela (~300 px): aí entram o poster e o arquivo;
@@ -49,6 +48,8 @@ export const MIDIA = [
   {
     titulo: 'Gamification',
     descricao: 'Programa de recompensas para clientes engajados, garantindo experiências exclusivas.',
+    video: { mp4: 'assets/video/gamification-9x16-540.mp4' },
+    poster: 'assets/video/gamification-9x16-poster.webp',
   },
 ];
 
@@ -62,13 +63,11 @@ const numero = (i) => String(i + 1).padStart(2, '0');
 const escapar = (s) => String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 
 function htmlDoCard(item, i, copia) {
-  let midia;
+  let midia = '';
   if (item.video) {
     const fontes = ['webm', 'mp4'].filter((t) => item.video[t])
       .map((t) => `<source data-src="${escapar(item.video[t])}" type="video/${t}">`).join('');
     midia = `<video class="cslide__video" autoplay muted loop playsinline preload="none" disablepictureinpicture aria-hidden="true"${item.poster ? ` data-poster="${escapar(item.poster)}"` : ''}>${fontes}</video>`;
-  } else {
-    midia = `<span class="cslide__ph" aria-hidden="true"></span><span class="cslide__num-grande" aria-hidden="true">${numero(i)}</span><span class="cslide__breve">Vídeo em breve</span>`;
   }
   return `<div class="swiper-slide cslide" data-i="${i}"${copia ? ' aria-hidden="true"' : ''}>
       ${midia}

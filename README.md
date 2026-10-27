@@ -67,7 +67,7 @@ Depois de publicar, confira:
 |---|---|
 | Preços, checkout, modo (30/60 dias, reinício) e prazo de cada plano | `data/planos.json`. Depois, rode `npm run planos:snapshot`, que gera o fallback usado se o fetch falhar. **Nunca escreva preço ou URL de checkout no HTML.** |
 | Data de término da Black e endereço do planos.json | `js/config.js` (`BLACK_FIM` e `PLANOS_URL`). |
-| Cards e vídeos da comunidade | Array `MIDIA` em `js/modulos/comunidade.js`. Cada item tem `titulo`, `descricao` e, se tiver vídeo, `video: { mp4, webm }` e `poster`. Sem `video`, o card mostra "Vídeo em breve". Os vídeos ficam em `assets/video/`, em 9:16, sem som (tocam mudos e em loop). O poster vai em AVIF ou WebP. |
+| Cards e vídeos da comunidade | Array `MIDIA` em `js/modulos/comunidade.js`. Cada item tem `titulo`, `descricao`, `video: { mp4, webm? }` e `poster`. Os vídeos ficam em `assets/video/`, em 9:16, sem som (tocam mudos e em loop). O poster vai em AVIF ou WebP. |
 | Textos | `index.html`. Use a copy aprovada palavra por palavra. |
 | Cores, raios, degradê da marca e durações | `css/tokens.css`. |
 | Pele da seção de planos | `css/secoes/planos-black.css`. O `css/secoes/planos.css` é **gerado** a partir da home (veja abaixo); não edite à mão. |
