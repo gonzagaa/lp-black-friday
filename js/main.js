@@ -13,7 +13,9 @@ import { iniciarComunidade } from './modulos/comunidade.js';
 import { iniciarFechamento } from './modulos/fechamento.js';
 import { iniciarRodape } from './modulos/rodape.js';
 import { iniciarBarraMobile } from './modulos/barra-mobile.js';
+import { iniciarTracking } from './modulos/tracking.js';
 
+iniciarTracking(); // antes dos planos: o sck entra a cada href que o blackPlanos montar
 iniciarNav();
 iniciarRevelar();
 iniciarRolagem();

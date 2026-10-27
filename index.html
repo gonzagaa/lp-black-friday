@@ -28,7 +28,36 @@
   <link rel="icon" href="assets/marca/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/marca/apple-touch-icon.png">
 
-  <!-- TRACKING: GTM/Meta entram aqui -->
+  <!-- Google Tag Manager -->
+  <!-- C5 (aprovado por Gustavo; o B5 pela gestora): o GTM só entra na
+       PRIMEIRA INTERAÇÃO — pointerdown, touchstart, keydown, scroll ou
+       mousemove (o mousemove dá segundos de folga no desktop antes de
+       qualquer clique). Sem LCP, sem timer, sem load: quem não interage não
+       carrega tag NENHUMA — e deixa de ser contado; o PageView server-side
+       do Meta (sendCapiPageView, backend próprio, intocado) continua
+       contando esses. O dataLayer segue nascendo AQUI, antes de tudo: push
+       anterior fica enfileirado e o container processa na chegada. Páginas
+       de obrigado intocadas, com o snippet original. -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    (function () {
+      var injetado = false;
+      var EVENTOS = ['pointerdown', 'touchstart', 'keydown', 'scroll', 'mousemove'];
+      var OPTS = { once: true, passive: true, capture: true };
+      function injetar() {
+        if (injetado) return;
+        injetado = true;
+        for (var i = 0; i < EVENTOS.length; i++) window.removeEventListener(EVENTOS[i], injetar, OPTS);
+        var j = document.createElement('script');
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-KCJQPMC';
+        document.head.appendChild(j);
+      }
+      for (var i = 0; i < EVENTOS.length; i++) window.addEventListener(EVENTOS[i], injetar, OPTS);
+    })();
+  </script>
+  <!-- End Google Tag Manager -->
 
   <!-- Fontes da hero: Plus Jakarta Sans 800 (H1), 700 (rótulo dos botões da nav e da hero) e Inter (corpo).
        Sem o preload da 700, o rótulo troca de fonte depois da pintura e o botão muda de largura (CLS). -->
@@ -63,6 +92,11 @@
   <script type="module" src="js/main.js" defer></script>
 </head>
 <body>
+  <!-- Google Tag Manager (noscriptt) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KCJQPMC" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <!-- Sprite: o selo serrilhado (polígono de 36 pontos) e os degradês das duas variantes.
        Use com <svg><use href="#selo-serrilhado" fill="url(#selo-hero-cor)"/></svg>. Não pode ficar em display:none, senão os degradês somem. -->
   <svg id="sprite" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -796,5 +830,68 @@
   <div class="barra-mobile" data-barra-mobile inert>
     <a class="fbtn fbtn--block" href="#planos" data-cta="barra-mobile"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
   </div>
+
+  <!-- Pixel + API de Conversões: cópia da home (../Zero7/index.html, linhas 2000–2062), sem os console.log/console.error -->
+  <script>
+  // gera e guarda o eventID ANTES para casar Pixel + API
+  window.__eventID = '_' + Math.random().toString(36).slice(2, 11);
+
+  function pixelReady() {
+    return typeof window.fbq === 'function' && window.fbq.loaded;
+  }
+
+  function safeTrackPageView() {
+    if (!pixelReady()) return false;
+    fbq('track', 'PageView', {}, { eventID: window.__eventID });
+    return true;
+  }
+
+  window.addEventListener('DOMContentLoaded', function () {
+    // tenta por até ~3s (20 tentativas × 150ms)
+    let tries = 0;
+    const iv = setInterval(function () {
+      tries++;
+      if (safeTrackPageView() || tries > 20) clearInterval(iv);
+    }, 150);
+  });
+  </script>
+
+  <script>
+  function getFbp() {
+    const existing = localStorage.getItem('_fbp');
+    if (existing) return existing;
+    const fbp = 'fb.1.' + Date.now() + '.' + Math.floor(Math.random() * 1e10);
+    localStorage.setItem('_fbp', fbp);
+    return fbp;
+  }
+
+  function getFbc() {
+    const fbclid = new URLSearchParams(window.location.search).get('fbclid');
+    if (!fbclid) return '';
+    return 'fb.1.' + Date.now() + '.' + fbclid;
+  }
+
+  function sendCapiPageView() {
+    const fbp = getFbp();
+    const fbc = getFbc();
+
+    fetch('https://backend-api-zero7.vercel.app/api/send-event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: 'PageView',
+        event_id: window.__eventID,           // <<< MESMO ID do Pixel
+        fbp,
+        fbc,
+        email: 'anonimo@teste.com'
+      })
+    })
+    .then(r => r.json())
+    .catch(function () {});
+  }
+
+  // mantenha o envio da API no DOMContentLoaded
+  window.addEventListener('DOMContentLoaded', sendCapiPageView);
+  </script>
 </body>
 </html>

@@ -45,7 +45,7 @@ Estes textos **não estão na copy**. Eles entram na LP, mas cada relatório pre
 | P4 | Remover a observação "Profit One disponível…" dos planos (conflita com o benefício Profit Pro) | Fase 4 |
 | P5 | Vídeos: Trading e Performance, Lives, Comunidade no WhatsApp, Gamification (o HUB já chegou: 9:16 no card, 16:9 no modal do desktop) | Fase 5 |
 | P6 | Imagem de fundo da hero gerada por IA (opcional; o horizonte em CSS já resolve) | Fase 6 |
-| P7 | Tracking (GTM, Meta, etc.) | Fase 6 |
+| P7 | ~~Tracking (GTM, Meta, etc.)~~ **Resolvida:** cópia fiel da home (GTM-KCJQPMC na primeira interação, Pixel + CAPI com eventID), sck nos checkouts e `cta_click` no dataLayer. Ver `relatorios/tracking.md` | Fase 6 |
 
 ---
 

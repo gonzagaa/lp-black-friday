@@ -52,6 +52,7 @@ Configuração recomendada no servidor:
 - **Cache longo** (por exemplo, `max-age=31536000`) para `assets/fonts/`, `assets/3d/`, `assets/texturas/`, `assets/video/` e `vendor/`.
 - **Cache curto ou revalidação** (`no-cache`) para `index.html`, `css/`, `js/` e `data/planos.json`. Os nomes desses arquivos não mudam a cada versão, então um cache longo serviria uma versão velha depois de uma atualização.
 - **Vídeos** (`.mp4`, `.webm`) servidos com suporte a `Range` (o padrão de Apache e Nginx).
+- **Sem bloquear o tracking:** a página chama `www.googletagmanager.com` e `backend-api-zero7.vercel.app`. Se o servidor mandar um Content-Security-Policy, ele precisa liberar esses domínios e os que o container do GTM carrega (Meta, Google Ads).
 - **Tipos MIME** para `.avif` (`image/avif`), `.webp`, `.webm` e `.woff2` (`font/woff2`).
 
 Depois de publicar, confira:
@@ -74,9 +75,15 @@ Depois de publicar, confira:
 
 ### Tracking
 
-Nenhum script de terceiros está instalado. O lugar do GTM e do Meta Pixel está marcado no `<head>` com `<!-- TRACKING: GTM/Meta entram aqui -->`.
+O tracking é o mesmo da home (detalhes e origem de cada trecho em `relatorios/tracking.md`):
 
-Cada CTA tem um `data-cta` para os gatilhos de clique:
+- **GTM-KCJQPMC** no `<head>`: o `dataLayer` nasce antes de tudo, mas o `gtm.js` só é baixado na primeira interação (toque, tecla, rolagem ou movimento do mouse). O `<noscript>` do GTM fica logo depois do `<body>`.
+- **Pixel + API de Conversões** no fim do `<body>`: o `window.__eventID` casa o PageView do Pixel (que vem pelo GTM) com o POST para `https://backend-api-zero7.vercel.app/api/send-event`, enviado no DOMContentLoaded. A API só aceita a origem `https://zero7.com.br`; em localhost o console mostra um erro de CORS, e isso é esperado.
+- **`js/modulos/tracking.js`:**
+  - acrescenta `&sck=utm_source|utm_medium|utm_campaign|utm_term|utm_content` aos links do checkout, depois que os planos montam o href;
+  - põe `{ event: 'cta_click', cta }` no `dataLayer` a cada clique num CTA.
+
+Cada CTA tem um `data-cta`, o valor que vai no `cta_click`:
 
 - `nav`
 - `hero`
@@ -86,7 +93,7 @@ Cada CTA tem um `data-cta` para os gatilhos de clique:
 - `fechamento`
 - `barra-mobile`
 
-Os CTAs dos planos repassam para o checkout os parâmetros da URL da página (as UTMs), como na home.
+Os CTAs dos planos repassam para o checkout os parâmetros da URL da página (as UTMs), como na home, e o `sck`.
 
 ## Scripts de manutenção (`scripts/`)
 

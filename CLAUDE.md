@@ -93,7 +93,7 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
       - Exceção aprovada pelo cliente: rolagem suave com o Lenis 1.1.14, como na home (`vendor/lenis-1.1.14/`, `js/modulos/rolagem.js`): carregado depois do load, em idle, e desligado com movimento reduzido. Modais e o menu levam `data-lenis-prevent`.
       - Exceção aprovada pelo cliente: a seção de planos usa o Swiper 11.2.10 da home (`vendor/swiper-11.2.10/`, carregado sob demanda depois do load, em idle), porque o carrossel é portado literalmente da home. Só ali.
     - Metas: LCP < 2,5 s no mobile, CLS < 0,05, primeira dobra < 800 KB.
-11. **Tracking e terceiros.** Não adicione GTM, Pixel ou similares sem pedido explícito. O selo do Reclame Aqui entra igual à home (Fase 5).
+11. **Tracking e terceiros.** O tracking é uma cópia fiel da home: GTM-KCJQPMC injetado só na primeira interação (pointerdown, touchstart, keydown, scroll ou mousemove), o noscript do GTM logo depois do `<body>` e Pixel + API de Conversões com o mesmo `window.__eventID` (o POST sai no DOMContentLoaded). Além disso, só o `js/modulos/tracking.js`: o sck nos links do checkout (getParams da home, com o prefixo `https://app.zero7.com.br/checkout` incluído a pedido) e o `cta_click` no dataLayer para todo `[data-cta]`. Mudanças só com pedido explícito. Zendesk não entra. O selo do Reclame Aqui entra igual à home (Fase 5).
 12. **Datas e números de negócio.** A data de término do contador e qualquer número que não esteja na copy ficam em `js/config.js` como constantes com `// TODO: confirmar`. Liste todos no relatório.
 
 ## Verificação
