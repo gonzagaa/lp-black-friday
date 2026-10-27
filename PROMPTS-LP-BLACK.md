@@ -23,6 +23,15 @@ São seis fases, cada uma com entrega e critério de aceite próprios. **O Claud
 
 ---
 
+## Copy alterada depois da aprovação
+
+Estes textos **substituem** os do `_referencia/copy/LPBlack.html` e valem como copy oficial. Nenhuma fase deve voltar ao texto antigo.
+
+| Data | Onde | Antes (LPBlack.html) | Agora |
+|---|---|---|---|
+| 27/10/2026 (aprovado pelo Gustavo) | Hero, parágrafo abaixo do H1 (`.hero__sub`) | "+ um pacote completo para levar sua jornada no trading para outro nível:" | "Os melhores benefícios da Zero7 + novidades juntos em um único plano. Chegou a hora de ir para outro nível." No desktop (≥ 1024), 2 linhas quebradas no ponto; no mobile, quebra natural. |
+| 27/10/2026 (aprovado pelo Gustavo) | Comunidade, título | "Faça parte da comunidade com mais de 19 mil traders…" | "Faça parte da comunidade com mais de 30 mil traders e que continuam evoluindo com o ecossistema criado pela Zero7." |
+
 ## Textos a aprovar
 
 Estes textos **não estão na copy**. Eles entram na LP, mas cada relatório precisa listá-los até serem aprovados.
@@ -33,7 +42,8 @@ Estes textos **não estão na copy**. Eles entram na LP, mas cada relatório pre
 | Hero | "Termina em" (contador) |
 | Benefícios | rótulo "O pacote da Black"; título "Um pacote completo para o próximo nível."; link "Ir direto para os planos"; selo "Online 24h" no card Mentor IAVA; título curto do card 03, "Conta real com 10 dias na incubadora" (a copy diz "Transição para conta real com 10 dias na incubadora.") |
 | Planos | rótulo "Planos Black Friday" |
-| Comunidade | rótulo "Ecossistema Zero7"; "Vídeo em breve" (o bloco "19K traders na comunidade" foi removido a pedido do cliente) |
+| Comunidade | rótulo "Ecossistema Zero7" (o bloco "19K traders na comunidade" foi removido a pedido do cliente; o "Vídeo em breve" saiu quando os 6 cards ganharam vídeo) |
+| SEO | `meta description` e `og:description`: "80% OFF na maior Black da história: os melhores benefícios da Zero7 + novidades juntos em um único plano. Chegou a hora de ir para outro nível." (montada com a copy de 27/10) |
 
 ## Pendências de negócio (não bloqueiam as fases)
 

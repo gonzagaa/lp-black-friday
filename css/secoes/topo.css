@@ -434,6 +434,22 @@ html.menu-aberto {
   color: var(--cor-texto-2);
 }
 
+/* Copy de 27/10: no desktop, 2 linhas quebradas no ponto (o <br> só vale aqui); a linha 1 tem 34,4em em qualquer
+   tamanho do --fs-lead, e o max-width em em acompanha a fonte. No mobile, quebra natural. */
+.hero__sub br {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero__sub {
+    max-width: 35em;
+  }
+
+  .hero__sub br {
+    display: inline;
+  }
+}
+
 .hero__acoes {
   display: flex;
   flex-wrap: wrap;
