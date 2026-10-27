@@ -8,6 +8,8 @@
 // Vídeos (desempenho):
 // - nada é pedido antes de o card chegar perto da tela (~300 px): aí entram o poster e o arquivo;
 // - só tocam os cards que estão na tela; ao sair, pausam;
+// - desktop com mouse (DESKTOP, o mesmo media query do CSS): sem hover, tocam só os 3 cards do palco (os do degradê
+//   das laterais pausam); com hover, só o card sob o mouse, e os outros pausam no quadro em que estavam;
 // - com movimento reduzido, nada toca e nenhum vídeo é baixado: fica o poster.
 // O "perto" e o "na tela" de cada card são calculados pela posição dele (o carrossel recorta os cards de fora no
 // eixo X, e um IntersectionObserver com margem não enxerga além desse recorte).
@@ -58,6 +60,9 @@ export const MIDIA = [
 const COPIAS = 3;
 const PERTO = 300; // px
 const semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)');
+// Desktop com mouse (css/secoes/comunidade.css): palco de 3 cards, 28 px entre eles e hover
+const DESKTOP = window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)');
+const espaco = () => (DESKTOP.matches ? 28 : 20);
 
 const numero = (i) => String(i + 1).padStart(2, '0');
 const escapar = (s) => String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
@@ -110,12 +115,22 @@ export function iniciarComunidade() {
     video.load();
   }
 
+  let cardSobMouse = null; // desktop: o card sob o mouse (só ele toca)
+
   function avaliar() {
     const largura = window.innerWidth;
+    // palco (desktop): o card do centro e os dois vizinhos, pelo centro de cada card
+    const tr = trilho.getBoundingClientRect();
+    const meio = tr.left + tr.width / 2;
+    const primeiro = trilho.querySelector('.cslide');
+    const alcance = primeiro ? primeiro.offsetWidth + espaco() + 2 : 0;
     trilho.querySelectorAll('.cslide__video').forEach((video) => {
       const r = video.getBoundingClientRect();
       const perto = secaoPerto && r.right > -PERTO && r.left < largura + PERTO;
-      const naTela = secaoNaTela && r.right > 0 && r.left < largura;
+      let naTela = secaoNaTela && r.right > 0 && r.left < largura;
+      if (naTela && DESKTOP.matches) {
+        naTela = cardSobMouse ? video.closest('.cslide') === cardSobMouse : Math.abs(r.left + r.width / 2 - meio) <= alcance;
+      }
       if (semMovimento.matches) {
         // movimento reduzido: nada toca e nenhum vídeo é baixado; só o poster, quando perto
         if (perto && video.dataset.poster && !video.getAttribute('poster')) video.poster = video.dataset.poster;
@@ -147,7 +162,7 @@ export function iniciarComunidade() {
   function armar(Swiper) {
     swiper = new Swiper(trilho, {
       slidesPerView: 'auto',
-      spaceBetween: 20,
+      spaceBetween: espaco(),
       loop: true,
       centeredSlides: true,
       grabCursor: true,
@@ -165,12 +180,40 @@ export function iniciarComunidade() {
         slideChange: marcarProgresso,
         setTranslate: avaliarNoQuadro,
         transitionEnd: avaliarNoQuadro,
-        resize: avaliarNoQuadro,
+        resize: () => { marcarCortes(); avaliarNoQuadro(); },
       },
     });
     marcarProgresso();
     avaliar();
   }
+
+  // ---------- desktop: texto em 2 linhas e hover ----------
+  // data-corta nas descrições com mais de 2 linhas: só nelas entra a máscara do fim da 2ª linha (CSS). O
+  // scrollHeight é a altura do texto inteiro, com o card fechado ou aberto.
+  function marcarCortes() {
+    trilho.querySelectorAll('.cslide__desc').forEach((d) => {
+      const linha = parseFloat(getComputedStyle(d).lineHeight);
+      d.toggleAttribute('data-corta', d.scrollHeight > linha * 2 + 1);
+    });
+  }
+  marcarCortes();
+  if (document.fonts) document.fonts.ready.then(marcarCortes);
+
+  trilho.addEventListener('pointerover', (e) => {
+    if (!DESKTOP.matches || e.pointerType !== 'mouse') return;
+    const card = e.target.closest('.cslide');
+    if (card !== cardSobMouse) { cardSobMouse = card; avaliar(); }
+  });
+  trilho.addEventListener('pointerleave', () => {
+    if (cardSobMouse) { cardSobMouse = null; avaliar(); }
+  });
+
+  DESKTOP.addEventListener('change', () => {
+    cardSobMouse = null;
+    if (swiper) { swiper.params.spaceBetween = espaco(); swiper.update(); }
+    marcarCortes();
+    avaliar();
+  });
 
   anterior.addEventListener('click', () => swiper && swiper.slidePrev());
   proximo.addEventListener('click', () => swiper && swiper.slideNext());
