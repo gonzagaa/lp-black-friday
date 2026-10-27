@@ -39,8 +39,8 @@ Estes textos **não estão na copy**. Eles entram na LP, mas cada relatório pre
 
 | # | Pendência | Afeta |
 |---|---|---|
-| P1 | Data e hora de término da Black (contador) | Fase 2 |
-| P2 | **Aguardando o cliente:** preços e links de checkout da Black para o `data/planos.json` da LP. Hoje o desconto real dá cerca de 77%, e a etiqueta diz "80% OFF" (mantida até os preços chegarem) | Fase 4 |
+| P1 | Data e hora de término da Black (contador). **Data recebida:** 30/11 (planilha "Planos Black 80% OFF 29/10 até 30/11"); `BLACK_FIM = 2026-11-30T23:59:59-03:00`, falta confirmar a hora. O contador segue sem uso na página | Fase 2 |
+| P2 | ~~Preços e links de checkout da Black~~ **Resolvida:** planilha do cliente no modo ativo (60 dias) do `data/planos.json` (à vista, 12x e checkout dos 8 planos; desconto real de exatamente 80%) e "Limite de perda total" nos chips. Ver `relatorios/precos-black.md` | Fase 4 |
 | P3 | ~~Onde a LP será publicada~~ **Resolvida:** https://zero7.com.br/a-maior-black/. A LP lê o próprio `data/planos.json` (relativo à pasta; não o painel da home), todos os caminhos são relativos e canonical/og:url = https://zero7.com.br/a-maior-black/ (Fase 6) | Fase 4 |
 | P4 | Remover a observação "Profit One disponível…" dos planos (conflita com o benefício Profit Pro) | Fase 4 |
 | P5 | Vídeos: Trading e Performance, Lives, Comunidade no WhatsApp, Gamification (o HUB já chegou: 9:16 no card, 16:9 no modal do desktop) | Fase 5 |

@@ -50,6 +50,18 @@ const trocas = [
 ];
 // data-cta="plano-{chave}" em cada CTA (para configurar o tracking depois, P7): a chave é a do data-plan do card
 trocas.push([/(data-plan="([^"]+)"[\s\S]*?)<a target="_blank" rel="noopener" class="z7-btnx js-checkout/g, '$1<a data-cta="plano-$2" target="_blank" rel="noopener" class="z7-btnx js-checkout']);
+// "Limite de perda total" da Black (planilha do cliente "Planos Black 80% OFF 29/10 até 30/11"): na home é outro
+// valor. Os outros chips continuam os da home.
+const PERDA_TOTAL_BLACK = {
+  trainee: 'R$ 1.200,00', junior: 'R$ 2.500,00', pleno: 'R$ 6.500,00', senior: 'R$ 15.000,00',
+  expert: 'R$ 17.500,00', master: 'R$ 22.500,00', bit_trainee: 'R$ 1.200,00', bit_junior: 'R$ 2.500,00',
+};
+for (const [plano, valor] of Object.entries(PERDA_TOTAL_BLACK)) {
+  trocas.push([
+    new RegExp(`(data-plan="${plano}"[\\s\\S]*?<span class="chip__rotulo">Limite de perda total</span><span class="chip__valor">)[^<]*`),
+    (_, antes) => antes + valor,
+  ]);
+}
 for (const [de, para] of trocas) {
   const antes = s;
   s = s.replace(de, para);

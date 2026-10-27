@@ -247,6 +247,12 @@
   white-space: nowrap;
 }
 
+/* "100% em conta real" (Repasse, o último chip) não cabe numa linha no chip de 1/3 dos cards do Bitcoin até 768 px:
+   com o nowrap ele vazava do chip. Esse texto pode quebrar; os valores em R$ continuam numa linha só. */
+#planos .chip:last-child .chip__valor {
+  white-space: normal;
+}
+
 /* desktop: a mesma rampa da home, que chega a 13 / 16 px em 1920 */
 @media (min-width: 1080px) {
   #planos .chip__rotulo {
