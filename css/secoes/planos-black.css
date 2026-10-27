@@ -667,3 +667,20 @@
 #planos .plano .swiper-pagination.swiper-pagination-lock {
   display: flex;
 }
+
+/* Carrosséis invisíveis (ocupando o lugar) até o Swiper armar: ver mostrarCarrosseis() em
+   js/modulos/home/carrosselPlanos.js. Sem JS (sem .js no <html>), nada se esconde. */
+.js #planos:not(.carrossel-armado) .plano {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#planos.carrossel-armado .plano {
+  transition: opacity .3s var(--curva);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #planos.carrossel-armado .plano {
+    transition: none;
+  }
+}

@@ -188,7 +188,15 @@ function armarCarrosseis(Swiper) {
   indicadoresPorCard(window.swiper11, ".mySwiper11");
   escondidos.forEach(bloco => { bloco.hidden = true; });
 
+  mostrarCarrosseis();
   window.dispatchEvent(new CustomEvent("zero7:carrosseisProntos"));
+}
+
+// LP: até o Swiper armar, os carrosséis ficam invisíveis, ocupando o lugar (css/secoes/planos-black.css). Armado
+// com a seção já na tela (recarga com a rolagem restaurada nos planos, salto sem clique), ele trocava o card da
+// frente à vista e deslocava a página (CLS de 0,03 a 0,11). Se o Swiper não carregar, eles aparecem do mesmo jeito.
+function mostrarCarrosseis() {
+  document.getElementById("planos")?.classList.add("carrossel-armado");
 }
 
 // dadosProntos: a promessa do iniciarBlackPlanos()
@@ -221,5 +229,5 @@ export function iniciarCarrosselPlanos(dadosProntos) {
     .then(() => perto)
     .then(carregarSwiper)
     .then(armarCarrosseis)
-    .catch(console.error);
+    .catch(erro => { mostrarCarrosseis(); console.error(erro); });
 }
