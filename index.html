@@ -214,6 +214,18 @@
               <h3 class="card-z__t">Desconto de 80%</h3>
               <p class="card-z__d">Mais estrutura para o seu operacional, investindo menos.</p>
             </div>
+            <!-- Comparativo de preço (plano Sênior, Mini Índice): os valores vêm do data/planos.json (js/modulos/comparativo.js).
+                 "Preço normal" e "Na Black" são textos a aprovar. -->
+            <div class="cmp" data-comparativo>
+              <div class="cmp__linha">
+                <div class="cmp__topo"><span class="cmp__rotulo">Preço normal</span><s class="cmp__valor cmp__valor--normal" data-cmp-normal>&nbsp;</s></div>
+                <div class="cmp__trilho"><i class="cmp__barra"></i></div>
+              </div>
+              <div class="cmp__linha cmp__linha--black">
+                <div class="cmp__topo"><span class="cmp__rotulo">Na Black</span><span class="cmp__valor" data-cmp-black aria-hidden="true">&nbsp;</span><span class="sr-only" data-cmp-black-leitor></span></div>
+                <div class="cmp__trilho"><i class="cmp__barra cmp__barra--black"></i><span class="cmp__ponta"><b class="cmp__chip" data-cmp-chip>&nbsp;</b></span></div>
+              </div>
+            </div>
             <span class="beneficio__contorno" aria-hidden="true">80</span>
             <picture>
               <source type="image/avif" srcset="assets/3d/19-percentual-320.avif 320w, assets/3d/19-percentual-640.avif 640w" sizes="(max-width: 767px) 130px, 260px">

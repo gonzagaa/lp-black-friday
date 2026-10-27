@@ -2,18 +2,16 @@
    Mudanças em relação à home, e só estas:
    - módulo ES: a IIFE virou iniciarBlackPlanos(), que devolve uma promessa resolvida quando os cards estão
      preenchidos (o carrossel só arma depois disso);
-   - DATA_URL -> PLANOS_URL (js/config.js), com fallback no snapshot embutido se o fetch falhar (Fase 4);
+   - DATA_URL -> PLANOS_URL (js/config.js), com fallback no snapshot embutido se o fetch falhar (Fase 4). A leitura
+     fica em js/modulos/dados-planos.js, dividida com o comparativo dos benefícios e o limite de perda;
    - card sem preço ou sem checkout válido sai do carrossel (Fase 4: nunca mostrar card sem preço);
    - card preenchido ganha .is-pronto (até lá a pele o deixa invisível, ocupando o lugar);
    - os cards ficam na ordem do planos.json (ordenarComoNoJson).
    O resto (modos, botões, textos, flash, footnote, withCurrentQueryParams) é o da home. */
-import { PLANOS_URL } from '../../config.js';
-import SNAPSHOT from '../planos-snapshot.js';
+import { carregarPlanos } from '../dados-planos.js';
 import { separarParcela, separarAvista, checkoutValido } from '../precos.js';
 
 export function iniciarBlackPlanos() {
-  const DATA_URL = PLANOS_URL;
-
   let currentMode = null;
   let cache = null;
   let activeModeIds = [];
@@ -155,16 +153,7 @@ export function iniciarBlackPlanos() {
   // LP: se o fetch falhar (ou vier sem modo ativo), usa o snapshot embutido
   async function loadData() {
     if (cache) return cache;
-    try {
-      const res = await fetch(DATA_URL, { cache: "no-cache" });
-      if (!res.ok) throw new Error("Falha ao carregar planos.json");
-      const db = await res.json();
-      if (!getActiveModes(db?.config || {}).length) throw new Error("planos.json sem modo ativo");
-      cache = db;
-    } catch (erro) {
-      console.warn(`[planos] Não consegui usar ${DATA_URL} (${erro.message}). Usando o snapshot embutido.`);
-      cache = SNAPSHOT;
-    }
+    cache = await carregarPlanos();
     return cache;
   }
 

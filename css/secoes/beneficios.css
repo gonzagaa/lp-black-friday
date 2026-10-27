@@ -223,6 +223,105 @@
   height: auto;
 }
 
+/* 01: comparativo de preço (Sênior, Mini Índice; valores do planos.json via js/modulos/comparativo.js).
+   Mesma linguagem do gráfico do 02: barras de 10 px com cantos de 3 px, cinza e laranja. A barra da Black nasce
+   cheia e encolhe até a proporção real (--fim = à vista / preço antigo); a ponta (o chip "−80%") anda junto com ela.
+   Só transform na animação. */
+.cmp {
+  --fim: 1;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 16px;
+  max-width: 56%;
+}
+
+.cmp__topo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.cmp__rotulo {
+  font: 500 13px/1.2 var(--fonte-texto);
+  color: rgba(255, 255, 255, .62);
+}
+
+.cmp__valor {
+  font: 700 20px/1 var(--fonte-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.cmp__valor--normal {
+  color: rgba(255, 255, 255, .42);
+  text-decoration-thickness: 1.5px;
+}
+
+/* a pista deixa 64 px à direita para o chip caber quando a barra ainda está cheia */
+.cmp__trilho {
+  position: relative;
+  height: 10px;
+  margin-right: 64px;
+}
+
+.cmp__barra {
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .14);
+}
+
+.cmp__barra--black {
+  background: var(--grad-marca-brilho), var(--grad-marca-horizontal);
+  box-shadow: 0 4px 14px -4px rgba(255, 106, 26, .55);
+  transform-origin: left center;
+  transition: transform 1.2s var(--curva);
+}
+
+.cmp__ponta {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: transform 1.2s var(--curva);
+}
+
+.cmp__chip {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-left: 8px;
+  padding: 4px 7px 3px;
+  border-radius: 8px;
+  background: var(--grad-marca-brilho), var(--grad-marca);
+  box-shadow: var(--sombra-material), 0 6px 14px -6px rgba(255, 106, 26, .7);
+  font: 800 13px/1 var(--fonte-display);
+  letter-spacing: .02em;
+  color: #fff;
+  white-space: nowrap;
+  transform: translateY(-50%);
+}
+
+/* estado final (depois da entrada na tela, ou direto com movimento reduzido) */
+.cmp.is-fim .cmp__barra--black {
+  transform: scaleX(var(--fim));
+}
+
+.cmp.is-fim .cmp__ponta {
+  transform: translateX(calc((var(--fim) - 1) * 100%));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cmp__barra--black,
+  .cmp__ponta {
+    transition: none;
+  }
+}
+
 /* CTA da seção */
 .beneficios__acao {
   display: flex;
@@ -335,5 +434,31 @@
   .beneficios__acao .fbtn {
     display: flex;
     width: 100%;
+  }
+}
+
+/* < 768 px: o comparativo fica abaixo do texto, à esquerda do % (que continua no canto de baixo) */
+@media (max-width: 767.98px) {
+  .cmp {
+    max-width: calc(100% - 140px);
+    gap: 14px;
+  }
+
+  /* ~170 px ao lado do %: rótulo e valor numa linha só */
+  .cmp__topo {
+    gap: 8px;
+  }
+
+  .cmp__valor {
+    font-size: 16px;
+  }
+
+  .cmp__rotulo {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .cmp__trilho {
+    margin-right: 56px;
   }
 }
