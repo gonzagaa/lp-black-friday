@@ -39,10 +39,11 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
 ### Planos (Fase 4 refeita: porte da home + ajustes do cliente; vale por cima do canvas e do print 05)
 
 - Layout é o da home **portado literalmente**: HTML (`scripts/portar-planos-html.mjs`), CSS (`css/secoes/planos.css`, GERADO por `scripts/portar-planos-css.mjs`; não edite à mão) e JS (`js/modulos/home/`). A pele fica só em `css/secoes/planos-black.css`. Aceite: `node scripts/medir-planos.mjs` (home × LP, ±2 px).
-- Seção preta e neutra: o laranja aparece só nas etiquetas 3D (`22-etiqueta-de-oferta`, exceção à regra 8) e no desenho do botão escuro (neon da base, luz da borda e gota da seta). Nenhum card tem destaque; o Sênior só é o slide inicial (`data-inicial`).
+- Seção preta e neutra: o laranja aparece só nas etiquetas 3D (`22-etiqueta-de-oferta`, exceção à regra 8) e nos CTAs. Nenhum card tem destaque; o Sênior só é o slide inicial (`data-inicial`).
 - Preço: valores em branco; "12x", "ou" e "à vista" em branco .42 (20 px bold, texto grande: 4:1 sobre o card).
 - Cards com o raio da home (`30px 30px 30px 0`), não o da regra 4.
-- CTAs dos cards e da hero usam o mesmo desenho escuro (tokens `--escuro-*` em `tokens.css`): borda em degradê, neon na base, seta preta na gota laranja.
+- CTAs dos cards: o `.fbtn` laranja (degradê da marca) na caixa do `.z7-btnx` da home (largura total, 70 px, raio 20px 0). O `.fbtn--escuro` (tokens `--escuro-*`) existe só no CTA da hero a partir de 768 px.
+- Degradê da marca: todo laranja cheio usa `--grad-marca` + `--grad-marca-brilho` e a `--sombra-material` (`tokens.css`); textos laranja, topos dos candles e o selo da hero não mudam.
 - Título bicolor como o dos benefícios: "80% OFF para garantir" em branco e "o seu plano perfeito." em branco .42 (linha própria a partir de 768 px).
 - Loop do carrossel só com cards suficientes (≥ 2 × slidesPerView). Com menos (o Bitcoin), sem loop, cards centralizados, setas escondidas quando todos cabem, indicadores com o nome de cada plano e ordem do `planos.json` (aqui NÃO se replica o defeito da home).
 
@@ -81,7 +82,7 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
    - Área de toque de no mínimo 44 × 44 px.
    - `:focus-visible` desenhado em tudo que recebe foco.
    - Contraste de 4,5:1 no texto.
-     - Exceção consciente, aprovada pelo cliente: o `.fbtn` mantém o texto branco sobre laranja (visual aprovado). O degradê dele garante no mínimo 3:1 em toda a área do rótulo. Não use essa exceção em nenhum outro texto.
+     - Exceção consciente, aprovada pelo cliente: o `.fbtn` mantém o texto branco sobre o degradê da marca (`--grad-marca` + `--grad-marca-brilho`, `tokens.css`). Medido pixel a pixel atrás do rótulo: no mínimo 3,07:1 (hero mobile) e 3,10–3,19:1 nos outros (nav, benefícios, planos, fechamento); mediana ~3,7:1. Não use essa exceção em nenhum outro texto, e remeça (`fbtn`) se mudar o degradê.
    - `prefers-reduced-motion` desliga toda animação que não for essencial.
    - Use HTML semântico: `button` para ação, `a` para navegação.
 10. **Performance.**

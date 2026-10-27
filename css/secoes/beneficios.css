@@ -127,7 +127,7 @@
 }
 
 .beneficio__progresso i.aceso {
-  background: var(--cor-laranja);
+  background: var(--grad-marca-horizontal);
 }
 
 .beneficio__progresso span {

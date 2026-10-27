@@ -205,7 +205,7 @@
 }
 
 .comunidade__progresso button[aria-pressed="true"] i {
-  background: var(--cor-laranja);
+  background: var(--grad-marca-horizontal);
 }
 
 .comunidade__progresso button:focus-visible {

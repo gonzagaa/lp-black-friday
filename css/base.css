@@ -144,7 +144,7 @@ body {
 }
 
 /* Barra de rolagem fina (página e áreas com rolagem própria): trilho na cor da base, polegar branco .18
-   (.32 no hover). Chromium e Safari usam o ::-webkit-scrollbar; o Firefox, o scrollbar-width/color. */
+   (no hover, o degradê da marca). Chromium e Safari usam o ::-webkit-scrollbar; o Firefox, o scrollbar-width/color. */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -157,7 +157,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, .32);
+  background: var(--grad-marca);
 }
 
 @supports not selector(::-webkit-scrollbar) {

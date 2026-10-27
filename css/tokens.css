@@ -19,7 +19,18 @@
   --cor-laranja: #FF6A1A;
   --cor-laranja-claro: #FF8A4C;
   --cor-vermelho: #E52B24; /* só no fim de degradês */
-  --cor-luz: #FFC83D; /* só luz: brilho interno do botão e foco */
+  --cor-luz: #FFC83D; /* só luz: foco e pontos de luz */
+
+  /* Degradê da marca (como no brand kit: ingresso, etiqueta, cofre, %): de laranja para vermelho, com a luz vindo de
+     cima à esquerda. É o preenchimento de todo laranja cheio. O brilho é o reflexo de "vidro" no alto, como nos 3D,
+     e a sombra interna é a do material.
+     Variante D, aprovada pelo cliente: o pedido era #FF8A3D → #FF6A1A → #F2441F → #E52B24 com o reflexo até 52%,
+     mas o texto branco do .fbtn (no lado esquerdo, o mais claro) caía para 2,2:1. Aqui o laranja começa um pouco
+     mais escuro e o reflexo fica acima do rótulo: >= 3:1 em toda a área do rótulo (CLAUDE.md, regra 9). */
+  --grad-marca: linear-gradient(120deg, #F6661E 0%, #EF4C1A 36%, #E8381F 70%, #DA2522 100%);
+  --grad-marca-horizontal: linear-gradient(90deg, #F6661E 0%, #EF4C1A 36%, #E8381F 70%, #DA2522 100%);
+  --grad-marca-brilho: linear-gradient(180deg, rgba(255, 255, 255, .26) 0%, rgba(255, 255, 255, 0) 30%);
+  --sombra-material: inset 0 1px 1px rgba(255, 255, 255, .5), inset 0 -3px 8px rgba(120, 20, 10, .35);
 
   --cor-linha: rgba(255, 255, 255, .07);
   --cor-linha-forte: rgba(255, 255, 255, .14);
@@ -101,9 +112,7 @@
     inset 0 -1px 0 rgba(255, 106, 26, .9),
     inset 0 -16px 26px -12px rgba(255, 106, 26, .55),
     0 18px 40px -16px rgba(255, 106, 26, .35);
-  /* gota laranja com reflexo; a seta é preta (--cor-tinta, traço de 2,4 px) */
-  --escuro-gota:
-    radial-gradient(120% 120% at 30% 20%, rgba(255, 255, 255, .45), rgba(255, 255, 255, 0) 45%),
-    linear-gradient(160deg, #FF8A3D, #FF6A1A 55%, #E85A14);
-  --escuro-gota-sombra: inset 0 -2px 4px rgba(120, 30, 0, .35), 0 6px 16px -4px rgba(255, 106, 26, .6);
+  /* gota no degradê da marca com o reflexo de vidro; a seta é preta (--cor-tinta, traço de 2,4 px) */
+  --escuro-gota: var(--grad-marca-brilho), var(--grad-marca);
+  --escuro-gota-sombra: var(--sombra-material), 0 6px 16px -4px rgba(255, 106, 26, .6);
 }

@@ -1,8 +1,8 @@
 /* Seção #planos: PELE BLACK sobre o porte da home (planos.css, gerado).
    Só pele: cor, fonte, fundo e a etiqueta de oferta. Caixas, espaçamentos e posições continuam os da home
    (aceite de layout no relatório da Fase 4, medido com scripts/medir-planos.mjs).
-   Ajuste do cliente: a seção é PRETA e NEUTRA. O laranja aparece só nas etiquetas 3D (e no filete de neon e na
-   seta dos CTAs escuros, que são o desenho do .fbtn--escuro). Nenhum card tem destaque.
+   Ajuste do cliente: a seção é PRETA e NEUTRA. O laranja aparece só nas etiquetas 3D e nos CTAs (o .fbtn laranja,
+   no degradê da marca: o botão escuro não destacava sobre o card escuro). Nenhum card tem destaque.
    Carrega DEPOIS de planos.css. As regras daqui usam #planos para vencer as da home sem !important. */
 
 /* ========== Tokens: as fontes e as cores da home viram as da LP dentro da seção ========== */
@@ -320,44 +320,39 @@
   text-shadow: 0 0 8px rgba(255, 255, 255, .45), 0 0 16px rgba(255, 255, 255, .3);
 }
 
-/* ========== CTA: a caixa do .z7-btnx da home com o desenho do .fbtn--escuro ==========
-   Mesmos tokens --escuro-* do .fbtn--escuro (tokens.css). As camadas da home são reaproveitadas:
-   .z7-btnx__bg::before = fundo; .z7-btnx::after = borda em degradê + luz girando; .z7-btnx__shine = varredura. */
+/* ========== CTA: a caixa do .z7-btnx da home com o desenho do .fbtn laranja ==========
+   Ajuste do cliente: o botão escuro sobre o card escuro não destacava. Todos os CTAs dos cards usam o .fbtn
+   (componentes.css): degradê da marca com o reflexo de vidro, sombra interna do material, moldura de vidro, texto
+   branco e seta laranja na gota branca. A caixa continua a do .z7-btnx (largura total, 70 px, raio 20px 0). As
+   camadas da home são reaproveitadas: .z7-btnx__bg = fundo; .z7-btnx__shine = varredura no hover. */
 #planos .z7-btnx {
-  --_borda: var(--escuro-borda);
   border: 0;
-  box-shadow: var(--escuro-sombra);
+  box-shadow:
+    0 0 0 5px rgba(255, 106, 26, .07),
+    0 0 0 6px rgba(255, 140, 70, .24),
+    0 10px 26px -6px rgba(255, 90, 20, .7),
+    0 0 70px rgba(255, 106, 26, .26);
 }
 
-/* o halo azul desfocado da home sai */
-#planos .z7-btnx::before {
+/* o halo azul desfocado e o anel girando da home saem */
+#planos .z7-btnx::before,
+#planos .z7-btnx::after {
   content: none;
 }
 
-#planos .z7-btnx::after {
-  padding: 1px;
-  opacity: 1;
-  background: conic-gradient(from var(--ang), var(--escuro-luz-arco)), var(--_borda);
-  animation: ang var(--escuro-luz-volta) linear infinite;
-}
-
-/* O fundo cobre as sombras internas do botão; por isso o fundo e o filete de neon (sombras internas) moram
-   juntos na camada .z7-btnx__bg, e o ::before dela (o degradê azul da home) sai. A sombra externa fica no botão. */
+/* O fundo cobre as sombras internas do botão; por isso o fundo e a sombra interna do material moram juntos na
+   camada .z7-btnx__bg, e o ::before dela (o degradê azul da home) sai. */
 #planos .z7-btnx__bg {
-  background: var(--escuro-fundo);
-  box-shadow: var(--escuro-sombra);
+  background: var(--grad-marca-brilho), var(--grad-marca);
+  box-shadow: var(--sombra-material);
 }
 
 #planos .z7-btnx__bg::before {
   content: none;
 }
 
-#planos .z7-btnx:hover .z7-btnx__bg {
-  box-shadow: var(--escuro-sombra-acesa);
-}
-
 #planos .z7-btnx__shine {
-  background: linear-gradient(115deg, rgba(255, 255, 255, 0) 44%, rgba(255, 255, 255, .14) 50%, rgba(255, 255, 255, 0) 56%);
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0) 44%, rgba(255, 255, 255, .38) 50%, rgba(255, 255, 255, 0) 56%);
 }
 
 #planos .z7-btnx__label,
@@ -368,24 +363,19 @@
   letter-spacing: .05em;
   text-transform: uppercase;
   color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+  text-shadow: 0 1px 1px rgba(140, 35, 0, .35);
 }
 
-/* seta preta (SVG de traço 2,4 px, o mesmo do .fbtn) na gota laranja */
+/* seta laranja (SVG de traço 2,4 px, o mesmo do .fbtn) na gota branca */
 #planos .z7-btnx__cap {
   border: 0;
-  background: var(--escuro-gota);
-  color: var(--cor-tinta);
-  box-shadow: var(--escuro-gota-sombra);
-  transition: filter var(--dur-2);
+  background: #fff;
+  color: var(--cor-laranja);
+  box-shadow: 0 2px 6px rgba(120, 30, 0, .35), inset 0 -2px 3px rgba(0, 0, 0, .08);
 }
 
 #planos .z7-btnx__arrow {
   display: grid;
-}
-
-#planos .z7-btnx:hover .z7-btnx__cap {
-  filter: brightness(1.08);
 }
 
 #planos .z7-btnx:hover .z7-btnx__arrow {
@@ -393,10 +383,13 @@
 }
 
 #planos .z7-btnx:hover {
-  --_borda: var(--escuro-borda-acesa);
   filter: none;
   transform: translateY(-1px);
-  box-shadow: var(--escuro-sombra-acesa);
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, .05),
+    0 0 0 6px rgba(255, 150, 80, .4),
+    0 14px 34px -6px rgba(255, 90, 20, .85),
+    0 0 100px rgba(255, 106, 26, .4);
 }
 
 #planos .z7-btnx:focus-visible {
