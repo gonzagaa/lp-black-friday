@@ -74,6 +74,9 @@
 
 .comunidade__trilho .swiper-wrapper {
   cursor: grab;
+  /* a deriva move o wrapper a cada quadro (js/modulos/comunidade.js): com a camada própria, ele é só recomposto, não
+     redesenhado (no Chrome sem GPU do teste, 22 → 27 fps em 1920 durante a deriva) */
+  will-change: transform;
 }
 
 /* ========== CARD ========== */

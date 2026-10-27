@@ -1,5 +1,7 @@
 // Comunidade: fileira de cards 9:16 sangrada na largura da tela (Swiper com slidesPerView 'auto', loop, arrastar
 // e toque), com o texto da copy por cima de cada card, setas .ibtn e uma barra de progresso de 6 segmentos.
+// O trilho anda sozinho, contínuo e linear (deriva; ver "deriva contínua" abaixo), e o usuário retoma o controle
+// a qualquer momento.
 //
 // MÍDIA: cada card tem o seu vídeo (P5 resolvida).
 // - video: { mp4, webm? } do card (9:16), mudo e em loop, sem controles; poster: a imagem do card.
@@ -148,8 +150,9 @@ export function iniciarComunidade() {
   }
 
   let pedido = null;
+  let derivando = false; // a deriva move o trilho a cada quadro; ela mesma chama o avaliar() a cada 200 ms
   const avaliarNoQuadro = () => {
-    if (pedido) return;
+    if (pedido || derivando) return;
     pedido = requestAnimationFrame(() => { pedido = null; avaliar(); });
   };
 
@@ -179,12 +182,85 @@ export function iniciarComunidade() {
       on: {
         slideChange: marcarProgresso,
         setTranslate: avaliarNoQuadro,
-        transitionEnd: avaliarNoQuadro,
+        transitionEnd: () => { avaliarNoQuadro(); soltar('clique'); },
         resize: () => { marcarCortes(); avaliarNoQuadro(); },
+        // arrastar pega o carrossel na hora; a deriva volta 2,5 s depois de soltar
+        touchStart: () => pausar('arraste'),
+        touchEnd: () => soltar('arraste'),
       },
     });
     marcarProgresso();
     avaliar();
+    ligarDeriva();
+  }
+
+  // ---------- deriva contínua ----------
+  // O trilho anda sozinho para a esquerda, em velocidade constante (40 px/s no desktop com mouse, 30 no resto),
+  // quadro a quadro com o setTranslate do Swiper (nada de transição CSS). O loop do Swiper (slidesPerView 'auto')
+  // é refeito como no mousewheel com freeMode do próprio Swiper: loopFix com byMousewheel move os cards do começo
+  // para o fim e compensa o translate no mesmo quadro, sem emenda. Ele só roda quando o card do centro muda (o
+  // loopFix remede todos os slides).
+  // Pausa: arraste, setas e progresso (deslizam com a curva normal de 500 ms), hover num card do palco, foco de
+  // teclado no carrossel, seção fora da tela e aba oculta. Retoma 2,5 s depois da última interação, com a
+  // velocidade subindo em rampa de 600 ms. Com movimento reduzido, não há deriva.
+  // Durante a deriva, a decisão de quais vídeos tocam (avaliar) roda a cada 200 ms, não a cada quadro.
+  const pausas = new Set();
+  const deriva = { v: 0, ultimo: 0, quadro: 0, retomarEm: 0, avaliadoEm: 0, ativo: -1, relogio: 0 };
+  const velocidade = () => (DESKTOP.matches ? 40 : 30) / 1000; // px por ms
+  const RAMPA = 600;
+  const RETOMADA = 2500;
+
+  const podeDerivar = () => swiper && !swiper.destroyed && !semMovimento.matches && secaoNaTela && !document.hidden
+    && pausas.size === 0 && performance.now() >= deriva.retomarEm;
+
+  function pausar(motivo) {
+    pausas.add(motivo);
+    deriva.v = 0;
+  }
+
+  // solta uma pausa (se existir) e marca a retomada para 2,5 s depois
+  function soltar(motivo) {
+    if (!pausas.delete(motivo)) return;
+    deriva.retomarEm = performance.now() + RETOMADA;
+    clearTimeout(deriva.relogio);
+    deriva.relogio = setTimeout(ligarDeriva, RETOMADA + 20);
+  }
+
+  function ligarDeriva() {
+    if (deriva.quadro || !podeDerivar()) return;
+    deriva.v = 0;
+    deriva.ultimo = 0;
+    deriva.quadro = requestAnimationFrame(passo);
+  }
+
+  function passo(agora) {
+    deriva.quadro = 0;
+    if (!podeDerivar()) { deriva.v = 0; avaliar(); return; }
+    const dt = deriva.ultimo ? Math.min(64, agora - deriva.ultimo) : 0;
+    deriva.ultimo = agora;
+    const alvo = velocidade();
+    deriva.v = Math.min(alvo, deriva.v + (alvo * dt) / RAMPA);
+    if (dt) mover(-deriva.v * dt);
+    if (agora - deriva.avaliadoEm >= 200) { deriva.avaliadoEm = agora; avaliar(); }
+    deriva.quadro = requestAnimationFrame(passo);
+  }
+
+  function mover(dx) {
+    derivando = true;
+    swiper.setTransition(0);
+    swiper.setTranslate(swiper.translate + dx);
+    swiper.updateProgress();
+    swiper.updateActiveIndex();
+    if (swiper.activeIndex !== deriva.ativo) {
+      swiper.updateSlidesClasses();
+      swiper.loopFix({ direction: 'next', byMousewheel: true });
+      swiper.updateProgress();
+      swiper.updateActiveIndex();
+      swiper.updateSlidesClasses();
+      deriva.ativo = swiper.activeIndex;
+      marcarProgresso();
+    }
+    derivando = false;
   }
 
   // ---------- desktop: texto em 2 linhas e hover ----------
@@ -199,13 +275,30 @@ export function iniciarComunidade() {
   marcarCortes();
   if (document.fonts) document.fonts.ready.then(marcarCortes);
 
+  // hover num card do palco (os das laterais ficam sob o degradê, que recebe o ponteiro): pausa a deriva
   trilho.addEventListener('pointerover', (e) => {
     if (!DESKTOP.matches || e.pointerType !== 'mouse') return;
     const card = e.target.closest('.cslide');
-    if (card !== cardSobMouse) { cardSobMouse = card; avaliar(); }
+    if (card === cardSobMouse) return;
+    cardSobMouse = card;
+    if (card) pausar('hover'); else soltar('hover');
+    avaliar();
   });
   trilho.addEventListener('pointerleave', () => {
-    if (cardSobMouse) { cardSobMouse = null; avaliar(); }
+    if (!cardSobMouse) return;
+    cardSobMouse = null;
+    soltar('hover');
+    avaliar();
+  });
+
+  // foco de teclado no carrossel (cards, setas e progresso): pausa enquanto o foco estiver ali
+  secao.addEventListener('focusin', (e) => {
+    if ((trilho.contains(e.target) || e.target.closest('.comunidade__nav')) && e.target.matches(':focus-visible')) pausar('foco');
+  });
+  secao.addEventListener('focusout', (e) => {
+    const destino = e.relatedTarget;
+    if (destino && (trilho.contains(destino) || destino.closest?.('.comunidade__nav'))) return;
+    soltar('foco');
   });
 
   DESKTOP.addEventListener('change', () => {
@@ -215,9 +308,16 @@ export function iniciarComunidade() {
     avaliar();
   });
 
-  anterior.addEventListener('click', () => swiper && swiper.slidePrev());
-  proximo.addEventListener('click', () => swiper && swiper.slideNext());
-  segmentos.forEach((b, i) => b.addEventListener('click', () => swiper && swiper.slideToLoop(i)));
+  // setas e progresso: param a deriva e deslizam com a curva normal (500 ms); a retomada conta do fim da transição
+  const navegar = (acao) => () => {
+    if (!swiper) return;
+    pausar('clique');
+    acao();
+    if (!swiper.animating) soltar('clique'); // já estava no lugar (ou movimento reduzido, sem transição)
+  };
+  anterior.addEventListener('click', navegar(() => swiper.slidePrev()));
+  proximo.addEventListener('click', navegar(() => swiper.slideNext()));
+  segmentos.forEach((b, i) => b.addEventListener('click', navegar(() => swiper.slideToLoop(i))));
 
   // ---------- visibilidade ----------
   // Perto (300 px): o Swiper é armado e os vídeos dos cards perto recebem o arquivo; na tela: tocam.
@@ -231,8 +331,10 @@ export function iniciarComunidade() {
   new IntersectionObserver((entradas) => {
     secaoNaTela = entradas.some((e) => e.isIntersecting);
     avaliar();
+    ligarDeriva(); // fora da tela, o próprio passo() para
   }).observe(trilho);
 
+  document.addEventListener('visibilitychange', ligarDeriva);
   window.addEventListener('resize', avaliarNoQuadro, { passive: true });
-  semMovimento.addEventListener('change', avaliar);
+  semMovimento.addEventListener('change', () => { avaliar(); ligarDeriva(); });
 }
