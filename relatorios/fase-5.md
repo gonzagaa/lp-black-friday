@@ -240,3 +240,11 @@ LINKS: 10/12 iguais
 6. Seguem abertas: P1 (`BLACK_FIM`), P2 (preços da Black) e o contador na barra mobile (Fase 6).
 
 Aguardando aprovação para a Fase 6.
+
+---
+
+## Adendo pós-aprovação (commit "fase 5 (ajuste): cookie e políticas como texto")
+
+- "Cookie" e "Políticas de Uso" passaram a texto simples (sem `<a>` e sem `href` vazio), com um comentário TODO no HTML. Quando o cliente informar os endereços, os dois voltam a ser links.
+- O diff do rodapé segue com os textos iguais aos da home. Nos links, só saíram os dois de `href` vazio.
+- Confirmados: o eclipse de 760 px, a grafia "WhatsApp" e o Lenis como está. A P5 continua aberta.
