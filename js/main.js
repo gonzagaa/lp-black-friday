@@ -12,6 +12,7 @@ import { iniciarCarrosselPlanos } from './modulos/home/carrosselPlanos.js';
 import { iniciarComunidade } from './modulos/comunidade.js';
 import { iniciarFechamento } from './modulos/fechamento.js';
 import { iniciarComparativo } from './modulos/comparativo.js';
+import { iniciarLimiteAlta } from './modulos/limite-alta.js';
 import { iniciarRodape } from './modulos/rodape.js';
 import { iniciarBarraMobile } from './modulos/barra-mobile.js';
 import { iniciarTracking } from './modulos/tracking.js';
@@ -26,6 +27,7 @@ iniciarCarrosselPlanos(iniciarBlackPlanos());
 iniciarComunidade();
 iniciarFechamento();
 iniciarComparativo();
+iniciarLimiteAlta();
 iniciarRodape();
 iniciarBarraMobile();
 

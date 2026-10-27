@@ -196,5 +196,39 @@ export default {
       "checkout": "https://app.zero7.com.br/checkout/c44cad",
       "maxDias": "60 + reinício"
     }
+  },
+  "limitePerdaTotal": {
+    "trainee": {
+      "padrao": "R$ 997,00",
+      "black": "R$ 1.200,00"
+    },
+    "junior": {
+      "padrao": "R$ 1.997,00",
+      "black": "R$ 2.500,00"
+    },
+    "pleno": {
+      "padrao": "R$ 4.997,00",
+      "black": "R$ 6.500,00"
+    },
+    "senior": {
+      "padrao": "R$ 9.997,00",
+      "black": "R$ 15.000,00"
+    },
+    "expert": {
+      "padrao": "R$ 14.997,00",
+      "black": "R$ 17.500,00"
+    },
+    "master": {
+      "padrao": "R$ 19.997,00",
+      "black": "R$ 22.500,00"
+    },
+    "bit_trainee": {
+      "padrao": "R$ 997,00",
+      "black": "R$ 1.200,00"
+    },
+    "bit_junior": {
+      "padrao": "R$ 1.997,00",
+      "black": "R$ 2.500,00"
+    }
   }
 };

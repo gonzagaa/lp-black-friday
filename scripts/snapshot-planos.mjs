@@ -14,4 +14,4 @@ const saida = `// GERADO por scripts/snapshot-planos.mjs a partir de data/planos
 export default ${JSON.stringify(json, null, 2)};
 `;
 await writeFile(join(RAIZ, 'js', 'modulos', 'planos-snapshot.js'), saida);
-console.log(`js/modulos/planos-snapshot.js gerado (${Object.keys(json).length - 1} modos).`);
+console.log(`js/modulos/planos-snapshot.js gerado (${json.config.modes.length} modos).`);

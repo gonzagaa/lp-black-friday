@@ -332,6 +332,111 @@
   }
 }
 
+/* "Limite de perda total" subindo: o efeito de alta da home (css/limiteAlta.css, commit 5bedb6b) com a pele da
+   Black (js/modulos/limite-alta.js troca os estados). No lugar do verde, o laranja da marca: a seta fica num chip
+   com o degradê da marca e a célula ganha uma borda laranja sutil; a piscada é de opacidade (sem vermelho).
+   A seta ocupa o lugar desde o início e só muda opacity/transform, para o valor não andar (CLS 0).
+   Estado padrão = final (sem JS, com movimento reduzido ou quem já estava na tela). */
+#planos .chip.limite-alta {
+  --chip-borda: rgba(255, 106, 26, .32);
+  container-type: inline-size;
+  transition: border-color .35s var(--curva);
+}
+
+#planos .chip.limite-alta.is-antigo,
+#planos .chip.limite-alta.is-queda,
+#planos .chip.limite-alta.is-subindo {
+  --chip-borda: transparent;
+}
+
+#planos .limite-alta .chip__valor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .3em;
+}
+
+#planos .limite-alta__seta {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 4px 0;
+  background: var(--grad-marca-brilho), var(--grad-marca);
+  box-shadow: var(--sombra-material);
+  transition: opacity .3s var(--curva), transform .3s var(--curva);
+}
+
+#planos .limite-alta__seta svg {
+  width: .56em;
+  height: .45em;
+  fill: #fff;
+}
+
+/* Célula estreita (menos de 112 px: 360–390, 768, 1080–1279): seta e valor numa linha só não cabem, então a seta
+   sobe para cima do valor. Vale para as 8 células desde o início (sem deslocamento). */
+@container (max-width: 111.98px) {
+  #planos .limite-alta .chip__valor {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+#planos .limite-alta__valor {
+  text-align: left;
+  transition: color .25s ease, opacity .25s ease;
+}
+
+/* valor padrão: tom do chip, seta apagada (no lugar dela) */
+#planos .limite-alta.is-antigo .limite-alta__valor {
+  color: rgba(255, 255, 255, .72);
+}
+
+#planos .limite-alta.is-antigo .limite-alta__seta,
+#planos .limite-alta.is-queda .limite-alta__seta {
+  opacity: 0;
+  transform: translateY(.35em) scale(.7);
+}
+
+/* a piscada antes de subir */
+#planos .limite-alta.is-queda .limite-alta__valor {
+  opacity: .3;
+}
+
+/* chegou: um pulso laranja em volta da célula */
+#planos .chip.limite-alta.is-alta {
+  animation: limite-alta-pulso 1.1s ease-out;
+}
+
+/* parada no valor da Black, a seta "respira" para cima */
+#planos .limite-alta:not(.is-antigo):not(.is-queda):not(.is-subindo) .limite-alta__seta svg {
+  animation: limite-alta-seta 2.6s ease-in-out infinite;
+}
+
+@keyframes limite-alta-pulso {
+  from { box-shadow: 0 0 0 0 rgba(255, 106, 26, .4); }
+  to { box-shadow: 0 0 0 12px rgba(255, 106, 26, 0); }
+}
+
+@keyframes limite-alta-seta {
+  0%, 55%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-.16em); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #planos .chip.limite-alta,
+  #planos .limite-alta__seta,
+  #planos .limite-alta__valor {
+    transition: none;
+  }
+
+  #planos .chip.limite-alta,
+  #planos .limite-alta__seta svg {
+    animation: none !important;
+  }
+}
+
 /* Preço antigo: "de ~~R$ X~~ por" em branco, com o risco cinza no próprio valor (o traço posicionado da home
    dependia da métrica da TT Fors). Claro também no bitcoin, onde a home escurece o texto (o card dela é claro). */
 #planos .card .oldPrice p {

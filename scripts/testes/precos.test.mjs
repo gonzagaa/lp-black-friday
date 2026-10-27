@@ -70,3 +70,17 @@ test('checkout válido: só URL absoluta http(s)', () => {
   assert.ok(!checkoutValido('javascript:alert(1)'));
   assert.ok(!checkoutValido(undefined));
 });
+
+test('limite de perda total: padrão e Black para cada plano do modo ativo, e a Black maior', () => {
+  const limites = db.limitePerdaTotal;
+  assert.ok(limites, 'falta o bloco limitePerdaTotal no planos.json');
+  const ativo = db.config.modes.find((m) => m.active)?.id;
+  for (const plano of Object.keys(db[ativo])) {
+    const l = limites[plano];
+    assert.ok(l, `${plano}: sem limite de perda total`);
+    const padrao = valorEmReais(l.padrao);
+    const black = valorEmReais(l.black);
+    assert.ok(padrao > 0 && black > 0, `${plano}: valores ilegíveis (${l.padrao} / ${l.black})`);
+    assert.ok(black > padrao, `${plano}: a Black (${l.black}) não é maior que o padrão (${l.padrao})`);
+  }
+});
