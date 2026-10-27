@@ -100,7 +100,7 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
 
 - **Publicação:** https://zero7.com.br/a-maior-black/. Todo caminho é relativo (nada começa com "/"): CSS, JS, módulos, imagens, vídeos, fontes, vendor, dados. Teste com `node scripts/servir-subpasta.mjs` (http://localhost:5502/a-maior-black/; fora da subpasta tudo dá 404) e confira a aba de rede sem 404.
 
-- `npm run dev` sobe a página em **http://localhost:5500**. Use sempre esta porta: o revisor abre a página nesse endereço, no navegador.
+- `npm run dev` sobe a página em **http://localhost:5501**. Use sempre esta porta: o revisor abre a página nesse endereço, no navegador.
 - `npm run shots -- <rotulo>` captura a página inteira em 360, 390, 768, 1024, 1280, 1440 e 1920 px e salva em `shots/<rotulo>/`.
 - Toda fase termina comparando as capturas com `_referencia/prints/`. Aponte você mesmo, no relatório, onde a página ainda diverge do protótipo.
 

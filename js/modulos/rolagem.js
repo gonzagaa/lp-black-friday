@@ -6,7 +6,9 @@
 //   alvo, descontando o scroll-padding-top do <html> (a nav fixa), e o endereço ganha o #.
 // - Menu aberto (html.menu-aberto) e qualquer [data-lenis-prevent]: o Lenis para e a rolagem de dentro dele é a
 //   nativa.
-// - Diferente da home: sem o console.log de cada evento de rolagem.
+// - Diferente da home: sem o console.log de cada evento de rolagem, e o laço de requestAnimationFrame só roda enquanto
+//   há rolagem (acorda com rodinha, toque, teclado ou scrollTo e dorme quando o Lenis para). Na home ele roda a cada
+//   quadro, sempre: no Lighthouse mobile isso aparecia como segundos de trabalho na thread principal.
 
 const LENIS_JS = 'vendor/lenis-1.1.14/lenis.min.js';
 const easing = (t) => 1 - Math.pow(1 - t, 4);
@@ -26,11 +28,24 @@ function armar(Lenis) {
   const lenis = new Lenis({ duration: 1.1, easing });
   window.lenis = lenis;
 
+  let rodando = false;
+  let acordouEm = 0;
   const quadro = (tempo) => {
     lenis.raf(tempo);
+    // segue enquanto rola (e uns 300 ms depois de acordar, para o Lenis começar a animar)
+    if (lenis.isScrolling || tempo - acordouEm < 300) requestAnimationFrame(quadro);
+    else rodando = false;
+  };
+  const acordar = () => {
+    acordouEm = performance.now();
+    if (rodando) return;
+    rodando = true;
     requestAnimationFrame(quadro);
   };
-  requestAnimationFrame(quadro);
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((tipo) => window.addEventListener(tipo, acordar, { passive: true }));
+  const scrollToOriginal = lenis.scrollTo.bind(lenis);
+  lenis.scrollTo = (...args) => { acordar(); return scrollToOriginal(...args); };
+  acordar();
 
   // Menu aberto: a página não rola por baixo
   const html = document.documentElement;

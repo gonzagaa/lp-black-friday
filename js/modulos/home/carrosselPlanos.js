@@ -2,7 +2,7 @@
    do plano, slides fora da tela inert, Sênior como slide inicial).
    Mudanças em relação à home, e só estas:
    - módulo ES; o Swiper 11.2.10 vem de vendor/ (exceção da regra 10 do CLAUDE.md, só para esta seção) e é
-     carregado aqui, sob demanda, no mesmo portão da home (depois do load, em idle);
+     carregado aqui, sob demanda: depois do load, em idle (o portão da home) e com a seção a ~1200 px da tela;
    - além do load, espera o planos.json preencher os cards (o blackPlanos pode retirar card sem preço, e o
      loop e a paginação do Swiper precisam nascer com a lista final). Por isso o índice do slide inicial é lido na
      hora de armar, não no parse;
@@ -203,8 +203,22 @@ export function iniciarCarrosselPlanos(dadosProntos) {
     ? window.requestIdleCallback(ok, { timeout: 3000 })
     : setTimeout(ok, 800)));
 
+  // LP: além do load e do idle, espera a seção chegar perto (~1200 px). O Swiper (151 KB) e a montagem dos dois
+  // carrosséis eram uma tarefa longa de ~0,8 s no celular, mesmo para quem não chega aos planos. O idle vem antes
+  // do "perto": com a seção se aproximando, o download começa na hora (armado tarde, com a seção já na tela, o
+  // card da frente trocava do Iniciante para o Sênior à vista).
+  const perto = new Promise(ok => {
+    const secao = document.getElementById('planos');
+    if (!secao || !('IntersectionObserver' in window)) return ok();
+    const io = new IntersectionObserver(es => {
+      if (es.some(e => e.isIntersecting)) { io.disconnect(); ok(); }
+    }, { rootMargin: '1200px 0px 1200px 0px' });
+    io.observe(secao);
+  });
+
   Promise.all([carregado, Promise.resolve(dadosProntos)])
     .then(emIdle)
+    .then(() => perto)
     .then(carregarSwiper)
     .then(armarCarrosseis)
     .catch(console.error);

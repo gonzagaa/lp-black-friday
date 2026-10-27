@@ -2,13 +2,33 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- viewport-fit=cover: a barra fixa do mobile usa env(safe-area-inset-bottom) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#070607">
   <meta name="color-scheme" content="dark">
-  <!-- Título provisório: título, descrição e Open Graph saem da copy na Fase 6 -->
-  <title>Black Friday Zero7</title>
-  <!-- Favicon provisório (evita o 404 do /favicon.ico); o do brand kit entra na Fase 6 -->
-  <link rel="icon" href="data:,">
+  <!-- Título, descrição e Open Graph: frases da copy (hero, subtítulo e título dos planos) -->
+  <title>A maior Black da história: 80% OFF | Zero7</title>
+  <meta name="description" content="80% OFF para garantir o seu plano perfeito + um pacote completo para levar sua jornada no trading para outro nível.">
+  <link rel="canonical" href="https://zero7.com.br/a-maior-black/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Zero7">
+  <meta property="og:url" content="https://zero7.com.br/a-maior-black/">
+  <meta property="og:title" content="A maior Black da história: 80% OFF | Zero7">
+  <meta property="og:description" content="80% OFF para garantir o seu plano perfeito + um pacote completo para levar sua jornada no trading para outro nível.">
+  <meta property="og:image" content="https://zero7.com.br/a-maior-black/assets/og/og-1200x630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A maior black da história. 80% OFF. Botão Aproveitar a Black sobre o horizonte laranja.">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Favicon: o ingresso ZERO7 do brand kit (gerado por scripts/gerar-icones-og.mjs). Só o PNG (1 KB): o SVG do
+       ingresso tem 33 KB e disputava banda na primeira carga. -->
+  <link rel="icon" href="assets/marca/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/marca/apple-touch-icon.png">
+
+  <!-- TRACKING: GTM/Meta entram aqui -->
 
   <!-- Fontes da hero: Plus Jakarta Sans 800 (H1), 700 (rótulo dos botões da nav e da hero) e Inter (corpo).
        Sem o preload da 700, o rótulo troca de fonte depois da pintura e o botão muda de largura (CLS). -->
@@ -21,11 +41,22 @@
   <link rel="stylesheet" href="css/componentes.css">
   <link rel="stylesheet" href="css/secoes/topo.css">
   <link rel="stylesheet" href="css/secoes/beneficios.css">
-  <link rel="stylesheet" href="css/secoes/planos.css">
-  <link rel="stylesheet" href="css/secoes/planos-black.css">
-  <link rel="stylesheet" href="css/secoes/comunidade.css">
-  <link rel="stylesheet" href="css/secoes/fechamento.css">
-  <link rel="stylesheet" href="css/secoes/rodape.css">
+  <!-- A barra fixa do mobile também bloqueia (0,8 KB): adiada, ela ficava no fluxo até a folha chegar e deslocava a tela -->
+  <link rel="stylesheet" href="css/secoes/barra-mobile.css">
+  <!-- Seções abaixo da primeira dobra: carregam sem bloquear a renderização (media="print" → "all" ao carregar).
+       A ordem aqui mantém a cascata. Sem JS, o <noscript> carrega as mesmas folhas do jeito comum. -->
+  <link rel="stylesheet" href="css/secoes/planos.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/secoes/planos-black.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/secoes/comunidade.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/secoes/fechamento.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/secoes/rodape.css" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="css/secoes/planos.css">
+    <link rel="stylesheet" href="css/secoes/planos-black.css">
+    <link rel="stylesheet" href="css/secoes/comunidade.css">
+    <link rel="stylesheet" href="css/secoes/fechamento.css">
+    <link rel="stylesheet" href="css/secoes/rodape.css">
+  </noscript>
 
   <!-- Marca que há JS antes da primeira pintura: os itens com entrada por rolagem já nascem escondidos (sem piscar) -->
   <script>document.documentElement.classList.add('js')</script>
@@ -69,7 +100,7 @@
         <a class="nav__link" href="#planos">Planos</a>
         <a class="nav__link" href="#comunidade">Comunidade</a>
         <a class="nav__link" href="https://app.zero7.com.br/login" target="_blank" rel="noopener">Área do Trader</a>
-        <a class="fbtn fbtn--sm" href="#planos"><span class="fbtn__label">Aproveitar</span><span class="fbtn__cap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="fbtn fbtn--sm" href="#planos" data-cta="nav"><span class="fbtn__label">Aproveitar</span><span class="fbtn__cap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       </div>
       <button class="ibtn ibtn--sm nav__menu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h10"/></svg></button>
     </nav>
@@ -88,7 +119,7 @@
         <li><a class="menu__link" href="#comunidade">Comunidade<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
         <li><a class="menu__link" href="https://app.zero7.com.br/login" target="_blank" rel="noopener">Área do Trader<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></li>
       </ul>
-      <a class="fbtn fbtn--block" href="#planos"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <a class="fbtn fbtn--block" href="#planos" data-cta="nav"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
     </div>
   </dialog>
 
@@ -127,7 +158,7 @@
         <p class="hero__sub">+ um pacote completo para levar sua jornada no trading para outro nível:</p>
         <div class="hero__acoes">
           <!-- A partir de 768 px, versão escura (.fbtn--escuro): o laranja sumia na luz do horizonte. No mobile, laranja. -->
-          <a class="fbtn fbtn--escuro" href="#planos"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="fbtn fbtn--escuro" href="#planos" data-cta="hero"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
         </div>
       </div>
     </section>
@@ -233,7 +264,7 @@
         </div>
 
         <div class="beneficios__acao" data-revelar>
-          <a class="fbtn" href="#planos"><span class="fbtn__label">Conhecer planos</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="fbtn" href="#planos" data-cta="beneficios"><span class="fbtn__label">Conhecer planos</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
         </div>
       </div>
     </section>
@@ -316,7 +347,7 @@
               <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
             </div>
 
-            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Trainee">
+            <a data-cta="plano-trainee" target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Trainee">
               <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
               <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
               <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(TRAINEE)</span></span>
@@ -351,7 +382,7 @@
               <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
             </div>
 
-            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Júnior">
+            <a data-cta="plano-junior" target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Júnior">
               <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
               <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
               <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(JUNIOR)</span></span>
@@ -387,7 +418,7 @@
               <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
             </div>
 
-            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Pleno">
+            <a data-cta="plano-pleno" target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Pleno">
               <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
               <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
               <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(PLENO)</span></span>
@@ -422,7 +453,7 @@
               <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
             </div>
 
-            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Sênior">
+            <a data-cta="plano-senior" target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Sênior">
               <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
               <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
               <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(SÊNIOR)</span></span>
@@ -457,7 +488,7 @@
               <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
             </div>
 
-            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Expert">
+            <a data-cta="plano-expert" target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Expert">
               <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
               <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
               <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(EXPERT)</span></span>
@@ -492,7 +523,7 @@
               <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
             </div>
 
-            <a target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Master">
+            <a data-cta="plano-master" target="_blank" rel="noopener" class="z7-btnx js-checkout link4Selet btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano Master">
               <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
               <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
               <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(MASTER)</span></span>
@@ -544,7 +575,7 @@
               <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
             </div>
 
-             <a target="_blank" rel="noopener" class="z7-btnx js-checkout btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano BIT 16">
+             <a data-cta="plano-bit_junior" target="_blank" rel="noopener" class="z7-btnx js-checkout btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano BIT 16">
               <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
               <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
               <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(BIT 16)</span></span>
@@ -577,7 +608,7 @@
               <p class="js-price-avista"><span>ou</span> &nbsp; <span>à vista</span></p>
             </div>
 
-             <a target="_blank" rel="noopener" class="z7-btnx js-checkout btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano BIT 8">
+             <a data-cta="plano-bit_trainee" target="_blank" rel="noopener" class="z7-btnx js-checkout btn btn--lg btn--primaria btn--bloco" aria-label="Contratar plano BIT 8">
               <span class="z7-btnx__bg btn__bg" aria-hidden="true"></span>
               <span class="z7-btnx__shine btn__shine" aria-hidden="true"></span>
               <span class="z7-btnx__label btn__label">CONTRATAR PLANO <span>(BIT 8)</span></span>
@@ -760,5 +791,10 @@
     </div>
   </footer>
 
+  <!-- Barra fixa do mobile (< 768 px): aparece quando a hero sai da tela e some sobre os planos, o rodapé e qualquer
+       CTA (js/modulos/barra-mobile.js). Sem contador. -->
+  <div class="barra-mobile" data-barra-mobile inert>
+    <a class="fbtn fbtn--block" href="#planos" data-cta="barra-mobile"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  </div>
 </body>
 </html>

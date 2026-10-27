@@ -302,7 +302,8 @@ html.menu-aberto {
   transform: translateX(-50%);
   transform-origin: 50% 100%;
   background: radial-gradient(40% 55% at 50% 100%, rgba(255, 214, 160, .95), rgba(255, 140, 55, .78) 20%, rgba(255, 106, 26, .45) 42%, rgba(229, 43, 36, .16) 62%, transparent 78%);
-  filter: blur(14px);
+  /* sem filter: blur(): o degradê radial já é suave, e o blur num elemento de 1800 px custava caro na primeira
+     pintura (medido: a hero pintava em 248 ms com ele e em 144 ms sem filtros, sem throttling) */
   mix-blend-mode: screen;
   animation: breathe 7s ease-in-out infinite;
 }
@@ -472,7 +473,6 @@ html.menu-aberto {
   .glow-rise {
     width: 860px;
     height: 520px;
-    filter: blur(10px);
   }
 
   /* Planeta menor, para o arco curvar como no print 03 */

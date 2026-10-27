@@ -1,5 +1,5 @@
 // Captura a página inteira em várias larguras e confere o básico de cada uma.
-// Uso: npm run shots -- <rotulo> [--pagina=componentes] [--porta=5500]
+// Uso: npm run shots -- <rotulo> [--pagina=componentes] [--porta=5501] [--larguras=414,390]
 // Salva em shots/<rotulo>/<largura>.png. Roda com prefers-reduced-motion: reduce para a captura ser estável.
 // Também relata: erros de console, requisições para fora do localhost, fontes baixadas e scroll horizontal.
 import { chromium } from 'playwright';
@@ -9,7 +9,6 @@ import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
-const LARGURAS = [360, 390, 768, 1024, 1280, 1440, 1920];
 
 const flags = Object.fromEntries(
   process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => {
@@ -17,13 +16,14 @@ const flags = Object.fromEntries(
     return [chave, valor];
   }),
 );
+const LARGURAS = flags.larguras ? flags.larguras.split(',').map(Number) : [360, 390, 768, 1024, 1280, 1440, 1920];
 const rotulo = process.argv.slice(2).find((a) => !a.startsWith('--'));
 if (!rotulo) {
   console.error('Informe o rótulo: npm run shots -- <rotulo> [--pagina=componentes]');
   process.exit(1);
 }
 
-const porta = flags.porta ?? '5500';
+const porta = flags.porta ?? '5501';
 const caminho = flags.pagina && flags.pagina !== 'index' ? `/${flags.pagina}.html` : '/';
 const url = `http://localhost:${porta}${caminho}`;
 const pasta = join(RAIZ, 'shots', rotulo);
@@ -82,8 +82,9 @@ for (const largura of LARGURAS) {
 
   // Página inteira em fatias do tamanho da janela, emendadas. O modo fullPage do Chromium desenha errado os
   // carrosséis com scroll-snap + máscara (mostra outra posição de rolagem). Na foto, a nav deixa de grudar,
-  // para não se repetir em cada fatia (o lugar dela no fluxo é o mesmo).
-  await pagina.addStyleTag({ content: '.cabecalho{position:relative!important;top:auto!important}' });
+  // para não se repetir em cada fatia (o lugar dela no fluxo é o mesmo). A barra fixa do mobile sai da foto
+  // pelo mesmo motivo (ela tem capturas próprias no relatório da Fase 6).
+  await pagina.addStyleTag({ content: '.cabecalho{position:relative!important;top:auto!important}.barra-mobile{display:none!important}' });
   const altura = medidas.altura;
   const fatias = [];
   for (let y = 0; y < altura; y += 900) {

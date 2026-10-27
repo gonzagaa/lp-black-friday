@@ -48,6 +48,8 @@ const trocas = [
   // seta do CTA: o SVG de traço 2,4 px do .fbtn no lugar do caractere "→" (ajuste do cliente nos botões escuros)
   [/<span class="z7-btnx__arrow btn__arrow">→<\/span>/g, '<span class="z7-btnx__arrow btn__arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>'],
 ];
+// data-cta="plano-{chave}" em cada CTA (para configurar o tracking depois, P7): a chave é a do data-plan do card
+trocas.push([/(data-plan="([^"]+)"[\s\S]*?)<a target="_blank" rel="noopener" class="z7-btnx js-checkout/g, '$1<a data-cta="plano-$2" target="_blank" rel="noopener" class="z7-btnx js-checkout']);
 for (const [de, para] of trocas) {
   const antes = s;
   s = s.replace(de, para);

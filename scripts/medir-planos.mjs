@@ -59,6 +59,8 @@ async function abrirLP(nav, largura) {
   pag.on('pageerror', (e) => erros.push(e.message));
   pag.on('console', (m) => { if (m.type() === 'error' && !m.text().includes('WebSocket')) erros.push(m.text()); }); // (o live reload não conecta com a rota de teste)
   await pag.goto(`http://localhost:${PORTA}/`, { waitUntil: 'networkidle' });
+  // na LP, o carrossel arma quando a seção chega perto
+  await pag.evaluate(() => document.getElementById('planos').scrollIntoView());
   await pag.waitForFunction(() => window.swiper4 && window.swiper4.initialized, null, { timeout: 15000 });
   return { ctx, pag, secao: '#planos', erros };
 }

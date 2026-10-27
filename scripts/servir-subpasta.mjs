@@ -2,7 +2,10 @@
 // Tudo fora de /a-maior-black/ responde 404, então um caminho absoluto ("/css/...") quebra aqui como quebraria em
 // https://zero7.com.br/a-maior-black/. Uso: node scripts/servir-subpasta.mjs [--porta=5502]
 // (O live-server --mount não serviu a pasta no Windows e ainda devolveria 200 para caminhos absolutos.)
+// Como um servidor de produção, comprime em gzip o que é texto (HTML, CSS, JS, JSON, SVG); é com ele que o Lighthouse
+// mede a LP (o live-server não comprime e injeta o script de recarga).
 import { createServer } from 'node:http';
+import { gzipSync } from 'node:zlib';
 import { readFile, stat } from 'node:fs/promises';
 import { dirname, extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -25,8 +28,14 @@ createServer(async (req, res) => {
   if (!arquivo.startsWith(RAIZ + sep) && arquivo !== RAIZ) { res.writeHead(403); return res.end(); }
   try {
     if ((await stat(arquivo)).isDirectory()) arquivo = join(arquivo, 'index.html');
-    const corpo = await readFile(arquivo);
-    res.writeHead(200, { 'Content-Type': TIPOS[extname(arquivo).toLowerCase()] || 'application/octet-stream' });
+    let corpo = await readFile(arquivo);
+    const tipo = TIPOS[extname(arquivo).toLowerCase()] || 'application/octet-stream';
+    const cabecalhos = { 'Content-Type': tipo };
+    if (/text|javascript|json|svg/.test(tipo) && /gzip/.test(req.headers['accept-encoding'] || '')) {
+      corpo = gzipSync(corpo);
+      cabecalhos['Content-Encoding'] = 'gzip';
+    }
+    res.writeHead(200, cabecalhos);
     res.end(corpo);
   } catch {
     res.writeHead(404);
