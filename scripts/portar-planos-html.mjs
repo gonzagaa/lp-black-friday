@@ -56,7 +56,7 @@ trocas.push([/(data-plan="([^"]+)"[\s\S]*?)<a target="_blank" rel="noopener" cla
 // escritos por js/modulos/limite-alta.js. A seta tem o espaço reservado desde o início (CLS 0).
 trocas.push([
   /<div class="chip"><span class="chip__rotulo">Limite de perda total<\/span><span class="chip__valor">[^<]*<\/span><\/div>/g,
-  '<div class="chip limite-alta"><span class="chip__rotulo">Limite de perda total</span><span class="chip__valor"><span class="limite-alta__seta"><svg viewBox="0 0 10 8" role="img" aria-label="Aumentou"><path d="M5 0 10 8H0z"/></svg></span><span class="limite-alta__valor">&nbsp;</span></span></div>',
+  '<div class="chip limite-alta"><span class="chip__rotulo">Limite de perda total</span><span class="chip__valor"><span class="limite-alta__seta"><svg width="10" height="8" viewBox="0 0 10 8" role="img" aria-label="Aumentou"><path d="M5 0 10 8H0z"/></svg></span><span class="limite-alta__valor">&nbsp;</span></span></div>',
 ]);
 for (const [de, para] of trocas) {
   const antes = s;
