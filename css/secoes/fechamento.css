@@ -213,7 +213,11 @@
 }
 
 /* Frase: o destaque. Jakarta 800, no máximo 2 linhas no desktop, bicolor como os títulos de seção */
+/* Duas linhas a partir de 600 px (ajuste do cliente): a caixa vai a ~68% do eclipse, para a frase não caber numa
+   linha só (em ~810 px ela encostava na borda). O piso de 8.6em existe porque, a 72 px, a linha mais longa
+   ("você não opera sozinho.") tem 8.4em = 604 px, mais que os 68% (517 px), e a frase cairia para 3 linhas. */
 .fechamento__frase {
+  max-width: max(calc(var(--eclipse) * .68), 8.6em);
   font: 800 clamp(40px, 5vw, 72px)/1.02 var(--fonte-impacto);
   letter-spacing: var(--tracking-impacto);
   color: #fff;

@@ -312,3 +312,49 @@ Em todas as paradas o anel de foco estava desenhado, e nenhuma ficou fora da tel
 3. **"Cookie" e "Políticas de Uso"** no rodapé continuam como texto, com TODO. Quais são os endereços?
 
 Aguardando aprovação da Fase 6.
+
+---
+
+## Adendo pós-aprovação (commit "fase 6 (ajuste): fechamento e meta description")
+
+Fase 6 aprovada com dois ajustes finais.
+
+### 1. Frase do fechamento sempre em 2 linhas a partir de 600 px
+
+Em `css/secoes/fechamento.css`, a `.fechamento__frase` ganhou `max-width: max(calc(var(--eclipse) * .68), 8.6em)` e mantém o `text-wrap: balance`.
+
+- **Os 68% do eclipse sozinhos não fecham em 1440 e 1920.** Nessas larguras a fonte chega a 72 px e a linha mais longa ("você não opera sozinho.") tem 604 px, mais que os 68% do eclipse (517 px). A frase cairia para 3 linhas.
+- **Por isso o piso de 8.6em:** a caixa nunca fica mais estreita que a linha mais longa. Onde os 68% cabem (600–1024), valem os 68%.
+
+Medido com `getClientRects` da frase:
+
+| Largura | Fonte | Linhas | Largura das linhas | Caixa | Folga até a borda do eclipse |
+|---|---|---|---|---|---|
+| 600 | 40 px | 2 | 319 / 336 | 422 (68% de 620) | 142 px |
+| 768 | 40 px | 2 | 319 / 336 | 517 (68% de 760) | 212 px |
+| **810** | 40,5 px | **2** (antes: 1 linha, 46 px de folga) | 323 / 340 | 517 | 210 px |
+| **1024** | 51,2 px | **2** (antes: 1 linha, passava 42 px da borda) | 408 / 430 | 517 | 165 px |
+| 1280 | 64 px | 2 | 510 / 537 | 550 | 111 px |
+| **1440** | 72 px | **2** | 574 / 604 | 619 (piso 8.6em) | 78 px |
+| **1920** | 72 px | **2** | 574 / 604 | 619 (piso 8.6em) | 78 px |
+
+- **Abaixo de 600 px nada muda:** 2 linhas em 390 e 3 em 360, como antes.
+- **As outras medidas do fechamento continuam iguais:**
+  - logo a 65% do botão;
+  - gaps 24/24 no desktop e 20/20 no mobile;
+  - centro do conteúdo × eclipse com diferença de 0,0 px;
+  - respiros 160/160 no desktop e 120/120 no mobile.
+- **Capturas:**
+  - `shots/fase-6/fechamento-frase-810.png`, `-1024.png`, `-1440.png` e `-1920.png`;
+  - página inteira atualizada em `shots/fase-6/`, sem scroll horizontal em nenhuma largura.
+
+### 2. Meta description
+
+O "+" virou "e" na `meta description` e no `og:description`: "80% OFF para garantir o seu plano perfeito e um pacote completo para levar sua jornada no trading para outro nível."
+
+O título ficou como estava (aprovado).
+
+### Decisões registradas
+
+- **LCP mobile:** aceito como está, sem `content-visibility` e sem preload da Barlow. A medição fica para o PageSpeed, depois da publicação.
+- **"Cookie" e "Políticas de Uso":** seguem como texto sem link até o cliente informar os endereços.
