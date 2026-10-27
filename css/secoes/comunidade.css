@@ -217,7 +217,8 @@
    - Texto com a mesma altura em todos os cards (título em 1 linha, descrição em 2), que abre por inteiro no hover
      e, pelo teclado, no card ativo quando o foco está nas setas ou no progresso.
    - Hover: o card sob o mouse sobe 6 px e os outros apagam (só opacity e transform; nada de filter ou blur).
-   - Vídeos (js/modulos/comunidade.js): sem hover, tocam só os 3 do palco; com hover, só o card sob o mouse. */
+   - Vídeos (js/modulos/comunidade.js): sem hover, tocam só os 3 do palco; com hover, só o card sob o mouse.
+   - Só os cards do palco reagem ao mouse: os degradês das laterais ficam por cima e recebem o ponteiro. */
 @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
   .comunidade__trilho {
     --gap: 28px;
@@ -240,7 +241,9 @@
     bottom: 0;
     z-index: 2;
     width: calc((100% - var(--palco)) / 2);
-    pointer-events: none;
+    /* Recebem o mouse (ajuste do cliente): o card no degradê não acende, não toca e não apaga os do palco. O arraste
+       continua em toda a faixa, porque o Swiper escuta o trilho inteiro (touchEventsTarget: 'container'). */
+    pointer-events: auto;
   }
 
   /* transparente na borda do palco, cor cheia do fundo a ~60% da largura */
