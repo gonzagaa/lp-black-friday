@@ -3,9 +3,12 @@
    sangrada na largura da tela (Swiper, js/modulos/comunidade.js), com esmaecimento nas bordas, o texto da copy por
    cima de cada card e a navegação (setas + progresso) embaixo, alinhada ao container. */
 
+/* Por cima do fechamento (z-index 1 × 0) e com o fundo transparente embaixo (a base #050404 vem do body): os efeitos
+   do eclipse aparecem nos espaços vazios do fim da seção, sem linha de corte; cards e navegação ficam por cima. */
 .comunidade {
+  z-index: 1;
   padding: 140px 0 120px;
-  background: linear-gradient(180deg, #070505, #050404);
+  background: linear-gradient(180deg, #070505, rgba(5, 4, 4, 0));
 }
 
 /* Grade de 72 px com máscara radial */

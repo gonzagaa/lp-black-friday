@@ -1,22 +1,17 @@
-/* Rodapé (#rodape): Fase 5.
-   Conteúdo da home (#footer, #pagamento e #author); pele do RODAPÉ de _referencia/canvas/Main.dc.html. Sobe em
-   candles (.div-candles). Fundo #0c0908 com o lettering BLACK FRIDAY gigante ao fundo, a .03. */
+/* Rodapé (#rodape): Fase 5, com o ajuste do cliente.
+   Conteúdo da home (#footer, #pagamento e #author); pele do RODAPÉ de _referencia/canvas/Main.dc.html.
+   Ajuste: sem a entrada em candles e sem o lettering de marca d'água; fundo na base da página (#050404), sem tom
+   quente. O fechamento termina na mesma cor, e uma linha fina separa os dois (CLAUDE.md, regra 6, exceção). O grão
+   global continua por cima. */
 
+/* Fundo transparente: a base da página (#050404, do body) aparece por trás, e os efeitos do eclipse que descem um
+   pouco abaixo da linha somem sem corte; o rodapé fica por cima do fechamento (z-index 1 × 0). */
 .rodape {
+  position: relative;
+  z-index: 1;
   overflow: hidden;
-  background: var(--cor-superficie-2);
-}
-
-.rodape__lettering {
-  position: absolute;
-  left: 50%;
-  bottom: -90px;
-  width: 1400px;
-  max-width: none;
-  height: auto;
-  opacity: .03;
-  transform: translateX(-50%);
-  pointer-events: none;
+  border-top: 1px solid rgba(255, 255, 255, .06);
+  background: transparent;
 }
 
 .rodape__conteudo {
@@ -220,8 +215,4 @@
     flex: 1 1 140px;
   }
 
-  .rodape__lettering {
-    width: 760px;
-    bottom: -40px;
-  }
 }

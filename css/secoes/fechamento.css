@@ -1,24 +1,30 @@
 /* Seção #fechamento: Fase 5, com os ajustes do cliente.
    Eclipse e grade do FECHAMENTO de _referencia/canvas/Main.dc.html (eclipse de 760 px no desktop, aprovado). Por
-   cima: a logo da campanha como assinatura (Motion V02, js/modulos/motion-logo.js), com a largura do botão; a frase
-   bicolor é o destaque. O céu ecoa a hero, para a página fechar como abriu: coroa de raios girando devagar, órbitas
-   com um ponto de luz, estrelas fora do eclipse e uma névoa laranja na base. Tudo atrás do eclipse e do texto;
-   com movimento reduzido, fica estático (base.css). */
+   cima, a logo da campanha como assinatura (Motion V02, js/modulos/motion-logo.js, ~65% da largura do botão), a frase
+   bicolor (o destaque) e o botão, com o mesmo espaço entre os três. O céu ecoa a hero, para a página fechar como
+   abriu: coroa de raios girando devagar, órbitas com um ponto de luz, estrelas fora do eclipse e uma névoa laranja na
+   base. Céu, eclipse e conteúdo dividem o mesmo centro (uma célula de grid); tudo de fundo fica atrás do eclipse e do
+   texto. Com movimento reduzido, fica estático (base.css). */
 
-/* Altura mínima proporcional ao eclipse e conteúdo centrado nele: o disco, a coroa e as órbitas respiram */
+/* Respiro igual em cima e embaixo do eclipse:
+   - em cima: o padding-bottom da comunidade (120 px; 90 no mobile) + o padding-top daqui;
+   - embaixo: o padding-bottom daqui (o rodapé não sobe mais por cima desta seção: saíram os candles).
+   Desktop: 120 + 40 = 160 px. Mobile: 90 + 30 = 120 px.
+   A seção termina na cor do rodapé (a base da página): a passagem é contínua, com uma linha fina no rodapé. */
+/* Sem corte reto em cima nem embaixo: a seção só recorta no eixo X (overflow-x: clip, sem scroll horizontal) e fica
+   numa camada abaixo da comunidade e do rodapé (z-index 0 × 1). Os efeitos do céu se estendem por baixo do fim
+   transparente das duas e somem na máscara radial do .fechamento__astro. */
 .fechamento {
   --eclipse: 760px;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: calc(var(--eclipse) * 1.32);
-  overflow: hidden;
-  padding: 120px var(--gutter) 150px;
+  z-index: 0;
+  overflow-x: clip;
+  overflow-y: visible;
+  padding: 40px var(--gutter) 160px;
   background: var(--cor-base);
 }
 
-/* Névoa laranja na base: encaminha o olho para a transição em candles do rodapé */
+/* Névoa laranja muito suave embaixo do eclipse; some antes da borda, para a seção terminar na cor do rodapé */
 .fechamento::after {
   content: "";
   position: absolute;
@@ -27,6 +33,8 @@
   bottom: 0;
   height: 50%;
   background: radial-gradient(60% 80% at 50% 100%, rgba(255, 106, 26, .06), transparent 72%);
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent);
+  mask-image: linear-gradient(180deg, #000 55%, transparent);
   pointer-events: none;
 }
 
@@ -39,14 +47,39 @@
   pointer-events: none;
 }
 
-/* ========== CÉU: coroa e órbitas, com o mesmo centro do eclipse ========== */
-.fechamento__astro {
+/* Estrelas da hero (.star e .sparkle, topo.css), em menor quantidade e fora do eclipse */
+.fechamento__estrelas {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: var(--eclipse);
-  height: var(--eclipse);
-  transform: translate(-50%, -46%);
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ========== PALCO: céu, eclipse e conteúdo na mesma célula ========== */
+/* A coluna tem a largura do contêiner (minmax(0, 1fr)): no mobile o eclipse é mais largo que a tela e transborda
+   igualmente para os dois lados, sem empurrar o centro */
+.fechamento__palco {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+}
+
+.fechamento__palco > * {
+  grid-area: 1 / 1;
+  justify-self: center;
+}
+
+/* ========== CÉU: coroa e órbitas, com o centro do eclipse ==========
+   A caixa do céu é maior que o eclipse (1,8 × de largura, 1,64 × de altura) e tem uma máscara radial elíptica:
+   tudo some suavemente antes de chegar ao conteúdo do rodapé e aos cards da comunidade, sem borda reta. */
+.fechamento__astro {
+  position: relative;
+  z-index: 0;
+  width: calc(var(--eclipse) * 1.8);
+  height: calc(var(--eclipse) * 1.64);
+  /* ocupa na grid só o tamanho do eclipse: a caixa maior não pode empurrar os respiros */
+  margin: calc(var(--eclipse) * -.32) calc(var(--eclipse) * -.4);
+  -webkit-mask-image: radial-gradient(closest-side, #000 70%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 70%, transparent 100%);
   pointer-events: none;
 }
 
@@ -112,13 +145,6 @@
   box-shadow: 0 0 6px 1px rgba(255, 200, 61, .8), 0 0 16px 3px rgba(255, 140, 40, .45);
 }
 
-/* Estrelas da hero (.star e .sparkle, topo.css), em menor quantidade e fora do eclipse */
-.fechamento__estrelas {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
 @keyframes fechamento-coroa {
   to {
     transform: rotate(360deg);
@@ -137,9 +163,8 @@
 
 /* ========== ECLIPSE ========== */
 .eclipse {
-  position: absolute;
-  left: 50%;
-  top: 50%;
+  position: relative;
+  z-index: 1;
   width: var(--eclipse);
   height: var(--eclipse);
   border-radius: 50%;
@@ -149,29 +174,30 @@
     inset 0 18px 40px -10px rgba(255, 106, 26, .35),
     0 -4px 30px rgba(255, 140, 70, .35),
     0 -40px 140px rgba(255, 106, 26, .22);
-  transform: translate(-50%, -46%);
   pointer-events: none;
 }
 
-/* ========== CONTEÚDO: assinatura → 40 px → frase → 32 px → botão ========== */
+/* ========== CONTEÚDO: assinatura, frase e botão com um só gap ========== */
+/* Compensação óptica: centrado no círculo, o bloco parecia baixo; só ele sobe 3,5% do diâmetro do eclipse
+   (~26 px no desktop). O eclipse e o céu não mudam de lugar. */
 .fechamento__conteudo {
   position: relative;
   z-index: 2;
+  transform: translateY(calc(var(--eclipse) * -.035));
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 24px;
   max-width: 900px;
-  margin: 0 auto;
   text-align: center;
 }
 
-/* A logo tem a largura do botão logo abaixo (--largura-botao, medida em js/modulos/fechamento.js; antes do JS, a
-   medida do desktop). Mesma proporção do quadro final (1306 × 646): a troca da imagem pela animação não mexe no
+/* A logo tem ~65% da largura do botão logo abaixo (--largura-botao, medida em js/modulos/fechamento.js; antes do
+   JS, a medida do desktop). Mesma proporção do quadro final (1306 × 646): a troca da imagem pela animação não mexe no
    layout. O ingresso entra voando de fora da área (overflow visível no SVG). */
 .fechamento__marca {
-  width: var(--largura-botao, 276px);
+  width: calc(var(--largura-botao, 276px) * .65);
   aspect-ratio: 1306 / 646;
-  margin-bottom: 40px;
 }
 
 .fechamento__marca img,
@@ -188,7 +214,6 @@
 
 /* Frase: o destaque. Jakarta 800, no máximo 2 linhas no desktop, bicolor como os títulos de seção */
 .fechamento__frase {
-  margin-bottom: 32px;
   font: 800 clamp(40px, 5vw, 72px)/1.02 var(--fonte-impacto);
   letter-spacing: var(--tracking-impacto);
   color: #fff;
@@ -202,12 +227,14 @@
 @media (max-width: 767.98px) {
   .fechamento {
     --eclipse: min(620px, 160vw);
-    min-height: calc(var(--eclipse) * 1.18);
-    padding: 100px var(--gutter) 120px;
+    padding: 30px var(--gutter) 120px;
   }
 
-  /* no mobile, a assinatura tem ~70% da largura do botão */
+  .fechamento__conteudo {
+    gap: 20px;
+  }
+
   .fechamento__marca {
-    width: calc(var(--largura-botao, 252px) * .7);
+    width: calc(var(--largura-botao, 252px) * .65);
   }
 }

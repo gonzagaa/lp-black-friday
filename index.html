@@ -625,13 +625,6 @@
          movimento reduzido, fica o quadro final (assets/marca/completa-escuro.svg). -->
     <section id="fechamento" class="fechamento" aria-labelledby="fechamento-titulo">
       <div class="fechamento__grade grade" aria-hidden="true"></div>
-      <!-- Céu do fechamento (ecoa a hero): coroa de raios e órbitas atrás do eclipse, estrelas fora dele -->
-      <div class="fechamento__astro" aria-hidden="true">
-        <span class="fechamento__coroa"></span>
-        <span class="orbita orbita--1"></span>
-        <span class="orbita orbita--2 orbita--ponto"></span>
-        <span class="orbita orbita--3"></span>
-      </div>
       <div class="fechamento__estrelas" aria-hidden="true">
         <span class="star" style="left: 7%; top: 22%"></span>
         <span class="star" style="left: 15%; top: 64%; animation-delay: 1.4s"></span>
@@ -641,21 +634,31 @@
         <svg class="sparkle" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="left: 11%; top: 40%"><path d="M12 0l2.2 9.8L24 12l-9.8 2.2L12 24l-2.2-9.8L0 12l9.8-2.2z"/></svg>
         <svg class="sparkle" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="left: 88%; top: 14%; animation-delay: 2s"><path d="M12 0l2.2 9.8L24 12l-9.8 2.2L12 24l-2.2-9.8L0 12l9.8-2.2z"/></svg>
       </div>
-      <div class="eclipse" aria-hidden="true"></div>
-      <div class="fechamento__conteudo">
-        <div class="fechamento__marca" data-motion-logo>
-          <img src="assets/marca/assinatura-escuro.svg" width="1306" height="646" alt="Black Friday Zero7" loading="lazy" decoding="async">
+      <!-- Céu do fechamento (ecoa a hero): coroa de raios e órbitas atrás do eclipse, estrelas fora dele.
+           Céu, eclipse e conteúdo ficam na mesma célula de uma grid: o mesmo centro, sem posicionamento solto. -->
+      <div class="fechamento__palco">
+        <div class="fechamento__astro" aria-hidden="true">
+          <span class="fechamento__coroa"></span>
+          <span class="orbita orbita--1"></span>
+          <span class="orbita orbita--2 orbita--ponto"></span>
+          <span class="orbita orbita--3"></span>
         </div>
-        <h2 class="fechamento__frase" id="fechamento-titulo">Com a Zero7 <span>você não opera sozinho<span class="ponto">.</span></span></h2>
-        <a class="fbtn" href="#planos"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <div class="eclipse" aria-hidden="true"></div>
+        <div class="fechamento__conteudo">
+          <div class="fechamento__marca" data-motion-logo>
+            <img src="assets/marca/assinatura-escuro.svg" width="1306" height="646" alt="Black Friday Zero7" loading="lazy" decoding="async">
+          </div>
+          <h2 class="fechamento__frase" id="fechamento-titulo">Com a Zero7 <span>você não opera sozinho<span class="ponto">.</span></span></h2>
+          <a class="fbtn" href="#planos" data-cta="fechamento"><span class="fbtn__label">Aproveitar a Black</span><span class="fbtn__cap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- RODAPÉ: sobe em candles. Conteúdo, textos e links dos blocos #footer, #pagamento e #author da home
-       (../Zero7/index.html); "Home" e "Planos" apontam para as âncoras desta página. -->
-  <footer id="rodape" class="rodape div-candles">
-    <img class="rodape__lettering" src="assets/marca/lettering-escuro.svg" width="1125" height="586" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  <!-- RODAPÉ: o fechamento termina na mesma cor e uma linha fina separa os dois (sem candles, ajuste do cliente).
+       Conteúdo, textos e links dos blocos #footer, #pagamento e #author da home (../Zero7/index.html); "Home" e
+       "Planos" apontam para as âncoras desta página. -->
+  <footer id="rodape" class="rodape">
     <div class="wrap rodape__conteudo">
       <div class="rodape__colunas">
         <div class="rodape__marca">
