@@ -40,17 +40,22 @@ for (const largura of LARGURAS) {
     deviceScaleFactor: 1,
     reducedMotion: 'reduce',
   });
+  // Tracking: a rolagem da captura conta como interação e carregaria o GTM (e o container dele: Meta, Google Ads,
+  // RD Station, Hotjar), e o POST da API de Conversões sairia no DOMContentLoaded. Na captura, nada disso sai:
+  // não se manda evento falso de localhost. O que é bloqueado aqui não aparece nos erros nem nas externas.
+  const TRACKING = /googletagmanager\.com|google-analytics\.com|analytics\.google\.com|doubleclick\.net|google\.com(\.br)?\/(rmkt|ccm|pagead)|facebook\.(net|com)|rdstation\.com\.br|d335luupugsy2\.cloudfront\.net|hotjar\.com|backend-api-zero7\.vercel\.app/;
+  await contexto.route(TRACKING, (rota) => rota.abort('blockedbyclient'));
   const pagina = await contexto.newPage();
   const erros = [];
   const externas = [];
   const fontes = new Set();
 
-  pagina.on('console', (msg) => { if (msg.type() === 'error') erros.push(msg.text()); });
+  pagina.on('console', (msg) => { if (msg.type() === 'error' && !/ERR_BLOCKED_BY_CLIENT/.test(msg.text())) erros.push(msg.text()); });
   pagina.on('pageerror', (erro) => erros.push(erro.message));
-  pagina.on('requestfailed', (req) => erros.push(`falhou: ${req.url()} (${req.failure()?.errorText})`));
+  pagina.on('requestfailed', (req) => { if (!TRACKING.test(req.url())) erros.push(`falhou: ${req.url()} (${req.failure()?.errorText})`); });
   pagina.on('response', (res) => { if (res.status() >= 400) erros.push(`${res.status()}: ${res.url()}`); });
   pagina.on('request', (req) => {
-    if (!ehLocal(req.url())) externas.push(req.url());
+    if (!ehLocal(req.url()) && !TRACKING.test(req.url())) externas.push(req.url());
     if (req.resourceType() === 'font') fontes.add(req.url().split('/').pop());
   });
 
