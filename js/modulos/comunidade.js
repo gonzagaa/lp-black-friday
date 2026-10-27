@@ -31,6 +31,8 @@ export const MIDIA = [
   {
     titulo: 'Lives',
     descricao: 'Encontros diários, com panoramas, insights educacionais e bate papo.',
+    video: { mp4: 'assets/video/lives-zero7-9x16-540.mp4' },
+    poster: 'assets/video/lives-zero7-9x16-poster.webp',
   },
   {
     titulo: 'Academy',
