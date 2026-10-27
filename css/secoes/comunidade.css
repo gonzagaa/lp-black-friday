@@ -1,7 +1,7 @@
-/* Seção #comunidade: Fase 5.
-   Valores da seção #comunidade de _referencia/canvas/Main.dc.html (palco, abas, cards 298 × 530, passo de 255 px,
-   escala 1 − |d| × .16, opacidade 1 / .5 / .2, barra de progresso). Cabeçalho no padrão de título de seção da LP
-   (centralizado a partir de 768 px, Plus Jakarta, bicolor), por pedido do cliente; o bloco "19K" saiu. */
+/* Seção #comunidade: Fase 5, com o ajuste do cliente (sem palco).
+   Entrada em picote, fundo com a grade de 72 px e máscara radial, cabeçalho bicolor e uma fileira de cards 9:16
+   sangrada na largura da tela (Swiper, js/modulos/comunidade.js), com esmaecimento nas bordas, o texto da copy por
+   cima de cada card e a navegação (setas + progresso) embaixo, alinhada ao container. */
 
 .comunidade {
   padding: 140px 0 120px;
@@ -18,11 +18,16 @@
   pointer-events: none;
 }
 
-.comunidade__conteudo {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 46px;
+/* Título em 3 linhas de 1280 a 1920: max-width maior só aqui (1100 px) e o teto do tamanho em 58 px, em vez de
+   64 (a frase é bem mais longa que a dos outros títulos de seção) */
+@media (min-width: 768px) {
+  .comunidade__cabecalho {
+    max-width: 1100px;
+  }
+
+  .comunidade__h2 {
+    font-size: clamp(38px, 4.6vw, 58px);
+  }
 }
 
 /* Bicolor: "Faça parte … 19 mil traders" em branco, o resto em branco .42 (como os benefícios) */
@@ -30,134 +35,66 @@
   color: rgba(255, 255, 255, .42);
 }
 
-/* ========== PALCO ========== */
-.palco {
-  --card-w: 298px;
-  --card-h: 530px;
-  --passo: 255px;
+/* ========== TRILHO (Swiper sangrado) ========== */
+.comunidade__trilho {
+  --card-w: 320px;
   position: relative;
+  z-index: 1;
   overflow: hidden;
-  padding: 22px clamp(12px, 3vw, 36px) 32px;
-  border: 1px solid var(--cor-linha);
-  border-radius: 40px 0 40px 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .01)), #090706;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05), 0 60px 120px -60px rgba(0, 0, 0, .9);
-}
-
-/* Abas de texto: rolam no mobile, centralizadas quando cabem */
-.palco__abas {
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  justify-content: safe center;
-  border-bottom: 1px solid rgba(255, 255, 255, .06);
-  scrollbar-width: none;
-}
-
-.palco__abas::-webkit-scrollbar {
-  display: none;
-}
-
-.palco__aba {
-  flex: 0 0 auto;
-  min-height: 46px;
-  padding: 0 16px;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  background: none;
-  cursor: pointer;
-  white-space: nowrap;
-  font: 700 16px/1 var(--fonte-display);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, .55);
-  transition: color var(--dur-2), border-color var(--dur-2);
-}
-
-.palco__aba:hover {
-  color: #fff;
-}
-
-.palco__aba[aria-pressed="true"] {
-  color: #fff;
-  border-bottom-color: var(--cor-laranja);
-}
-
-.palco__aba:focus-visible {
-  outline: 2px solid var(--cor-luz);
-  outline-offset: -2px;
-}
-
-/* ========== CARROSSEL ========== */
-.palco__trilho {
-  position: relative;
-  height: calc(var(--card-h) + 50px);
-  margin-top: 34px;
+  margin-top: 56px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
   touch-action: pan-y; /* o arraste lateral fica com o carrossel; o vertical, com a página */
 }
 
-/* Brilho laranja embaixo do card ativo */
-.palco__brilho {
-  position: absolute;
-  left: 50%;
-  bottom: -40px;
-  width: 900px;
-  height: 260px;
-  transform: translateX(-50%);
-  background: radial-gradient(50% 60% at 50% 100%, rgba(255, 106, 26, .22), transparent 70%);
-  pointer-events: none;
+/* Núcleo do Swiper (o CSS do pacote não é carregado; só o necessário, aqui) */
+.comunidade__trilho .swiper-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  box-sizing: content-box;
+  transition-property: transform;
 }
 
-.slide {
-  --d: 0;
-  --ad: 0;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  z-index: calc(10 - var(--ad));
+.comunidade__trilho .swiper-slide {
+  flex-shrink: 0;
+  transition-property: transform;
+}
+
+.comunidade__trilho .swiper-wrapper {
+  cursor: grab;
+}
+
+/* ========== CARD ========== */
+.cslide {
+  position: relative;
   width: var(--card-w);
-  height: var(--card-h);
+  aspect-ratio: 9 / 16;
   overflow: hidden;
   border-radius: 24px 24px 24px 0;
   background: #0d0a09;
-  transform: translateX(calc(-50% + var(--d) * var(--passo))) scale(calc(1 - var(--ad) * .16));
-  opacity: .2;
-  filter: grayscale(.6) brightness(.8);
-  transition: transform .7s var(--curva), opacity .7s, filter .7s, box-shadow .7s;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
 }
 
-.slide--perto {
-  opacity: .5;
-}
-
-.slide--on {
-  opacity: 1;
-  filter: none;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, .35), 0 40px 80px -30px rgba(255, 106, 26, .45);
-}
-
-.slide--longe {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.slide__video,
-.slide__poster {
+.cslide__video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  pointer-events: none;
 }
 
 /* "Vídeo em breve": fundo escuro com brilho laranja embaixo e o número gigante em contorno */
-.slide__ph {
+.cslide__ph {
   position: absolute;
   inset: 0;
-  background: radial-gradient(90% 50% at 50% 110%, rgba(255, 106, 26, .28), transparent 70%), linear-gradient(180deg, #151110, #070505);
+  /* o brilho fica acima da área do texto (embaixo, o degradê do card o cobriria) */
+  background: radial-gradient(85% 42% at 50% 74%, rgba(255, 106, 26, .3), transparent 70%), linear-gradient(180deg, #151110, #070505);
 }
 
-.slide__num-grande {
+.cslide__num-grande {
   position: absolute;
   left: 20px;
   top: 14px;
@@ -166,7 +103,7 @@
   -webkit-text-stroke: 1px rgba(255, 255, 255, .1);
 }
 
-.slide__breve {
+.cslide__breve {
   position: absolute;
   right: 18px;
   top: 22px;
@@ -176,127 +113,71 @@
   color: rgba(255, 255, 255, .55);
 }
 
-.slide__sombra {
+/* Degradê da base do card */
+.cslide__sombra {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 45%, rgba(5, 4, 4, .92));
+  background: linear-gradient(180deg, transparent 40%, rgba(5, 4, 4, .55) 62%, rgba(5, 4, 4, .94) 100%);
   pointer-events: none;
 }
 
-/* Botão de play: gota de vidro */
-.play {
+/* Texto por cima do vídeo. Ele tem um degradê próprio que sobe 70 px acima da primeira linha: se a descrição for
+   longa, a área escura cresce junto e nada da copy é cortado. */
+.cslide__texto {
   position: absolute;
-  left: 50%;
-  top: 46%;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 72px;
-  height: 72px;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, .25);
-  border-radius: 999px 0 999px 999px;
-  cursor: pointer;
-  color: #fff;
-  background: rgba(255, 255, 255, .1);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  transform: translate(-50%, -50%);
-  transition: background var(--dur-2), border-color var(--dur-2);
-}
-
-.play:hover {
-  background: rgba(255, 255, 255, .18);
-  border-color: rgba(255, 255, 255, .45);
-}
-
-.play:focus-visible {
-  outline: 2px solid var(--cor-luz);
-  outline-offset: 4px;
-}
-
-.slide__rotulo {
-  position: absolute;
-  left: 22px;
-  right: 22px;
-  bottom: 22px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 1;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  padding: 22px;
   text-align: left;
+}
+
+.cslide__texto::before {
+  content: "";
+  position: absolute;
+  inset: -70px 0 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(5, 4, 4, 0), rgba(5, 4, 4, .55) 70px, rgba(5, 4, 4, .7));
   pointer-events: none;
 }
 
-.slide__n {
-  font: 700 11px/1 var(--fonte-display);
+.cslide__n {
+  font: 700 12px/1 var(--fonte-display);
   letter-spacing: .16em;
   color: var(--cor-laranja-claro);
 }
 
-.slide__titulo {
+.cslide__titulo {
   font: 800 26px/1 var(--fonte-display);
   text-transform: uppercase;
   color: #fff;
 }
 
-/* Card lateral inteiro clicável (ativa o card); no ativo, sai da frente do play */
-.slide__ativar {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
+.cslide__desc {
+  font: 400 14px/1.5 var(--fonte-texto);
+  color: rgba(255, 255, 255, .78);
 }
 
-.slide--on .slide__ativar {
-  display: none;
-}
-
-/* ========== LEGENDA E CONTROLES ========== */
-.palco__rodape {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  margin-top: 10px;
-  padding-top: 22px;
-  border-top: 1px solid rgba(255, 255, 255, .06);
-}
-
-.palco__legenda {
-  flex: 1 1 420px;
-  max-width: 660px;
-  min-height: calc(3 * 1.6em); /* três linhas reservadas: a troca de conteúdo não mexe no layout */
-  margin: 0;
-  font: 400 16px/1.6 var(--fonte-texto);
-  color: var(--cor-texto-2);
-}
-
-.palco__legenda b {
-  margin-right: 10px;
-  font: 800 22px/1 var(--fonte-display);
-  letter-spacing: .03em;
-  text-transform: uppercase;
-  color: #fff;
-}
-
-.palco__controles {
+/* ========== NAVEGAÇÃO ========== */
+.comunidade__nav {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
+  margin-top: 32px;
 }
 
-.palco__progresso {
+.comunidade__progresso {
   display: flex;
   gap: 6px;
 }
 
-.palco__progresso button {
+.comunidade__progresso button {
   display: grid;
   place-items: center;
   width: 28px;
@@ -307,7 +188,7 @@
   cursor: pointer;
 }
 
-.palco__progresso button i {
+.comunidade__progresso button i {
   display: block;
   width: 100%;
   height: 3px;
@@ -316,11 +197,11 @@
   transition: background var(--dur-2);
 }
 
-.palco__progresso button[aria-pressed="true"] i {
+.comunidade__progresso button[aria-pressed="true"] i {
   background: var(--cor-laranja);
 }
 
-.palco__progresso button:focus-visible {
+.comunidade__progresso button:focus-visible {
   outline: 2px solid var(--cor-luz);
   outline-offset: 2px;
 }
@@ -331,102 +212,16 @@
     padding: 110px 0 90px;
   }
 
-  .palco {
-    --card-w: 236px;
-    --card-h: 420px;
-    --passo: 196px;
-    margin-inline: calc(-1 * var(--gutter) / 2);
-    padding-inline: 10px;
-    border-radius: 28px 0 28px 0;
+  .comunidade__trilho {
+    --card-w: 260px;
+    margin-top: 40px;
   }
 
-  .slide__titulo {
+  .cslide__titulo {
     font-size: 22px;
   }
 
-  .palco__legenda {
-    flex-basis: 100%;
-    min-height: calc(5 * 1.6em);
-    font-size: 15px;
+  .cslide__desc {
+    font-size: 13px;
   }
-
-  .palco__legenda b {
-    font-size: 20px;
-  }
-
-  .palco__controles {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .palco__progresso {
-    gap: 2px;
-  }
-}
-
-/* ========== MODAL DE VÍDEO ========== */
-html.modal-aberto {
-  overflow: hidden;
-}
-
-.video-modal {
-  width: min(92vw, 420px, calc(88svh * 9 / 16));
-  max-width: none;
-  max-height: 92svh;
-  padding: 0;
-  border: 0;
-  overflow: visible;
-  background: none;
-  color: #fff;
-}
-
-.video-modal--16x9 {
-  width: min(92vw, 1100px, calc(88svh * 16 / 9));
-}
-
-.video-modal::backdrop {
-  background: rgba(3, 2, 2, .86);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-}
-
-.video-modal__caixa {
-  position: relative;
-  overflow: hidden;
-  border-radius: 24px 24px 24px 0;
-  background: #000;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 40px 120px -30px rgba(0, 0, 0, .9);
-}
-
-.video-modal__video {
-  display: block;
-  width: 100%;
-  max-height: 88svh;
-  aspect-ratio: 9 / 16;
-  background: #000;
-}
-
-.video-modal--16x9 .video-modal__video {
-  aspect-ratio: 16 / 9;
-}
-
-.video-modal__fechar {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 2;
-}
-
-.video-modal__fechar:focus-visible,
-.video-modal__video:focus-visible {
-  outline: 2px solid var(--cor-luz);
-  outline-offset: -4px;
-}
-
-/* Vídeo sem trilha de áudio (o HUB e a Academy): sem controle de volume. Os pseudoelementos valem no Chromium e
-   no Safari; o Firefox não permite esconder o botão (ele aparece desativado). */
-.video-modal--sem-audio .video-modal__video::-webkit-media-controls-mute-button,
-.video-modal--sem-audio .video-modal__video::-webkit-media-controls-volume-slider,
-.video-modal--sem-audio .video-modal__video::-webkit-media-controls-volume-control-container {
-  display: none !important;
 }

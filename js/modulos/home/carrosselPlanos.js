@@ -17,7 +17,8 @@ const BP_SM = 640;
 const BP_LG = 1080;
 const SEM_MOVIMENTO = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function carregarSwiper() {
+// Também usado pela comunidade (js/modulos/comunidade.js): um só script do Swiper na página.
+export function carregarSwiper() {
   if (window.Swiper) return Promise.resolve(window.Swiper);
   return new Promise((ok, falha) => {
     const s = document.createElement('script');

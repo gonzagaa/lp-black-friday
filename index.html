@@ -599,30 +599,25 @@
 
     </div><!-- /.plano-asset--bit -->
   </section>
-    <!-- COMUNIDADE: a borda de cima rasga em picote. Os cards, abas e a barra de progresso são montados por
-         js/modulos/comunidade.js a partir do array MIDIA (títulos e descrições da copy). -->
+    <!-- COMUNIDADE: a borda de cima rasga em picote. Os cards (com o texto da copy por cima) são montados por
+         js/modulos/comunidade.js a partir do array MIDIA; o trilho é um Swiper sangrado na largura da tela. -->
     <section id="comunidade" class="comunidade div-picote" aria-labelledby="comunidade-titulo">
       <div class="comunidade__grade grade" aria-hidden="true"></div>
-      <div class="wrap comunidade__conteudo">
-        <div class="cabecalho-secao" data-revelar>
+      <div class="wrap">
+        <div class="cabecalho-secao comunidade__cabecalho" data-revelar>
           <span class="tag">Ecossistema Zero7</span>
           <h2 class="titulo-secao comunidade__h2" id="comunidade-titulo">Faça parte da comunidade com mais de 19 mil traders <span>e que continuam evoluindo com o ecossistema criado pela Zero7<span class="ponto">.</span></span></h2>
         </div>
+      </div>
 
-        <div class="palco" data-comunidade>
-          <div class="palco__abas" role="group" aria-label="Escolha um conteúdo"></div>
-          <div class="palco__trilho">
-            <span class="palco__brilho" aria-hidden="true"></span>
-          </div>
-          <div class="palco__rodape">
-            <p class="palco__legenda" aria-live="polite"></p>
-            <div class="palco__controles">
-              <button type="button" class="ibtn" data-anterior aria-label="Conteúdo anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg></button>
-              <div class="palco__progresso"></div>
-              <button type="button" class="ibtn" data-proximo aria-label="Próximo conteúdo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></button>
-            </div>
-          </div>
-        </div>
+      <div class="comunidade__trilho swiper" data-comunidade>
+        <div class="swiper-wrapper"></div>
+      </div>
+
+      <div class="wrap comunidade__nav">
+        <button type="button" class="ibtn" data-anterior aria-label="Conteúdo anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <div class="comunidade__progresso"></div>
+        <button type="button" class="ibtn" data-proximo aria-label="Próximo conteúdo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
     </section>
 
@@ -746,13 +741,5 @@
     </div>
   </footer>
 
-  <!-- Modal de vídeo da comunidade (js/modulos/comunidade.js): dialog modal, Esc fecha, foco preso e devolvido -->
-  <dialog class="video-modal" id="video-modal" aria-labelledby="video-modal-titulo" data-lenis-prevent>
-    <div class="video-modal__caixa">
-      <h2 class="video-modal__titulo sr-only" id="video-modal-titulo"></h2>
-      <button type="button" class="video-modal__fechar ibtn" aria-label="Fechar vídeo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-      <video class="video-modal__video" controls playsinline preload="none" controlslist="nodownload noplaybackrate" disablepictureinpicture></video>
-    </div>
-  </dialog>
 </body>
 </html>
