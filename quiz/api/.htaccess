@@ -1,5 +1,5 @@
-# TESTE TEMPORÁRIO: PHP 8.3 só nesta pasta (LiteSpeed + CloudLinux alt-php). O domínio continua no 7.4.
-# Se a checagem não mostrar 8.3 com curl (ou der erro 500), este arquivo sai no próximo commit.
+# PHP 8.3 só nesta pasta (LiteSpeed + CloudLinux alt-php), testado no ar em 04/11/2026. O domínio continua no 7.4,
+# e o lead.php funciona nos dois: se um dia este handler sair ou der erro 500, basta apagar este arquivo.
 <FilesMatch "\.php$">
   SetHandler application/x-lsphp83
 </FilesMatch>

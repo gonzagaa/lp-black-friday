@@ -2,7 +2,7 @@
 
 Página em `/a-maior-black/quiz/`, com envio para a RD Station Marketing por um repasse em PHP na própria hospedagem. Design fica para depois: aqui é estrutura, conteúdo e integração, com a base visual da LP.
 
-**Nada foi publicado nem enviado para a RD.** Todos os testes rodaram com uma RD falsa local e uma chave falsa.
+**Nada foi enviado para a RD ainda.** Os testes abaixo rodaram com uma RD falsa local e uma chave falsa. O envio real (1 contato de teste, autorizado) vem depois da publicação e do arquivo de configuração.
 
 ## Hospedagem
 
@@ -10,36 +10,33 @@ Página em `/a-maior-black/quiz/`, com envio para a RD Station Marketing por um 
 |---|---|
 | PHP do domínio | **7.4.33**. O 404 do PHP na pasta da LP responde `X-Powered-By: PHP/7.4.33`. O Gustavo confirmou no cPanel: CloudLinux PHP Selector com 7.4 em todos os domínios (não mexer) e cURL ativo; o seletor oferece de 5.1 a 8.5. |
 | Servidor web | **LiteSpeed**. O cabeçalho `Server` vem renomeado ("Servidor: Nucleo Brasil Servidores"), mas a resposta traz o `alt-svc` do LiteSpeed (`h3`, `h3-29`) e cabeçalhos `X-LiteSpeed-Cache-Control` e `X-LiteSpeed-Tag`. Handler: `application/x-lsphp83`. |
-| `lead.php` | Compatível com **7.4 e 8.x sem mudar uma linha** (revisão abaixo). Funciona no 7.4 que já está no ar; o PHP 8.3 só na pasta é opcional. |
+| `lead.php` | Compatível com **7.4 e 8.x sem mudar uma linha** (revisão abaixo). Funciona no 7.4 e no 8.3. |
+| PHP da pasta `quiz/api/` | **8.3.36**, com curl e gravação na pasta temporária (checagem no ar em 04/11/2026). O `quiz/api/.htaccess` (`SetHandler application/x-lsphp83`) fica; o resto do domínio segue no 7.4. |
+| Publicação | **Git Version Control do cPanel**, sem `.cpanel.yml`: o clone é a própria pasta pública (`/home7/zero7/public_html/a-maior-black`), então tudo o que está commitado vai para o ar. O material interno responde 404 pelo `.htaccess` da raiz (ver abaixo). |
 
-## Teste do PHP 8.3 só na pasta (aguardando o seu ok para publicar)
+## Teste do PHP 8.3 só na pasta (feito pelo Git)
 
-**O que subir** (cPanel > Gerenciador de Arquivos, na pasta onde a LP está publicada, a mesma do `index.html` da LP):
-
-1. Crie as pastas `quiz/api/`, se ainda não existirem: `a-maior-black/quiz/api/`.
-2. Suba **só** estes dois arquivos, a partir de `quiz/api/` deste repositório:
-   - `check-2y5cxto7.php`, com o mesmo nome;
-   - `htaccess-php83-teste.txt`, e depois renomeie para **`.htaccess`**. Ligue "Mostrar arquivos ocultos" nas Configurações do Gerenciador para ver o arquivo.
-3. Abra **uma vez**: `https://zero7.com.br/a-maior-black/quiz/api/check-2y5cxto7.php`.
-
-**O que a checagem mostra:** só 4 linhas, sem `phpinfo()`:
+1. Commit `quiz: teste php83 (temporário)`, com só a checagem `quiz/api/check-2y5cxto7.php` (versão do PHP, curl e gravação na pasta temporária, sem `phpinfo()`; apaga a si mesma) e o `quiz/api/.htaccess` ativo.
+2. Push + "Update from Remote" no cPanel e a checagem aberta uma vez:
 
 ```
-PHP: 8.3.x
+PHP: 8.3.36
 curl carregado: sim
 pasta temporária aceita gravação (file_put_contents): sim
 este arquivo foi apagado: sim
 ```
 
-A última linha quer dizer que o próprio arquivo se apagou ao terminar. Testei numa cópia local: as 3 checagens rodaram e a cópia sumiu.
+3. Commit `quiz: remove a checagem do php83`: a checagem sai do repositório (senão o próximo sync a recriaria) e o `.htaccess` fica.
 
-**O que fazer depois:**
+O `htaccess-php83-teste.txt` e o `.htaccess` comentado não entraram no repositório publicado: a versão ativa já está em `quiz/api/.htaccess`.
 
-- **Mostrou PHP 8.3, curl "sim" e gravação "sim":** mantenha o `.htaccess` e confira no Gerenciador que o `check-2y5cxto7.php` sumiu. Se o "apagado" veio "NÃO", apague à mão.
-- **Erro 500, ou ainda PHP 7.4:** apague o `.htaccess` na hora. Apague também o `check-2y5cxto7.php`, porque com erro 500 ele não chega a rodar nem a se apagar. Seguimos em 7.4. Me avise.
-- **Gravação "não":** o limite por IP não consegue contar e deixa os envios passarem (o resto funciona). Nesse caso, defino `pasta_temporaria` na configuração, apontando para uma pasta gravável fora do `public_html`.
+## Material interno: 404 no ar
 
-Se o PHP 8.3 der certo, o `quiz/api/.htaccess` do repositório (hoje todo comentado) passa a ser a versão ativa.
+Como o cPanel publica o repositório inteiro, o `.htaccess` da raiz (commit `ajuste: material interno responde 404 no ar`) devolve 404 para `_referencia/`, `_brandkit/`, `relatorios/`, `scripts/`, `shots/`, `node_modules/`, todo `*.md`, `package.json`, `package-lock.json` e `componentes.html`.
+
+- Mesmo padrão da home no ar: `RedirectMatch 404` (mod_alias). Não usa `RewriteEngine` nem `Require all denied` (que exige AuthConfig e poderia dar 500 na pasta toda).
+- Não interfere no `quiz/api/.htaccess`: o mod_alias soma as regras das duas pastas, e nenhuma casa com `quiz/`.
+- Antes, conferi que a LP e o quiz não carregam nada dessas pastas: no código, elas só aparecem em comentários; na rede (Playwright, 390 e 1440, LP inteira rolada e quiz), nenhum pedido para elas.
 
 ## O que foi feito
 
@@ -73,7 +70,7 @@ Se o PHP 8.3 der certo, o `quiz/api/.htaccess` do repositório (hoje todo coment
 - se vier `Origin`, ela precisa ser o mesmo host (403).
 
 **Chave da RD:**
-- vem de um arquivo **fora da pasta pública**, procurado nesta ordem: a variável `RD_QUIZ_CONFIG`, `<pasta acima do DOCUMENT_ROOT>/config/rd-quiz.php` (no cPanel, `/home/<usuario>/config/rd-quiz.php`) e `~/config/rd-quiz.php`;
+- vem de um arquivo **fora da pasta pública**, procurado nesta ordem: a variável `RD_QUIZ_CONFIG`, a pasta pessoal da conta (`/home7/zero7/config/rd-quiz.php`, pelo usuário do PHP ou pelo caminho do próprio `lead.php`) e `$HOME/config/rd-quiz.php`;
 - no repositório entra só o modelo `quiz/api/rd-quiz.example.php`. `config/rd-quiz.php` e `rd-quiz.php` estão no `.gitignore`;
 - a chave não está em nenhum arquivo do projeto.
 
@@ -129,13 +126,14 @@ O `php -l` rodou no 8.3. Para o 7.4 revisei os recursos um a um:
 **Criados:**
 - `quiz/index.html`, `quiz/quiz.css`, `quiz/quiz.js`;
 - `quiz/api/lead.php`, `quiz/api/rd-quiz.example.php`;
-- `quiz/api/.htaccess` (todo comentado) e `quiz/api/htaccess-php83-teste.txt` (a versão ativa, só para o teste);
-- `quiz/api/check-2y5cxto7.php`, fora do git;
+- `quiz/api/.htaccess` (PHP 8.3 só nesta pasta);
+- `quiz/api/check-2y5cxto7.php`, só no commit temporário do teste;
+- `.htaccess` da raiz (material interno com 404);
 - `relatorios/quiz.md`.
 
 **Alterados:**
 - `.gitignore`: a configuração real e o `check-*.php`;
-- `README.md`: seção "Quiz" e `quiz/` na lista do que vai para o servidor;
+- `README.md`: seção "Quiz" e a publicação pelo Git (o que vai ao ar e o que responde 404);
 - `PROMPTS-LP-BLACK.md`: textos a aprovar do quiz.
 
 ## Capturas (shots/quiz/)
@@ -214,15 +212,10 @@ Todos os textos do quiz são novos e foram registrados em "Textos a aprovar" do 
 
 ## Perguntas / pendências
 
-1. **Link da Política de Privacidade:** o pedido diz que está pendente "igual ao do rodapé da LP". No rodapé, porém, a Política de Privacidade **tem link** (`https://zero7.com.br/politica-de-privacidade/`, o mesmo da home); os pendentes são "Cookie" e "Políticas de Uso". No consentimento usei esse mesmo link, com um `TODO: confirmar` no HTML. Confirma?
-2. **Contagem com a P2 pulada:** mostra "Pergunta 2 de 3" e "3 de 3", em vez de "de 4", para a barra e o texto contarem a mesma coisa. Ok?
-3. **`fbclid` e `gclid`:** ficam guardados na sessão, mas **não vão para a RD**, porque o corpo pedido não tem campo para eles. Querem um `cf_` para cada?
-4. **Teste do PHP 8.3 na pasta:** aguardando o seu ok para subir o `.htaccess` + a checagem (passo a passo acima).
-5. **Teste real na RD:** aguardando a sua autorização. Passos:
-   - a chave vai para `/home/<usuario>/config/rd-quiz.php`, a partir do modelo;
-   - o quiz é publicado;
-   - 1 envio com "Teste Quiz" / teste-quiz@zero7.com.br;
-   - depois, o contato na RD com os campos preenchidos.
-6. **Log no cPanel:** o `error_log` do PHP costuma ficar num arquivo `error_log` na própria pasta. Ele só terá linhas de status, mas, se preferirem, dá para bloquear esse arquivo na pasta `quiz/api/` pelo `.htaccess`.
+Respondidas: o link da Política de Privacidade está certo (o `TODO` saiu); "Pergunta 2 de 3" com a P2 pulada está ok; `fbclid`/`gclid` não vão para a RD; o PHP 8.3 na pasta deu certo.
 
-O quiz fica aqui até o seu ok para os dois testes na hospedagem.
+1. **Teste real na RD (autorizado):** depois do push + sync deste commit, o Gustavo cria `/home7/zero7/config/rd-quiz.php` pelo Gerenciador de Arquivos (a partir do modelo, permissão 600). Aí faço 1 envio com "Teste Quiz" / teste-quiz@zero7.com.br / (62) 90000-0000, com GTM, Pixel e CAPI bloqueados, e paro para vocês conferirem o contato na RD.
+2. **Log no cPanel:** o `error_log` do PHP costuma ficar num arquivo `error_log` na própria pasta (`quiz/api/error_log`), e ele ficaria legível no ar. Só tem linhas de status, mas mostra o caminho do servidor. Quer que ele também responda 404 pelo `.htaccess` da raiz?
+3. **Fora da lista do 404:** `_videos-fora-do-site/` e `.gitignore` continuam acessíveis. Bloqueio também?
+
+Design: em espera até o pedido de design (proposta de tema claro em aprovação).

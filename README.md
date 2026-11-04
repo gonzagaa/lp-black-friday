@@ -2,7 +2,7 @@
 
 Landing page da Black Friday 2026 da Zero7 Tesouraria, publicada em **https://zero7.com.br/a-maior-black/**.
 
-É feita em HTML, CSS e JS puros. Não tem framework nem etapa de build: o que está na pasta é o que vai para o servidor.
+É feita em HTML, CSS e JS puros. Não tem framework nem etapa de build: o que está commitado é o que vai para o servidor.
 
 ## Como rodar
 
@@ -21,31 +21,23 @@ Outros comandos:
 | `npm run planos:snapshot` | Regenera `js/modulos/planos-snapshot.js` a partir de `data/planos.json`. **Rode sempre que o planos.json mudar.** |
 | `npm test` | Testes de `scripts/testes/`. |
 
-## O que vai para o servidor
+## Publicação (Git Version Control do cPanel)
 
-Envie para a pasta `/a-maior-black/` do site:
+A LP publica como a home: push no GitHub (`gonzagaa/lp-black-friday`, branch `master`) e, no cPanel, **Git™ Version Control → Gerenciar → Pull or Deploy → Update from Remote**. Não há `.cpanel.yml`: o clone é a própria pasta pública (`/home7/zero7/public_html/a-maior-black`), então **tudo o que está commitado vai para o ar**.
 
-```
-index.html
-css/
-js/
-data/
-assets/
-vendor/
-quiz/          (o quiz, em /a-maior-black/quiz/; ver "Quiz" abaixo)
-```
+O que a página usa: `index.html`, `css/`, `js/`, `data/`, `assets/`, `vendor/` e `quiz/` (o quiz, em /a-maior-black/quiz/; ver "Quiz" abaixo).
 
-**Não envie:**
+O resto do repositório também sobe, mas o `.htaccess` da raiz faz responder **404** (`RedirectMatch 404`, como a home):
 
-- `_brandkit/`, `_referencia/` e `_videos-fora-do-site/`: material de origem e vídeos fora de uso;
-- `shots/` e `relatorios/`: capturas e relatórios das fases;
-- `node_modules/`, `scripts/`, `package.json` e `package-lock.json`: ferramentas de desenvolvimento;
-- `componentes.html`: vitrine interna dos componentes;
-- `CLAUDE.md`, `PROMPTS-LP-BLACK.md` e `README.md`.
+- `_referencia/`, `_brandkit/`, `relatorios/`, `scripts/`, `shots/` e `node_modules/`;
+- todo `*.md` (`CLAUDE.md`, `PROMPTS-LP-BLACK.md`, `README.md`);
+- `package.json`, `package-lock.json` e `componentes.html`.
+
+Nada que a página carrega pode ficar nessas pastas. Arquivo de teste ou temporário que não deve ir ao ar não entra em commit.
 
 Todos os caminhos da página são relativos, então ela funciona em qualquer subpasta.
 
-Em `assets/3d/`, a página usa só uma parte dos elementos 3D do brand kit. Os outros 82 arquivos dessa pasta podem ficar fora do upload sem quebrar nada. Se em dúvida, envie a pasta inteira.
+Em `assets/3d/`, a página usa só uma parte dos elementos 3D do brand kit. Os outros 82 arquivos dessa pasta sobem junto, mas não são pedidos pela página.
 
 Configuração recomendada no servidor:
 
@@ -127,8 +119,7 @@ Página de quiz integrada à RD Station Marketing. Relatório: `relatorios/quiz.
 
 - **Página:** `quiz/index.html`, `quiz/quiz.css` e `quiz/quiz.js`. Usa a base da LP (`../css`, `../assets`), o mesmo tracking (GTM na primeira interação, Pixel + CAPI) e o mesmo rodapé.
 - **Repasse:** `quiz/api/lead.php` recebe o lead e manda para a RD. A chave da RD **nunca** vai para o navegador, para o código ou para o git.
-  - Ela fica em `/home/<usuario>/config/rd-quiz.php`, fora do `public_html`. O modelo é `quiz/api/rd-quiz.example.php`.
+  - Ela fica em `/home7/zero7/config/rd-quiz.php`, fora do `public_html` (criado à mão no Gerenciador de Arquivos, permissão 600; nunca no git). O modelo é `quiz/api/rd-quiz.example.php`.
   - Funciona em PHP 7.4 e 8.x, e precisa da extensão curl.
-- **PHP 8.3 só na pasta do quiz:** há um exemplo em `quiz/api/htaccess-php83-teste.txt` (LiteSpeed + CloudLinux alt-php), ativado só depois do teste com o arquivo de checagem.
-- **Não envie:** `quiz/api/check-*.php` fora do teste, que é de uso único e se apaga sozinho.
+- **PHP 8.3 só na pasta do quiz:** `quiz/api/.htaccess` (`SetHandler application/x-lsphp83`, LiteSpeed + CloudLinux alt-php), testado no ar. O resto do domínio segue no 7.4.
 - **Evento para o GTM:** `quiz_lead` (com `quiz_e_trader` e `quiz_mercado`, sem dado pessoal), para ligar o Lead do Meta e a conversão do Google Ads.
