@@ -29,9 +29,11 @@ O que a página usa: `index.html`, `css/`, `js/`, `data/`, `assets/`, `vendor/` 
 
 O resto do repositório também sobe, mas o `.htaccess` da raiz faz responder **404** (`RedirectMatch 404`, como a home):
 
-- `_referencia/`, `_brandkit/`, `relatorios/`, `scripts/`, `shots/` e `node_modules/`;
+- `_referencia/`, `_brandkit/`, `_videos-fora-do-site/`, `relatorios/`, `scripts/`, `shots/` e `node_modules/`;
 - todo `*.md` (`CLAUDE.md`, `PROMPTS-LP-BLACK.md`, `README.md`);
-- `package.json`, `package-lock.json` e `componentes.html`.
+- `package.json`, `package-lock.json` e `componentes.html`;
+- `error_log` e todo `*.log`, em qualquer pasta (o log do PHP do quiz nasce em `quiz/api/`);
+- dotfiles e dotpastas (`.gitignore`, `.git/`, `.htaccess`…), menos `.well-known/`.
 
 Nada que a página carrega pode ficar nessas pastas. Arquivo de teste ou temporário que não deve ir ao ar não entra em commit.
 

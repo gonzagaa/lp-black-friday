@@ -6,10 +6,15 @@
 # regras de rewrite de pastas acima.
 #
 # Não interfere no quiz/api/.htaccess (PHP 8.3): o mod_alias soma as regras das duas pastas, e nenhuma destas casa
-# com quiz/. NÃO bloqueie aqui nada que a página carrega (css/, js/, data/, assets/, vendor/, quiz/).
+# com o que o quiz carrega. NÃO bloqueie aqui nada que a página carrega (css/, js/, data/, assets/, vendor/, quiz/).
 <IfModule mod_alias.c>
-  RedirectMatch 404 (?i)/(_referencia|_brandkit|relatorios|scripts|shots|node_modules)(/|$)
+  RedirectMatch 404 (?i)/(_referencia|_brandkit|_videos-fora-do-site|relatorios|scripts|shots|node_modules)(/|$)
   RedirectMatch 404 (?i)\.md$
   RedirectMatch 404 (?i)/package(-lock)?\.json$
   RedirectMatch 404 (?i)/componentes\.html$
+  # log do PHP (o error_log do cPanel nasce na pasta do script, ex.: quiz/api/error_log) e qualquer *.log
+  RedirectMatch 404 (?i)/error_log$
+  RedirectMatch 404 (?i)\.log$
+  # dotfiles e dotpastas em qualquer nível (.gitignore, .git, .htaccess, .cpanel.yml...), menos .well-known
+  RedirectMatch 404 (?i)/\.(?!well-known(/|$))
 </IfModule>

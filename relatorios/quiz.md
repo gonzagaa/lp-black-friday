@@ -32,7 +32,7 @@ O `htaccess-php83-teste.txt` e o `.htaccess` comentado não entraram no reposit�
 
 ## Material interno: 404 no ar
 
-Como o cPanel publica o repositório inteiro, o `.htaccess` da raiz (commit `ajuste: material interno responde 404 no ar`) devolve 404 para `_referencia/`, `_brandkit/`, `relatorios/`, `scripts/`, `shots/`, `node_modules/`, todo `*.md`, `package.json`, `package-lock.json` e `componentes.html`.
+Como o cPanel publica o repositório inteiro, o `.htaccess` da raiz (commit `ajuste: material interno responde 404 no ar`) devolve 404 para `_referencia/`, `_brandkit/`, `_videos-fora-do-site/`, `relatorios/`, `scripts/`, `shots/`, `node_modules/`, todo `*.md`, `package.json`, `package-lock.json`, `componentes.html`, `error_log` e `*.log` em qualquer pasta e os dotfiles (menos `.well-known/`). Conferido no ar depois do sync de 04/11/2026 (a primeira lista).
 
 - Mesmo padrão da home no ar: `RedirectMatch 404` (mod_alias). Não usa `RewriteEngine` nem `Require all denied` (que exige AuthConfig e poderia dar 500 na pasta toda).
 - Não interfere no `quiz/api/.htaccess`: o mod_alias soma as regras das duas pastas, e nenhuma casa com `quiz/`.
@@ -214,8 +214,8 @@ Todos os textos do quiz são novos e foram registrados em "Textos a aprovar" do 
 
 Respondidas: o link da Política de Privacidade está certo (o `TODO` saiu); "Pergunta 2 de 3" com a P2 pulada está ok; `fbclid`/`gclid` não vão para a RD; o PHP 8.3 na pasta deu certo.
 
-1. **Teste real na RD (autorizado):** depois do push + sync deste commit, o Gustavo cria `/home7/zero7/config/rd-quiz.php` pelo Gerenciador de Arquivos (a partir do modelo, permissão 600). Aí faço 1 envio com "Teste Quiz" / teste-quiz@zero7.com.br / (62) 90000-0000, com GTM, Pixel e CAPI bloqueados, e paro para vocês conferirem o contato na RD.
-2. **Log no cPanel:** o `error_log` do PHP costuma ficar num arquivo `error_log` na própria pasta (`quiz/api/error_log`), e ele ficaria legível no ar. Só tem linhas de status, mas mostra o caminho do servidor. Quer que ele também responda 404 pelo `.htaccess` da raiz?
-3. **Fora da lista do 404:** `_videos-fora-do-site/` e `.gitignore` continuam acessíveis. Bloqueio também?
+1. **Teste real na RD (04/11/2026, 1 envio):** pelo quiz no ar, em 390 px, com GTM, Pixel, CAPI, RD e Reclame Aqui bloqueados no navegador, e só 1 pedido ao `lead.php` liberado. Dados: "Teste Quiz", teste-quiz@zero7.com.br, (62) 90000-0000; Sim, opero na B3 / De 6 meses a 2 anos / Os dois / Controle emocional; sem UTMs e sem `_rdtrk`. Resposta: **200 `{"ok":true}`** (a RD aceitou), tela de sucesso e `quiz_lead` sem dado pessoal. **Falta: conferir o contato dentro da RD.**
+2. **3 espaços antes do JSON:** as respostas que passam pela configuração (200 e 422) começam com 3 espaços; as de antes (405, 415) não. Vêm do `/home7/zero7/config/rd-quiz.php`: há 3 espaços antes do `<?php`. Não quebra nada (o status e os cabeçalhos saem certos e o navegador lê o JSON), mas convém apagar esses espaços no Gerenciador de Arquivos.
+3. **404 do log e dos dotfiles (pedido):** `error_log`, `*.log`, `_videos-fora-do-site/` e dotfiles (menos `.well-known/`) entram no `.htaccess` da raiz, num commit à parte; conferir no ar depois do sync.
 
 Design: em espera até o pedido de design (proposta de tema claro em aprovação).
