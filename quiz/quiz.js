@@ -74,7 +74,8 @@ function mostrar(passo, { focar = true } = {}) {
   const pct = Math.round((posicao / total) * 100);
   barra.style.setProperty('--progresso', `${pct}%`);
   barra.setAttribute('aria-valuenow', String(pct));
-  contagem.textContent = lista.includes(passo) ? `Pergunta ${posicao} de ${lista.length}` : '';
+  // no contato, "Último passo" (canvas aprovado); no sucesso, a linha do progresso some
+  contagem.textContent = lista.includes(passo) ? `Pergunta ${posicao} de ${lista.length}` : passo === 'dados' ? 'Último passo' : '';
   voltar.hidden = historico.length === 0 || passo === 'sucesso';
   document.querySelector('[data-topo]').hidden = passo === 'sucesso';
   // só visual: o tema troca o título e o palco por etapa (quiz.css e palco.js)

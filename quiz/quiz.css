@@ -714,8 +714,16 @@ html:not(.js) .quiz__painel {
     mask-image: linear-gradient(180deg, #000 78%, transparent);
   }
 
+  /* desfocado de leve (o scale esconde a borda clara do blur); no contato, mais escuro: o vídeo da Comunidade tem
+     print de conversa com texto legível, que competia com os logos e o título */
   .palco__cenas {
-    filter: brightness(.62) saturate(.85);
+    filter: brightness(.62) saturate(.85) blur(3px);
+    transform: scale(1.04);
+    transition: filter var(--troca);
+  }
+
+  .qz[data-passo="dados"] .palco__cenas {
+    filter: brightness(.5) saturate(.85) blur(3px);
   }
 
   /* degradê escuro por cima do vídeo (leitura dos logos e do título) */

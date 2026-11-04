@@ -185,6 +185,33 @@ Em `shots/quiz-respostas/`:
 - as outras etapas nas 5 telas;
 - `zoom-1440.png`.
 
+## 7. Dois ajustes finais
+
+Commit `quiz (ajuste): vídeo de fundo desfocado e "Último passo"`.
+
+1. **Vídeo de fundo (até 1079 px):**
+   - em todas as etapas, `filter: brightness(.62) saturate(.85) blur(3px)`;
+   - `transform: scale(1.04)`, para a borda clara do desfoque não aparecer (a moldura corta o excesso);
+   - **no contato** (o vídeo da Comunidade, com print de conversa), `brightness(.5)`. A troca de filtro entre as etapas é suave (.45 s).
+   - **Desktop:** sem filtro e sem escala (conferido: `filter: none` em 1440).
+2. **"Último passo"** à esquerda do progresso, no contato. "Leva 30 segundos" continua à direita.
+   - O texto vem do `quiz.js`: só a linha que escreve a contagem mudou, e o fluxo é o mesmo.
+   - A contagem é `aria-live`, então o leitor de tela anuncia "Último passo" ao chegar no contato.
+   - Registrado nos textos a aprovar como vindo do canvas aprovado.
+
+### Testes
+
+- Telas: 360 × 740, 390 × 844 e 768 × 1024.
+- **Filtro:** conferido nas perguntas e no contato.
+- **Contagem:** "Pergunta 1 de 4" na P1 e "Último passo" no contato.
+- **Sem salto de layout:** CLS ≤ 0,0003.
+- **Sem** erros ou 404.
+- **3D:** 0 imagens baixadas.
+
+### Prints
+
+Em `shots/quiz-blur/`: `{360,390,768}-{p1,p4,dados,sucesso}.png`.
+
 ## Perguntas / pendências
 
 1. **Hub:** a colagem volta no meio do vídeo (perto de 8 s, 16 s, 28 s e 48 s; ver `relatorios/tarja.md`). Se incomodar, a saída é reexportar um trecho limpo só para o quiz.
