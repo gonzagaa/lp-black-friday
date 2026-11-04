@@ -20,8 +20,8 @@
   --troca: .45s var(--curva);
 
   isolation: isolate;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
   min-height: 100svh;
   overflow-x: clip;
   background: var(--papel);
@@ -111,6 +111,7 @@
 /* ========== ESTRUTURA (mobile): palco em cima, o card sobe 26 px por cima dele ========== */
 .qz__main {
   display: flex;
+  flex: 1 0 auto;
   flex-direction: column;
   width: 100%;
   max-width: 560px;
@@ -131,6 +132,11 @@
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/* Sem JS, o painel não funciona: fica só o aviso do <noscript> */
+html:not(.js) .quiz__painel {
+  display: none;
 }
 
 .qz__card {
@@ -778,7 +784,7 @@
   .qz[data-passo="dados"] .palco__moldura,
   .qz[data-passo="sucesso"] .palco__moldura {
     width: 430px;
-    height: clamp(560px, 100svh - 190px, 720px);
+    height: clamp(560px, 100svh - 190px - var(--tarja-altura, 0px), 720px);
     border-radius: 40px 0 40px 0;
   }
 

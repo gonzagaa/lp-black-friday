@@ -1,0 +1,153 @@
+/* Tarja do topo: o timer de 24 horas da home ("Essa oferta se encerra em:"), com a pele da Black.
+   Usada pela LP e pelo quiz (o mesmo HTML; lógica em js/modulos/tarja.js). Fica grudada no topo (sticky) e tem
+   altura fixa (--tarja-altura), que a nav da LP e o palco do quiz descontam. Quando a Black acaba, a tarja some e
+   html.tarja-encerrada zera a altura.
+   Cor: preto com a luz laranja de cima e o filete do degradê na base; os números em branco nos chips e as unidades no
+   laranja claro (o destaque desta faixa). Contraste: texto .82 sobre o preto ~13:1; unidades #FF8A4C ~7:1. */
+
+:root {
+  --tarja-altura: 44px;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --tarja-altura: 40px;
+  }
+}
+
+html.tarja-encerrada {
+  --tarja-altura: 0px;
+}
+
+.tarja {
+  position: sticky;
+  top: 0;
+  z-index: 70; /* acima da nav da LP (60) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  height: var(--tarja-altura);
+  padding-inline: 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(50% 160% at 50% 0%, rgba(255, 106, 26, .24), transparent 70%),
+    linear-gradient(180deg, #120c0a, #0a0706);
+  box-shadow: 0 8px 20px -10px rgba(0, 0, 0, .55);
+  color: #fff;
+}
+
+/* filete do degradê da marca na base */
+.tarja::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: var(--grad-marca-horizontal);
+  opacity: .9;
+}
+
+.tarja[hidden] {
+  display: none;
+}
+
+.tarja__texto {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font: 600 13px/1 var(--fonte-texto);
+  letter-spacing: .01em;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, .82);
+}
+
+/* ponto "ao vivo": o quadradinho no degradê com o raio diagonal, pulsando devagar */
+.tarja__ponto {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px 0;
+  background: var(--grad-marca);
+  box-shadow: 0 0 0 0 rgba(255, 106, 26, .55);
+  animation: tarja-pulso 2s var(--curva) infinite;
+}
+
+@keyframes tarja-pulso {
+  70% {
+    box-shadow: 0 0 0 7px rgba(255, 106, 26, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 106, 26, 0);
+  }
+}
+
+.tarja__tempo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tarja__grupo {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  padding: 5px 7px 4px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .03));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+.tarja__grupo b {
+  display: inline-block;
+  min-width: 2.05ch;
+  font: 800 19px/1 var(--fonte-display);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: #fff;
+}
+
+.tarja__grupo small {
+  font: 700 12px/1 var(--fonte-display);
+  text-transform: uppercase;
+  color: var(--cor-laranja-claro, #FF8A4C);
+}
+
+/* Os números só aparecem depois do primeiro cálculo (sem "00" piscando; a largura já está reservada) */
+.tarja:not([data-pronto]) .tarja__grupo b {
+  visibility: hidden;
+}
+
+@media (max-width: 600px) {
+  .tarja {
+    gap: 10px;
+    padding-inline: 10px;
+  }
+
+  .tarja__texto {
+    gap: 7px;
+    font-size: 12px;
+  }
+
+  /* o timer zera a cada 24 horas: os dias são sempre 00, e no mobile o espaço vai para horas, minutos e segundos */
+  .tarja__grupo--dias {
+    display: none;
+  }
+
+  .tarja__tempo {
+    gap: 5px;
+  }
+
+  .tarja__grupo {
+    padding: 4px 6px 3px;
+  }
+
+  .tarja__grupo b {
+    font-size: 17px;
+  }
+
+  .tarja__grupo small {
+    font-size: 11px;
+  }
+}

@@ -8,6 +8,7 @@
 //   pessoal. Deu erro: mensagem e o botão liberado.
 import { iniciarTracking } from '../js/modulos/tracking.js';
 import { iniciarRodape } from '../js/modulos/rodape.js';
+import { iniciarTarja } from '../js/modulos/tarja.js';
 import './palco.js'; // só visual: palco de mídia e segmentos do progresso (ouve o evento quiz:passo)
 
 const NAO_OPERA = 'Ainda não opero';
@@ -18,6 +19,7 @@ const PARAMETROS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm
 
 iniciarTracking();
 iniciarRodape();
+iniciarTarja();
 const grao = () => document.documentElement.classList.add('grao-pronto');
 if (document.readyState === 'complete') grao(); else window.addEventListener('load', grao, { once: true });
 

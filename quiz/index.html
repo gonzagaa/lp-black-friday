@@ -48,6 +48,7 @@
   <link rel="stylesheet" href="../css/tokens.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/tarja.css">
   <link rel="stylesheet" href="quiz.css">
   <!-- LCP: o poster da P1 (fica por baixo do vídeo no palco) -->
   <link rel="preload" href="../assets/video/hub-zero7-9x16-poster.webp" as="image" type="image/webp" fetchpriority="high">
@@ -63,6 +64,18 @@
 
   <div class="grao" aria-hidden="true"></div>
   <div class="qz__fundo" aria-hidden="true"></div>
+
+  <!-- TARJA DO TOPO: o timer de 24 horas da home ("Essa oferta se encerra em:"), zerando todo dia às 23:59:59 até
+       30/11 (js/modulos/tarja.js e css/tarja.css; datas em js/config.js). Para desligar a tarja, apague este bloco. -->
+  <div class="tarja" data-tarja>
+    <p class="tarja__texto"><span class="tarja__ponto" aria-hidden="true"></span>Essa oferta se encerra em:</p>
+    <div class="tarja__tempo" role="timer" aria-label="Essa oferta se encerra hoje, às 23h59">
+      <span class="tarja__grupo tarja__grupo--dias" aria-hidden="true"><b data-d>00</b><small>d</small></span>
+      <span class="tarja__grupo" aria-hidden="true"><b data-h>00</b><small>h</small></span>
+      <span class="tarja__grupo" aria-hidden="true"><b data-m>00</b><small>m</small></span>
+      <span class="tarja__grupo" aria-hidden="true"><b data-s>00</b><small>s</small></span>
+    </div>
+  </div>
 
   <header class="qz__topo">
     <a class="qz__logo" href="../"><img src="../assets/img/zero7-logo-tinta.svg" width="176" height="55" alt="Zero7 Tesouraria"></a>
@@ -82,17 +95,18 @@
       <div class="qz__card">
         <noscript><p class="quiz__aviso">Para responder o quiz, ative o JavaScript do navegador.</p></noscript>
 
-        <div class="quiz__painel" data-painel hidden>
+        <!-- O painel e a P1 já nascem prontos (sem salto de layout quando o quiz.js roda); sem JS, o CSS esconde o painel -->
+        <div class="quiz__painel" data-painel>
           <div class="quiz__topo" data-topo>
-            <div class="quiz__barra" data-barra role="progressbar" aria-label="Progresso do quiz" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            <div class="quiz__barra" data-barra role="progressbar" aria-label="Progresso do quiz" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20"><i style="--cheio: .55"></i><i></i><i></i><i></i></div>
             <div class="quiz__rotulos">
-              <p class="quiz__contagem" data-contagem aria-live="polite"></p>
+              <p class="quiz__contagem" data-contagem aria-live="polite">Pergunta 1 de 4</p>
               <p class="quiz__leva" aria-hidden="true">Leva 30 segundos</p>
             </div>
           </div>
 
           <div class="quiz__passos">
-            <section class="quiz__passo quiz__passo--pergunta" data-passo="e_trader" aria-labelledby="quiz-p1" hidden>
+            <section class="quiz__passo quiz__passo--pergunta" data-passo="e_trader" aria-labelledby="quiz-p1">
               <h2 class="quiz__pergunta" id="quiz-p1" tabindex="-1">Você é <span class="qz-cinza">trader?</span></h2>
               <div class="quiz__opcoes">
               <button type="button" class="quiz__opcao" data-valor="Sim, opero na B3"><span class="quiz__letra" aria-hidden="true">A</span><span class="quiz__opcao-texto">Sim, opero na B3</span><span class="quiz__seta" aria-hidden="true">→</span></button>

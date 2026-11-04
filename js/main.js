@@ -16,8 +16,10 @@ import { iniciarLimiteAlta } from './modulos/limite-alta.js';
 import { iniciarRodape } from './modulos/rodape.js';
 import { iniciarBarraMobile } from './modulos/barra-mobile.js';
 import { iniciarTracking } from './modulos/tracking.js';
+import { iniciarTarja } from './modulos/tarja.js';
 
 iniciarTracking(); // antes dos planos: o sck entra a cada href que o blackPlanos montar
+iniciarTarja();
 iniciarNav();
 iniciarSimboloHero();
 iniciarRevelar();

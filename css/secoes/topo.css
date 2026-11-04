@@ -19,9 +19,9 @@
   }
 }
 
-/* Âncoras não ficam escondidas atrás da nav fixa */
+/* Âncoras não ficam escondidas atrás da nav fixa (nem da tarja do topo, css/tarja.css) */
 html {
-  scroll-padding-top: calc(var(--nav-margem) + var(--nav-altura) + 16px);
+  scroll-padding-top: calc(var(--tarja-altura, 0px) + var(--nav-margem) + var(--nav-altura) + 16px);
 }
 
 /* O menu aberto trava a rolagem da página */
@@ -32,7 +32,7 @@ html.menu-aberto {
 /* ========== NAV ========== */
 .cabecalho {
   position: sticky;
-  top: 16px;
+  top: calc(var(--tarja-altura, 0px) + 16px); /* gruda logo abaixo da tarja do topo */
   z-index: 60;
   margin-top: var(--nav-margem);
   padding-inline: var(--nav-lateral);

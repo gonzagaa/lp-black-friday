@@ -35,6 +35,7 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
 - H1: "A maior black" / "da história." em todas as larguras, com a luz em "da história." inteiro. Selo com `top: -.05em` e `margin-left: -.1em`; a linha 2 é deslocada .41em para a esquerda.
 - CTA da hero: `.fbtn--escuro` a partir de 768 px (laranja no mobile).
 - Sem contador na hero (o módulo `js/modulos/contador.js` está guardado; a decisão sobre a barra mobile fica para a Fase 6).
+- Tarja do topo (pedido do cliente, 04/11): o timer de 24 horas da home, "Essa oferta se encerra em:", na LP e no quiz. Zera todo dia às 23:59:59 de Brasília até o `BLACK_FIM` (`js/config.js`); fica grudada no topo, acima da nav (`css/tarja.css`, `js/modulos/tarja.js`). A nav e as âncoras descontam `--tarja-altura`.
 
 ### Planos (Fase 4 refeita: porte da home + ajustes do cliente; vale por cima do canvas e do print 05)
 
