@@ -10,8 +10,8 @@
  *   3. Troque o valor de api_key pela chave da RD Station Marketing (Integrações > Chave de API).
  *   4. Permissão 600 (só o dono lê e grava).
  *
- * O lead.php procura, nesta ordem: a variável de ambiente RD_QUIZ_CONFIG, <pasta acima do DOCUMENT_ROOT>/config/rd-quiz.php
- * e ~/config/rd-quiz.php. O caminho real está no .gitignore.
+ * O lead.php procura sempre na pasta pessoal da conta: /home/<usuario>/config/rd-quiz.php (a variável de ambiente
+ * RD_QUIZ_CONFIG só serve para o teste local). O caminho real está no .gitignore.
  */
 
 return [

@@ -50,8 +50,10 @@ function erro(int $status, string $mensagem): void
     responder($status, ['ok' => false, 'erro' => $mensagem]);
 }
 
-/* Configuração fora da pasta pública. Ordem: variável de ambiente RD_QUIZ_CONFIG (teste local), a pasta config ao
-   lado do public_html (dirname do DOCUMENT_ROOT) e ~/config. O arquivo devolve ['api_key' => '…']. */
+/* Configuração fora da pasta pública: sempre na pasta pessoal da conta do cPanel, /home/<usuario>/config/rd-quiz.php
+   (ao lado do public_html). Ordem: a variável de ambiente RD_QUIZ_CONFIG (só o teste local), a pasta pessoal do
+   usuário que roda o PHP (posix), a /home/<usuario> tirada do caminho deste arquivo e o $HOME. Nada relativo ao
+   DOCUMENT_ROOT: num domínio adicional, a pasta acima dele ainda pode ser pública. O arquivo devolve ['api_key' => '…']. */
 function carregar_config(): ?array
 {
     $candidatos = [];
@@ -59,9 +61,14 @@ function carregar_config(): ?array
     if (is_string($ambiente) && $ambiente !== '') {
         $candidatos[] = $ambiente;
     }
-    $raiz = isset($_SERVER['DOCUMENT_ROOT']) ? (string) $_SERVER['DOCUMENT_ROOT'] : '';
-    if ($raiz !== '') {
-        $candidatos[] = dirname(rtrim($raiz, '/\\')) . '/config/rd-quiz.php';
+    if (function_exists('posix_getpwuid') && function_exists('posix_geteuid')) {
+        $usuario = posix_getpwuid(posix_geteuid());
+        if (is_array($usuario) && !empty($usuario['dir'])) {
+            $candidatos[] = rtrim((string) $usuario['dir'], '/') . '/config/rd-quiz.php';
+        }
+    }
+    if (preg_match('#^(/home\d*/[^/]+)/#', str_replace('\\', '/', __DIR__), $pessoal)) {
+        $candidatos[] = $pessoal[1] . '/config/rd-quiz.php';
     }
     $home = getenv('HOME');
     if (is_string($home) && $home !== '') {
