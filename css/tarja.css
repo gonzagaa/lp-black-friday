@@ -51,6 +51,41 @@ html.tarja-encerrada {
   display: none;
 }
 
+/* Tarja como link (LP): leva para os planos */
+a.tarja {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a.tarja:focus-visible {
+  outline: 2px solid var(--cor-luz);
+  outline-offset: -4px; /* por dentro: em cima, a borda da janela cortaria o contorno */
+}
+
+/* seta na gota da marca: só no link, e só onde cabe */
+.tarja__seta {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--raio-gota);
+  background: var(--grad-marca-brilho), var(--grad-marca);
+  box-shadow: var(--sombra-material);
+  color: #fff;
+  transition: transform var(--dur-2) var(--curva);
+}
+
+a.tarja:hover .tarja__seta {
+  transform: translateX(3px);
+}
+
+@media (max-width: 429.98px) {
+  .tarja__seta {
+    display: none;
+  }
+}
+
 .tarja__texto {
   display: flex;
   align-items: center;
@@ -166,6 +201,14 @@ html.tarja-encerrada {
 
 .tarja--clara .tarja__texto {
   color: rgba(10, 7, 6, .82);
+}
+
+a.tarja--clara:focus-visible {
+  outline-color: var(--cor-tinta); /* o amarelo some no branco */
+}
+
+a.tarja--clara:hover .tarja__texto {
+  color: var(--cor-tinta);
 }
 
 .tarja--clara .tarja__grupo {

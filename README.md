@@ -87,6 +87,7 @@ Cada CTA tem um `data-cta`, o valor que vai no `cta_click`:
 - `plano-trainee`, `plano-junior`, `plano-pleno`, `plano-senior`, `plano-expert`, `plano-master`
 - `plano-bit_trainee` e `plano-bit_junior` (os cards BIT 8 e BIT 16 do Bitcoin)
 - `fechamento`
+- `tarja` (a tarja do topo da LP, que leva para os planos)
 - `barra-mobile`
 
 Os CTAs dos planos repassam para o checkout os parâmetros da URL da página (as UTMs), como na home, e o `sck`.

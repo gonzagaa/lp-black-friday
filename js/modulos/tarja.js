@@ -3,7 +3,8 @@
 // Depois do último prazo, a tarja some e a nav volta ao topo (html.tarja-encerrada zera --tarja-altura).
 // Usada pela LP (js/main.js) e pelo quiz (quiz/quiz.js). Estilo em css/tarja.css.
 // Acessibilidade: os números são aria-hidden; o role="timer" leva o texto completo, atualizado só quando o minuto
-// muda (nada de leitura a cada segundo).
+// muda (nada de leitura a cada segundo). Na LP a tarja é um link (<a href="#planos">): o nome do link é o mesmo texto
+// + "Ver os planos.".
 import { BLACK_FIM, TARJA_HORA_DIARIA } from '../config.js';
 
 const BRASILIA = -3 * 60 * 60 * 1000; // UTC−3, sem horário de verão desde 2019
@@ -68,7 +69,9 @@ export function iniciarTarja() {
     const minutoTotal = Math.floor(falta / 60);
     if (minutoTotal !== ultimoMinuto) {
       ultimoMinuto = minutoTotal;
-      relogio.setAttribute('aria-label', textoCompleto(dias * 24 + horas, minutos));
+      const texto = textoCompleto(dias * 24 + horas, minutos);
+      relogio.setAttribute('aria-label', texto);
+      if (tarja.tagName === 'A') tarja.setAttribute('aria-label', `${texto}. Ver os planos.`);
     }
     tarja.dataset.pronto = '';
   }

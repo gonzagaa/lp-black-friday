@@ -125,8 +125,9 @@
   <div class="grao" aria-hidden="true"></div>
 
   <!-- TARJA DO TOPO: o timer de 24 horas da home ("Essa oferta se encerra em:"), zerando todo dia às 23:59:59 até
-       30/11 (js/modulos/tarja.js e css/tarja.css; datas em js/config.js). Para desligar a tarja, apague este bloco. -->
-  <div class="tarja tarja--clara" data-tarja>
+       30/11 (js/modulos/tarja.js e css/tarja.css; datas em js/config.js). Para desligar a tarja, apague este bloco.
+       Na LP, a tarja inteira leva para os planos (o aria-label do link é o texto do timer + "Ver os planos."). -->
+  <a class="tarja tarja--clara" href="#planos" data-tarja data-cta="tarja">
     <p class="tarja__texto"><span class="tarja__ponto" aria-hidden="true"></span>Essa oferta se encerra em:</p>
     <div class="tarja__tempo" role="timer" aria-label="Essa oferta se encerra hoje, às 23h59">
       <span class="tarja__grupo tarja__grupo--dias" aria-hidden="true"><b data-d>00</b><small>d</small></span>
@@ -134,7 +135,8 @@
       <span class="tarja__grupo" aria-hidden="true"><b data-m>00</b><small>m</small></span>
       <span class="tarja__grupo" aria-hidden="true"><b data-s>00</b><small>s</small></span>
     </div>
-  </div>
+    <span class="tarja__seta" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </a>
 
   <!-- NAV: fica fora do <main> para o sticky valer na página inteira (dentro da hero, com overflow:hidden, ele não grudaria) -->
   <header class="cabecalho">

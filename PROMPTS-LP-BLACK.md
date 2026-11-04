@@ -52,7 +52,7 @@ Estes textos **não estão na copy**. Eles entram na LP, mas cada relatório pre
 | Quiz (design, tema claro) | rótulo "Quiz da Black"; título "Sua oferta da Black" / "em 4 perguntas." (no mobile, só para o leitor de tela); no sucesso, "Obrigado!" / "Bem-vindo à Black."; "Leva 30 segundos" no progresso; "Seus dados ficam só com a Zero7." (abaixo do CTA); a parte em cinza de cada pergunta ("Você é **trader?**", "Qual é a sua **experiência?**", "O que você **opera?**", "Qual é o seu **maior desafio hoje?**", "Para onde enviamos **sua oferta?**", "Pronto! **Sua oferta está a caminho.**": a divisão é minha); letras A/B/C/D nas opções |
 | Quiz (palco de mídia) | rótulo "Ecossistema Zero7" e as legendas por etapa: "HUB Zero7" / "Encontros presenciais da comunidade."; "Academy" / "+170 aulas com mentores do mercado."; "Lives diárias" / "Panorama e mercado ao vivo, todo dia."; "Trading e Performance" / "Imersão de 3 dias na sua carreira de trader."; "Comunidade no WhatsApp" / "Mercado em tempo real e ofertas em primeira mão."; "Gamification" / "Recompensas para quem participa." |
 | Quiz (rodapé legal) | "© 2026 Zero7 Tesouraria LTDA \| CNPJ: 49.452.697/0001-20 · Todos os direitos reservados. · Política de Privacidade" (textos do rodapé da LP, juntos numa linha) |
-| Tarja do topo (LP e quiz) | "Essa oferta se encerra em:" e as unidades "d", "h", "m", "s" (os mesmos da tarja da home no ar); leitor de tela: "Essa oferta se encerra em X horas e Y minutos" |
+| Tarja do topo (LP e quiz) | "Essa oferta se encerra em:" e as unidades "d", "h", "m", "s" (os mesmos da tarja da home no ar); leitor de tela: "Essa oferta se encerra em X horas e Y minutos" (na LP, o link da tarja acrescenta "Ver os planos.") |
 
 ## Pendências de negócio (não bloqueiam as fases)
 

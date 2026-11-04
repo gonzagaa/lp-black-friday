@@ -76,3 +76,51 @@ O pedido era trazer da home o timer que vence a cada 24 horas, bonito e em desta
 
 1. **Último dia:** em 30/11 o timer vai até as 23:59:59 (o `BLACK_FIM`) e a tarja some. A hora do fim da Black continua com o `TODO: confirmar` da P1.
 2. **Link:** na home, a tarja inteira é um link para a LP. Aqui ela não é link. Quer que leve para os planos (`#planos`) na LP e para o início do quiz no quiz?
+
+## Revisão (3 ajustes)
+
+### 1. Vão entre a tarja e a nav (LP)
+
+- `.cabecalho::before`: um degradê de 17 px, que sai do `#f6f3ee` da base da tarja e some no topo da nav.
+- Aparece só com a nav grudada (`.nav--opaca`, depois de 80 px). Parado, a opacidade é 0; rolado, é 1.
+- O vidro da nav não mudou.
+- Vale em todas as larguras, porque o vão de 16 px também existe no mobile.
+
+### 2. Vídeo do hub no quiz
+
+- O vídeo abre com um quadro preto (0 s) e a colagem de três faixas (0,3–2,5 s).
+- Agora começa em **2,8 s**, o primeiro quadro limpo. Em 4 s ele já está no meio de uma fusão.
+  - Como: `#t=2.8` no endereço e `currentTime` no `loadedmetadata`.
+  - A cada fim do loop, volta para 2,8 s.
+- **Poster:** o do quiz passou a ser esse mesmo quadro (`assets/video/hub-zero7-9x16-quiz-poster.webp`, 38 KB). O antigo era a colagem e tinha 52 KB.
+  - Ele é o LCP e é a imagem que fica com movimento reduzido.
+  - A LP continua com o poster antigo.
+- **Outros vídeos:** os outros cinco (academy, lives, trading, comunidade, gamification) começam limpos. Conferi nas folhas de contato de 0 a 5 s, no recorte 358 × 400.
+- **Atenção:** a colagem volta no meio do hub, perto de 8 s, 16 s, 28 s e 48 s. Se incomodar, o caminho é reexportar um trecho limpo só para o quiz.
+- **Loop testado:** no fim, `ended` → 2,80 s → toca. Isso precisa de `Range` no servidor.
+  - O 5501 e o site no ar respondem 206.
+  - O servidor de teste 5502 não. Lá o Chrome não consegue pular para o fim.
+
+### 3. Link da tarja (LP)
+
+- A tarja inteira é um `<a href="#planos" data-cta="tarja">`:
+  - cursor de link;
+  - foco desenhado por dentro, em tinta, porque o amarelo some no branco;
+  - a partir de 430 px, a seta na gota da marca.
+- **Nome do link:** "Essa oferta se encerra em X horas e Y minutos. Ver os planos." O "Ver os planos." é texto a aprovar.
+- A barra mobile ignora a tarja na conta de "CTA na tela". Senão, ela nunca apareceria.
+- No quiz, a tarja continua sem link.
+
+### Testes (360, 390 e 1440 px)
+
+- **Teclado:** o 1º Tab cai na tarja, com contorno de 2 px em tinta.
+- **Destino:** Enter e clique levam a #planos. O topo dos planos fica em 134 px no mobile e em 148 px no desktop, abaixo da nav.
+- **Tracking:** o `cta_click` "tarja" entra no dataLayer.
+- **Barra mobile:** visível depois de rolar.
+- **Quiz:**
+  - a tarja é um `<div>`;
+  - o hub toca a partir de 2,8 s;
+  - o poster é o novo.
+- **Layout:** CLS ≤ 0,0003 e sem scroll horizontal.
+- **Console e rede:** sem erros e sem 404.
+- **Fim da Black:** mantido em 23:59:59 de 30/11.

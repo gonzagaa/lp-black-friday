@@ -4,10 +4,13 @@
 // - O poster da P1 está no HTML (é o LCP); o vídeo da P1 só entra depois do load, em idle.
 // - Movimento reduzido ou economia de dados: só o poster, sem vídeo (e o CSS desliga as animações).
 // - Palco fora da tela (no mobile, ao rolar até o formulário): o vídeo pausa.
+// - inicio: o vídeo começa (e volta, a cada volta do loop) nesse segundo. O hub abre com um quadro preto e a colagem de
+//   três faixas, que no recorte do mobile parecia defeito: ele começa em 2,8 s, o primeiro quadro limpo, e o poster do
+//   quiz é esse mesmo quadro (hub-zero7-9x16-quiz-poster.webp).
 const V = '../assets/video/';
 const OBJ = '../assets/3d/';
 const CENAS = {
-  e_trader: { video: 'hub-zero7-9x16-540', poster: 'hub-zero7-9x16-poster.webp', titulo: 'HUB Zero7', desc: 'Encontros presenciais da comunidade.', obj: ['01-moeda-zero7', 344] },
+  e_trader: { video: 'hub-zero7-9x16-540', inicio: 2.8, poster: 'hub-zero7-9x16-quiz-poster.webp', titulo: 'HUB Zero7', desc: 'Encontros presenciais da comunidade.', obj: ['01-moeda-zero7', 344] },
   experiencia: { video: 'academy-9x16-540', poster: 'academy-9x16-poster.webp', titulo: 'Academy', desc: '+170 aulas com mentores do mercado.', obj: ['18-selo-de-conquista', 399] },
   mercado: { video: 'lives-zero7-9x16-540', poster: 'lives-zero7-9x16-poster.webp', titulo: 'Lives diárias', desc: 'Panorama e mercado ao vivo, todo dia.', obj: ['03-candles-de-trade', 408] },
   desafio: { video: 'trading-performance-1', webm: true, poster: 'trading-performance-1-poster.avif', titulo: 'Trading e Performance', desc: 'Imersão de 3 dias na sua carreira de trader.', obj: ['09-alvo-de-precisao', 315] },
@@ -42,12 +45,20 @@ function criarVideo(cena) {
   v.preload = 'auto';
   ['muted', 'playsinline', 'disablepictureinpicture', 'disableremoteplayback'].forEach((a) => v.setAttribute(a, ''));
   const fontes = cena.webm ? [['webm', 'video/webm'], ['mp4', 'video/mp4']] : [['mp4', 'video/mp4']];
+  const trecho = cena.inicio ? `#t=${cena.inicio}` : ''; // o navegador já pede o arquivo a partir daí
   fontes.forEach(([ext, tipo]) => {
     const s = document.createElement('source');
-    s.src = `${V}${cena.video}.${ext}`;
+    s.src = `${V}${cena.video}.${ext}${trecho}`;
     s.type = tipo;
     v.append(s);
   });
+  if (cena.inicio) {
+    // o loop nativo voltaria ao 0: aqui ele volta ao início escolhido
+    v.loop = false;
+    const aoInicio = () => { if (v.currentTime < cena.inicio) v.currentTime = cena.inicio; };
+    v.addEventListener('loadedmetadata', aoInicio, { once: true });
+    v.addEventListener('ended', () => { v.currentTime = cena.inicio; v.play().catch(() => {}); });
+  }
   // o vídeo só aparece quando já tem quadro: até lá, fica o poster por baixo (sem piscar preto)
   v.addEventListener('playing', () => v.classList.add('is-tocando'), { once: true });
   return v;

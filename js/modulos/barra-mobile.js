@@ -37,7 +37,7 @@ export function iniciarBarraMobile() {
   if (rodape) secoes.observe(rodape);
 
   // Faixa de baixo da tela (a altura da barra + folga): o observador é refeito quando a janela muda de altura
-  const ctas = [...document.querySelectorAll('[data-cta]')].filter((el) => !barra.contains(el) && !el.closest('.cabecalho, #menu'));
+  const ctas = [...document.querySelectorAll('[data-cta]')].filter((el) => !barra.contains(el) && !el.closest('.cabecalho, #menu, .tarja'));
   let faixa = null;
   function observarFaixa() {
     if (faixa) faixa.disconnect();
