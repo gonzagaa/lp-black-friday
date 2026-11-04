@@ -6,10 +6,10 @@
 // - As UTMs (e fbclid/gclid) da URL de entrada ficam guardadas na sessão ao abrir a página.
 // - Deu certo: tela de sucesso e dataLayer.push({ event: 'quiz_lead', quiz_e_trader, quiz_mercado }), sem nenhum dado
 //   pessoal. Deu erro: mensagem e o botão liberado.
-import { iniciarTracking } from '../js/modulos/tracking.js?v=202611041047';
-import { iniciarRodape } from '../js/modulos/rodape.js?v=202611041047';
-import { iniciarTarja } from '../js/modulos/tarja.js?v=202611041047';
-import './palco.js?v=202611041047'; // só visual: palco de mídia e segmentos do progresso (ouve o evento quiz:passo)
+import { iniciarTracking } from '../js/modulos/tracking.js?v=202611041050';
+import { iniciarRodape } from '../js/modulos/rodape.js?v=202611041050';
+import { iniciarTarja } from '../js/modulos/tarja.js?v=202611041050';
+import './palco.js?v=202611041050'; // só visual: palco de mídia e segmentos do progresso (ouve o evento quiz:passo)
 
 const NAO_OPERA = 'Ainda não opero';
 const EXPERIENCIA_NAO_OPERA = 'Não opera';

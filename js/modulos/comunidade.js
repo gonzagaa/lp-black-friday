@@ -16,16 +16,16 @@
 // O "perto" e o "na tela" de cada card são calculados pela posição dele (o carrossel recorta os cards de fora no
 // eixo X, e um IntersectionObserver com margem não enxerga além desse recorte).
 
-import { carregarSwiper } from './home/carrosselPlanos.js?v=202611041047';
-import { comVersao } from '../versao.js?v=202611041047';
+import { carregarSwiper } from './home/carrosselPlanos.js?v=202611041050';
+import { comVersao } from '../versao.js?v=202611041050';
 
 export const MIDIA = [
   {
     titulo: 'HUB Zero7',
     descricao: 'Evento para conectar traders e trocar ideias sobre o dia a dia no mercado acompanhado de boa gastronomia.',
-    // o mesmo arquivo limpo do quiz (sem a abertura preta, a colagem e o trecho de comida e bebida)
-    video: { mp4: 'assets/video/hub-zero7-9x16-540-limpo.mp4' },
-    poster: 'assets/video/hub-zero7-9x16-limpo-poster.webp',
+    // o original, com a comida (a copy fala em "boa gastronomia"); o arquivo -limpo é só do quiz
+    video: { mp4: 'assets/video/hub-zero7-9x16-540.mp4' },
+    poster: 'assets/video/hub-zero7-9x16-poster.webp',
   },
   {
     titulo: 'Trading e Performance',

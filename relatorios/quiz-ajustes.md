@@ -267,8 +267,22 @@ Em `shots/quiz-hub-limpo/`:
 - `1440-lp-comunidade.png`;
 - as folhas de contato, a cada 0,5 s (`folha-1.png`, `folha-2.png`), e os detalhes das taças e da fusão (`detalhe-tacas.png`, `transicao-13.5-15.1s.png`).
 
+## 9. Respostas sobre o HUB
+
+Commit `quiz (ajuste): HUB original de volta na LP`.
+
+1. **Taças:** ficam como estão, sem novo corte.
+2. **LP:** o card "HUB Zero7" da Comunidade voltou para o vídeo e o poster originais (`hub-zero7-9x16-540.mp4` e `hub-zero7-9x16-poster.webp`), que combinam com "boa gastronomia". O `-limpo` fica só na P1 do quiz.
+3. **Arquivos:** o vídeo original fica, porque a LP usa. O poster antigo do quiz (`hub-zero7-9x16-quiz-poster.webp`, o quadro de comida) já tinha saído no commit anterior: foi substituído pelo `hub-zero7-9x16-limpo-poster.webp`, e nada mais aponta para ele.
+
+**Testes (1440 × 900 e 390 × 844):**
+- **LP:** o card HUB toca o `hub-zero7-9x16-540.mp4`, com o poster original. A página não pede nenhum arquivo `-limpo`.
+- **Quiz:** a P1 toca o `hub-zero7-9x16-540-limpo.mp4`, com o poster limpo.
+- Sem erros e sem 404.
+- **Cache:** `npm run versao` (versão `202611041050`) e `--conferir` OK.
+- **Prints:** `shots/quiz-hub-limpo/{1440,390}-lp-comunidade.png` e `{1440,390}-quiz-p1.png`.
+
 ## Perguntas / pendências
 
-1. **Taças no vídeo do HUB:** sobrou bebida em dois trechos, 6,5–7,9 s e 26,0–27,4 s (ver o item 8). Corto também? Seriam três pedaços emendados, com cerca de 34 s no total.
-2. **Arquivos sem uso:** apago o `hub-zero7-9x16-540.mp4` e o `hub-zero7-9x16-poster.webp` do repositório?
+Nenhuma.
 
