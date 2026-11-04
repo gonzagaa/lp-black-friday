@@ -8,6 +8,7 @@
 //   pessoal. Deu erro: mensagem e o botão liberado.
 import { iniciarTracking } from '../js/modulos/tracking.js';
 import { iniciarRodape } from '../js/modulos/rodape.js';
+import './palco.js'; // só visual: palco de mídia e segmentos do progresso (ouve o evento quiz:passo)
 
 const NAO_OPERA = 'Ainda não opero';
 const EXPERIENCIA_NAO_OPERA = 'Não opera';
@@ -50,7 +51,6 @@ function idDeRastreioRd() {
 
 // ---------- passos ----------
 const painel = document.querySelector('[data-painel]');
-const cabecalho = document.querySelector('[data-cabecalho]');
 const passos = Object.fromEntries([...document.querySelectorAll('[data-passo]')].map((el) => [el.dataset.passo, el]));
 const voltar = document.querySelector('[data-voltar]');
 const contagem = document.querySelector('[data-contagem]');
@@ -75,7 +75,9 @@ function mostrar(passo, { focar = true } = {}) {
   contagem.textContent = lista.includes(passo) ? `Pergunta ${posicao} de ${lista.length}` : '';
   voltar.hidden = historico.length === 0 || passo === 'sucesso';
   document.querySelector('[data-topo]').hidden = passo === 'sucesso';
-  cabecalho.hidden = passo === 'sucesso';
+  // só visual: o tema troca o título e o palco por etapa (quiz.css e palco.js)
+  document.body.dataset.passo = passo;
+  document.dispatchEvent(new CustomEvent('quiz:passo', { detail: { passo, perguntas: lista } }));
   if (focar) passos[passo].querySelector('.quiz__pergunta').focus();
 }
 

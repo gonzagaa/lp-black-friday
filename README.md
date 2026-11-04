@@ -119,7 +119,8 @@ Ficam em `vendor/`, com as licenças:
 
 Página de quiz integrada à RD Station Marketing. Relatório: `relatorios/quiz.md`.
 
-- **Página:** `quiz/index.html`, `quiz/quiz.css` e `quiz/quiz.js`. Usa a base da LP (`../css`, `../assets`), o mesmo tracking (GTM na primeira interação, Pixel + CAPI) e o mesmo rodapé.
+- **Página:** `quiz/index.html`, `quiz/quiz.css` (tema claro, tokens no escopo `.qz`), `quiz/quiz.js` (fluxo, validação e envio) e `quiz/palco.js` (só visual: o palco de mídia e os segmentos do progresso, pelo evento `quiz:passo`). Usa a base da LP (`../css`, `../assets`) e o mesmo tracking (GTM na primeira interação, Pixel + CAPI). Rodapé: só a linha legal.
+- **Palco de mídia:** vídeos e legendas por etapa no objeto `CENAS` de `quiz/palco.js`. Só o vídeo da etapa atual baixa; da próxima, só o poster. Movimento reduzido ou economia de dados: só o poster.
 - **Repasse:** `quiz/api/lead.php` recebe o lead e manda para a RD. A chave da RD **nunca** vai para o navegador, para o código ou para o git.
   - Ela fica em `/home7/zero7/config/rd-quiz.php`, fora do `public_html` (criado à mão no Gerenciador de Arquivos, permissão 600; nunca no git). O modelo é `quiz/api/rd-quiz.example.php`.
   - Funciona em PHP 7.4 e 8.x, e precisa da extensão curl.
