@@ -15,6 +15,7 @@ O pedido era trazer da home o timer que vence a cada 24 horas, bonito e em desta
   - um quadradinho "ao vivo" no degradê, pulsando devagar (desligado com movimento reduzido);
   - os números em Barlow 800 branco, em chips de vidro com raio 8; as unidades no laranja claro;
   - altura fixa: 44 px, ou 40 px até 600 px.
+- **Tarja clara na LP (ajuste do cliente):** na LP, toda escura, a tarja preta sumia. Lá ela é branca, como a da home (`.tarja--clara`): texto em tinta (~11:1), números brancos em chips pretos e unidades no laranja claro. O quiz, de fundo claro, continua com a tarja escura.
 - **Posição:**
   - fica grudada no topo (`position: sticky`), acima da nav (z-index 70);
   - na LP, a nav gruda logo abaixo (`top: calc(var(--tarja-altura) + 16px)`), e o `scroll-padding-top` das âncoras desconta a tarja;

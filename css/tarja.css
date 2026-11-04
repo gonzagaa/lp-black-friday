@@ -151,3 +151,25 @@ html.tarja-encerrada {
     font-size: 11px;
   }
 }
+
+/* ========== VARIANTE CLARA (.tarja--clara): a da LP ==========
+   Pedido do cliente: na LP, toda escura, a tarja preta sumia. Branca como a da home, ela se destaca do resto da
+   página. Texto em tinta (~11:1), números brancos em chips pretos e unidades no laranja claro (~7:1 sobre o chip).
+   O quiz (fundo claro) continua com a tarja escura. */
+.tarja--clara {
+  background:
+    radial-gradient(50% 160% at 50% 0%, rgba(255, 138, 61, .16), transparent 70%),
+    linear-gradient(180deg, #fff, #f6f3ee);
+  box-shadow: 0 10px 24px -12px rgba(0, 0, 0, .7);
+  color: var(--cor-tinta);
+}
+
+.tarja--clara .tarja__texto {
+  color: rgba(10, 7, 6, .82);
+}
+
+.tarja--clara .tarja__grupo {
+  border-color: rgba(10, 7, 6, .9);
+  background: linear-gradient(180deg, #1c1513, #0a0706);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 2px 5px -2px rgba(10, 7, 6, .45);
+}
