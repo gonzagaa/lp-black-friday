@@ -16,7 +16,8 @@
 // O "perto" e o "na tela" de cada card são calculados pela posição dele (o carrossel recorta os cards de fora no
 // eixo X, e um IntersectionObserver com margem não enxerga além desse recorte).
 
-import { carregarSwiper } from './home/carrosselPlanos.js';
+import { carregarSwiper } from './home/carrosselPlanos.js?v=202611040959';
+import { comVersao } from '../versao.js?v=202611040959';
 
 export const MIDIA = [
   {
@@ -73,8 +74,8 @@ function htmlDoCard(item, i, copia) {
   let midia = '';
   if (item.video) {
     const fontes = ['webm', 'mp4'].filter((t) => item.video[t])
-      .map((t) => `<source data-src="${escapar(item.video[t])}" type="video/${t}">`).join('');
-    midia = `<video class="cslide__video" autoplay muted loop playsinline preload="none" disablepictureinpicture aria-hidden="true"${item.poster ? ` data-poster="${escapar(item.poster)}"` : ''}>${fontes}</video>`;
+      .map((t) => `<source data-src="${escapar(comVersao(item.video[t]))}" type="video/${t}">`).join('');
+    midia = `<video class="cslide__video" autoplay muted loop playsinline preload="none" disablepictureinpicture aria-hidden="true"${item.poster ? ` data-poster="${escapar(comVersao(item.poster))}"` : ''}>${fontes}</video>`;
   }
   return `<div class="swiper-slide cslide" data-i="${i}"${copia ? ' aria-hidden="true"' : ''}>
       ${midia}

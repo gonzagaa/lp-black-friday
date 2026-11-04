@@ -10,7 +10,10 @@
 //   há rolagem (acorda com rodinha, toque, teclado ou scrollTo e dorme quando o Lenis para). Na home ele roda a cada
 //   quadro, sempre: no Lighthouse mobile isso aparecia como segundos de trabalho na thread principal.
 
-const LENIS_JS = 'vendor/lenis-1.1.14/lenis.min.js';
+import { comVersao } from '../versao.js?v=202611040959';
+
+// cache busting: o ?v= do deploy (js/versao.js)
+const LENIS_JS = comVersao('vendor/lenis-1.1.14/lenis.min.js');
 const easing = (t) => 1 - Math.pow(1 - t, 4);
 
 function carregarLenis() {

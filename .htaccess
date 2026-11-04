@@ -18,3 +18,32 @@
   # dotfiles e dotpastas em qualquer nível (.gitignore, .git, .htaccess, .cpanel.yml...), menos .well-known
   RedirectMatch 404 (?i)/\.(?!well-known(/|$))
 </IfModule>
+
+# ==============================
+# CACHE (cache busting por ?v=, scripts/versao.mjs)
+# ==============================
+# O HTML é quem aponta para as versões novas: sempre revalida. Tudo o que ele carrega (CSS, JS, imagens, vídeos,
+# fontes) sai com ?v=<versão do deploy>, então pode ficar um ano em cache: a versão nova é outra URL.
+# "Header set" (e não "always") nos arquivos versionados: um 404 passageiro não pode ficar um ano em cache.
+# Só mod_headers e FilesMatch (o mesmo que a home usa no ar). O quiz/api/ tem o próprio no-store (quiz/api/.htaccess).
+<IfModule mod_headers.c>
+  <FilesMatch "\.html?$">
+    Header always set Cache-Control "no-cache, must-revalidate"
+    Header always set X-LiteSpeed-Cache-Control "no-cache"
+    Header always unset Expires
+  </FilesMatch>
+
+  <FilesMatch "\.(css|m?js|png|jpe?g|webp|avif|gif|svg|ico|woff2?|mp4|webm)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # data/planos.json (preços e checkouts): sempre fresco, sem ?v=
+  <FilesMatch "\.json$">
+    Header always set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Cache de página do LiteSpeed desligado nesta pasta (e no quiz): o HTML sai sempre do disco
+<IfModule LiteSpeed>
+  CacheLookup off
+</IfModule>

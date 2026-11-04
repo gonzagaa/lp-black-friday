@@ -11,6 +11,8 @@
 // - inicio: o vídeo começa (e volta, a cada volta do loop) nesse segundo. O hub abre com um quadro preto e a colagem de
 //   três faixas, que no recorte do mobile parecia defeito: ele começa em 2,8 s, o primeiro quadro limpo, e o poster do
 //   quiz é esse mesmo quadro (hub-zero7-9x16-quiz-poster.webp).
+import { comVersao } from '../js/versao.js?v=202611040959';
+
 const V = '../assets/video/';
 const OBJ = '../assets/3d/';
 const CENAS = {
@@ -50,7 +52,7 @@ function criarVideo(cena) {
   const trecho = cena.inicio ? `#t=${cena.inicio}` : ''; // o navegador já pede o arquivo a partir daí
   fontes.forEach(([ext, tipo]) => {
     const s = document.createElement('source');
-    s.src = `${V}${cena.video}.${ext}${trecho}`;
+    s.src = comVersao(`${V}${cena.video}.${ext}${trecho}`); // ?v= antes do #t=
     s.type = tipo;
     v.append(s);
   });
@@ -101,7 +103,7 @@ function novaCena(passo) {
   const img = new Image(540, 960);
   img.alt = '';
   img.decoding = 'async';
-  img.src = V + c.poster;
+  img.src = comVersao(V + c.poster);
   el.append(img);
   return el;
 }
@@ -137,9 +139,9 @@ function carregarObjeto(dados, animar) {
   objAtual = dados;
   if (!MOSTRA_3D.matches) return;
   const [nome, altura] = dados;
-  obj.querySelector('source').srcset = `${OBJ}${nome}-320.avif`;
+  obj.querySelector('source').srcset = comVersao(`${OBJ}${nome}-320.avif`);
   const img = obj.querySelector('img');
-  img.src = `${OBJ}${nome}-320.webp`;
+  img.src = comVersao(`${OBJ}${nome}-320.webp`);
   img.height = altura;
   if (animar) reanimar(obj);
 }
@@ -157,7 +159,7 @@ function preCarregarPoster(passo) {
   preCarregados.add(CENAS[passo].poster);
   const img = new Image();
   img.decoding = 'async';
-  img.src = V + CENAS[passo].poster;
+  img.src = comVersao(V + CENAS[passo].poster);
 }
 
 // Progresso em segmentos: os feitos cheios, o atual com 55%; no contato e no sucesso, todos cheios

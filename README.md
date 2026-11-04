@@ -37,6 +37,24 @@ O resto do repositório também sobe, mas o `.htaccess` da raiz faz responder **
 
 Nada que a página carrega pode ficar nessas pastas. Arquivo de teste ou temporário que não deve ir ao ar não entra em commit.
 
+### Cache busting: rode `npm run versao` antes de cada deploy
+
+Todo arquivo local que a LP e o quiz carregam sai com `?v=<versão>`: CSS, módulos JS (inclusive os `import` entre eles), fontes, imagens, vídeos, posters, ícones e a `og:image`. O servidor manda esses arquivos com cache de um ano (`immutable`), e o HTML com `no-cache` (`.htaccess`). Então a versão nova só chega se a versão mudar.
+
+```bash
+npm run versao                  # versão = data e hora de Brasília (AAAAMMDDHHMM); grava em js/versao.js e em todos os ?v=
+npm run versao -- --conferir    # só confere: lista referência local sem ?v= (ou com outra versão) e sai com erro
+git add -A && git commit -m "deploy: versão <AAAAMMDDHHMM>"   # depois: push e "Update from Remote" no cPanel
+```
+
+- A versão mora num lugar só, `js/versao.js` (`VERSAO`). O script `scripts/versao.mjs` a espalha pelo HTML, pelo CSS e pelos imports. Não edite os `?v=` à mão.
+- Os endereços que o JS monta em tempo de execução usam `comVersao()` de `js/versao.js`: vídeos e posters da comunidade e do quiz, 3D do quiz, Swiper e Lenis.
+- **Ficam sem versão:**
+  - `data/planos.json`, buscado com `no-cache` (servido com `no-cache`);
+  - `quiz/api/lead.php` (`no-store`).
+- **Arquivo novo:** basta referenciar normalmente e rodar `npm run versao`. O `--conferir` acusa o que tiver ficado sem versão.
+- **Arquivo gerado regenerado** (`css/secoes/planos.css`, `js/modulos/motion-logo-*.js`, `js/modulos/planos-snapshot.js`): rode `npm run versao` de novo.
+
 Todos os caminhos da página são relativos, então ela funciona em qualquer subpasta.
 
 Em `assets/3d/`, a página usa só uma parte dos elementos 3D do brand kit. Os outros 82 arquivos dessa pasta sobem junto, mas não são pedidos pela página.
@@ -44,8 +62,7 @@ Em `assets/3d/`, a página usa só uma parte dos elementos 3D do brand kit. Os o
 Configuração recomendada no servidor:
 
 - **Compressão** gzip ou brotli para HTML, CSS, JS, JSON e SVG. Sem ela, a página pesa cerca de 620 KB em vez de 365 KB.
-- **Cache longo** (por exemplo, `max-age=31536000`) para `assets/fonts/`, `assets/3d/`, `assets/texturas/`, `assets/video/` e `vendor/`.
-- **Cache curto ou revalidação** (`no-cache`) para `index.html`, `css/`, `js/` e `data/planos.json`. Os nomes desses arquivos não mudam a cada versão, então um cache longo serviria uma versão velha depois de uma atualização.
+- **Cache** (já no `.htaccess` da pasta): HTML com `no-cache, must-revalidate` e o cache de página do LiteSpeed desligado; CSS, JS, imagens, vídeos e fontes, todos com `?v=`, com `public, max-age=31536000, immutable`; `data/planos.json` com `no-cache`; `quiz/api/` com `no-store`. Ver "Cache busting" acima.
 - **Vídeos** (`.mp4`, `.webm`) servidos com suporte a `Range` (o padrão de Apache e Nginx).
 - **Sem bloquear o tracking:** a página chama `www.googletagmanager.com` e `backend-api-zero7.vercel.app`. Se o servidor mandar um Content-Security-Policy, ele precisa liberar esses domínios e os que o container do GTM carrega (Meta, Google Ads).
 - **Tipos MIME** para `.avif` (`image/avif`), `.webp`, `.webm` e `.woff2` (`font/woff2`).
@@ -107,6 +124,7 @@ Os CTAs dos planos repassam para o checkout os parâmetros da URL da página (as
 | `shots.mjs` | As capturas (`npm run shots`). |
 | `snapshot-planos.mjs` | O fallback dos preços (`npm run planos:snapshot`). |
 | `diff-rodape.mjs` | Compara os textos e links do rodapé com os da home. |
+| `versao.mjs` | O cache busting (`npm run versao`): grava a versão em `js/versao.js` e em todos os `?v=`. Com `--conferir`, só confere. |
 
 Se a home mudar a seção de planos, rode os dois `portar-planos-*` e depois o `medir-planos.mjs`.
 

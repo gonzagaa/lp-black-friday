@@ -11,7 +11,8 @@
     "fontes": "node scripts/fontes.mjs",
     "shots": "node scripts/shots.mjs",
     "planos:snapshot": "node scripts/snapshot-planos.mjs",
-    "test": "node --test scripts/testes/*.test.mjs"
+    "test": "node --test scripts/testes/*.test.mjs",
+    "versao": "node scripts/versao.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",

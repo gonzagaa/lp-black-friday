@@ -8,10 +8,14 @@
      hora de armar, não no parse;
    - a largura do slide inicial é lida na hora de armar (na home, window.innerWidth no parse: dá no mesmo);
    - loop só quando há cards suficientes (loopOuCentro); senão, cards centralizados e sem aviso do Swiper;
+   - o Swiper é pedido com o ?v= do deploy (cache busting, js/versao.js);
    - ajuste do cliente: o Sênior não tem mais destaque (.card--copa saiu). Ele continua sendo o slide inicial,
      marcado no HTML com data-inicial. */
 
-const SWIPER_JS = 'vendor/swiper-11.2.10/swiper-bundle.min.js';
+import { comVersao } from '../../versao.js?v=202611040959';
+
+// cache busting: o ?v= do deploy (js/versao.js)
+const SWIPER_JS = comVersao('vendor/swiper-11.2.10/swiper-bundle.min.js');
 
 const BP_SM = 640;
 const BP_LG = 1080;

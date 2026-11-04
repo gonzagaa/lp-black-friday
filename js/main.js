@@ -2,21 +2,21 @@
 // A classe .js no <html> é posta por um script inline no <head> (antes da primeira pintura).
 // js/modulos/contador.js existe, mas está sem uso (saiu da hero e não entrou na barra mobile, por decisão do cliente).
 // Planos: módulos de js/modulos/home/ são PORTES do JS da home (ver o cabeçalho de cada um).
-import { iniciarNav } from './modulos/nav.js';
-import { iniciarSimboloHero } from './modulos/simbolo-hero.js';
-import { iniciarRevelar } from './modulos/revelar.js';
-import { iniciarRolagem } from './modulos/rolagem.js';
-import { iniciarSelet4 } from './modulos/home/selet4.js';
-import { iniciarPlanosAtivo } from './modulos/home/planosAtivo.js';
-import { iniciarBlackPlanos } from './modulos/home/blackPlanos.js';
-import { iniciarCarrosselPlanos } from './modulos/home/carrosselPlanos.js';
-import { iniciarComunidade } from './modulos/comunidade.js';
-import { iniciarFechamento } from './modulos/fechamento.js';
-import { iniciarLimiteAlta } from './modulos/limite-alta.js';
-import { iniciarRodape } from './modulos/rodape.js';
-import { iniciarBarraMobile } from './modulos/barra-mobile.js';
-import { iniciarTracking } from './modulos/tracking.js';
-import { iniciarTarja } from './modulos/tarja.js';
+import { iniciarNav } from './modulos/nav.js?v=202611040959';
+import { iniciarSimboloHero } from './modulos/simbolo-hero.js?v=202611040959';
+import { iniciarRevelar } from './modulos/revelar.js?v=202611040959';
+import { iniciarRolagem } from './modulos/rolagem.js?v=202611040959';
+import { iniciarSelet4 } from './modulos/home/selet4.js?v=202611040959';
+import { iniciarPlanosAtivo } from './modulos/home/planosAtivo.js?v=202611040959';
+import { iniciarBlackPlanos } from './modulos/home/blackPlanos.js?v=202611040959';
+import { iniciarCarrosselPlanos } from './modulos/home/carrosselPlanos.js?v=202611040959';
+import { iniciarComunidade } from './modulos/comunidade.js?v=202611040959';
+import { iniciarFechamento } from './modulos/fechamento.js?v=202611040959';
+import { iniciarLimiteAlta } from './modulos/limite-alta.js?v=202611040959';
+import { iniciarRodape } from './modulos/rodape.js?v=202611040959';
+import { iniciarBarraMobile } from './modulos/barra-mobile.js?v=202611040959';
+import { iniciarTracking } from './modulos/tracking.js?v=202611040959';
+import { iniciarTarja } from './modulos/tarja.js?v=202611040959';
 
 iniciarTracking(); // antes dos planos: o sck entra a cada href que o blackPlanos montar
 iniciarTarja();

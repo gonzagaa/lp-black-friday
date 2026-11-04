@@ -3,3 +3,8 @@
 <FilesMatch "\.php$">
   SetHandler application/x-lsphp83
 </FilesMatch>
+
+# O repasse para a RD nunca vai para cache (o lead.php também manda no-store)
+<IfModule mod_headers.c>
+  Header always set Cache-Control "no-store"
+</IfModule>
