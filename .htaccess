@@ -1,0 +1,15 @@
+# LP Black (/a-maior-black/): o cPanel publica o repositório inteiro (Git Version Control, sem .cpanel.yml),
+# então o material interno responde 404, como na home. 404 e não 403: o 403 confirma que o arquivo existe.
+#
+# RedirectMatch é do mod_alias (o mesmo da home no ar). "Require all denied" não foi usado de propósito: exige
+# AuthConfig e, se ela não estiver liberada, a pasta inteira devolve 500. Não usa RewriteEngine, para não anular
+# regras de rewrite de pastas acima.
+#
+# Não interfere no quiz/api/.htaccess (PHP 8.3): o mod_alias soma as regras das duas pastas, e nenhuma destas casa
+# com quiz/. NÃO bloqueie aqui nada que a página carrega (css/, js/, data/, assets/, vendor/, quiz/).
+<IfModule mod_alias.c>
+  RedirectMatch 404 (?i)/(_referencia|_brandkit|relatorios|scripts|shots|node_modules)(/|$)
+  RedirectMatch 404 (?i)\.md$
+  RedirectMatch 404 (?i)/package(-lock)?\.json$
+  RedirectMatch 404 (?i)/componentes\.html$
+</IfModule>
