@@ -562,16 +562,6 @@ html:not(.js) .quiz__painel {
   height: 200px;
 }
 
-/* degradê escuro de baixo, para a legenda */
-.palco__moldura::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(180deg, transparent 50%, rgba(10, 6, 5, .8));
-  pointer-events: none;
-}
-
 .palco__cenas,
 .palco__cena {
   position: absolute;
@@ -610,38 +600,6 @@ html:not(.js) .quiz__painel {
 
 .palco__cena video.is-tocando {
   opacity: 1;
-}
-
-.palco__legenda {
-  position: absolute;
-  inset: auto 0 0;
-  z-index: 2;
-  padding: 0 22px 46px; /* o card sobe 26 px por cima da base no mobile */
-  color: #fff;
-}
-
-.palco__rotulo {
-  font: 700 12px/1 var(--fonte-display);
-  letter-spacing: var(--tracking-rotulo);
-  text-transform: uppercase;
-  color: #FF9A5C;
-}
-
-.palco__titulo {
-  margin-top: 8px;
-  font: 800 26px/1 var(--fonte-display);
-  text-transform: uppercase;
-}
-
-.palco__desc {
-  display: none;
-  margin-top: 8px;
-  font: 400 14px/1.45 var(--fonte-texto);
-  color: rgba(255, 255, 255, .82);
-}
-
-.palco__legenda.is-entrando {
-  animation: qz-passo var(--troca) both;
 }
 
 /* Objeto 3D que escapa da moldura (caixa fixa: os altos, como o cadeado, encolhem para caber) */
@@ -772,18 +730,10 @@ html:not(.js) .quiz__painel {
     border-radius: 40px 0 40px 0;
   }
 
-  .palco__legenda {
-    padding: 0 32px 32px;
-  }
-
-  .palco__desc {
-    display: block;
-  }
-
   .palco__obj {
     top: auto;
     right: auto;
-    bottom: 150px; /* acima da legenda */
+    bottom: 150px;
     left: -66px;
     width: 132px;
     height: 170px;
@@ -798,7 +748,6 @@ html:not(.js) .quiz__painel {
 
 @media (prefers-reduced-motion: reduce) {
   .quiz__passo:not([hidden]),
-  .palco__legenda.is-entrando,
   .palco__obj.is-entrando img {
     animation: none;
   }

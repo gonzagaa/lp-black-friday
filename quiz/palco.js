@@ -1,5 +1,5 @@
 // Quiz da Black: só visual. Ouve o evento quiz:passo (quiz.js) e troca o palco de mídia e os segmentos do progresso.
-// - Uma cena por etapa (vídeo 9:16 + legenda + objeto 3D). Só o vídeo da etapa atual baixa e toca: a cena que sai
+// - Uma cena por etapa (vídeo 9:16 + objeto 3D), sem texto por cima do vídeo. Só o vídeo da etapa atual baixa e toca: a cena que sai
 //   perde o src (o download para). Da próxima etapa, só o POSTER é pré-carregado.
 // - O poster da P1 está no HTML (é o LCP); o vídeo da P1 só entra depois do load, em idle.
 // - Movimento reduzido ou economia de dados: só o poster, sem vídeo (e o CSS desliga as animações).
@@ -10,20 +10,17 @@
 const V = '../assets/video/';
 const OBJ = '../assets/3d/';
 const CENAS = {
-  e_trader: { video: 'hub-zero7-9x16-540', inicio: 2.8, poster: 'hub-zero7-9x16-quiz-poster.webp', titulo: 'HUB Zero7', desc: 'Encontros presenciais da comunidade.', obj: ['01-moeda-zero7', 344] },
-  experiencia: { video: 'academy-9x16-540', poster: 'academy-9x16-poster.webp', titulo: 'Academy', desc: '+170 aulas com mentores do mercado.', obj: ['18-selo-de-conquista', 399] },
-  mercado: { video: 'lives-zero7-9x16-540', poster: 'lives-zero7-9x16-poster.webp', titulo: 'Lives diárias', desc: 'Panorama e mercado ao vivo, todo dia.', obj: ['03-candles-de-trade', 408] },
-  desafio: { video: 'trading-performance-1', webm: true, poster: 'trading-performance-1-poster.avif', titulo: 'Trading e Performance', desc: 'Imersão de 3 dias na sua carreira de trader.', obj: ['09-alvo-de-precisao', 315] },
-  dados: { video: 'comunidade-9x16-540', poster: 'comunidade-9x16-poster.webp', titulo: 'Comunidade no WhatsApp', desc: 'Mercado em tempo real e ofertas em primeira mão.', obj: ['12-cadeado-zero7', 543] },
-  sucesso: { video: 'gamification-9x16-540', poster: 'gamification-9x16-poster.webp', titulo: 'Gamification', desc: 'Recompensas para quem participa.', obj: ['20-presente-black', 312] },
+  e_trader: { video: 'hub-zero7-9x16-540', inicio: 2.8, poster: 'hub-zero7-9x16-quiz-poster.webp', obj: ['01-moeda-zero7', 344] },
+  experiencia: { video: 'academy-9x16-540', poster: 'academy-9x16-poster.webp', obj: ['18-selo-de-conquista', 399] },
+  mercado: { video: 'lives-zero7-9x16-540', poster: 'lives-zero7-9x16-poster.webp', obj: ['03-candles-de-trade', 408] },
+  desafio: { video: 'trading-performance-1', webm: true, poster: 'trading-performance-1-poster.avif', obj: ['09-alvo-de-precisao', 315] },
+  dados: { video: 'comunidade-9x16-540', poster: 'comunidade-9x16-poster.webp', obj: ['12-cadeado-zero7', 543] },
+  sucesso: { video: 'gamification-9x16-540', poster: 'gamification-9x16-poster.webp', obj: ['20-presente-black', 312] },
 };
 const SAIDA_MS = 500; // um pouco mais que a transição de .45 s do CSS
 
 const palco = document.querySelector('[data-palco]');
 const cenas = palco.querySelector('[data-cenas]');
-const legenda = palco.querySelector('[data-legenda]');
-const legendaTitulo = palco.querySelector('[data-legenda-titulo]');
-const legendaDesc = palco.querySelector('[data-legenda-desc]');
 const obj = palco.querySelector('[data-obj]');
 const barra = document.querySelector('[data-barra]');
 
@@ -103,7 +100,7 @@ function novaCena(passo) {
   return el;
 }
 
-// reinicia a animação de entrada (legenda e 3D) sem depender de timers
+// reinicia a animação de entrada do 3D sem depender de timers
 function reanimar(el) {
   el.classList.remove('is-entrando');
   void el.offsetWidth;
@@ -125,10 +122,6 @@ function trocarCena(passo) {
     velha.classList.add('is-saindo');
     setTimeout(() => descartar(velha), reduzido ? 0 : SAIDA_MS);
   }
-
-  legendaTitulo.textContent = c.titulo;
-  legendaDesc.textContent = c.desc;
-  reanimar(legenda);
 
   const [nome, altura] = c.obj;
   obj.querySelector('source').srcset = `${OBJ}${nome}-320.avif`;

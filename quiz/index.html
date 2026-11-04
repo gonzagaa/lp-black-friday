@@ -195,18 +195,13 @@
 
     <!-- Palco de mídia (quiz/palco.js): uma cena por etapa. Só o vídeo da etapa atual baixa e toca; o poster da P1 é
          o LCP e fica por baixo do vídeo. Movimento reduzido ou economia de dados: só o poster. -->
-    <aside class="qz__palco palco" data-palco aria-label="Ecossistema Zero7">
+    <aside class="qz__palco palco" data-palco aria-hidden="true">
       <div class="palco__fantasma" aria-hidden="true"></div>
       <div class="palco__moldura">
         <div class="palco__cenas" data-cenas aria-hidden="true">
           <div class="palco__cena is-ativa" data-cena="e_trader">
             <img src="../assets/video/hub-zero7-9x16-quiz-poster.webp" width="540" height="960" alt="" fetchpriority="high" decoding="async">
           </div>
-        </div>
-        <div class="palco__legenda" data-legenda>
-          <p class="palco__rotulo">Ecossistema Zero7</p>
-          <p class="palco__titulo" data-legenda-titulo>HUB Zero7</p>
-          <p class="palco__desc" data-legenda-desc>Encontros presenciais da comunidade.</p>
         </div>
       </div>
       <picture class="palco__obj" data-obj aria-hidden="true">
