@@ -97,8 +97,9 @@
   </div>
 
   <header class="qz__topo">
-    <a class="qz__logo" href="../"><img src="../assets/img/zero7-logo-tinta.svg" width="176" height="55" alt="Zero7 Tesouraria"></a>
-    <img class="qz__black" src="../assets/marca/completa-papel.svg" width="1306" height="646" alt="Black Friday ZERO7">
+    <!-- Até 767 px os logos ficam por cima do vídeo de fundo: as versões brancas (a Black Friday é a mesma da nav da LP) -->
+    <a class="qz__logo" href="../"><picture><source media="(max-width: 767px)" srcset="../assets/img/zero7-logo-branca.svg"><img src="../assets/img/zero7-logo-tinta.svg" width="176" height="55" alt="Zero7 Tesouraria"></picture></a>
+    <picture><source media="(max-width: 767px)" srcset="../assets/marca/completa-escuro.svg"><img class="qz__black" src="../assets/marca/completa-papel.svg" width="1306" height="646" alt="Black Friday ZERO7"></picture>
   </header>
 
   <main class="qz__main" id="topo">

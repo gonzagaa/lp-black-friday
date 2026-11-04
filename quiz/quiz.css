@@ -691,22 +691,140 @@ html:not(.js) .quiz__painel {
   }
 }
 
+/* ========== MOBILE (até 767 px): vídeo de fundo (canvas "Quiz da Black · Zero7", aprovado) ==========
+   O vídeo da etapa sai da moldura e vira o fundo do topo: largura total, logo abaixo da tarja, 360 px nas perguntas e
+   240 px no contato e no sucesso, escurecido e sumindo no papel. Por cima: os logos em branco, o título em branco com
+   o selo "80% OFF" à direita, e o card logo abaixo do título. Sem 3D (o palco.js nem pede a imagem) e com a luz
+   laranja do topo mais fraca. Vale só até 767 px; o tablet (768–1079) segue com a moldura. */
 @media (max-width: 767px) {
   .qz__fundo {
     background: radial-gradient(560px circle at 100% 0, rgba(255, 138, 61, .1), rgba(255, 106, 26, .036) 55%, transparent 75%);
   }
 
-  .palco__moldura {
-    height: 260px;
+  /* --- vídeo de fundo --- */
+  .qz__palco {
+    position: absolute;
+    top: var(--tarja-altura, 0px); /* logo abaixo da tarja (o body é a referência) */
+    right: 0;
+    left: 0;
+    z-index: 0;
+    height: 360px;
+    transition: height var(--troca);
   }
 
+  .qz[data-passo="dados"] .qz__palco,
+  .qz[data-passo="sucesso"] .qz__palco {
+    height: 240px;
+  }
+
+  .palco__moldura,
   .qz[data-passo="dados"] .palco__moldura,
   .qz[data-passo="sucesso"] .palco__moldura {
-    height: 160px;
+    height: 100%;
+    border-radius: 0;
+    background: #120c0a;
+    box-shadow: none;
+    /* o fim do vídeo some suave no papel */
+    -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent);
+    mask-image: linear-gradient(180deg, #000 78%, transparent);
+  }
+
+  .palco__cenas {
+    filter: brightness(.62) saturate(.85);
+  }
+
+  /* degradê escuro por cima do vídeo (leitura dos logos e do título) */
+  .palco__moldura::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10, 6, 5, .55) 0%, rgba(10, 6, 5, .12) 32%, rgba(10, 6, 5, .2) 55%, rgba(10, 6, 5, .78) 100%);
+    pointer-events: none;
+  }
+
+  .palco__selo {
+    display: none;
+  }
+
+  /* --- por cima do vídeo: logos (as versões brancas entram pelo <picture> do HTML), título e card --- */
+  .qz__topo,
+  .qz__quiz {
+    position: relative;
+    z-index: 1;
+  }
+
+  .qz__main {
+    padding-top: 0;
+  }
+
+  .qz__cabecalho {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 118px 0 14px; /* o vídeo aparece entre os logos e o título */
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  .qz__titulo {
+    position: relative; /* a referência do selo */
+    /* 32 px; em telas estreitas encolhe para a linha mais longa ("Sua oferta da Black", ~8,95em) não chegar no selo */
+    font-size: clamp(26px, calc((100vw - 2 * var(--gutter) - 72px) / 8.95), 32px);
+    color: #fff;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, .35);
+  }
+
+  .qz__titulo .qz-cinza {
+    color: rgba(255, 255, 255, .66);
+  }
+
+  /* selo: no canto direito do bloco do título, no meio das duas linhas, girado como na LP */
+  .qz__titulo .selo-pino {
+    position: static;
+  }
+
+  .qz__titulo .selo-hero {
+    top: calc(50% - .56em);
+    right: 0;
+    left: auto;
+    margin-left: 0;
+    font-size: 57px; /* 1,12em = 64 px */
+    text-shadow: none;
+  }
+
+  .qz[data-passo="dados"] .qz__cabecalho,
+  .qz[data-passo="sucesso"] .qz__cabecalho {
+    margin-top: 56px;
+    margin-bottom: 10px;
+  }
+
+  .qz[data-passo="dados"] .qz__titulo,
+  .qz[data-passo="sucesso"] .qz__titulo {
+    font-size: 26px;
+  }
+
+  .qz[data-passo="dados"] .qz__titulo .selo-hero,
+  .qz[data-passo="sucesso"] .qz__titulo .selo-hero {
+    font-size: 50px; /* 1,12em = 56 px */
   }
 
   .qz__card {
-    margin-top: -32px;
+    margin-top: 0;
+  }
+
+  /* contato: o formulário inteiro cabe na tela de um 390 × 844, com a tarja */
+  .qz[data-passo="dados"] .quiz__passos {
+    margin-top: 16px;
+  }
+
+  .quiz__form {
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .quiz__campo {
+    gap: 4px;
   }
 }
 

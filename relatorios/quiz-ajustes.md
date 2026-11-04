@@ -80,8 +80,72 @@ São quatro pedidos, um commit para cada, todos sem push. A lógica, a validaç�
 - **Testes:** 360 × 740, 390 × 844, 430 × 932 e 1440 × 900, mais 768 e 1024 para o tablet.
 - **Prints:** `shots/quiz-selo/`, com `{360,390,430,1440}-{p1,dados,sucesso}.png`, mais `768`, `1024` e o detalhe do título no desktop (`zoom-titulo.png`).
 
+## 5. Mobile com o vídeo de fundo (canvas "Quiz da Black · Zero7")
+
+Commit `quiz (ajuste): mobile com o vídeo de fundo`. Até 767 px, ele **substitui** o item 3 (vídeo de 260 px e card a −32 px) e o selo no canto do vídeo (item 4). A luz mais fraca e a saída dos 3D continuam. O tablet (768–1079 px) e o desktop não mudaram.
+
+### Vídeo de fundo
+
+- **Sem caixa:** a moldura perde raio, sombra e cartão fantasma. O vídeo ocupa a largura toda, colado nas laterais, logo abaixo da tarja.
+- **Altura:** 360 px nas perguntas e 240 px no contato e no sucesso.
+- **Imagem:** `object-fit: cover` e `filter: brightness(.62) saturate(.85)`.
+- **Degradê por cima:** `rgba(10,6,5,.55)` no topo, `.12` em 32%, `.2` em 55% e `.78` no fim.
+- **Fim do vídeo:** some no papel pela máscara `linear-gradient(180deg, #000 78%, transparent)`.
+- A troca de vídeo entre as etapas continua igual.
+- O vídeo é absoluto, então mudar a altura entre as etapas não empurra nada.
+
+### Por cima do vídeo
+
+- **Logos:** o Zero7 todo branco (`zero7-logo-branca.svg`, 22 px) e a Black Friday para fundo escuro (`completa-escuro.svg`, 34 px, a mesma da nav da LP).
+  - Entram por `<picture>` com `media`, então cada largura baixa só a sua versão.
+- **Título nas perguntas:** "Sua oferta da Black" / "em 4 perguntas." em Jakarta 800, entrelinha 1.02 e −.045em.
+  - Primeira linha branca e a segunda em `rgba(255,255,255,.66)`, com sombra `0 2px 18px rgba(0,0,0,.35)`.
+  - 118 px abaixo dos logos.
+  - Fonte de 32 px; abaixo de ~390 px ela encolhe até a linha mais longa não chegar no selo (28,6 px em 360).
+- **Contato e sucesso:** título de 26 px, 56 px abaixo dos logos. No sucesso, o título é "Obrigado!" / "Bem-vindo à Black.".
+
+### Selo "80% OFF"
+
+- É o mesmo `.selo-hero` da LP, girado −12°.
+- Fica no canto direito do bloco do título, centralizado na vertical entre as duas linhas (os centros batem nas três larguras).
+- **Tamanho:** 64 px nas perguntas e 56 px no contato e no sucesso.
+- **Folga até o texto**, medida com a caixa girada (a folga real ao círculo é maior):
+
+| Largura | Perguntas | Contato e sucesso |
+|---|---|---|
+| 360 px | 13 px | 40 px ou mais |
+| 390 px | 15 px | 70 px ou mais |
+| 430 px | 52 px | 108 px ou mais |
+
+- O selo da moldura (item 4) fica escondido nessa largura.
+
+### Card
+
+- Começa logo abaixo do título, por cima da parte de baixo do vídeo, sem margem negativa.
+- **Em 390 × 844, o topo fica em:** 295 px nas perguntas e 217 px no contato (o canvas pedia ~295 e ~217).
+- **No contato,** os vãos do formulário diminuem para caber: entre os campos, de 14 para 10 px; entre rótulo e campo, de 6 para 4 px.
+
+### Cabe sem rolar (com a tarja)
+
+| Tela | P4 (4 opções), base da última opção | Contato: base de "Seus dados ficam só com a Zero7." |
+|---|---|---|
+| 360 × 740 | 696 px, cabe | 756 de 740, **não cabe** (passa 16 px) |
+| 390 × 844 | 699 px, cabe | 756 de 844, cabe, com o "← Voltar" |
+| 430 × 932 | 695 px, cabe | 736 de 932, cabe |
+
+### Testes
+
+- **CLS:** ≤ 0,0003 no mobile e 0 no desktop.
+- **Sem** scroll horizontal, erros ou 404.
+- **3D no mobile:** 0 imagens baixadas.
+- **Desktop (1440 × 900):** as mesmas medidas, com o selo colado no fim de "em 4 perguntas.".
+
+### Prints
+
+Em `shots/quiz-mobile-fundo/`: `{360,390,430}-{p1,p4,dados,sucesso}.png` e `1440-{p1,p4,dados,sucesso}.png`.
+
 ## Perguntas / pendências
 
-1. **360 × 740:** a P4 passa 11 px da tela. Quer que eu ajuste o 360 também, por exemplo com o vídeo de 250 px só nessa largura?
-2. **Tablet (768–1079 px):** o selo fica na moldura e o 3D sai, como descrito acima. Ok?
+1. **360 × 740 (layout do vídeo de fundo):** as perguntas cabem; o contato passa 16 px da tela. Quer que eu aperte o 360 também, por exemplo com o vídeo de contato mais baixo ou o título a 56 px dos logos só nessa largura?
+2. **Tablet (768–1079 px):** continua com a moldura (o vídeo de fundo é só até 767 px), com o selo no canto da moldura e sem 3D. Ok, ou o tablet também vai para o vídeo de fundo?
 3. **Hub:** a colagem volta no meio do vídeo (perto de 8 s, 16 s, 28 s e 48 s; ver `relatorios/tarja.md`). Se incomodar, a saída é reexportar um trecho limpo só para o quiz.
