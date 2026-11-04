@@ -212,6 +212,63 @@ Commit `quiz (ajuste): vídeo de fundo desfocado e "Último passo"`.
 
 Em `shots/quiz-blur/`: `{360,390,768}-{p1,p4,dados,sucesso}.png`.
 
+## 8. Vídeo do HUB sem comida (P1 do quiz e card HUB da LP)
+
+Commit `quiz (ajuste): vídeo do HUB sem comida e bebida`.
+
+### Arquivo novo
+
+- `assets/video/hub-zero7-9x16-540-limpo.mp4`: 36,8 s, 1,7 MB (o original tem 50,9 s e 2,5 MB). Sem áudio, como o original.
+- **Encode:** os mesmos parâmetros do original, lidos do próprio arquivo: libx264, preset veryfast (ref 1, subme 2, me hex), **CRF 27** (o comando sugeria 26), yuv420p, 30 fps e `+faststart`.
+- **Corte em 14,1 s, e não em 13,9 s:** quadro a quadro (a cada 0,1 s), a fusão com as garrafas de cerveja ainda aparece em 13,9 s e só some em 14,0 s.
+- **Nome:** `-limpo`, e não `-quiz`, porque a LP também passa a usar o arquivo.
+
+### Conferência quadro a quadro (a cada 0,5 s, 74 quadros)
+
+- Nenhum quadro de comida, nem nas faixas da colagem.
+- **Ainda aparece bebida em dois trechos**, como pessoas segurando taças no evento:
+
+| Trecho (arquivo novo) | No original | O que aparece |
+|---|---|---|
+| 6,5–7,9 s | 20,6–22,0 s | Uma convidada com uma taça na mão, ao lado do rapaz de suéter laranja |
+| 26,0–27,4 s | 40,1–41,5 s | Uma taça sobre a mesa, atrás do grupo olhando o celular |
+
+  Não cortei sem perguntar (ver pendências).
+
+### Poster
+
+- `assets/video/hub-zero7-9x16-limpo-poster.webp`: o primeiro quadro do arquivo novo, 540 × 960 e 16 KB.
+- Ele substitui o `hub-zero7-9x16-quiz-poster.webp`, que era um quadro de comida. É o LCP da P1 e tem preload.
+
+### Quiz
+
+- A cena `e_trader` do `quiz/palco.js` aponta para o arquivo e o poster novos, **sem `inicio`**. O loop é o nativo e recomeça no 0.
+- **Foco do recorte:** `22%`, para os rostos ficarem acima do título no vídeo de fundo do celular.
+
+### LP
+
+- O mesmo vídeo aparecia no **card "HUB Zero7" da seção Comunidade** (`MIDIA` em `js/modulos/comunidade.js`). Lá também ficaram o arquivo e o poster limpos.
+- O texto desse card fala em "boa gastronomia", e agora o vídeo não mostra comida. O texto é da copy e não mudei.
+- `hub-zero7-9x16-540.mp4` e `hub-zero7-9x16-poster.webp` ficaram sem uso, mas continuam no repositório (2,6 MB).
+
+### Testes
+
+- **P1 em 390 × 844 e 1440 × 900:** o vídeo deu a volta inteira. O tempo chegou a 36,7–36,8 s, voltou ao início e seguiu tocando.
+- **Rede da P1:** só o poster limpo, o arquivo limpo e o poster da P2. Nenhum pedido ao vídeo antigo.
+- Sem erros e sem 404.
+- **Card HUB da LP:** carrega o `hub-zero7-9x16-540-limpo.mp4`.
+- **Cache:** `npm run versao` (versão `202611041047`) e `--conferir` OK.
+
+### Prints
+
+Em `shots/quiz-hub-limpo/`:
+- `390-p1-inicio.png`, `390-p1-10s.png`, `390-p1-20s.png`, `390-p1-30s.png` e `390-p1-depois-da-volta.png`;
+- os mesmos em 1440;
+- `1440-lp-comunidade.png`;
+- as folhas de contato, a cada 0,5 s (`folha-1.png`, `folha-2.png`), e os detalhes das taças e da fusão (`detalhe-tacas.png`, `transicao-13.5-15.1s.png`).
+
 ## Perguntas / pendências
 
-1. **Hub:** a colagem volta no meio do vídeo (perto de 8 s, 16 s, 28 s e 48 s; ver `relatorios/tarja.md`). Se incomodar, a saída é reexportar um trecho limpo só para o quiz.
+1. **Taças no vídeo do HUB:** sobrou bebida em dois trechos, 6,5–7,9 s e 26,0–27,4 s (ver o item 8). Corto também? Seriam três pedaços emendados, com cerca de 34 s no total.
+2. **Arquivos sem uso:** apago o `hub-zero7-9x16-540.mp4` e o `hub-zero7-9x16-poster.webp` do repositório?
+

@@ -13,7 +13,7 @@
 // e a classe cd--encerrada ao zerar.
 // Acessibilidade: nada de aria-live por segundo. O role="timer" leva um aria-label com o texto
 // completo, atualizado só quando o minuto muda.
-import { BLACK_FIM } from '../config.js?v=202611040959';
+import { BLACK_FIM } from '../config.js?v=202611041047';
 
 const dois = (n) => String(n).padStart(2, '0');
 const quantos = (n, um, varios) => `${n} ${n === 1 ? um : varios}`;

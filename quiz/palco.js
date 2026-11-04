@@ -8,15 +8,15 @@
 //   celular (260 px). Sem foco, o centro.
 // - 3D: só onde aparece (MOSTRA_3D, o layout de desktop). Abaixo disso (vídeo de fundo) o CSS esconde e a imagem nem
 //   é pedida; se a janela crescer, carrega.
-// - inicio: o vídeo começa (e volta, a cada volta do loop) nesse segundo. O hub abre com um quadro preto e a colagem de
-//   três faixas, que no recorte do mobile parecia defeito: ele começa em 2,8 s, o primeiro quadro limpo, e o poster do
-//   quiz é esse mesmo quadro (hub-zero7-9x16-quiz-poster.webp).
-import { comVersao } from '../js/versao.js?v=202611040959';
+// - inicio (opcional): o vídeo começa (e volta, a cada volta do loop) nesse segundo. Hoje nenhuma cena usa: o hub da P1
+//   é um arquivo reexportado só com o trecho limpo (hub-zero7-9x16-540-limpo.mp4, sem a abertura preta, a colagem e a
+//   comida e bebida; ver relatorios/quiz-ajustes.md), e o poster é o primeiro quadro dele.
+import { comVersao } from '../js/versao.js?v=202611041047';
 
 const V = '../assets/video/';
 const OBJ = '../assets/3d/';
 const CENAS = {
-  e_trader: { video: 'hub-zero7-9x16-540', inicio: 2.8, poster: 'hub-zero7-9x16-quiz-poster.webp', obj: ['01-moeda-zero7', 344] },
+  e_trader: { video: 'hub-zero7-9x16-540-limpo', foco: '22%', poster: 'hub-zero7-9x16-limpo-poster.webp', obj: ['01-moeda-zero7', 344] },
   experiencia: { video: 'academy-9x16-540', poster: 'academy-9x16-poster.webp', obj: ['18-selo-de-conquista', 399] },
   mercado: { video: 'lives-zero7-9x16-540', foco: '15%', poster: 'lives-zero7-9x16-poster.webp', obj: ['03-candles-de-trade', 408] },
   desafio: { video: 'trading-performance-1', foco: '18%', webm: true, poster: 'trading-performance-1-poster.avif', obj: ['09-alvo-de-precisao', 315] },

@@ -22,7 +22,7 @@ export function iniciarFechamento() {
 
   let carregando = null;
   const carregar = () => {
-    carregando ??= import('./motion-logo.js?v=202611040959').then((m) => {
+    carregando ??= import('./motion-logo.js?v=202611041047').then((m) => {
       const logo = m.criarLogoAnimada(lugar);
       logo.preparar();
       return logo;
