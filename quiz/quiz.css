@@ -163,6 +163,35 @@ html:not(.js) .quiz__painel {
   display: block;
 }
 
+/* Selo "80% OFF": o componente .selo-hero da LP (componentes.css: 1,12em, −12°, entrada "carimbo" e giro de 40 s;
+   com movimento reduzido, parado). Como na hero da LP: um pino de largura zero depois do ponto final e o selo
+   absoluto a partir dele, sem mexer no layout do título (nenhum salto). Pode invadir um pouco a linha de cima. */
+.selo-pino {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 1em;
+  vertical-align: top;
+}
+
+.qz__titulo .selo-hero {
+  position: absolute;
+  left: 0;
+  top: -.05em;
+  z-index: 3;
+  margin-left: -.1em;
+}
+
+/* No palco (até 1079 px, onde o título não aparece): no canto de cima à direita da moldura, escapando um pouco */
+.palco__selo {
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  z-index: 3;
+  font-size: 70px; /* 1,12em = 78 px */
+  pointer-events: none;
+}
+
 .qz__titulo-sucesso,
 .qz[data-passo="sucesso"] .qz__titulo-quiz {
   display: none;
@@ -656,13 +685,15 @@ html:not(.js) .quiz__painel {
    - sem 3D (o palco.js nem pede a imagem nessa largura);
    - vídeo mais baixo (260 px nas perguntas, 160 px no contato e no sucesso) e o card subindo 32 px por cima dele:
      num 390 × 844, a pergunta e as 4 opções da P3/P4 cabem sem rolar, com a tarja. */
+@media (max-width: 1079.98px) {
+  .palco__obj {
+    display: none;
+  }
+}
+
 @media (max-width: 767px) {
   .qz__fundo {
     background: radial-gradient(560px circle at 100% 0, rgba(255, 138, 61, .1), rgba(255, 106, 26, .036) 55%, transparent 75%);
-  }
-
-  .palco__obj {
-    display: none;
   }
 
   .palco__moldura {
@@ -738,6 +769,10 @@ html:not(.js) .quiz__painel {
 
   .qz .fbtn {
     min-height: 62px;
+  }
+
+  .palco__selo {
+    display: none;
   }
 
   .palco__fantasma {

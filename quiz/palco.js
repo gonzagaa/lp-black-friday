@@ -6,7 +6,8 @@
 // - Palco fora da tela (no mobile, ao rolar até o formulário): o vídeo pausa.
 // - foco: a altura do recorte (object-position), para os vídeos com gente não cortarem o rosto no vídeo baixo do
 //   celular (260 px). Sem foco, o centro.
-// - 3D: só onde aparece (MOSTRA_3D). No celular o CSS esconde e a imagem nem é pedida; se a janela crescer, carrega.
+// - 3D: só onde aparece (MOSTRA_3D, o layout de desktop). Abaixo disso o CSS esconde (o selo "80% OFF" fica no lugar)
+//   e a imagem nem é pedida; se a janela crescer, carrega.
 // - inicio: o vídeo começa (e volta, a cada volta do loop) nesse segundo. O hub abre com um quadro preto e a colagem de
 //   três faixas, que no recorte do mobile parecia defeito: ele começa em 2,8 s, o primeiro quadro limpo, e o poster do
 //   quiz é esse mesmo quadro (hub-zero7-9x16-quiz-poster.webp).
@@ -21,7 +22,7 @@ const CENAS = {
   sucesso: { video: 'gamification-9x16-540', poster: 'gamification-9x16-poster.webp', obj: ['20-presente-black', 312] },
 };
 const SAIDA_MS = 500; // um pouco mais que a transição de .45 s do CSS
-const MOSTRA_3D = window.matchMedia('(min-width: 768px)'); // o mesmo corte do quiz.css
+const MOSTRA_3D = window.matchMedia('(min-width: 1080px)'); // o mesmo corte do quiz.css (abaixo, o selo ocupa o lugar)
 
 const palco = document.querySelector('[data-palco]');
 const cenas = palco.querySelector('[data-cenas]');
