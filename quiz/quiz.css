@@ -150,26 +150,10 @@ html:not(.js) .quiz__painel {
   box-shadow: var(--sombra-card);
 }
 
-/* ========== CABEÇALHO (desktop): rótulo + título em duas cores; no sucesso, "Obrigado!" ========== */
-.qz__rotulo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font: 700 13px/1 var(--fonte-display);
-  letter-spacing: var(--tracking-rotulo);
-  text-transform: uppercase;
-  color: var(--tinta);
-}
-
-.qz__rotulo i {
-  width: 8px;
-  height: 8px;
-  border-radius: 2px 0;
-  background: var(--grad);
-}
-
+/* ========== CABEÇALHO (desktop): título em duas cores; no sucesso, "Obrigado!" ==========
+   Sem o rótulo "Quiz da Black" (pedido do cliente): o título é o primeiro elemento da coluna, que fica centralizada
+   na vertical ao lado do palco, então não sobra buraco em cima nem cola no topo. */
 .qz__titulo {
-  margin-top: 16px;
   font: 800 48px/1.02 var(--fonte-impacto);
   letter-spacing: var(--tracking-impacto);
   color: var(--tinta);
