@@ -1,0 +1,5 @@
+# TESTE TEMPORÁRIO: PHP 8.3 só nesta pasta (LiteSpeed + CloudLinux alt-php). O domínio continua no 7.4.
+# Se a checagem não mostrar 8.3 com curl (ou der erro 500), este arquivo sai no próximo commit.
+<FilesMatch "\.php$">
+  SetHandler application/x-lsphp83
+</FilesMatch>
