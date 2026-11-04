@@ -144,8 +144,47 @@ Commit `quiz (ajuste): mobile com o vídeo de fundo`. Até 767 px, ele **substit
 
 Em `shots/quiz-mobile-fundo/`: `{360,390,430}-{p1,p4,dados,sucesso}.png` e `1440-{p1,p4,dados,sucesso}.png`.
 
+## 6. Respostas às 4 decisões
+
+Commit `quiz (ajuste): contato em tela baixa, tablet no vídeo de fundo, selo de 72 px`.
+
+1. **Contato em telas com altura ≤ 760 px** (ex.: 360 × 740). As perguntas não mudaram.
+   - Vídeo de fundo com 200 px.
+   - Título de 24 px, mais perto dos logos (26 px de margem), para ficar na parte escura do vídeo.
+   - Selo de 52 px.
+   - Menos espaço no formulário: 8 px entre os campos e campos de 44 px.
+   - **Resultado em 360 × 740:** o card começa em 183 px. A linha "Seus dados ficam só com a Zero7." termina em **700 px de 740**: o formulário cabe inteiro com a tarja, e o "← Voltar" também aparece.
+2. **Tablet (768 a 1079 px):** passou para o layout com o vídeo de fundo.
+   - Os logos e o conteúdo ficam numa coluna centralizada de 560 px; o vídeo continua de ponta a ponta.
+   - Os logos brancos também valem nessa faixa (`<picture>` até 1079 px).
+   - O título e o selo aparecem como no mobile: 32 px nas perguntas e 26 px no contato e no sucesso; selo de 64 e 56 px.
+   - O selo do canto da moldura saiu de vez, do HTML e do CSS.
+   - Sem 3D: nem baixa.
+   - **768 × 1024:** o card começa em 299 px nas perguntas e em 221 px no contato.
+   - **1024 × 768:** o contato cabe (714 de 768). Como a altura passa de 760 px, essa tela não usa o aperto do item 1.
+3. **Enquadramento da P3 e da P4:** aprovado, sem mudança.
+4. **"Ver os planos."** no link da tarja: aprovado e registrado.
+5. **Extra, desktop:** o selo passou a ter **72 px**, 1,5em do título de 48 px.
+   - Fica centrado na linha 2, logo depois do ponto (`top: -.14em`, `margin-left: .02em`).
+   - O ponto continua visível, e o selo não encosta no "k" de "Black". Detalhe em `zoom-1440.png`.
+   - O resto do desktop ficou igual: mesmas medidas em 1440 × 900.
+
+### Testes
+
+- Telas: 360 × 740, 390 × 844, 768 × 1024, 1024 × 768 e 1440 × 900.
+- **CLS:** ≤ 0,0003.
+- **Sem** scroll horizontal, erros ou 404.
+- **3D:** 0 imagens baixadas abaixo de 1080 px.
+- **Folga entre o texto e o selo:** 13 px em 360, 15 px em 390 e mais de 130 px no tablet.
+
+### Prints
+
+Em `shots/quiz-respostas/`:
+- contato em 360: `360-dados.png`;
+- P1 no tablet: `768-p1.png` e `1024-p1.png`;
+- as outras etapas nas 5 telas;
+- `zoom-1440.png`.
+
 ## Perguntas / pendências
 
-1. **360 × 740 (layout do vídeo de fundo):** as perguntas cabem; o contato passa 16 px da tela. Quer que eu aperte o 360 também, por exemplo com o vídeo de contato mais baixo ou o título a 56 px dos logos só nessa largura?
-2. **Tablet (768–1079 px):** continua com a moldura (o vídeo de fundo é só até 767 px), com o selo no canto da moldura e sem 3D. Ok, ou o tablet também vai para o vídeo de fundo?
-3. **Hub:** a colagem volta no meio do vídeo (perto de 8 s, 16 s, 28 s e 48 s; ver `relatorios/tarja.md`). Se incomodar, a saída é reexportar um trecho limpo só para o quiz.
+1. **Hub:** a colagem volta no meio do vídeo (perto de 8 s, 16 s, 28 s e 48 s; ver `relatorios/tarja.md`). Se incomodar, a saída é reexportar um trecho limpo só para o quiz.
