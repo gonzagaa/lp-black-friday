@@ -8,6 +8,10 @@ export const BLACK_FIM = '2026-11-30T23:59:59-03:00';
 // tarja da home (prazosPromo: um prazo por dia, às 23:59:59, até 30/11).
 export const TARJA_HORA_DIARIA = '23:59:59';
 
+// Dias (AAAA-MM-DD, Brasília) cujo prazo é pulado: o timer conta direto até o prazo do dia seguinte e passa de 24 h.
+// Pedido do cliente em 04/11: o prazo de hoje vira o de amanhã (05/11 às 23:59:59); depois, volta ao ciclo diário.
+export const TARJA_PULAR = ['2026-11-04'];
+
 // De onde a seção de planos lê preços, checkout, modo e prazo (Fase 4).
 // É o planos.json PRÓPRIO da LP, relativo à pasta da página: publicada em https://zero7.com.br/a-maior-black/,
 // ela lê https://zero7.com.br/a-maior-black/data/planos.json. Não aponte para o painel da home

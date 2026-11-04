@@ -170,6 +170,11 @@ a.tarja:hover .tarja__seta {
     display: none;
   }
 
+  /* prazo com mais de 24 h (dia pulado em TARJA_PULAR, js/config.js): os dias voltam */
+  .tarja--com-dias .tarja__grupo--dias {
+    display: inline-flex;
+  }
+
   .tarja__tempo {
     gap: 5px;
   }
@@ -215,4 +220,25 @@ a.tarja--clara:hover .tarja__texto {
   border-color: rgba(10, 7, 6, .9);
   background: linear-gradient(180deg, #1c1513, #0a0706);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 2px 5px -2px rgba(10, 7, 6, .45);
+}
+
+/* Com os dias à mostra (mais de 24 h), a tarja aperta um pouco em telas estreitas, para não encostar nas bordas */
+@media (max-width: 400px) {
+  .tarja--com-dias {
+    gap: 8px;
+    padding-inline: 8px;
+  }
+
+  .tarja--com-dias .tarja__texto {
+    gap: 6px;
+    font-size: 11.5px;
+  }
+
+  .tarja--com-dias .tarja__tempo {
+    gap: 4px;
+  }
+
+  .tarja--com-dias .tarja__grupo {
+    padding: 4px 5px 3px;
+  }
 }

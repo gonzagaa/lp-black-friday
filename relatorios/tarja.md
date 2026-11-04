@@ -124,3 +124,14 @@ O pedido era trazer da home o timer que vence a cada 24 horas, bonito e em desta
 - **Layout:** CLS ≤ 0,0003 e sem scroll horizontal.
 - **Console e rede:** sem erros e sem 404.
 - **Fim da Black:** mantido em 23:59:59 de 30/11.
+
+## Prazo de 04/11 pulado (pedido do cliente, 04/11)
+
+Commit `ajuste: tarja conta até amanhã (prazo de 04/11 pulado)`.
+
+- O prazo de hoje (04/11 às 23:59:59) vira o de amanhã: hoje o timer conta até **05/11 às 23:59:59**, com mais de 24 h. A partir de 06/11, volta ao ciclo diário.
+- **Onde:** `TARJA_PULAR = ['2026-11-04']` em `js/config.js`, uma lista de dias (horário de Brasília) cujo prazo é pulado. Para repetir em outro dia, é só acrescentar a data.
+- **Celular:** os dias ("01d") aparecem quando passam de 0. Até 400 px, a tarja aperta um pouco os espaços para caber (347 px de conteúdo em 360).
+- **Simulado:** 04/11 10:53 e 04/11 23:59:59 → 05/11 23:59:59; 05/11 00:00 → 05/11 23:59:59; 06/11 00:00 → 06/11 23:59:59; 01/12 → tarja encerrada.
+- **Testes** (LP e quiz, de 360 a 1920 px): "01d 13h …" e aria "37 horas e …"; cabe, sem scroll horizontal e sem erros. CLS ≤ 0,0012 no celular, porque o grupo dos dias entra no primeiro cálculo.
+- **Prints:** `shots/tarja-pulo/`.
