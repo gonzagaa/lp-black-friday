@@ -32,6 +32,7 @@ js/
 data/
 assets/
 vendor/
+quiz/          (o quiz, em /a-maior-black/quiz/; ver "Quiz" abaixo)
 ```
 
 **Não envie:**
@@ -119,3 +120,15 @@ Ficam em `vendor/`, com as licenças:
 
 - **Swiper 11.2.10**, só nos carrosséis de planos e da comunidade, carregado sob demanda;
 - **Lenis 1.1.14**, a rolagem suave, desligada com movimento reduzido.
+
+## Quiz (/a-maior-black/quiz/)
+
+Página de quiz integrada à RD Station Marketing. Relatório: `relatorios/quiz.md`.
+
+- **Página:** `quiz/index.html`, `quiz/quiz.css` e `quiz/quiz.js`. Usa a base da LP (`../css`, `../assets`), o mesmo tracking (GTM na primeira interação, Pixel + CAPI) e o mesmo rodapé.
+- **Repasse:** `quiz/api/lead.php` recebe o lead e manda para a RD. A chave da RD **nunca** vai para o navegador, para o código ou para o git.
+  - Ela fica em `/home/<usuario>/config/rd-quiz.php`, fora do `public_html`. O modelo é `quiz/api/rd-quiz.example.php`.
+  - Funciona em PHP 7.4 e 8.x, e precisa da extensão curl.
+- **PHP 8.3 só na pasta do quiz:** há um exemplo em `quiz/api/htaccess-php83-teste.txt` (LiteSpeed + CloudLinux alt-php), ativado só depois do teste com o arquivo de checagem.
+- **Não envie:** `quiz/api/check-*.php` fora do teste, que é de uso único e se apaga sozinho.
+- **Evento para o GTM:** `quiz_lead` (com `quiz_e_trader` e `quiz_mercado`, sem dado pessoal), para ligar o Lead do Meta e a conversão do Google Ads.

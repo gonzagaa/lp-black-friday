@@ -1,3 +1,8 @@
 node_modules/
 shots/
 _brandkit/
+# Quiz: a configuração com a chave da RD nunca entra no git (ela fica fora da pasta pública, em ~/config/rd-quiz.php)
+config/rd-quiz.php
+rd-quiz.php
+# Quiz: arquivo de checagem da hospedagem (uso único, se apaga sozinho)
+quiz/api/check-*.php

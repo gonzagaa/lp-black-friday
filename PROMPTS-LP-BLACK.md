@@ -44,6 +44,11 @@ Estes textos **não estão na copy**. Eles entram na LP, mas cada relatório pre
 | Planos | rótulo "Planos Black Friday" |
 | Comunidade | rótulo "Ecossistema Zero7" (o bloco "19K traders na comunidade" foi removido a pedido do cliente; o "Vídeo em breve" saiu quando os 6 cards ganharam vídeo) |
 | SEO | `meta description` e `og:description`: "80% OFF na maior Black da história: os melhores benefícios da Zero7 + novidades juntos em um único plano. Chegou a hora de ir para outro nível." (montada com a copy de 27/10) |
+| Quiz (página) | `<title>` "Quiz da Black: receba sua oferta | Zero7"; description "Responda 4 perguntas e receba sua oferta da Black. Leva 30 segundos."; título "Responda 4 perguntas e receba sua oferta da Black."; subtítulo "Leva 30 segundos."; aviso sem JavaScript "Para responder o quiz, ative o JavaScript do navegador." |
+| Quiz (perguntas) | "Pergunta X de 4" (ou "de 3", quando a P2 é pulada); "← Voltar"; P1 "Você é trader?": Sim, opero na B3 / Estou começando a estudar / Ainda não opero; P2 "Qual é a sua experiência?": Menos de 6 meses / De 6 meses a 2 anos / Mais de 2 anos (pulada: "Não opera", só na RD); P3 "O que você opera?": Mini índice / Mini dólar / Os dois / Ainda não sei; P4 "Qual é o seu maior desafio hoje?": Controle emocional / Operar poucos contratos / Falta de segurança nas decisões / Capital limitado |
+| Quiz (contato) | "Para onde enviamos sua oferta?"; rótulos "Nome", "WhatsApp (com DDD)", "E-mail"; exemplo "(11) 91234-5678"; "Aceito receber contato da Zero7 por WhatsApp, e-mail e telefone, conforme a Política de Privacidade."; botão "Quero minha oferta" / "Enviando…"; erros "Digite seu nome.", "Digite um WhatsApp válido com DDD.", "Digite um e-mail válido.", "Marque a autorização para receber a oferta.", "Não conseguimos enviar agora. Tente de novo." (e, do servidor, "Muitas tentativas. Tente de novo em alguns minutos.") |
+| Quiz (sucesso) | "Pronto! Sua oferta está a caminho."; "Entre no grupo e receba as condições da Black antes de todo mundo."; botão "Entrar no grupo do WhatsApp" |
+| Quiz (só leitor de tela) | "Progresso do quiz" (barra) |
 
 ## Pendências de negócio (não bloqueiam as fases)
 
