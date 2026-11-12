@@ -8,7 +8,7 @@
 .beneficios {
   position: relative;
   margin-top: calc(-1 * var(--arco));
-  padding: calc(var(--arco) - 40px) 0 150px; /* o rótulo aparece 40 px acima da base da hero, como no print 01 */
+  padding: calc(var(--arco) - 40px) 0 120px; /* o CTA desceu para o #vsl, que fecha com os 150 px antes dos planos */ /* o rótulo aparece 40 px acima da base da hero, como no print 01 */
   background: linear-gradient(180deg, rgba(3, 2, 2, 0), var(--cor-planeta) var(--arco), #070505);
 }
 
@@ -258,13 +258,6 @@
   height: auto;
 }
 
-/* CTA da seção */
-.beneficios__acao {
-  display: flex;
-  justify-content: center;
-  padding-top: 10px;
-}
-
 /* ========== 768–1199 px: 2 colunas ==========
    Os cards de 2 e 3 colunas ocupam a linha inteira. O 07 também, para não sobrar um buraco ao lado dele
    (05 e 06 dividem uma linha; o 07 ficaria sozinho em meia linha). */
@@ -369,10 +362,5 @@
     right: 18px;
     bottom: -24px;
     width: 96px;
-  }
-
-  .beneficios__acao .fbtn {
-    display: flex;
-    width: 100%;
   }
 }

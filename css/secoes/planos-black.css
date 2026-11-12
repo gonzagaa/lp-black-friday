@@ -61,7 +61,7 @@
   width: min(1600px, 150vw);
   aspect-ratio: 1600 / 640;
   transform: translateX(-50%);
-  background: url(../../assets/texturas/planos-grafico.svg?v=202611041053) center / 100% 100% no-repeat;
+  background: url(../../assets/texturas/planos-grafico.svg?v=202611121008) center / 100% 100% no-repeat;
   opacity: .035;
   -webkit-mask-image: radial-gradient(closest-side, #000 35%, transparent 100%);
   mask-image: radial-gradient(closest-side, #000 35%, transparent 100%);
@@ -103,7 +103,7 @@
   width: auto;
   height: 48px;
   z-index: 3;
-  background: url(../../assets/texturas/candles-tops.svg?v=202611041053) repeat-x 0 0 / 360px 48px;
+  background: url(../../assets/texturas/candles-tops.svg?v=202611121008) repeat-x 0 0 / 360px 48px;
   pointer-events: none;
 }
 

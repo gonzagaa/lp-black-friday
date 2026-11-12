@@ -1,0 +1,243 @@
+/* Seção #vsl: o vídeo de vendas entre os benefícios e os planos (pedido do cliente, 12/11).
+   Player leve: a capa (miniatura do YouTube salva em assets/img/) e um botão de play; o iframe do youtube-nocookie só
+   entra no clique (js/modulos/vsl.js). A proporção é reservada com aspect-ratio (nada de salto quando o iframe entra).
+   Fundo: continua o #070505 do fim dos benefícios, com a grade de 72 px mascarada e a luz laranja difusa sob o player. */
+
+.vsl {
+  position: relative;
+  overflow-x: clip; /* o selo escapa do player; nunca da página */
+  padding: 0 0 150px;
+  background: #070505;
+}
+
+/* Fundo nunca liso: a grade de 72 px, só ao redor do player */
+.vsl__grade {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: radial-gradient(60% 55% at 50% 62%, #000 10%, transparent 75%);
+  mask-image: radial-gradient(60% 55% at 50% 62%, #000 10%, transparent 75%);
+  opacity: .6;
+  pointer-events: none;
+}
+
+.vsl__conteudo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+}
+
+.vsl__h2 span {
+  color: rgba(255, 255, 255, .42);
+}
+
+.vsl__sub {
+  max-width: 46em;
+  text-wrap: balance;
+  font: 400 var(--fs-lead)/1.55 var(--fonte-texto);
+  color: var(--cor-texto-2);
+}
+
+/* ========== PLAYER ========== */
+.vsl__player {
+  position: relative;
+  width: 100%;
+  max-width: 1040px;
+}
+
+/* Luz laranja difusa saindo de baixo do player (o tom do horizonte da hero), discreta */
+.vsl__player::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -70px;
+  height: 60%;
+  z-index: -1;
+  background: radial-gradient(50% 60% at 50% 100%, rgba(255, 106, 26, .34), rgba(229, 43, 36, .12) 55%, transparent 75%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.vsl__moldura {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 32px 0 32px 0;
+  background: #0a0706;
+  box-shadow: 0 50px 90px -40px rgba(0, 0, 0, .95), 0 18px 40px -20px rgba(0, 0, 0, .8);
+}
+
+.vsl__capa,
+.vsl__capa img,
+.vsl__moldura iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.vsl__capa img {
+  object-fit: cover;
+}
+
+/* até a capa ser pedida (vsl.js), sem o alt à mostra: fica o fundo escuro da moldura */
+.vsl__capa img:not([src]) {
+  visibility: hidden;
+}
+
+.vsl__capa img {
+  transition: filter var(--dur-3);
+}
+
+/* degradê escuro leve por cima da capa */
+.vsl__capa::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 4, 4, .18), rgba(5, 4, 4, .42));
+  transition: opacity var(--dur-3);
+  pointer-events: none;
+}
+
+.vsl__moldura iframe {
+  border: 0;
+}
+
+/* Play: redondo (pedido do cliente, exceção à regra 4), no degradê da marca com o círculo branco e o ▶ */
+.vsl__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--grad-marca-brilho), var(--grad-marca);
+  box-shadow:
+    0 0 0 6px rgba(255, 106, 26, .1),
+    0 0 0 7px rgba(255, 140, 70, .28),
+    var(--sombra-material),
+    0 16px 36px -8px rgba(255, 90, 20, .7),
+    0 0 80px rgba(255, 106, 26, .3);
+  transform: translate(-50%, -50%);
+  transition: transform var(--dur-3) var(--curva), box-shadow var(--dur-3);
+}
+
+.vsl__play-gota {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--cor-laranja);
+  box-shadow: 0 2px 6px rgba(120, 30, 0, .35), inset 0 -2px 3px rgba(0, 0, 0, .08);
+}
+
+.vsl__play-gota svg {
+  margin-left: 3px; /* o triângulo parece centrado com um leve deslocamento */
+}
+
+.vsl__capa:hover .vsl__play,
+.vsl__play:focus-visible {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.vsl__capa:hover img {
+  filter: brightness(1.12);
+}
+
+.vsl__capa:hover::after {
+  opacity: .7;
+}
+
+.vsl__play:focus-visible {
+  outline: 2px solid var(--cor-luz);
+  outline-offset: 6px;
+}
+
+/* Selo 80% OFF da hero (componente .selo-hero): preso no canto de cima à direita, escapando um pouco. 1,12em = 96 px */
+.vsl__selo {
+  position: absolute;
+  top: -34px;
+  right: -26px;
+  z-index: 3;
+  font-size: 86px;
+  pointer-events: none;
+}
+
+.vsl__acao {
+  display: flex;
+  justify-content: center;
+}
+
+/* subtítulo numa linha só no desktop */
+@media (min-width: 1024px) {
+  .vsl__sub {
+    max-width: none;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .vsl__selo {
+    right: -12px;
+  }
+}
+
+@media (max-width: 767px) {
+  .vsl {
+    padding-bottom: 110px;
+  }
+
+  .vsl__conteudo {
+    align-items: stretch;
+    gap: 32px;
+  }
+
+  .vsl__moldura {
+    border-radius: 22px 0 22px 0;
+  }
+
+  .vsl__play {
+    width: 72px;
+    height: 72px;
+  }
+
+  .vsl__play-gota {
+    width: 46px;
+    height: 46px;
+  }
+
+  /* 1,12em = 64 px, sem passar da borda da tela (o gutter é de 16 px) */
+  .vsl__selo {
+    top: -26px;
+    right: -6px;
+    font-size: 57px;
+  }
+
+  .vsl__acao .fbtn {
+    display: flex;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vsl__play,
+  .vsl__capa img,
+  .vsl__capa::after {
+    transition: none;
+  }
+
+  .vsl__capa:hover .vsl__play,
+  .vsl__play:focus-visible {
+    transform: translate(-50%, -50%);
+  }
+}

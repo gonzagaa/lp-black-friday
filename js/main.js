@@ -2,21 +2,21 @@
 // A classe .js no <html> é posta por um script inline no <head> (antes da primeira pintura).
 // js/modulos/contador.js existe, mas está sem uso (saiu da hero e não entrou na barra mobile, por decisão do cliente).
 // Planos: módulos de js/modulos/home/ são PORTES do JS da home (ver o cabeçalho de cada um).
-import { iniciarNav } from './modulos/nav.js?v=202611041053';
-import { iniciarSimboloHero } from './modulos/simbolo-hero.js?v=202611041053';
-import { iniciarRevelar } from './modulos/revelar.js?v=202611041053';
-import { iniciarRolagem } from './modulos/rolagem.js?v=202611041053';
-import { iniciarSelet4 } from './modulos/home/selet4.js?v=202611041053';
-import { iniciarPlanosAtivo } from './modulos/home/planosAtivo.js?v=202611041053';
-import { iniciarBlackPlanos } from './modulos/home/blackPlanos.js?v=202611041053';
-import { iniciarCarrosselPlanos } from './modulos/home/carrosselPlanos.js?v=202611041053';
-import { iniciarComunidade } from './modulos/comunidade.js?v=202611041053';
-import { iniciarFechamento } from './modulos/fechamento.js?v=202611041053';
-import { iniciarLimiteAlta } from './modulos/limite-alta.js?v=202611041053';
-import { iniciarRodape } from './modulos/rodape.js?v=202611041053';
-import { iniciarBarraMobile } from './modulos/barra-mobile.js?v=202611041053';
-import { iniciarTracking } from './modulos/tracking.js?v=202611041053';
-import { iniciarTarja } from './modulos/tarja.js?v=202611041053';
+import { iniciarNav } from './modulos/nav.js?v=202611121008';
+import { iniciarSimboloHero } from './modulos/simbolo-hero.js?v=202611121008';
+import { iniciarRevelar } from './modulos/revelar.js?v=202611121008';
+import { iniciarRolagem } from './modulos/rolagem.js?v=202611121008';
+import { iniciarSelet4 } from './modulos/home/selet4.js?v=202611121008';
+import { iniciarPlanosAtivo } from './modulos/home/planosAtivo.js?v=202611121008';
+import { iniciarBlackPlanos } from './modulos/home/blackPlanos.js?v=202611121008';
+import { iniciarCarrosselPlanos } from './modulos/home/carrosselPlanos.js?v=202611121008';
+import { iniciarComunidade } from './modulos/comunidade.js?v=202611121008';
+import { iniciarFechamento } from './modulos/fechamento.js?v=202611121008';
+import { iniciarLimiteAlta } from './modulos/limite-alta.js?v=202611121008';
+import { iniciarRodape } from './modulos/rodape.js?v=202611121008';
+import { iniciarBarraMobile } from './modulos/barra-mobile.js?v=202611121008';
+import { iniciarTracking } from './modulos/tracking.js?v=202611121008';
+import { iniciarTarja } from './modulos/tarja.js?v=202611121008';
 
 iniciarTracking(); // antes dos planos: o sck entra a cada href que o blackPlanos montar
 iniciarTarja();
@@ -32,6 +32,11 @@ iniciarFechamento();
 iniciarLimiteAlta();
 iniciarRodape();
 iniciarBarraMobile();
+
+// VSL (#vsl, longe da primeira dobra): o módulo só entra depois do load, fora do caminho do LCP
+const vsl = () => import('./modulos/vsl.js?v=202611121008').then((m) => m.iniciarVsl()).catch(console.error);
+if (document.readyState === 'complete') vsl();
+else window.addEventListener('load', vsl, { once: true });
 
 // Grão global depois do load (css/base.css): decorativo, fora do caminho da primeira dobra
 const grao = () => document.documentElement.classList.add('grao-pronto');
