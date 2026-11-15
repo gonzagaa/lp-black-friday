@@ -10,9 +10,9 @@
    - roda de novo na troca de mercado: o bloco que some volta ao valor padrão e anima quando reaparecer.
    Como na home: uma vez por card, quando ele aparece de verdade (inclusive ao arrastar o carrossel); quem já está
    na tela ao carregar fica no valor final; sem IntersectionObserver ou com movimento reduzido, nada anima. */
-import { carregarPlanos } from './dados-planos.js?v=202611121008';
-import { contar, desacelerar, formatarReais } from './contagem.js?v=202611121008';
-import { valorEmReais } from './precos.js?v=202611121008';
+import { carregarPlanos } from './dados-planos.js?v=202611151823';
+import { contar, desacelerar, formatarReais } from './contagem.js?v=202611151823';
+import { valorEmReais } from './precos.js?v=202611151823';
 
 const ESPERA = 900;  // ms no valor padrão antes da piscada
 const QUEDA = 450;   // ms da piscada

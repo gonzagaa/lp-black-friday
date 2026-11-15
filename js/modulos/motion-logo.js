@@ -4,8 +4,8 @@
 // - preparar(): troca a imagem estática pelo SVG no instante 0 (vazio: o ingresso ainda não entrou);
 // - tocar(): toca UMA vez, gerando o SVG quadro a quadro com requestAnimationFrame, e para no quadro final, nítido
 //   (a partir de 5,11 s o motion está parado; o resto dos 9 s do vídeo é a cartela). Sem som.
-import { createMotion } from './motion-logo-core.js?v=202611121008';
-import CENA from './motion-logo-cena.js?v=202611121008';
+import { createMotion } from './motion-logo-core.js?v=202611151823';
+import CENA from './motion-logo-cena.js?v=202611151823';
 
 const FIM = 5.11;
 

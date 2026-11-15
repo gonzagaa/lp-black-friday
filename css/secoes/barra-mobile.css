@@ -34,4 +34,10 @@
   .barra-mobile .fbtn {
     width: 100%;
   }
+
+  /* Com o botão do suporte ligado (js/modulos/suporte.js), a barra deixa o canto dele livre: o lançador do Zendesk
+     (64 px, a 16 px da borda) fica ao lado dela, na mesma linha, com o mesmo vão de 10 px */
+  .suporte-ativo .barra-mobile {
+    right: 90px;
+  }
 }
