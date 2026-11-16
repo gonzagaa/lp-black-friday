@@ -35,7 +35,7 @@ O cliente ajustou a hero depois do print. As próximas fases partem destes valor
 - H1: "A maior black" / "da história." em todas as larguras, com a luz em "da história." inteiro. Selo com `top: -.05em` e `margin-left: -.1em`; a linha 2 é deslocada .41em para a esquerda.
 - CTA da hero: `.fbtn--escuro` a partir de 768 px (laranja no mobile).
 - Sem contador na hero (o módulo `js/modulos/contador.js` está guardado; a decisão sobre a barra mobile fica para a Fase 6).
-- Tarja do topo da LP (pedido do cliente, 16/11): a tarja de escassez ("Os planos da Black Friday estão acabando" + medidor da % vendida, em rampa até quinta; `TARJA_ESCASSEZ` em `js/config.js`, `css/escassez.css`, `js/modulos/escassez.js`). Ocupa o lugar da tarja do timer, com a mesma `--tarja-altura` (64 px; 76 px até 767 px). A tarja do timer ficou só no quiz.
+- Tarja do topo da LP (pedido do cliente, 16/11): a tarja de escassez ("Os planos da Black Friday estão acabando" + medidor da % vendida, em rampa até quinta; `TARJA_ESCASSEZ` em `js/config.js`, `css/escassez.css`, `js/modulos/escassez.js`). Ocupa o lugar da tarja do timer, com a mesma `--tarja-altura` (72 px no desktop, 84 px de 768 a 1023 e 76 px até 767). A tarja do timer ficou só no quiz.
 - Tarja do timer (pedido do cliente, 04/11; hoje só no quiz): o timer de 24 horas da home, "Essa oferta se encerra em:". Zera todo dia às 23:59:59 de Brasília até o `BLACK_FIM` (`js/config.js`); fica grudada no topo, acima da nav (`css/tarja.css`, `js/modulos/tarja.js`). A nav e as âncoras descontam `--tarja-altura`.
 
 ### Planos (Fase 4 refeita: porte da home + ajustes do cliente; vale por cima do canvas e do print 05)

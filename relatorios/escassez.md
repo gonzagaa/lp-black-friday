@@ -174,6 +174,51 @@ Commit `ajuste: tarja de escassez sem brilho claro, % no tamanho da frase`.
 
 `shots/escassez-sombra/{390,1440}-{antes,depois}-{parada,rolada}.png`.
 
+## Mais destaque (16/11)
+
+Commit `ajuste: tarja de escassez com mais destaque (% azul, trilho preto)`.
+
+1. **Tipografia maior, com a % como estrela:**
+
+| | Desktop | 768–1023 px | Mobile | Até 389 px |
+|---|---|---|---|---|
+| Mensagem (Inter 700, "acabando" em 800 no degradê vermelho) | 18 px | 18 px | 14 px | 13 px |
+| "78% dos planos vendidos" ("78%" em 800, mesmo tamanho do número e do %) | 22 px | 22 px | 16 px ("78% vendidos") | 15 px |
+| Altura da tarja | 72 px | 84 px | 76 px | 76 px |
+
+   - A nav e as âncoras acompanham a altura de cada faixa: nav grudada logo abaixo da tarja, e os planos parando abaixo da nav.
+   - **Mobile (diferença em relação ao pedido):** com a mensagem a 14 px e a % a 16 px, as duas não cabem na mesma linha (em 390 px passariam de 410 px). A mensagem fica inteira em cima, e "78% vendidos" vai para a direita do medidor, embaixo.
+   - **768–1023 px:** numa linha só, o medidor teria que cair a ~100 px para caber em 768 px. Em vez de reduzir o texto, essa faixa usa duas linhas com as fontes do desktop: a frase inteira (com "Friday") em cima e, embaixo, o medidor largo com "78% dos planos vendidos", numa coluna de até 680 px.
+   - **1024–1199 px:** o medidor cai para 200 px e o gap para 20 px. O texto continua inteiro.
+2. **Trilho preto:**
+   - #0E0B0A com borda interna rgba(255,255,255,.08);
+   - 16 px no desktop e 12 px no mobile;
+   - o traço de 100% em rgba(255,255,255,.35), dentro do trilho;
+   - a ponta branca, com borda vermelha, ganhou um halo um pouco mais forte para se destacar sobre o preto.
+3. **"78%" no azul da Zero7:**
+   - degradê de texto de #1689E0 a #0A4FB8, em 800;
+   - **contraste**, do branco ao ponto mais alaranjado do fundo: tom claro 3,15–3,69:1 e tom escuro 6,35–7,44:1. O texto grande e negrito pede 3:1, então passa sem escurecer;
+   - só o "78%" é azul; a mensagem, o "acabando", a barra e o filete seguem no laranja e no vermelho.
+
+### Testes
+
+| Largura | Altura | Conteúdo | CLS | Rolagem lateral | Erros |
+|---|---|---|---|---|---|
+| 360 | 76 | 12–348 | 0 | não | 0 |
+| 390 | 76 | 16–374 | 0 | não | 0 |
+| 768 | 84 | 54–724 | 0 | não | 0 |
+| 1024 | 72 | 59–965 | 0 | não | 0 |
+| 1440 | 72 | 211–1229 | 0 | não | 0 |
+| 1920 | 72 | 451–1469 | 0 | não | 0 |
+
+- O resto continua igual: `ativo: false`, movimento reduzido, datas, `cta_click` "tarja" e o medidor sincronizado.
+- `npm run versao` e `--conferir` OK.
+
+### Prints
+
+- `shots/escassez-destaque/{390,1440}-destaque-{parada,rolada}.png`;
+- `{360,768,1024,1920}-topo.png`.
+
 ## Perguntas / pendências
 
 Nenhuma. `vendidos` e `meta` foram confirmados, e para atualizar o número real basta mudar `vendidos` e rodar `npm run versao`.
