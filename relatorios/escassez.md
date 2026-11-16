@@ -150,6 +150,30 @@ Commit `ajuste: tarja de escassez sem botão, % numa linha, medidor sincronizado
 - `{360,390,768,1024,1440,1920}-topo.png`;
 - a entrada a cada ~150 ms (desacelerada 10×): `{1440,390}-entrada-00…13.png` e as folhas `{1440,390}-entrada-folha.png`.
 
+## Sombra e porcentagem (16/11)
+
+Commit `ajuste: tarja de escassez sem brilho claro, % no tamanho da frase`.
+
+1. **Sombra:**
+   - A faixa clara sobre a nav era o degradê claro (#FFF7F1) do vão entre a tarja e a nav, posto para esconder o conteúdo que aparecia ali ao rolar. Ele virou um véu escuro, na cor da base da página: o vão continua escondido, sem clarear a nav.
+   - O filete de 3 px ficou sem o glow laranja.
+   - A sombra da tarja agora é `0 6px 16px -8px rgba(0,0,0,.55)`.
+2. **"78% dos planos vendidos" num tamanho só:**
+   - a frase usa a mesma fonte e o mesmo tamanho da mensagem da esquerda (Inter: 16 px no desktop, 13,5 px no mobile e 12,5 px até 389 px);
+   - o "78%" (com o "%" do tamanho do número) vem em 800, no degradê vermelho;
+   - "dos planos vendidos" (no mobile, "vendidos") vem em 600, no cinza escuro;
+   - sem Barlow e sem número grande.
+   - **Diferença em relação ao pedido:** o pedido citava 14 px, mas a mensagem da esquerda tem 16 px. Segui "o mesmo tamanho da mensagem". Se for para ficar em 14 px, a mensagem também precisa mudar.
+
+### Testes
+
+- 360–1920 px: sem rolagem lateral, sem sobreposição e com CLS 0. Em 360 px, o conteúdo fica entre 12 e 348 px.
+- `npm run versao` e `--conferir` OK.
+
+### Prints
+
+`shots/escassez-sombra/{390,1440}-{antes,depois}-{parada,rolada}.png`.
+
 ## Perguntas / pendências
 
 Nenhuma. `vendidos` e `meta` foram confirmados, e para atualizar o número real basta mudar `vendidos` e rodar `npm run versao`.

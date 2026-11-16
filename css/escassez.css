@@ -44,7 +44,7 @@ html.tarja-encerrada {
     radial-gradient(40% 220% at 50% 0%, rgba(255, 138, 61, .22), transparent 70%),
     radial-gradient(30% 200% at 100% 100%, rgba(229, 43, 36, .10), transparent 70%),
     linear-gradient(#FFFFFF, #FFF7F1);
-  box-shadow: 0 14px 30px -16px rgba(0, 0, 0, .75);
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, .55); /* sombra escura e sutil: separa a tarja sem clarear a nav */
   color: var(--tinta);
   text-decoration: none;
 }
@@ -53,14 +53,13 @@ html.tarja-encerrada {
   display: none;
 }
 
-/* filete de 3 px no degradê da marca, com brilho */
+/* filete de 3 px no degradê da marca (sem glow: o brilho laranja clareava a nav) */
 .escassez::after {
   content: "";
   position: absolute;
   inset: auto 0 0;
   height: 3px;
   background: var(--grad-marca-horizontal);
-  box-shadow: 0 0 14px rgba(255, 106, 26, .55);
   pointer-events: none;
 }
 
@@ -209,17 +208,19 @@ html.tarja-encerrada {
   transform: translate(50%, -50%);
 }
 
-/* d) a porcentagem: "78%" e, alinhado pela base, "dos planos vendidos" (no mobile, "vendidos") */
+/* d) a porcentagem: "78% dos planos vendidos" (no mobile, "78% vendidos") numa frase só, na mesma fonte e no mesmo
+   tamanho da mensagem da esquerda; só o "78%" muda: peso 800 e o degradê vermelho */
 .escassez__pct {
   display: flex;
   flex: 0 0 auto;
   align-items: baseline;
-  gap: 8px;
+  gap: .3em;
+  font: 600 16px/1.2 var(--fonte-texto);
   white-space: nowrap;
 }
 
 .escassez__num {
-  font: 800 30px/1 var(--fonte-display);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   background: linear-gradient(180deg, #F2441F, #C81E1A);
   -webkit-background-clip: text;
@@ -228,7 +229,7 @@ html.tarja-encerrada {
 }
 
 .escassez__num small {
-  font-size: .58em;
+  font-size: 1em; /* o "%" do tamanho do número */
 }
 
 /* os números só aparecem depois do primeiro cálculo (a largura já está reservada pelo "00") */
@@ -237,7 +238,6 @@ html.tarja-encerrada {
 }
 
 .escassez__rotulo {
-  font: 600 14px/1 var(--fonte-texto);
   color: rgba(14, 11, 10, .72);
 }
 
@@ -286,11 +286,7 @@ html.tarja-encerrada {
 
   .escassez__pct {
     grid-area: pct;
-    gap: 6px;
-  }
-
-  .escassez__num {
-    font-size: 24px;
+    font-size: 13.5px;
   }
 
   .escassez__rotulo--longo {
@@ -299,7 +295,6 @@ html.tarja-encerrada {
 
   .escassez__rotulo--curto {
     display: inline;
-    font-size: 12px;
   }
 
   .escassez__medidor {
@@ -328,12 +323,8 @@ html.tarja-encerrada {
     font-size: 12.5px;
   }
 
-  .escassez__num {
-    font-size: 22px;
-  }
-
   .escassez__pct {
-    gap: 4px;
+    font-size: 12.5px;
   }
 }
 
