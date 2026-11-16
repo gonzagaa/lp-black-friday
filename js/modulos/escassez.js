@@ -3,7 +3,7 @@
 // abrir a página e a cada 60 s, pelo relógio do navegador. Na entrada, o preenchimento anima de 0 até o valor (CSS).
 // ativo: false esconde a tarja e zera --tarja-altura (html.tarja-encerrada): a nav volta ao topo.
 // Acessibilidade: o medidor é role="progressbar" com aria-valuenow e aria-valuetext ("78% dos planos vendidos").
-import { TARJA_ESCASSEZ } from '../config.js?v=202611161448';
+import { TARJA_ESCASSEZ } from '../config.js?v=202611161458';
 
 const MINUTO = 60 * 1000;
 
@@ -32,7 +32,8 @@ export function iniciarEscassez() {
 
   function atualizar(entrada = false) {
     const pct = valorEscassez(TARJA_ESCASSEZ, Date.now());
-    const largura = () => tarja.style.setProperty('--escassez', `${pct}%`);
+    // --p é a fonte única do medidor (o preenchimento e a ponta derivam dela; css/escassez.css)
+    const largura = () => tarja.style.setProperty('--p', `${pct}%`);
     // na entrada, o valor vai depois da primeira pintura (com 0%), para a transição do CSS animar de 0 até ele
     if (entrada) requestAnimationFrame(() => requestAnimationFrame(largura));
     else largura();

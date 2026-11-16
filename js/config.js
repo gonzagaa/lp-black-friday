@@ -21,8 +21,8 @@ export const TARJA_PULAR = ['2026-11-04'];
 // ativo: false esconde a tarja inteira e a nav volta ao topo. Horários de Brasília (−03:00).
 export const TARJA_ESCASSEZ = {
   ativo: true,
-  vendidos: 3100, // TODO: confirmar (atualizar com o número real)
-  meta: 4000, // TODO: confirmar
+  vendidos: 3100, // confirmado pelo cliente (16/11); atualizar com o número real
+  meta: 4000, // confirmado pelo cliente (16/11)
   inicio: '2026-11-16T13:35:00-03:00',
   fim: '2026-11-19T23:59:59-03:00',
   teto: 99,

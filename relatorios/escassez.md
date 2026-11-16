@@ -111,7 +111,45 @@ Pedido do cliente de 16/11: na LP, a contagem de tempo sai e entra uma tarja de 
 
 São todos do pedido e estão registrados no `PROMPTS-LP-BLACK.md`: "Os planos da Black Friday estão acabando" (no mobile, sem "Friday"), "Dos planos vendidos" / "Vendidos", "Garantir o meu", "Ver os planos." e "78% dos planos vendidos".
 
+## Ajustes finais (16/11)
+
+Commit `ajuste: tarja de escassez sem botão, % numa linha, medidor sincronizado`.
+
+1. **Sem o botão "Garantir o meu"**, em todas as larguras: o "Aproveitar" da nav já cumpre esse papel. A tarja inteira continua sendo o link para #planos, com "Ver os planos.", foco visível e `cta_click` "tarja".
+2. **Porcentagem numa linha:**
+   - "78%" em Barlow 800, com 30 px no desktop, 24 px no mobile e 22 px até 389 px; degradê vermelho e "%" a 0,58em;
+   - ao lado, a 8 px e alinhado pela base: "dos planos vendidos" em Inter 600, 14 px, rgba(14,11,10,.72), sem caixa alta;
+   - no mobile, só "vendidos" (12 px), na mesma linha.
+   - Com o espaço do botão livre, a frase inteira ("…Black Friday estão acabando") volta a partir de 1024 px. De 768 a 1023 px ela ainda não cabe: a linha sem o "Friday" já vai de 32 a 736 px. Nessa faixa ficam o medidor de 180 px e o gap de 18 px.
+3. **Entrada sincronizada.**
+   - **Causa:** o preenchimento animava `width`, calculado na thread principal, e a ponta animava `transform`, que roda no compositor. Com a carga da página ocupando a thread principal, a ponta corria à frente do laranja.
+   - **Correção:** uma fonte única, `@property --p` (`<percentage>`). O JS põe o valor, e a transição anima só a `--p` (1,2 s, ease-out). O preenchimento é recortado com `clip-path: inset(0 calc(100% − --p) 0 0 round 999px)` e a ponta anda com `translateX(calc(--p − 100%))`. Os dois derivam do mesmo valor a cada quadro e nenhum desloca o layout.
+   - **Medido quadro a quadro durante a entrada:** 192 quadros em 1440 px e 393 em 390 px, com diferença máxima entre a ponta e a `--p` de 0,00 ponto.
+   - **Prints** a cada ~150 ms com as animações desaceleradas 10×: o laranja e a ponta andam juntos.
+4. **`vendidos: 3100` e `meta: 4000` confirmados:** saiu o "a confirmar" do config.
+
+### Testes
+
+| Largura | Conteúdo | "Friday" | Rótulo | CLS | Rolagem lateral | Erros |
+|---|---|---|---|---|---|---|
+| 360 | 12–348 | não | "vendidos" 12 px | 0 | não | 0 |
+| 390 | 16–374 | não | "vendidos" 12 px | 0 | não | 0 |
+| 768 | 32–736 | não | "dos planos vendidos" 14 px | 0 | não | 0 |
+| 1024 | 66–958 | sim | idem | 0 | não | 0 |
+| 1440 | 274–1166 | sim | idem | 0 | não | 0 |
+| 1920 | 514–1406 | sim | idem | 0 | não | 0 |
+
+- O resto continua igual:
+  - datas simuladas: 78 / 86 / 93 / 98 / 99 / 99 / 99;
+  - recálculo sem recarregar (ter 12h, 86%; 6 h depois, 88%);
+  - `ativo: false`, movimento reduzido, o clique levando a #planos abaixo da nav e o `cta_click` "tarja".
+- `npm run versao` e `--conferir` OK.
+
+### Prints (shots/escassez-ajuste/)
+
+- `{360,390,768,1024,1440,1920}-topo.png`;
+- a entrada a cada ~150 ms (desacelerada 10×): `{1440,390}-entrada-00…13.png` e as folhas `{1440,390}-entrada-folha.png`.
+
 ## Perguntas / pendências
 
-1. **`vendidos` e `meta`** (3100 e 4000) estão com `TODO: confirmar` no config. Para atualizar, basta trocar o `vendidos` e rodar `npm run versao`.
-2. **768–1199 px:** a linha inteira do desktop não cabe nessa faixa. Por isso tirei o "Friday", encolhi o medidor e, até 1023 px, escondi o botão. Ok?
+Nenhuma. `vendidos` e `meta` foram confirmados, e para atualizar o número real basta mudar `vendidos` e rodar `npm run versao`.

@@ -1,8 +1,17 @@
 /* Tarja de escassez da LP (pedido do cliente, 16/11): "Os planos da Black Friday estão acabando", o medidor dos planos
-   vendidos, a % e o botão "Garantir o meu". Substitui a tarja do timer só na LP (o quiz segue com css/tarja.css).
+   vendidos e a %. Substitui a tarja do timer só na LP (o quiz segue com css/tarja.css).
    Lógica em js/modulos/escassez.js (TARJA_ESCASSEZ em js/config.js). A tarja inteira é um link para #planos.
    Fica grudada no topo (sticky) com altura fixa (--tarja-altura), que a nav e as âncoras descontam (topo.css).
-   Desktop: 64 px, uma linha. Até 767 px: 76 px, duas linhas (texto + % em cima, medidor embaixo), sem o botão. */
+   Desktop: 64 px, uma linha. Até 767 px: 76 px, duas linhas (texto + % em cima, medidor embaixo). Sem botão: o
+   "Aproveitar" da nav já cumpre esse papel, e a tarja inteira é o link. */
+
+/* --p: a fonte única do medidor. O JS põe o valor e a transição anima só esta variável; o preenchimento (clip-path) e a
+   ponta (translateX) derivam dela, então andam juntos quadro a quadro. Nenhum dos dois desloca o layout. */
+@property --p {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
+}
 
 :root {
   --tarja-altura: 64px;
@@ -19,7 +28,8 @@ html.tarja-encerrada {
 }
 
 .escassez {
-  --escassez: 0%; /* o JS põe o valor; a transição faz a entrada de 0 até ele */
+  --p: 0%;
+  transition: --p 1.2s cubic-bezier(.16, 1, .3, 1);
   --tinta: #0E0B0A;
   position: sticky;
   top: 0;
@@ -124,14 +134,14 @@ html.tarja-encerrada {
   background: rgba(14, 11, 10, .28);
 }
 
+/* o preenchimento ocupa o trilho inteiro e é recortado até --p (o degradê fica do tamanho do trilho, como antes ao 100%) */
 .escassez__preench {
   position: absolute;
-  inset: 0 auto 0 0;
-  width: var(--escassez);
+  inset: 0;
   overflow: hidden;
   border-radius: 999px;
   background: linear-gradient(90deg, #FFA25C, #FF6A1A 45%, #F2441F 75%, #E52B24);
-  transition: width 1.2s cubic-bezier(.16, 1, .3, 1);
+  clip-path: inset(0 calc(100% - var(--p)) 0 0 round 999px);
 }
 
 /* listras diagonais correndo para a direita */
@@ -163,7 +173,8 @@ html.tarja-encerrada {
   animation: escassez-brilho 3.6s ease-in-out 1.4s infinite;
 }
 
-/* com transform (e não left): sem deslocamento de layout. 400% da largura do brilho = 120% do preenchimento */
+/* com transform (e não left): sem deslocamento de layout. 400% da largura do brilho = 120% do trilho (o recorte só
+   mostra até --p) */
 @keyframes escassez-brilho {
   0% {
     transform: translateX(-140%) skewX(-20deg);
@@ -175,13 +186,12 @@ html.tarja-encerrada {
   }
 }
 
-/* a ponta: anda com transform (sem deslocamento de layout). O trilho dela tem a largura do medidor, então o
-   translateX em % é relativo ao medidor: (valor − 100%) põe a borda direita do trilho no valor */
+/* a ponta: o trilho dela tem a largura do medidor, então o translateX em % é relativo ao medidor: (--p − 100%) põe a
+   borda direita do trilho, onde fica o círculo, exatamente no fim do recorte do preenchimento */
 .escassez__trilho-ponta {
   position: absolute;
   inset: 0;
-  transform: translateX(calc(var(--escassez) - 100%));
-  transition: transform 1.2s cubic-bezier(.16, 1, .3, 1);
+  transform: translateX(calc(var(--p) - 100%));
   pointer-events: none;
 }
 
@@ -199,12 +209,13 @@ html.tarja-encerrada {
   transform: translate(50%, -50%);
 }
 
-/* d) a porcentagem */
+/* d) a porcentagem: "78%" e, alinhado pela base, "dos planos vendidos" (no mobile, "vendidos") */
 .escassez__pct {
-  display: grid;
-  justify-items: center;
-  gap: 2px;
+  display: flex;
   flex: 0 0 auto;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
 }
 
 .escassez__num {
@@ -226,42 +237,8 @@ html.tarja-encerrada {
 }
 
 .escassez__rotulo {
-  font: 800 10px/1 var(--fonte-display);
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: rgba(14, 11, 10, .62);
-}
-
-/* e) o botão (dentro do link da tarja: um span com cara de botão) */
-.escassez__btn {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 12px;
-  height: 38px;
-  padding: 4px 4px 4px 16px;
-  border-radius: 10px 0;
-  background: var(--tinta);
-  font: 700 13px/1 var(--fonte-impacto);
-  letter-spacing: .02em;
-  white-space: nowrap;
-  color: #fff;
-  transition: transform var(--dur-2) var(--curva);
-}
-
-.escassez__btn i {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: var(--raio-gota);
-  background: var(--grad-marca-brilho), var(--grad-marca);
-  box-shadow: var(--sombra-material);
-  color: #fff;
-}
-
-.escassez:hover .escassez__btn {
-  transform: translateY(-1px);
+  font: 600 14px/1 var(--fonte-texto);
+  color: rgba(14, 11, 10, .72);
 }
 
 .escassez__friday,
@@ -273,18 +250,14 @@ html.tarja-encerrada {
   display: none;
 }
 
-/* ========== 768–1199 px: medidor e espaços menores; sem "Friday" ========== */
-@media (max-width: 1199.98px) {
+/* ========== 768–1023 px: medidor e espaços menores; sem "Friday" (não cabe; a partir de 1024 cabe a frase inteira) ========== */
+@media (max-width: 1023.98px) {
   .escassez {
     gap: 18px;
   }
 
   .escassez__medidor {
-    width: 200px;
-  }
-
-  .escassez__texto {
-    font-size: 15px;
+    width: 180px;
   }
 
   .escassez__friday {
@@ -292,18 +265,7 @@ html.tarja-encerrada {
   }
 }
 
-/* 768–1023 px: sem o botão (a tarja inteira já é o link) */
-@media (max-width: 1023.98px) {
-  .escassez__btn {
-    display: none;
-  }
-
-  .escassez__medidor {
-    width: 220px;
-  }
-}
-
-/* ========== MOBILE (até 767 px): duas linhas, sem botão ========== */
+/* ========== MOBILE (até 767 px): duas linhas ========== */
 @media (max-width: 767px) {
   .escassez {
     display: grid;
@@ -324,9 +286,7 @@ html.tarja-encerrada {
 
   .escassez__pct {
     grid-area: pct;
-    display: flex;
-    align-items: baseline;
-    gap: 5px;
+    gap: 6px;
   }
 
   .escassez__num {
@@ -339,6 +299,7 @@ html.tarja-encerrada {
 
   .escassez__rotulo--curto {
     display: inline;
+    font-size: 12px;
   }
 
   .escassez__medidor {
@@ -374,10 +335,6 @@ html.tarja-encerrada {
   .escassez__pct {
     gap: 4px;
   }
-
-  .escassez__rotulo {
-    letter-spacing: .1em;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -391,9 +348,7 @@ html.tarja-encerrada {
     display: none;
   }
 
-  .escassez__preench,
-  .escassez__trilho-ponta,
-  .escassez__btn {
+  .escassez {
     transition: none;
   }
 }
