@@ -323,6 +323,15 @@ Pelo P5, tudo passa de 4,5:1. Os piores pixels ficam abaixo disso porque são gr
 - `{390,1024,1440}-reduzido.png` (com movimento reduzido);
 - `{360,390,1024,1440}-meio-do-reflexo.png` (com a animação parada no meio da travessia).
 
+## "acabando" branco (16/11)
+
+Commit `ajuste: tarja de escassez com "acabando" branco`.
+
+- "acabando" agora tem a cor e o peso do resto da frase: branco, 700. O pêssego saiu.
+- Continua só o sublinhado laranja #FF6A1A embaixo da palavra.
+- **Contraste:** o mesmo da mensagem branca (P5 ≥ 5,8:1).
+- **Prints:** `shots/escassez-vivo/{390,1440}-branco-{parada,rolada}.png`.
+
 ## Perguntas / pendências
 
 Nenhuma. `vendidos` e `meta` foram confirmados, e para atualizar o número real basta mudar `vendidos` e rodar `npm run versao`.
