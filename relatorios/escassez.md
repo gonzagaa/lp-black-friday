@@ -268,6 +268,61 @@ Commit `ajuste: tarja de escassez no azul da Zero7, maior`. Substitui as cores e
 
 `shots/escassez-azul/{360,390,768,1024,1100,1280,1440,1920}-topo.png` e `1440-desligada.png`.
 
+## Fundo vivo e "acabando" mais legível (16/11)
+
+Commit `ajuste: tarja de escassez com fundo vivo e "acabando" em pêssego`.
+
+### 1. Fundo com textura e movimento
+
+O degradê azul continua como base. Por cima, atrás do conteúdo, entram as camadas:
+
+- **Grão:** o mesmo da LP (`grain.png`, que entra depois do load, como no resto da página), em soft-light a .18.
+- **Aurora:** duas manchas grandes e difusas (ciano e azul-violeta, com blur fixo), derivando em sentidos opostos com `translateX` ±16–18%, em 16 s e 14 s, ease-in-out e alternate.
+- **Trama de pontos:** 1 px a cada 14 px, em branco .06, sumindo nas pontas.
+- **Reflexo:** um feixe diagonal branco (.12, 120 px, skew −20°) atravessa a tarja a cada 6 s, em 1,2 s.
+  - O brilho do preenchimento laranja usa **a mesma animação** (6 s, 1,2 s de travessia, mesma curva e mesmo atraso), deslocada por `--mx`, que é onde o medidor começa na tela (o JS mede).
+  - Os dois são o mesmo feixe: no meio da travessia, ficam no mesmo x da tela (390: 135 = 135; 1024: 452 = 452; 1440: 660 = 660; 360: 120 = 120).
+- **Desempenho:** só `transform` é animado (o blur é fixo).
+- **Movimento reduzido:** a aurora para e o reflexo some; o grão e os pontos ficam. Testado: nenhuma animação ativa.
+
+**Ajuste para não baixar o contraste:** com os valores do pedido (aurora ciano .35 e violeta .25, grão em overlay a .22), o texto perdia contraste. A mensagem branca caía de 7,2 para 4,9:1 no pior ponto, e o grão em overlay acendia pontos claros. Por isso:
+- a aurora ficou em .22 e .18;
+- o grão foi para soft-light a .18.
+
+O fundo continua vivo.
+
+### 2. "acabando" legível, sem fundo atrás
+
+- **Cor:** pêssego claro, degradê #FFE8D2 → #FFDAB6, em 800. O #FFC08A e o #FFB070 do pedido ficavam em ~4,2 e ~3,7:1 no ponto mais claro (a luz ciano do topo somada à aurora).
+- **Sublinhado:** #FF6A1A embaixo da palavra, com 3 px, raio e brilho leve. No mobile, 2,5 px e mais perto da palavra.
+- **Sombra no texto:** sem o text-shadow opcional. Com o texto em degradê (background-clip), ele embaça as letras.
+
+### Contraste medido atrás do texto
+
+- **Como medi:** a aurora parada em 6 fases do movimento. Em cada fase, o texto foi escondido e cada pixel do fundo atrás dele foi comparado com a cor do texto.
+- **P5:** o contraste que 95% desses pixels superam; é a medida usual de texto sobre textura.
+- **Pior pixel:** o grão isolado mais claro de todas as fases.
+
+| Largura | "acabando" P5 (pior pixel) | Mensagem branca P5 (pior) | "78%" P5 (pior) | "dos planos vendidos" P5 (pior) |
+|---|---|---|---|---|
+| 360 | 4,64 (3,98) | 6,01 (5,01) | 6,61 (5,62) | 4,61 (4,38) |
+| 390 | 4,65 (4,16) | 6,01 (5,04) | 6,61 (5,83) | 4,63 (4,42) |
+| 1024 | 4,79 (4,25) | 5,81 (4,91) | 6,18 (5,66) | 4,71 (4,17) |
+| 1440 | 4,99 (4,24) | 7,14 (5,57) | 6,54 (5,75) | 4,65 (4,27) |
+
+Pelo P5, tudo passa de 4,5:1. Os piores pixels ficam abaixo disso porque são grãos isolados do ruído.
+
+### Testes
+
+- 390, 1024, 1440 e 360 px, com e sem movimento reduzido: CLS 0 e nenhum erro.
+- `npm run versao` e `--conferir` OK.
+
+### Prints (shots/escassez-vivo/)
+
+- `{360,390,1024,1440}-normal.png` (sem movimento reduzido);
+- `{390,1024,1440}-reduzido.png` (com movimento reduzido);
+- `{360,390,1024,1440}-meio-do-reflexo.png` (com a animação parada no meio da travessia).
+
 ## Perguntas / pendências
 
 Nenhuma. `vendidos` e `meta` foram confirmados, e para atualizar o número real basta mudar `vendidos` e rodar `npm run versao`.

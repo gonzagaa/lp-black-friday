@@ -47,6 +47,116 @@ html.tarja-encerrada {
   display: none;
 }
 
+/* o conteúdo fica acima das camadas do fundo */
+.escassez > :not(.escassez__fundo) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== FUNDO VIVO (pedido de 16/11): aurora lenta, trama de pontos, grão e um reflexo de tempos em tempos ==========
+   Tudo atrás do conteúdo, sutil, e animado só com transform (nada de filter, background-position ou width animados).
+   Com movimento reduzido: a aurora para e o reflexo some; o grão e os pontos ficam. */
+.escassez__fundo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* aurora: duas manchas grandes e difusas (ciano .22 e azul-violeta .18; com .35/.25, o texto perdia contraste), derivando devagar em sentidos opostos. O blur é fixo;
+   só o transform anda */
+.escassez__fundo::before,
+.escassez__fundo::after {
+  content: "";
+  position: absolute;
+  top: -120%;
+  width: 46%;
+  height: 340%;
+  border-radius: 50%;
+  filter: blur(42px);
+  will-change: transform;
+}
+
+.escassez__fundo::before {
+  left: 8%;
+  background: radial-gradient(closest-side, rgba(29, 164, 243, .22), transparent);
+  animation: escassez-aurora-a 16s ease-in-out infinite alternate;
+}
+
+.escassez__fundo::after {
+  right: 6%;
+  background: radial-gradient(closest-side, rgba(59, 91, 255, .18), transparent);
+  animation: escassez-aurora-b 14s ease-in-out infinite alternate;
+}
+
+@keyframes escassez-aurora-a {
+  from {
+    transform: translateX(-18%);
+  }
+
+  to {
+    transform: translateX(18%);
+  }
+}
+
+@keyframes escassez-aurora-b {
+  from {
+    transform: translateX(16%);
+  }
+
+  to {
+    transform: translateX(-16%);
+  }
+}
+
+/* trama de pontos bem fina, sumindo nas pontas */
+.escassez__pontos {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(rgba(255, 255, 255, .06) 1px, transparent 1.2px) 0 0 / 14px 14px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
+}
+
+/* grão: o mesmo da LP (entra depois do load, com o html.grao-pronto do base.css), em overlay */
+.escassez__grao {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  background-size: 240px;
+  mix-blend-mode: soft-light; /* soft-light, e não overlay: o overlay acendia pontos claros atrás do texto */
+  opacity: .18;
+}
+
+.grao-pronto .escassez__grao {
+  background-image: url(../assets/texturas/grain.png?v=202611161611);
+}
+
+/* reflexo: um feixe diagonal branco atravessa a tarja a cada 6 s, em 1,2 s. O brilho do preenchimento usa a mesma
+   animação, deslocada por --mx (onde o medidor começa): os dois são o mesmo feixe */
+.escassez__reflexo {
+  position: absolute;
+  top: -10px;
+  bottom: -10px;
+  left: 0;
+  width: 120px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .12), transparent);
+  transform: translateX(-200px) skewX(-20deg);
+  animation: escassez-reflexo 6s ease-in-out 1.4s infinite;
+}
+
+@keyframes escassez-reflexo {
+  0% {
+    transform: translateX(-200px) skewX(-20deg);
+  }
+
+  20%,
+  100% {
+    transform: translateX(calc(100vw + 80px)) skewX(-20deg);
+  }
+}
+
 /* filete de 3 px no degradê laranja da marca, sem glow */
 .escassez::after {
   content: "";
@@ -87,9 +197,9 @@ html.tarja-encerrada {
   }
 }
 
-/* b) a frase: branca, com "acabando" no laranja claro (#FFB37A → #FFA25C). Contraste medido pixel a pixel atrás do
-   "acabando", no pior ponto (onde a luz do topo mais clareia o azul): no mínimo 3:1 em todas as larguras. Com o fim do
-   degradê em #FF8A3D, caía para 2,85:1 no mobile. */
+/* b) a frase: branca, com "acabando" num pêssego claro (#FFE8D2 → #FFDAB6), bem mais brilhante que o azul, e o
+   sublinhado laranja forte da marca embaixo. Contraste medido pixel a pixel atrás da palavra, no pior ponto (a luz do
+   topo e a aurora): no mínimo 4,5:1. (#FFC08A e #FFB070, sugeridos, ficavam em ~4,2 e ~3,7:1 nesse ponto.) */
 .escassez__texto {
   display: flex;
   align-items: center;
@@ -99,11 +209,24 @@ html.tarja-encerrada {
 }
 
 .escassez__acabando {
+  position: relative;
   font-weight: 800;
-  background: linear-gradient(90deg, #FFB37A, #FFA25C);
+  background: linear-gradient(90deg, #FFE8D2, #FFDAB6);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.escassez__acabando::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 3px;
+  border-radius: 2px;
+  background: #FF6A1A;
+  box-shadow: 0 0 8px rgba(255, 106, 26, .55);
 }
 
 /* c) o medidor: trilho quase preto azulado, preenchimento no laranja da marca (o complementar do azul) */
@@ -162,22 +285,21 @@ html.tarja-encerrada {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 30%;
+  width: 120px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent);
-  transform: translateX(-140%) skewX(-20deg);
-  animation: escassez-brilho 3.6s ease-in-out 1.4s infinite;
+  transform: translateX(calc(-200px - var(--mx, 0px))) skewX(-20deg);
+  animation: escassez-brilho 6s ease-in-out 1.4s infinite;
 }
 
-/* com transform (e não left): sem deslocamento de layout. 400% da largura do brilho = 120% do trilho (o recorte só
-   mostra até --p) */
+/* o mesmo trajeto do reflexo da tarja, em coordenadas da tela (menos --mx, porque o preenchimento começa no medidor) */
 @keyframes escassez-brilho {
   0% {
-    transform: translateX(-140%) skewX(-20deg);
+    transform: translateX(calc(-200px - var(--mx, 0px))) skewX(-20deg);
   }
 
-  35%,
+  20%,
   100% {
-    transform: translateX(400%) skewX(-20deg);
+    transform: translateX(calc(100vw + 80px - var(--mx, 0px))) skewX(-20deg);
   }
 }
 
@@ -322,6 +444,12 @@ html.tarja-encerrada {
     font-size: 15px;
   }
 
+  /* o sublinhado mais perto da palavra: a linha de baixo (o medidor) está a 10 px */
+  .escassez__acabando::after {
+    bottom: -3px;
+    height: 2.5px;
+  }
+
   /* no mobile: "Os planos da Black estão acabando" */
   .escassez__friday {
     display: none;
@@ -381,8 +509,15 @@ html.tarja-encerrada {
 @media (prefers-reduced-motion: reduce) {
   .escassez__ponto,
   .escassez__preench::before,
-  .escassez__preench::after {
+  .escassez__preench::after,
+  .escassez__fundo::before,
+  .escassez__fundo::after,
+  .escassez__reflexo {
     animation: none;
+  }
+
+  .escassez__reflexo {
+    display: none;
   }
 
   .escassez__preench::after {

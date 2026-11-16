@@ -1,7 +1,7 @@
 // Versão do deploy, para o cache busting (o ?v= de todos os arquivos locais).
 // NÃO edite à mão: `npm run versao` troca o valor aqui e em todos os ?v= do HTML, do CSS e dos imports dos módulos
 // (scripts/versao.mjs). Rode antes de cada deploy. Vale para a LP e para o quiz.
-export const VERSAO = '202611161558';
+export const VERSAO = '202611161611';
 
 // Para os endereços que o JS monta em tempo de execução (vídeos, posters, 3D, vendor): acrescenta ?v= antes do #.
 export function comVersao(url) {

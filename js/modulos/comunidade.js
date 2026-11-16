@@ -16,8 +16,8 @@
 // O "perto" e o "na tela" de cada card são calculados pela posição dele (o carrossel recorta os cards de fora no
 // eixo X, e um IntersectionObserver com margem não enxerga além desse recorte).
 
-import { carregarSwiper } from './home/carrosselPlanos.js?v=202611161558';
-import { comVersao } from '../versao.js?v=202611161558';
+import { carregarSwiper } from './home/carrosselPlanos.js?v=202611161611';
+import { comVersao } from '../versao.js?v=202611161611';
 
 export const MIDIA = [
   {
