@@ -1,0 +1,399 @@
+/* Tarja de escassez da LP (pedido do cliente, 16/11): "Os planos da Black Friday estão acabando", o medidor dos planos
+   vendidos, a % e o botão "Garantir o meu". Substitui a tarja do timer só na LP (o quiz segue com css/tarja.css).
+   Lógica em js/modulos/escassez.js (TARJA_ESCASSEZ em js/config.js). A tarja inteira é um link para #planos.
+   Fica grudada no topo (sticky) com altura fixa (--tarja-altura), que a nav e as âncoras descontam (topo.css).
+   Desktop: 64 px, uma linha. Até 767 px: 76 px, duas linhas (texto + % em cima, medidor embaixo), sem o botão. */
+
+:root {
+  --tarja-altura: 64px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --tarja-altura: 76px;
+  }
+}
+
+html.tarja-encerrada {
+  --tarja-altura: 0px;
+}
+
+.escassez {
+  --escassez: 0%; /* o JS põe o valor; a transição faz a entrada de 0 até ele */
+  --tinta: #0E0B0A;
+  position: sticky;
+  top: 0;
+  z-index: 70; /* acima da nav (60) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  height: var(--tarja-altura);
+  padding-inline: 16px;
+  background:
+    radial-gradient(40% 220% at 50% 0%, rgba(255, 138, 61, .22), transparent 70%),
+    radial-gradient(30% 200% at 100% 100%, rgba(229, 43, 36, .10), transparent 70%),
+    linear-gradient(#FFFFFF, #FFF7F1);
+  box-shadow: 0 14px 30px -16px rgba(0, 0, 0, .75);
+  color: var(--tinta);
+  text-decoration: none;
+}
+
+.escassez[hidden] {
+  display: none;
+}
+
+/* filete de 3 px no degradê da marca, com brilho */
+.escassez::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: var(--grad-marca-horizontal);
+  box-shadow: 0 0 14px rgba(255, 106, 26, .55);
+  pointer-events: none;
+}
+
+.escassez:hover {
+  color: var(--tinta);
+}
+
+.escassez:focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: -5px; /* por dentro: em cima, a borda da janela cortaria o contorno */
+}
+
+/* a) "ao vivo": o quadradinho no degradê com um anel pulsando */
+.escassez__ponto {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px 0;
+  background: var(--grad-marca);
+  box-shadow: 0 0 0 0 rgba(255, 106, 26, .55);
+  animation: escassez-pulso 2s var(--curva) infinite;
+}
+
+@keyframes escassez-pulso {
+  70% {
+    box-shadow: 0 0 0 7px rgba(255, 106, 26, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 106, 26, 0);
+  }
+}
+
+/* b) a frase */
+.escassez__texto {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 700 16px/1.2 var(--fonte-texto);
+  white-space: nowrap;
+}
+
+.escassez__acabando {
+  font-weight: 800;
+  background: linear-gradient(90deg, #F2441F, #E52B24);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* c) o medidor */
+.escassez__medidor {
+  flex: 0 0 auto;
+  position: relative;
+  width: 300px;
+  height: 14px;
+  border-radius: 999px;
+  background: #EFE7DF;
+  box-shadow: inset 0 1px 2px rgba(14, 11, 10, .14);
+}
+
+/* traço fino no fim do trilho: o 100% */
+.escassez__medidor::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  right: 0;
+  width: 2px;
+  border-radius: 1px;
+  background: rgba(14, 11, 10, .28);
+}
+
+.escassez__preench {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--escassez);
+  overflow: hidden;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #FFA25C, #FF6A1A 45%, #F2441F 75%, #E52B24);
+  transition: width 1.2s cubic-bezier(.16, 1, .3, 1);
+}
+
+/* listras diagonais correndo para a direita */
+.escassez__preench::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, .28) 0 4px, transparent 4px 8px);
+  background-size: 11.31px 100%; /* um período das listras a −45° (8 px × √2) */
+  animation: escassez-listras .9s linear infinite;
+}
+
+@keyframes escassez-listras {
+  to {
+    background-position: 11.31px 0;
+  }
+}
+
+/* brilho que atravessa o preenchimento de tempos em tempos */
+.escassez__preench::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent);
+  transform: translateX(-140%) skewX(-20deg);
+  animation: escassez-brilho 3.6s ease-in-out 1.4s infinite;
+}
+
+/* com transform (e não left): sem deslocamento de layout. 400% da largura do brilho = 120% do preenchimento */
+@keyframes escassez-brilho {
+  0% {
+    transform: translateX(-140%) skewX(-20deg);
+  }
+
+  35%,
+  100% {
+    transform: translateX(400%) skewX(-20deg);
+  }
+}
+
+/* a ponta: anda com transform (sem deslocamento de layout). O trilho dela tem a largura do medidor, então o
+   translateX em % é relativo ao medidor: (valor − 100%) põe a borda direita do trilho no valor */
+.escassez__trilho-ponta {
+  position: absolute;
+  inset: 0;
+  transform: translateX(calc(var(--escassez) - 100%));
+  transition: transform 1.2s cubic-bezier(.16, 1, .3, 1);
+  pointer-events: none;
+}
+
+/* círculo branco com borda vermelha, halo e brilho laranja */
+.escassez__ponta {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #E52B24;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(229, 43, 36, .18), 0 0 12px rgba(255, 106, 26, .6);
+  transform: translate(50%, -50%);
+}
+
+/* d) a porcentagem */
+.escassez__pct {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+
+.escassez__num {
+  font: 800 30px/1 var(--fonte-display);
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, #F2441F, #C81E1A);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.escassez__num small {
+  font-size: .58em;
+}
+
+/* os números só aparecem depois do primeiro cálculo (a largura já está reservada pelo "00") */
+.escassez:not([data-pronto]) .escassez__num b {
+  visibility: hidden;
+}
+
+.escassez__rotulo {
+  font: 800 10px/1 var(--fonte-display);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(14, 11, 10, .62);
+}
+
+/* e) o botão (dentro do link da tarja: um span com cara de botão) */
+.escassez__btn {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 12px;
+  height: 38px;
+  padding: 4px 4px 4px 16px;
+  border-radius: 10px 0;
+  background: var(--tinta);
+  font: 700 13px/1 var(--fonte-impacto);
+  letter-spacing: .02em;
+  white-space: nowrap;
+  color: #fff;
+  transition: transform var(--dur-2) var(--curva);
+}
+
+.escassez__btn i {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--raio-gota);
+  background: var(--grad-marca-brilho), var(--grad-marca);
+  box-shadow: var(--sombra-material);
+  color: #fff;
+}
+
+.escassez:hover .escassez__btn {
+  transform: translateY(-1px);
+}
+
+.escassez__friday,
+.escassez__rotulo--curto {
+  display: inline;
+}
+
+.escassez__rotulo--curto {
+  display: none;
+}
+
+/* ========== 768–1199 px: medidor e espaços menores; sem "Friday" ========== */
+@media (max-width: 1199.98px) {
+  .escassez {
+    gap: 18px;
+  }
+
+  .escassez__medidor {
+    width: 200px;
+  }
+
+  .escassez__texto {
+    font-size: 15px;
+  }
+
+  .escassez__friday {
+    display: none;
+  }
+}
+
+/* 768–1023 px: sem o botão (a tarja inteira já é o link) */
+@media (max-width: 1023.98px) {
+  .escassez__btn {
+    display: none;
+  }
+
+  .escassez__medidor {
+    width: 220px;
+  }
+}
+
+/* ========== MOBILE (até 767 px): duas linhas, sem botão ========== */
+@media (max-width: 767px) {
+  .escassez {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "texto pct"
+      "medidor medidor";
+    align-content: center;
+    gap: 9px 12px;
+    padding: 0 16px 3px;
+  }
+
+  .escassez__texto {
+    grid-area: texto;
+    gap: 8px;
+    font-size: 13.5px;
+  }
+
+  .escassez__pct {
+    grid-area: pct;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+  }
+
+  .escassez__num {
+    font-size: 24px;
+  }
+
+  .escassez__rotulo--longo {
+    display: none;
+  }
+
+  .escassez__rotulo--curto {
+    display: inline;
+  }
+
+  .escassez__medidor {
+    grid-area: medidor;
+    width: auto;
+    height: 10px;
+    margin-inline: 8px; /* a ponta (16 px) não encosta nas bordas no 0% nem no 99% */
+  }
+
+  .escassez__ponta {
+    width: 16px;
+    height: 16px;
+    border-width: 3px;
+  }
+}
+
+/* até 389 px (ex.: 360): a linha de cima aperta para não encostar nas bordas */
+@media (max-width: 389.98px) {
+  .escassez {
+    column-gap: 8px;
+    padding-inline: 12px;
+  }
+
+  .escassez__texto {
+    gap: 7px;
+    font-size: 12.5px;
+  }
+
+  .escassez__num {
+    font-size: 22px;
+  }
+
+  .escassez__pct {
+    gap: 4px;
+  }
+
+  .escassez__rotulo {
+    letter-spacing: .1em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .escassez__ponto,
+  .escassez__preench::before,
+  .escassez__preench::after {
+    animation: none;
+  }
+
+  .escassez__preench::after {
+    display: none;
+  }
+
+  .escassez__preench,
+  .escassez__trilho-ponta,
+  .escassez__btn {
+    transition: none;
+  }
+}

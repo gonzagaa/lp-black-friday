@@ -31,14 +31,14 @@ html.menu-aberto {
 
 /* ========== NAV ========== */
 /* Rolando, o conteúdo aparecia cortado no vão de 16 px entre a tarja e a nav: um degradê que sai da cor da base da
-   tarja clara e some no topo da nav esconde o vão. Só com a nav grudada (.nav--opaca, depois de 80 px); o vidro da nav
+   tarja (a de escassez, #FFF7F1) e some no topo da nav esconde o vão. Só com a nav grudada (.nav--opaca, depois de 80 px); o vidro da nav
    não muda. */
 .cabecalho::before {
   content: "";
   position: absolute;
   inset: auto 0 100%;
   height: 17px; /* o vão + 1 px de sobra, sem fresta */
-  background: linear-gradient(180deg, #f6f3ee 0%, rgba(246, 243, 238, .55) 45%, rgba(246, 243, 238, 0) 100%);
+  background: linear-gradient(180deg, #FFF7F1 0%, rgba(255, 247, 241, .55) 45%, rgba(255, 247, 241, 0) 100%);
   opacity: 0;
   transition: opacity var(--dur-3);
   pointer-events: none;
@@ -173,7 +173,7 @@ html.tarja-encerrada .cabecalho::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: url(../../assets/texturas/grain.png?v=202611151823) repeat;
+  background: url(../../assets/texturas/grain.png?v=202611161448) repeat;
   background-size: 240px;
   opacity: .55;
   mix-blend-mode: soft-light;

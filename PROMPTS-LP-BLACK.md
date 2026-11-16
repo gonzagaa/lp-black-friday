@@ -54,6 +54,7 @@ Estes textos **não estão na copy**. Eles entram na LP, mas cada relatório pre
 | Quiz (rodapé legal) | "© 2026 Zero7 Tesouraria LTDA \| CNPJ: 49.452.697/0001-20 · Todos os direitos reservados. · Política de Privacidade" (textos do rodapé da LP, juntos numa linha) |
 | Tarja do topo (LP e quiz) | "Essa oferta se encerra em:" e as unidades "d", "h", "m", "s" (os mesmos da tarja da home no ar); leitor de tela: "Essa oferta se encerra em X horas e Y minutos" (na LP, o link da tarja acrescenta "Ver os planos.", aprovado em 04/11) |
 | VSL (#vsl) | selo "Assista antes de escolher"; título "Entenda o maior pacote" / "de benefícios da história."; subtítulo "Em poucos minutos, veja tudo o que vem no plano Black: 80% OFF e 7 benefícios extras sem custo."; aria-label do play "Assistir ao vídeo: Entenda o maior pacote de benefícios da Zero7" (do pedido, 12/11); title do iframe "Entenda o maior pacote de benefícios da história da Zero7" e alt da capa "Capa do vídeo: os benefícios do plano Black listados na tela, com o apresentador no canto" (meus) |
+| Tarja de escassez (LP, 16/11) | "Os planos da Black Friday estão acabando" (desktop) / "Os planos da Black estão acabando" (mobile); "Dos planos vendidos" (desktop) / "Vendidos" (mobile); botão "Garantir o meu"; leitor de tela: "78% dos planos vendidos" (o medidor) e "Ver os planos." (o link). Todos do pedido |
 
 ## Pendências de negócio (não bloqueiam as fases)
 

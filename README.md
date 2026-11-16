@@ -79,12 +79,36 @@ Depois de publicar, confira:
 |---|---|
 | Preços, checkout, modo (30/60 dias, reinício) e prazo de cada plano | `data/planos.json`. Depois, rode `npm run planos:snapshot`, que gera o fallback usado se o fetch falhar. **Nunca escreva preço ou URL de checkout no HTML.** |
 | Data de término da Black e endereço do planos.json | `js/config.js` (`BLACK_FIM` e `PLANOS_URL`). |
-| Tarja do topo (timer de 24 horas, LP e quiz) | HTML no topo do `index.html` e do `quiz/index.html` (para desligar, apague o bloco), estilo em `css/tarja.css`, lógica em `js/modulos/tarja.js`. Zera todo dia às `TARJA_HORA_DIARIA` (23:59:59) até o `BLACK_FIM`, os dois em `js/config.js`. |
+| Tarja do topo (timer de 24 horas, só o quiz desde 16/11) | HTML no topo do `quiz/index.html` (para desligar, apague o bloco), estilo em `css/tarja.css`, lógica em `js/modulos/tarja.js`. Zera todo dia às `TARJA_HORA_DIARIA` (23:59:59) até o `BLACK_FIM`, os dois em `js/config.js`. |
+| Tarja de escassez da LP ("Os planos da Black Friday estão acabando" + % vendidos) | `TARJA_ESCASSEZ` em `js/config.js` (ver "Tarja de escassez" abaixo). Estilo em `css/escassez.css`, lógica em `js/modulos/escassez.js`. |
 | Cards e vídeos da comunidade | Array `MIDIA` em `js/modulos/comunidade.js`. Cada item tem `titulo`, `descricao`, `video: { mp4, webm? }` e `poster`. Os vídeos ficam em `assets/video/`, em 9:16, sem som (tocam mudos e em loop). O poster vai em AVIF ou WebP. |
 | Textos | `index.html`. Use a copy aprovada palavra por palavra. |
 | Cores, raios, degradê da marca e durações | `css/tokens.css`. |
 | Pele da seção de planos | `css/secoes/planos-black.css`. O `css/secoes/planos.css` é **gerado** a partir da home (veja abaixo); não edite à mão. |
 | Imagem de compartilhamento e favicons | Gerados por `node scripts/gerar-icones-og.mjs`, com o `npm run dev` rodando. |
+
+### Tarja de escassez (LP)
+
+A tarja do topo da LP mostra "Os planos da Black Friday estão acabando" e um medidor com a % dos planos vendidos. Tudo se ajusta em `TARJA_ESCASSEZ`, no `js/config.js`:
+
+```js
+export const TARJA_ESCASSEZ = {
+  ativo: true,                            // false: a tarja some e a nav volta ao topo
+  vendidos: 3100,                         // o número real de planos vendidos
+  meta: 4000,                             // o total de planos da Black
+  inicio: '2026-11-16T13:35:00-03:00',    // começo da rampa
+  fim: '2026-11-19T23:59:59-03:00',       // fim da rampa (depois dele, fica no teto)
+  teto: 99,                               // nunca mostra 100
+  curva: 1.6,                             // > 1: sobe mais rápido no começo e desacelera perto do fim
+};
+```
+
+- **Atualizar o número real:** mude só `vendidos`. A tarja mostra o maior entre o real (`vendidos / meta`) e a rampa. Se o real passar da rampa, vale o real.
+- **A rampa:** sai do real no `inicio` e sobe até o `teto` no `fim`: `base + (teto − base) × (1 − (1 − x)^curva)`, com `x` = fração do tempo decorrido. Com os valores de hoje: seg 13:35 → 78%, ter 12h → 86%, qua 12h → 93%, qui 12h → 98%, qui à noite → 99%. Depois do `fim`, fica em 99.
+- **Desligar:** `ativo: false`.
+- Depois de qualquer mudança, rode `npm run versao` antes do deploy.
+- O valor é recalculado ao abrir a página e a cada 60 s, pelo relógio do navegador.
+- O quiz continua com a tarja do timer (`css/tarja.css` e `js/modulos/tarja.js`).
 
 ### Tracking
 

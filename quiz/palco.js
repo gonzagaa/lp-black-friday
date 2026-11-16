@@ -11,7 +11,7 @@
 // - inicio (opcional): o vídeo começa (e volta, a cada volta do loop) nesse segundo. Hoje nenhuma cena usa: o hub da P1
 //   é um arquivo reexportado só com o trecho limpo (hub-zero7-9x16-540-limpo.mp4, sem a abertura preta, a colagem e a
 //   comida e bebida; ver relatorios/quiz-ajustes.md), e o poster é o primeiro quadro dele.
-import { comVersao } from '../js/versao.js?v=202611151823';
+import { comVersao } from '../js/versao.js?v=202611161448';
 
 const V = '../assets/video/';
 const OBJ = '../assets/3d/';
