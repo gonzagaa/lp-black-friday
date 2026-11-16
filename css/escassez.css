@@ -2,9 +2,10 @@
    vendidos e a %. Substitui a tarja do timer só na LP (o quiz segue com css/tarja.css).
    Lógica em js/modulos/escassez.js (TARJA_ESCASSEZ em js/config.js). A tarja inteira é um link para #planos.
    Fica grudada no topo (sticky) com altura fixa (--tarja-altura), que a nav e as âncoras descontam (topo.css).
-   Desktop: 72 px, uma linha. Até 767 px: 76 px, duas linhas (a mensagem em cima; o medidor e "78% vendidos" embaixo).
-   A % é a estrela: maior que a mensagem e no azul da Zero7 (o complementar do laranja). Sem botão: o
-   "Aproveitar" da nav já cumpre esse papel, e a tarja inteira é o link. */
+   Tema azul da Zero7 (os tons do "7" do logo), com o laranja da marca como contraste complementar: o "ao vivo", o
+   "acabando", o preenchimento do medidor e o filete da base. Textos em branco.
+   Desktop: 84 px, uma linha. 768–1023 px e mobile: duas linhas (a mensagem em cima; o medidor e a % embaixo).
+   Sem botão: o "Aproveitar" da nav já cumpre esse papel, e a tarja inteira é o link. */
 
 /* --p: a fonte única do medidor. O JS põe o valor e a transição anima só esta variável; o preenchimento (clip-path) e a
    ponta (translateX) derivam dela, então andam juntos quadro a quadro. Nenhum dos dois desloca o layout. */
@@ -15,13 +16,7 @@
 }
 
 :root {
-  --tarja-altura: 72px;
-}
-
-@media (max-width: 767px) {
-  :root {
-    --tarja-altura: 76px;
-  }
+  --tarja-altura: 84px;
 }
 
 html.tarja-encerrada {
@@ -31,22 +26,20 @@ html.tarja-encerrada {
 .escassez {
   --p: 0%;
   transition: --p 1.2s cubic-bezier(.16, 1, .3, 1);
-  --tinta: #0E0B0A;
   position: sticky;
   top: 0;
   z-index: 70; /* acima da nav (60) */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 26px;
+  gap: 28px;
   height: var(--tarja-altura);
-  padding-inline: 16px;
+  padding: 0 16px 3px; /* os 3 px do filete */
   background:
-    radial-gradient(40% 220% at 50% 0%, rgba(255, 138, 61, .22), transparent 70%),
-    radial-gradient(30% 200% at 100% 100%, rgba(229, 43, 36, .10), transparent 70%),
-    linear-gradient(#FFFFFF, #FFF7F1);
+    radial-gradient(40% 200% at 50% 0%, rgba(29, 164, 243, .28), transparent 70%),
+    linear-gradient(90deg, #021F4D 0%, #06398F 45%, #0A4FB8 100%);
   box-shadow: 0 6px 16px -8px rgba(0, 0, 0, .55); /* sombra escura e sutil: separa a tarja sem clarear a nav */
-  color: var(--tinta);
+  color: #fff;
   text-decoration: none;
 }
 
@@ -54,7 +47,7 @@ html.tarja-encerrada {
   display: none;
 }
 
-/* filete de 3 px no degradê da marca (sem glow: o brilho laranja clareava a nav) */
+/* filete de 3 px no degradê laranja da marca, sem glow */
 .escassez::after {
   content: "";
   position: absolute;
@@ -65,82 +58,84 @@ html.tarja-encerrada {
 }
 
 .escassez:hover {
-  color: var(--tinta);
+  color: #fff;
 }
 
 .escassez:focus-visible {
-  outline: 2px solid var(--tinta);
+  outline: 2px solid #fff;
   outline-offset: -5px; /* por dentro: em cima, a borda da janela cortaria o contorno */
 }
 
-/* a) "ao vivo": o quadradinho no degradê com um anel pulsando */
+/* a) "ao vivo": o quadradinho laranja com um anel pulsando */
 .escassez__ponto {
   flex: 0 0 auto;
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 2px 0;
-  background: var(--grad-marca);
-  box-shadow: 0 0 0 0 rgba(255, 106, 26, .55);
+  background: #FF8A3D;
+  box-shadow: 0 0 0 0 rgba(255, 138, 61, .7);
   animation: escassez-pulso 2s var(--curva) infinite;
 }
 
 @keyframes escassez-pulso {
   70% {
-    box-shadow: 0 0 0 7px rgba(255, 106, 26, 0);
+    box-shadow: 0 0 0 8px rgba(255, 138, 61, 0);
   }
 
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 106, 26, 0);
+    box-shadow: 0 0 0 0 rgba(255, 138, 61, 0);
   }
 }
 
-/* b) a frase */
+/* b) a frase: branca, com "acabando" no laranja claro (#FFB37A → #FFA25C). Contraste medido pixel a pixel atrás do
+   "acabando", no pior ponto (onde a luz do topo mais clareia o azul): no mínimo 3:1 em todas as larguras. Com o fim do
+   degradê em #FF8A3D, caía para 2,85:1 no mobile. */
 .escassez__texto {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font: 700 18px/1.2 var(--fonte-texto);
+  gap: 11px;
+  font: 700 20px/1.2 var(--fonte-texto);
   white-space: nowrap;
 }
 
 .escassez__acabando {
   font-weight: 800;
-  background: linear-gradient(90deg, #F2441F, #E52B24);
+  background: linear-gradient(90deg, #FFB37A, #FFA25C);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* c) o medidor */
+/* c) o medidor: trilho quase preto azulado, preenchimento no laranja da marca (o complementar do azul) */
 .escassez__medidor {
   flex: 0 0 auto;
   position: relative;
-  width: 300px;
-  height: 16px;
+  width: 360px;
+  height: 20px;
   border-radius: 999px;
-  background: #0E0B0A; /* preto: o fim da barra fica evidente no fundo claro */
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08), inset 0 2px 4px rgba(0, 0, 0, .5);
+  background: #061633;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12), inset 0 2px 4px rgba(0, 0, 0, .45);
 }
 
-/* traço fino no fim do trilho, claro sobre o preto: o 100% */
+/* traço fino no fim do trilho: o 100% */
 .escassez__medidor::after {
   content: "";
   position: absolute;
-  top: 3px;
-  bottom: 3px;
-  right: 6px;
+  top: 4px;
+  bottom: 4px;
+  right: 8px;
   width: 2px;
   border-radius: 1px;
-  background: rgba(255, 255, 255, .35);
+  background: rgba(255, 255, 255, .4);
 }
 
-/* o preenchimento ocupa o trilho inteiro e é recortado até --p (o degradê fica do tamanho do trilho, como antes ao 100%) */
+/* o preenchimento ocupa o trilho inteiro e é recortado até --p (o degradê fica do tamanho do trilho) */
 .escassez__preench {
   position: absolute;
   inset: 0;
   overflow: hidden;
   border-radius: 999px;
-  background: linear-gradient(90deg, #FFA25C, #FF6A1A 45%, #F2441F 75%, #E52B24);
+  background: linear-gradient(90deg, #FFA25C, #FF6A1A 55%, #F2441F);
   clip-path: inset(0 calc(100% - var(--p)) 0 0 round 999px);
 }
 
@@ -195,44 +190,39 @@ html.tarja-encerrada {
   pointer-events: none;
 }
 
-/* círculo branco com borda vermelha, halo e brilho laranja */
+/* círculo branco com borda laranja e halo laranja */
 .escassez__ponta {
   position: absolute;
   top: 50%;
   right: 0;
-  width: 20px;
-  height: 20px;
-  border: 3px solid #E52B24;
+  width: 26px;
+  height: 26px;
+  border: 3px solid #FF6A1A;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(229, 43, 36, .28), 0 0 12px rgba(255, 106, 26, .7);
+  box-shadow: 0 0 0 5px rgba(255, 106, 26, .3), 0 0 16px rgba(255, 138, 61, .75);
   transform: translate(50%, -50%);
 }
 
-/* d) a porcentagem: "78% dos planos vendidos" (no mobile, "78% vendidos"), maior que a mensagem (22 px; 16 no mobile).
-   O "78%" vai em 800 no azul da Zero7 (o complementar do laranja, ao lado da barra): degradê #1689E0 → #0A4FB8.
-   Contraste sobre o fundo da tarja (do branco ao ponto mais alaranjado): 3,15–3,69:1 no tom mais claro e
-   6,35–7,44:1 no escuro; texto grande e negrito pede 3:1. */
+/* d) a porcentagem: "78% dos planos vendidos" (no mobile, "78% vendidos"), maior que a mensagem. "78%" em 800, branco
+   puro (o "%" do tamanho do número); o resto em 600, branco .78 */
 .escassez__pct {
   display: flex;
   flex: 0 0 auto;
   align-items: baseline;
   gap: .3em;
-  font: 600 22px/1.2 var(--fonte-texto);
+  font: 600 26px/1.2 var(--fonte-texto);
   white-space: nowrap;
 }
 
 .escassez__num {
   font-weight: 800;
   font-variant-numeric: tabular-nums;
-  background: linear-gradient(180deg, #1689E0, #0A4FB8);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #fff;
 }
 
 .escassez__num small {
-  font-size: 1em; /* o "%" do tamanho do número */
+  font-size: 1em;
 }
 
 /* os números só aparecem depois do primeiro cálculo (a largura já está reservada pelo "00") */
@@ -241,7 +231,7 @@ html.tarja-encerrada {
 }
 
 .escassez__rotulo {
-  color: rgba(14, 11, 10, .72);
+  color: rgba(255, 255, 255, .78);
 }
 
 .escassez__friday,
@@ -253,23 +243,30 @@ html.tarja-encerrada {
   display: none;
 }
 
-/* ========== 1024–1199 px: com as fontes maiores, o medidor encolhe antes do texto ========== */
-@media (max-width: 1199.98px) {
+/* ========== 1200–1439 px: o medidor encolhe antes do texto ========== */
+@media (max-width: 1439.98px) {
   .escassez {
-    gap: 20px;
+    gap: 22px;
   }
 
   .escassez__medidor {
-    width: 200px;
+    width: 280px;
   }
 }
 
-/* ========== 768–1023 px: duas linhas, com as fontes do desktop ==========
-   Numa linha só, o medidor teria de cair a ~100 px para caber em 768 px. Aqui a frase inteira (com "Friday") fica em
-   cima e, embaixo, o medidor largo com "78% dos planos vendidos" ao lado, numa coluna de até 680 px. 84 px de altura. */
-@media (min-width: 768px) and (max-width: 1023.98px) {
+/* ========== 1080–1199 px: o medidor cai para 240 px (o texto fica inteiro) ========== */
+@media (max-width: 1199.98px) {
+  .escassez__medidor {
+    width: 240px;
+  }
+}
+
+/* ========== 768–1079 px: duas linhas, com as fontes do desktop ==========
+   Numa linha só, mesmo com o medidor em 240 px, a linha pede 1075 px e não cabe em 1024. Aqui a frase inteira (com
+   "Friday") fica em cima e, embaixo, o medidor largo com "78% dos planos vendidos" ao lado, numa coluna de até 760 px. */
+@media (min-width: 768px) and (max-width: 1079.98px) {
   :root {
-    --tarja-altura: 84px;
+    --tarja-altura: 96px;
   }
 
   .escassez {
@@ -280,8 +277,8 @@ html.tarja-encerrada {
       "medidor pct";
     align-content: center;
     align-items: center;
-    gap: 9px 18px;
-    padding: 0 max(24px, calc(50% - 340px)) 3px;
+    gap: 10px 22px;
+    padding: 0 max(28px, calc(50% - 380px)) 3px;
   }
 
   .escassez__texto {
@@ -292,7 +289,7 @@ html.tarja-encerrada {
   .escassez__medidor {
     grid-area: medidor;
     width: auto;
-    margin-left: 10px;
+    margin-left: 13px; /* a ponta (26 px) não sai pela esquerda no 0% */
   }
 
   .escassez__pct {
@@ -301,9 +298,12 @@ html.tarja-encerrada {
 }
 
 /* ========== MOBILE (até 767 px): duas linhas ==========
-   Com a mensagem a 14 px e a % a 16 px, as duas não cabem numa linha (em 390 px passariam de 410 px): a mensagem fica
-   em cima, inteira, e "78% vendidos" vai para a direita do medidor, embaixo. */
+   A mensagem fica em cima, inteira, e "78% vendidos" vai para a direita do medidor, embaixo. */
 @media (max-width: 767px) {
+  :root {
+    --tarja-altura: 84px;
+  }
+
   .escassez {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -312,14 +312,14 @@ html.tarja-encerrada {
       "medidor pct";
     align-content: center;
     align-items: center;
-    gap: 9px 14px;
+    gap: 10px 16px;
     padding: 0 16px 3px;
   }
 
   .escassez__texto {
     grid-area: texto;
-    gap: 8px;
-    font-size: 14px;
+    gap: 9px;
+    font-size: 15px;
   }
 
   /* no mobile: "Os planos da Black estão acabando" */
@@ -329,7 +329,7 @@ html.tarja-encerrada {
 
   .escassez__pct {
     grid-area: pct;
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .escassez__rotulo--longo {
@@ -343,31 +343,38 @@ html.tarja-encerrada {
   .escassez__medidor {
     grid-area: medidor;
     width: auto;
-    height: 12px;
-    margin-left: 8px; /* a ponta (16 px) não encosta na borda no 0% */
+    height: 14px;
+    margin-left: 9px; /* a ponta (18 px) não sai pela esquerda no 0% */
+  }
+
+  .escassez__medidor::after {
+    top: 3px;
+    bottom: 3px;
+    right: 6px;
   }
 
   .escassez__ponta {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     border-width: 3px;
+    box-shadow: 0 0 0 4px rgba(255, 106, 26, .3), 0 0 12px rgba(255, 138, 61, .75);
   }
 }
 
-/* até 389 px (ex.: 360): a linha de cima aperta para não encostar nas bordas */
+/* até 389 px (ex.: 360): fontes um ponto menores e menos espaço nas laterais */
 @media (max-width: 389.98px) {
   .escassez {
-    column-gap: 8px;
+    column-gap: 12px;
     padding-inline: 12px;
   }
 
   .escassez__texto {
-    gap: 7px;
-    font-size: 13px;
+    gap: 8px;
+    font-size: 14px;
   }
 
   .escassez__pct {
-    font-size: 15px;
+    font-size: 17px;
   }
 }
 

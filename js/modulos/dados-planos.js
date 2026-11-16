@@ -1,8 +1,8 @@
 // Dados dos planos (data/planos.json, PLANOS_URL em js/config.js) para a LP inteira: uma requisição só, dividida
 // entre a seção de planos (blackPlanos.js) e o limite de perda dos cards (limite-alta.js).
 // Se o fetch falhar (ou o JSON vier sem modo ativo), vale o snapshot embutido, como antes no blackPlanos.
-import { PLANOS_URL } from '../config.js?v=202611161542';
-import SNAPSHOT from './planos-snapshot.js?v=202611161542';
+import { PLANOS_URL } from '../config.js?v=202611161558';
+import SNAPSHOT from './planos-snapshot.js?v=202611161558';
 
 let promessa = null;
 

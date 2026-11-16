@@ -12,7 +12,7 @@
    - ajuste do cliente: o Sênior não tem mais destaque (.card--copa saiu). Ele continua sendo o slide inicial,
      marcado no HTML com data-inicial. */
 
-import { comVersao } from '../../versao.js?v=202611161542';
+import { comVersao } from '../../versao.js?v=202611161558';
 
 // cache busting: o ?v= do deploy (js/versao.js)
 const SWIPER_JS = comVersao('vendor/swiper-11.2.10/swiper-bundle.min.js');

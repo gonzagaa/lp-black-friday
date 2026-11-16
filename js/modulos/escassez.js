@@ -3,7 +3,7 @@
 // abrir a página e a cada 60 s, pelo relógio do navegador. Na entrada, o preenchimento anima de 0 até o valor (CSS).
 // ativo: false esconde a tarja e zera --tarja-altura (html.tarja-encerrada): a nav volta ao topo.
 // Acessibilidade: o medidor é role="progressbar" com aria-valuenow e aria-valuetext ("78% dos planos vendidos").
-import { TARJA_ESCASSEZ } from '../config.js?v=202611161542';
+import { TARJA_ESCASSEZ } from '../config.js?v=202611161558';
 
 const MINUTO = 60 * 1000;
 

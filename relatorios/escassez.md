@@ -219,6 +219,55 @@ Commit `ajuste: tarja de escassez com mais destaque (% azul, trilho preto)`.
 - `shots/escassez-destaque/{390,1440}-destaque-{parada,rolada}.png`;
 - `{360,768,1024,1920}-topo.png`.
 
+## Tema azul e tudo maior (16/11)
+
+Commit `ajuste: tarja de escassez no azul da Zero7, maior`. Substitui as cores e os tamanhos do commit 46ec5b1.
+
+1. **Tema azul:**
+   - **Fundo:** `linear-gradient(90deg, #021F4D, #06398F 45%, #0A4FB8)` com a luz ciano no topo.
+   - **Filete e sombra:** o filete de 3 px no degradê laranja, sem glow; a sombra escura sutil; o véu escuro do vão continua.
+   - **Textos e "ao vivo":** textos em branco; o "ao vivo" em #FF8A3D, com o anel pulsando.
+   - **"acabando":** degradê #FFB37A → #FFA25C, em 800. O pedido sugeria terminar em #FF8A3D, mas medido pixel a pixel no pior ponto (onde a luz do topo clareia o azul) ele ficava em 2,85:1 no mobile. Com #FFA25C, no mínimo **3,37:1** em todas as larguras.
+2. **Fontes:** a mensagem tem 20 / 15 / 14 px; "78% dos planos vendidos", 26 / 18 / 17 px, com o "78%" em 800 branco e o resto em 600 branco .78 (7:1).
+3. **Medidor:**
+   - trilho #061633 com borda interna .12 e o traço de 100% em branco .4;
+   - preenchimento #FFA25C → #FF6A1A → #F2441F, com listras e brilho;
+   - ponta branca com borda #FF6A1A e halo laranja (26 px no desktop e 18 px no mobile).
+4. **Alturas e faixas:**
+
+| Faixa | Altura | Layout | Medidor |
+|---|---|---|---|
+| ≥ 1440 px | 84 | uma linha | 360 × 20 px |
+| 1200–1439 px | 84 | uma linha | 280 px |
+| 1080–1199 px | 84 | uma linha | 240 px |
+| 768–1079 px | 96 | duas linhas | largo |
+| até 767 px | 84 | duas linhas | 100% × 14 px |
+
+   - **Por que 1024 ficou em duas linhas:** mesmo com o medidor em 240 px, a linha única pede 1075 px e não cabe em 1024. Por isso o layout de duas linhas vai até 1079 px.
+   - A nav e as âncoras acompanham as alturas.
+
+### Testes
+
+- **Larguras:** 360, 390, 768, 1024, 1100, 1280, 1440 e 1920 px.
+  - Sem rolagem lateral, sem sobreposição e com CLS 0.
+  - Nada encosta nas bordas: em 360 px o conteúdo fica entre 12 e 348 px, e em 1100 px entre 29 e 1071 px.
+- `ativo: false`, movimento reduzido e `cta_click` "tarja" funcionando.
+- **Contraste mínimo, medido atrás do texto:**
+
+| Largura | "acabando" | "dos planos vendidos" |
+|---|---|---|
+| 1440 | 4,03 | 7,02 |
+| 1280 | 3,86 | 6,98 |
+| 1100 | 3,81 | 6,78 |
+| 1024 | 3,44 | 7,11 |
+| 768 | 3,56 | 6,79 |
+| 390 | 3,37 | 6,88 |
+| 360 | 3,40 | 6,78 |
+
+### Prints
+
+`shots/escassez-azul/{360,390,768,1024,1100,1280,1440,1920}-topo.png` e `1440-desligada.png`.
+
 ## Perguntas / pendências
 
 Nenhuma. `vendidos` e `meta` foram confirmados, e para atualizar o número real basta mudar `vendidos` e rodar `npm run versao`.

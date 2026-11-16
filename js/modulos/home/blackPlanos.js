@@ -8,8 +8,8 @@
    - card preenchido ganha .is-pronto (até lá a pele o deixa invisível, ocupando o lugar);
    - os cards ficam na ordem do planos.json (ordenarComoNoJson).
    O resto (modos, botões, textos, flash, footnote, withCurrentQueryParams) é o da home. */
-import { carregarPlanos } from '../dados-planos.js?v=202611161542';
-import { separarParcela, separarAvista, checkoutValido } from '../precos.js?v=202611161542';
+import { carregarPlanos } from '../dados-planos.js?v=202611161558';
+import { separarParcela, separarAvista, checkoutValido } from '../precos.js?v=202611161558';
 
 export function iniciarBlackPlanos() {
   let currentMode = null;
