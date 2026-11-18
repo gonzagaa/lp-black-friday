@@ -27,6 +27,9 @@ export const TARJA_ESCASSEZ = {
   fim: '2026-11-19T23:59:59-03:00',
   teto: 99,
   curva: 1.6,
+  // Congelado a pedido do cliente (18/11): mostra sempre este valor, sem rampa e sem recálculo, até nova ordem.
+  // Para voltar à rampa, ponha null.
+  fixo: 91,
 };
 
 // De onde a seção de planos lê preços, checkout, modo e prazo (Fase 4).

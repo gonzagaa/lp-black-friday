@@ -100,11 +100,13 @@ export const TARJA_ESCASSEZ = {
   fim: '2026-11-19T23:59:59-03:00',       // fim da rampa (depois dele, fica no teto)
   teto: 99,                               // nunca mostra 100
   curva: 1.6,                             // > 1: sobe mais rápido no começo e desacelera perto do fim
+  fixo: 91,                               // congela a % mostrada (ignora a rampa); null volta à rampa
 };
 ```
 
 - **Atualizar o número real:** mude só `vendidos`. A tarja mostra o maior entre o real (`vendidos / meta`) e a rampa. Se o real passar da rampa, vale o real.
 - **A rampa:** sai do real no `inicio` e sobe até o `teto` no `fim`: `base + (teto − base) × (1 − (1 − x)^curva)`, com `x` = fração do tempo decorrido. Com os valores de hoje: seg 13:35 → 78%, ter 12h → 86%, qua 12h → 93%, qui 12h → 98%, qui à noite → 99%. Depois do `fim`, fica em 99.
+- **Congelar:** `fixo: <número>` mostra sempre esse valor (desde 18/11, em 91 a pedido do cliente). Com `fixo: null`, volta a rampa.
 - **Desligar:** `ativo: false`.
 - Depois de qualquer mudança, rode `npm run versao` antes do deploy.
 - O valor é recalculado ao abrir a página e a cada 60 s, pelo relógio do navegador.

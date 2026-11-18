@@ -3,12 +3,13 @@
 // abrir a página e a cada 60 s, pelo relógio do navegador. Na entrada, o preenchimento anima de 0 até o valor (CSS).
 // ativo: false esconde a tarja e zera --tarja-altura (html.tarja-encerrada): a nav volta ao topo.
 // Acessibilidade: o medidor é role="progressbar" com aria-valuenow e aria-valuetext ("78% dos planos vendidos").
-import { TARJA_ESCASSEZ } from '../config.js?v=202611161616';
+import { TARJA_ESCASSEZ } from '../config.js?v=202611181532';
 
 const MINUTO = 60 * 1000;
 
 // Valor exibido (inteiro de 0 a teto) num instante. Exportado para os testes de data.
 export function valorEscassez(cfg, agora) {
+  if (cfg.fixo != null) return cfg.fixo; // congelado no config
   const real = (cfg.vendidos / cfg.meta) * 100;
   const inicio = Date.parse(cfg.inicio);
   const fim = Date.parse(cfg.fim);
