@@ -332,6 +332,17 @@ Commit `ajuste: tarja de escassez com "acabando" branco`.
 - **Contraste:** o mesmo da mensagem branca (P5 ≥ 5,8:1).
 - **Prints:** `shots/escassez-vivo/{390,1440}-branco-{parada,rolada}.png`.
 
+## 100% às 20h (19/11)
+
+Pedido do cliente de 19/11: a barra tem que chegar a 100% dos planos vendidos hoje às 20h. Commit `ajuste: tarja de escassez chega a 100% às 20h`.
+
+- **Descongelada:** `fixo: null`. A rampa nova parte dos 91% em que a tarja estava (`base: 91`, campo novo) e não do real (77,5%). Só tirar o `fixo` com as datas antigas faria a tarja pular de 91% para 99% de uma vez.
+- **Rampa:** de 19/11 às 12:00 (91%) a 19/11 às 20:00 (100%), em linha reta (`curva: 1`): +1 ponto a cada ~53 min (92% às 12:53, 93% às 13:47, 94% às 14:40, 95% às 15:33, 96% às 16:27, 97% às 17:20, 98% às 18:13, 99% às 19:07 e 100% às 20:00). Depois das 20h, fica em 100%. Antes das 12h, em 91%.
+- **Teto:** 100 (antes 99, "nunca 100").
+- **Arredondamento para baixo** (`Math.floor`, antes `Math.round`): com o arredondamento normal, os 100% apareceriam às 19:33. Agora aparecem às 20:00 em ponto.
+- **Teste novo:** `scripts/testes/escassez.test.mjs`. Confere os horários acima, que a % nunca desce, que sobe no máximo 1 ponto por minuto e que `fixo` e `base: null` continuam funcionando.
+- **Layout com "100%"** (relógio simulado às 19:59 e às 20:00; 360, 390, 768, 1024, 1280, 1440 e 1920 px): a altura da tarja continua igual a `--tarja-altura`, nada transborda nem quebra linha, nada se sobrepõe e não há scroll horizontal. O "100" ocupa de 8 a 17 px a mais para a esquerda.
+
 ## Perguntas / pendências
 
-Nenhuma. `vendidos` e `meta` foram confirmados, e para atualizar o número real basta mudar `vendidos` e rodar `npm run versao`.
+1. **Depois das 20h:** a tarja vai mostrar "Os planos da Black Friday estão acabando" com o medidor em 100% e "100% dos planos vendidos", e os planos continuam à venda. Quer outro texto depois das 20h, esconder a tarja (`ativo: false`) ou deixar assim?

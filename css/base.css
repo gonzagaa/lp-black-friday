@@ -6,42 +6,42 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(../assets/fonts/plus-jakarta-sans-latin-700-normal.woff2?v=202611181532) format('woff2');
+  src: url(../assets/fonts/plus-jakarta-sans-latin-700-normal.woff2?v=202611191142) format('woff2');
 }
 @font-face {
   font-family: 'Plus Jakarta Sans';
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url(../assets/fonts/plus-jakarta-sans-latin-800-normal.woff2?v=202611181532) format('woff2');
+  src: url(../assets/fonts/plus-jakarta-sans-latin-800-normal.woff2?v=202611191142) format('woff2');
 }
 @font-face {
   font-family: 'Barlow Condensed';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(../assets/fonts/barlow-condensed-latin-700-normal.woff2?v=202611181532) format('woff2');
+  src: url(../assets/fonts/barlow-condensed-latin-700-normal.woff2?v=202611191142) format('woff2');
 }
 @font-face {
   font-family: 'Barlow Condensed';
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url(../assets/fonts/barlow-condensed-latin-800-normal.woff2?v=202611181532) format('woff2');
+  src: url(../assets/fonts/barlow-condensed-latin-800-normal.woff2?v=202611191142) format('woff2');
 }
 @font-face {
   font-family: 'Barlow Condensed';
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: url(../assets/fonts/barlow-condensed-latin-900-normal.woff2?v=202611181532) format('woff2');
+  src: url(../assets/fonts/barlow-condensed-latin-900-normal.woff2?v=202611191142) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url(../assets/fonts/inter-latin-wght-normal.woff2?v=202611181532) format('woff2');
+  src: url(../assets/fonts/inter-latin-wght-normal.woff2?v=202611191142) format('woff2');
 }
 
 /* Reset */
@@ -134,7 +134,7 @@ body {
 /* Grão global: por cima de tudo, sem capturar clique. A textura (77 KB) entra depois do load (html.grao-pronto,
    js/main.js): é decorativa e disputava banda com as fontes da primeira dobra. */
 .grao-pronto .grao {
-  background-image: url(../assets/texturas/grain.png?v=202611181532);
+  background-image: url(../assets/texturas/grain.png?v=202611191142);
 }
 
 .grao {

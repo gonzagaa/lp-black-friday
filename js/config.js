@@ -13,23 +13,29 @@ export const TARJA_HORA_DIARIA = '23:59:59';
 export const TARJA_PULAR = ['2026-11-04'];
 
 // Tarja de escassez da LP (js/modulos/escassez.js, css/escassez.css; pedido do cliente, 16/11). Substitui a contagem de
-// tempo só na LP (o quiz continua com a tarja do timer). Mostra a % dos planos vendidos, numa rampa até quinta:
+// tempo só na LP (o quiz continua com a tarja do timer). Mostra a % dos planos vendidos, numa rampa:
 // - real = vendidos / meta;
-// - rampa = base + (teto − base) × (1 − (1 − x)^curva), com base = real e x = fração do tempo entre inicio e fim (0 a 1);
-// - exibido = arredondar(max(real, rampa)), no máximo teto (99; nunca 100). Depois do fim, fica no teto.
+// - rampa = base + (teto − base) × (1 − (1 − x)^curva), com x = fração do tempo entre inicio e fim (0 a 1) e
+//   base = o campo "base" (sem ele, o real);
+// - exibido = max(real, rampa) arredondado PARA BAIXO, no máximo teto: o teto só aparece no "fim". Depois dele, fica
+//   no teto.
 // Para atualizar o número real, mude só "vendidos" (se o real passar da rampa, vale o real).
 // ativo: false esconde a tarja inteira e a nav volta ao topo. Horários de Brasília (−03:00).
+//
+// Regra em vigor (pedido do cliente, 19/11): sai dos 91% em que estava congelada (desde 18/11) e chega a 100% hoje às
+// 20h, em linha reta: +1 ponto a cada ~53 min (92% às 12:53, 95% às 15:33, 99% às 19:07, 100% às 20:00). Depois das
+// 20h, fica em 100%.
 export const TARJA_ESCASSEZ = {
   ativo: true,
   vendidos: 3100, // confirmado pelo cliente (16/11); atualizar com o número real
   meta: 4000, // confirmado pelo cliente (16/11)
-  inicio: '2026-11-16T13:35:00-03:00',
-  fim: '2026-11-19T23:59:59-03:00',
-  teto: 99,
-  curva: 1.6,
-  // Congelado a pedido do cliente (18/11): mostra sempre este valor, sem rampa e sem recálculo, até nova ordem.
-  // Para voltar à rampa, ponha null.
-  fixo: 91,
+  base: 91, // de onde a rampa parte (null: do real). 91 é o valor em que a tarja estava congelada
+  inicio: '2026-11-19T12:00:00-03:00',
+  fim: '2026-11-19T20:00:00-03:00',
+  teto: 100,
+  curva: 1, // 1: linha reta; > 1: sobe mais rápido no começo e desacelera perto do fim
+  // fixo: <número> congela a tarja nesse valor, sem rampa e sem recálculo (ficou em 91 de 18/11 a 19/11). null: rampa.
+  fixo: null,
 };
 
 // De onde a seção de planos lê preços, checkout, modo e prazo (Fase 4).

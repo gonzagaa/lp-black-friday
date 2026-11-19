@@ -173,7 +173,7 @@ html.tarja-encerrada .cabecalho::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: url(../../assets/texturas/grain.png?v=202611181532) repeat;
+  background: url(../../assets/texturas/grain.png?v=202611191142) repeat;
   background-size: 240px;
   opacity: .55;
   mix-blend-mode: soft-light;

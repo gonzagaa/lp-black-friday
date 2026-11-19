@@ -563,10 +563,10 @@
   position: relative;
   margin-top: -48px;
   -webkit-mask:
-    url(../assets/texturas/candles-mask.svg?v=202611181532) repeat-x 0 0 / 360px 48px,
+    url(../assets/texturas/candles-mask.svg?v=202611191142) repeat-x 0 0 / 360px 48px,
     linear-gradient(#000, #000) 0 47px / 100% calc(100% - 47px) no-repeat;
   mask:
-    url(../assets/texturas/candles-mask.svg?v=202611181532) repeat-x 0 0 / 360px 48px,
+    url(../assets/texturas/candles-mask.svg?v=202611191142) repeat-x 0 0 / 360px 48px,
     linear-gradient(#000, #000) 0 47px / 100% calc(100% - 47px) no-repeat;
 }
 
@@ -578,17 +578,17 @@
   top: 0;
   z-index: 3;
   height: 48px;
-  background: url(../assets/texturas/candles-tops.svg?v=202611181532) repeat-x 0 0 / 360px 48px;
+  background: url(../assets/texturas/candles-tops.svg?v=202611191142) repeat-x 0 0 / 360px 48px;
   pointer-events: none;
 }
 
 @media (max-width: 600px) {
   .div-candles {
     -webkit-mask:
-      url(../assets/texturas/candles-mask.svg?v=202611181532) repeat-x 0 0 / 270px 36px,
+      url(../assets/texturas/candles-mask.svg?v=202611191142) repeat-x 0 0 / 270px 36px,
       linear-gradient(#000, #000) 0 35px / 100% calc(100% - 35px) no-repeat;
     mask:
-      url(../assets/texturas/candles-mask.svg?v=202611181532) repeat-x 0 0 / 270px 36px,
+      url(../assets/texturas/candles-mask.svg?v=202611191142) repeat-x 0 0 / 270px 36px,
       linear-gradient(#000, #000) 0 35px / 100% calc(100% - 35px) no-repeat;
   }
 

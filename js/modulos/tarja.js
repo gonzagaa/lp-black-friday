@@ -5,7 +5,7 @@
 // Acessibilidade: os números são aria-hidden; o role="timer" leva o texto completo, atualizado só quando o minuto
 // muda (nada de leitura a cada segundo). Na LP a tarja é um link (<a href="#planos">): o nome do link é o mesmo texto
 // + "Ver os planos.".
-import { BLACK_FIM, TARJA_HORA_DIARIA, TARJA_PULAR } from '../config.js?v=202611181532';
+import { BLACK_FIM, TARJA_HORA_DIARIA, TARJA_PULAR } from '../config.js?v=202611191142';
 
 const BRASILIA = -3 * 60 * 60 * 1000; // UTC−3, sem horário de verão desde 2019
 const DIA = 24 * 60 * 60 * 1000;

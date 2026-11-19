@@ -96,17 +96,21 @@ export const TARJA_ESCASSEZ = {
   ativo: true,                            // false: a tarja some e a nav volta ao topo
   vendidos: 3100,                         // o número real de planos vendidos
   meta: 4000,                             // o total de planos da Black
-  inicio: '2026-11-16T13:35:00-03:00',    // começo da rampa
-  fim: '2026-11-19T23:59:59-03:00',       // fim da rampa (depois dele, fica no teto)
-  teto: 99,                               // nunca mostra 100
-  curva: 1.6,                             // > 1: sobe mais rápido no começo e desacelera perto do fim
-  fixo: 91,                               // congela a % mostrada (ignora a rampa); null volta à rampa
+  base: 91,                               // de onde a rampa parte (null: do real)
+  inicio: '2026-11-19T12:00:00-03:00',    // começo da rampa
+  fim: '2026-11-19T20:00:00-03:00',       // fim da rampa: o teto aparece aqui (depois dele, fica no teto)
+  teto: 100,                              // o máximo mostrado
+  curva: 1,                               // 1: linha reta; > 1: sobe mais rápido no começo e desacelera perto do fim
+  fixo: null,                             // congela a % mostrada (ignora a rampa); null: rampa
 };
 ```
 
 - **Atualizar o número real:** mude só `vendidos`. A tarja mostra o maior entre o real (`vendidos / meta`) e a rampa. Se o real passar da rampa, vale o real.
-- **A rampa:** sai do real no `inicio` e sobe até o `teto` no `fim`: `base + (teto − base) × (1 − (1 − x)^curva)`, com `x` = fração do tempo decorrido. Com os valores de hoje: seg 13:35 → 78%, ter 12h → 86%, qua 12h → 93%, qui 12h → 98%, qui à noite → 99%. Depois do `fim`, fica em 99.
-- **Congelar:** `fixo: <número>` mostra sempre esse valor (desde 18/11, em 91 a pedido do cliente). Com `fixo: null`, volta a rampa.
+- **A rampa:** sai da `base` (sem ela, do real) no `inicio` e sobe até o `teto` no `fim`: `base + (teto − base) × (1 − (1 − x)^curva)`, com `x` = fração do tempo decorrido. O valor é arredondado para baixo, então o teto só aparece no `fim`.
+- **Regra em vigor (19/11):** de 91% (onde estava congelada) a 100% às 20h de 19/11, em linha reta: +1 ponto a cada ~53 min (92% às 12:53, 95% às 15:33, 99% às 19:07, 100% às 20:00). Depois disso, fica em 100%.
+- **Histórico:** de 16/11 a 18/11, rampa do real até 99% (`teto: 99`, `curva: 1.6`); de 18/11 a 19/11, congelada em 91% (`fixo: 91`).
+- **Congelar:** `fixo: <número>` mostra sempre esse valor. Com `fixo: null`, volta a rampa.
+- **Testes:** `npm test` confere a regra em vigor (`scripts/testes/escassez.test.mjs`). Se mudar as datas ou os valores, ajuste o teste.
 - **Desligar:** `ativo: false`.
 - Depois de qualquer mudança, rode `npm run versao` antes do deploy.
 - O valor é recalculado ao abrir a página e a cada 60 s, pelo relógio do navegador.
